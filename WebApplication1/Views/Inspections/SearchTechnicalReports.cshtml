@@ -1,0 +1,108 @@
+﻿@using System.Data
+@model DataTable
+<style type="text/css">
+    .card {
+        width: 200px !important;
+    }
+
+        .card .image {
+            background: black !important;
+            width: 200px;
+            height: 200px;
+        }
+
+            .card .image.icon {
+                text-align: center;
+                line-height: 200px;
+            }
+
+            .card .image i {
+                display: inline-block;
+                vertical-align: middle;
+            }
+
+            .card .image .portrait img {
+                border-radius: 0 !important;
+                height: 200px !important;
+                width: auto !important;
+                margin: auto;
+            }
+
+            .card .image.landscape img {
+                border-radius: 0 !important;
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                margin: auto;
+            }
+</style>
+<table class="ui selectable celled table ui center aligned tablesInitial" id="tablesIndexTechnicalReports">
+    <thead>
+        <tr>
+            @foreach (System.Data.DataColumn col in Model.Columns)
+            {
+
+                if (@col.ColumnName != "Tipo")
+                {
+
+                    <th>@col.ColumnName</th>
+                }
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (System.Data.DataRow row in Model.Rows)
+        {
+        <tr>
+            @foreach (DataColumn col in Model.Columns)
+            {
+                if (@col.ColumnName == "Archivos")
+                {
+                    <td><a href="javascript:void(0)" onclick="getDetailTechReports('@row["Archivos"].ToString()','@row["Archivos"].ToString()','@row["Tipo"].ToString()')">@row["Tipo"]</a></td>
+                }
+                else
+                {
+                    if (@col.ColumnName != "Tipo")
+                    {
+                        <td>@row[col.ColumnName]</td>
+                    }
+                }
+
+            }
+        </tr>
+        }
+    </tbody>
+</table>
+<br />
+<div class="ui card cardTest" style="display:none">
+    @*<div class="image icon">
+           <i class="teal huge file pdf outline icon"></i>
+
+        </div>*@
+    <div class="content">
+        Informe:  <a href="" id="pdfref" target="_blank">
+            <i id="number"></i>
+        </a>
+        <div class="meta">
+            <i id="datefile"></i>
+        </div>
+
+    </div>
+</div>
+<div class="content">
+    <div class="renderImages ui cards" style="display:none"></div>
+</div>
+<script type="text/javascript">
+    var $element = $('.cardTest');
+    LoadTables();
+    function getDetailTechReports(pdfs, type, datefile, acronym) {
+        $('.renderImages').html('');
+        $element.find($('#number').text(pdfs));
+        $element.find($('#pdfref').attr('href', '../PPROTECC/TECH_reports/' + pdfs));
+        //$element.find($('#type').text(type));
+        $element.find($('#datefile').text(datefile));
+        $('.renderImages').append('<div class="ui card cardTest"> ' + $element.html() + '</div>');
+
+        $('.renderImages').show('slow');
+    }
+</script>

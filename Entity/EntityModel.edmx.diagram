@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ae89148571f94e5b95578d3df258bb46" Name="Diagram1">
+        <EntityTypeShape EntityType="EntityModel.AccionTomar" Width="1.5" PointX="13.5" PointY="21.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.Activo" Width="1.5" PointX="7.5" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.ActivoInspeccion" Width="1.5" PointX="9.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.Cargo" Width="1.5" PointX="5.25" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.Categoria" Width="1.5" PointX="6" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.Certificaciones" Width="1.5" PointX="10.5" PointY="26.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.Curso_Inspector" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.Elemento" Width="1.5" PointX="8.25" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.Elementos" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.Empresa" Width="1.5" PointX="3" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.Encabezado" Width="1.5" PointX="10.5" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.EncabezadoFactor" Width="1.5" PointX="12.75" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.Estado" Width="1.5" PointX="10.5" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.EstadoFinal" Width="1.5" PointX="13.5" PointY="23.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.FactorElemento" Width="1.5" PointX="12.75" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.Factores" Width="1.5" PointX="10.5" PointY="23" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.FichasTec" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.FotoEncabezado" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.Grupo" Width="1.5" PointX="3" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.Inspeccion" Width="1.5" PointX="7.5" PointY="19.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.Inspeccion_Elemento" Width="1.5" PointX="9.75" PointY="20.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.Inspeccion_Elementos" Width="1.5" PointX="12.75" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.Inspeccion_inspectores" Width="1.5" PointX="9.75" PointY="17.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.InspeccionFactor" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.Inspector_certificacion" Width="1.5" PointX="12.75" PointY="18.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.Inspectores" Width="1.5" PointX="7.5" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.Linea" Width="1.5" PointX="5.25" PointY="14.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.Pais" Width="1.5" PointX="0.75" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.Resultado" Width="1.5" PointX="15.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.Rol" Width="1.5" PointX="12.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.Sede" Width="1.5" PointX="5.25" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.sysdiagrams" Width="1.5" PointX="12.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.TipoActivo" Width="1.5" PointX="5.25" PointY="17.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.TSA" Width="1.5" PointX="14.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.TSA_Empleado" Width="1.5" PointX="14.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.Usuario" Width="1.5" PointX="12.75" PointY="25.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.Usuario_Sede" Width="1.5" PointX="14.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.Certificacion_Inspector" Width="1.5" PointX="16.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.Curso" Width="1.5" PointX="4.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.Empleado" Width="1.5" PointX="7.5" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.SedeCategoria" Width="1.5" PointX="16.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityModel.usuario_Rol" Width="1.5" PointX="15" PointY="0.875" IsExpanded="true" />
+        <AssociationConnector Association="EntityModel.FK_Resultado_AccionTomar" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_Activo_Linea" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_Activo_Sede" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_Activo_TipoActivo" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_ActivoInspeccion_Activo" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_Empleado_Cargo" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_Elemento_Categoria" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_Inspector_certificacion_Certificaciones" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_Curso_Inspector_Curso_Inspector" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_Encabezado_Elemento" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_Inspeccion_Elemento_Elemento" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_Empresa_Pais" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_Sede_Empresa" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_Encabezado_Sede" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_EncabezadoFactor_Encabezado" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_FactorElemento_Encabezado" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_Inspeccion_Elementos_Encabezado" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_FactorElemento_Estado" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_Resultado_EstadoFinal" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_FactorElemento_Factores" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_Linea_Grupo" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_Inspeccion_Elemento_Inspeccion" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_Inspeccion_Elementos_Inspeccion" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_Inspeccion_inspectores_Inspeccion" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_Inspeccion_Sede" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_Inspeccion_inspectores_Inspectores" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_Inspector_certificacion_Inspectores" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_Resultado_Inspectores" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_usuario_Rol_Rol" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_Empleado_Sede" ManuallyRouted="false" />
+        <AssociationConnector Association="EntityModel.FK_usuario_Rol_Usuario" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

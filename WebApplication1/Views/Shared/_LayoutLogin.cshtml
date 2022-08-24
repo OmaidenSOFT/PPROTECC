@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Grupo Enel - Programa de protección contra caídas</title>
+    @Styles.Render("~/Content/SemanticUi/semantic.css")
+    @Styles.Render("~/Content/Site.css")
+    @Styles.Render("~/Content/font-awesome-4.7.0/css/font-awesome.css")
+
+    <style>
+        body {
+            background-image: url('@Url.Content("~/Content/Images/02-Pantalla-ingreso-A.jpg")');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
+</head>
+<body>
+    <br />
+    <div class="ui very text container segment" id="segmentLogin" style="margin-top:10%">
+        <img class="ui centered medium image" src="@Url.Content("~/Content/Images/Logo.png")">
+        <h2 style="text-align:center" class="ui teal header">Trabajo en alturas</h2>
+        <div>
+            @RenderBody()
+        </div>
+
+    </div>
+    @Scripts.Render("~/bundles/jqueryJs")
+    @Scripts.Render("~/bundles/semanticJs")
+    @Scripts.Render("~/Content/LoadingOverlay/src/loadingoverlay.min.js")
+    @Scripts.Render("~/bundles/jqueryUnobstriveJs")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

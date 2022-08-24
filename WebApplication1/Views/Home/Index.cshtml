@@ -1,0 +1,109 @@
+﻿@using LogicBo
+@model List<HomeBo.ImagesModels>
+@{
+    ViewBag.Title = "Página Inicial";
+}
+<style>
+    span {
+        color: white;
+    }
+</style>
+<link href="~/Scripts/Camera-master/css/camera.css" rel="stylesheet" />
+<script src="~/Scripts/Camera-master/scripts/jquery.mobile.customized.min.js"></script>
+<script src="~/Scripts/Camera-master/scripts/jquery.easing.1.3.js"></script>
+<script src="~/Scripts/Camera-master/scripts/camera.min.js"></script>
+
+
+<script type="text/javascript">
+    $(function () {
+        $('#camera_wrap_1').camera({
+            thumbnails: false,
+            pagination: false,
+            fx: 'simpleFade',
+            time: 2000,
+            loader: 'none'
+        });
+    })
+</script>
+
+
+@*<div class="camera_wrap camera_azure_skin" id="camera_wrap_1">*@
+@*@foreach (var item in Model)
+    {
+        <div data-thumb="@Url.Content("~/"+ViewBag.pathImage+item.Name+item.Extension)" data-src="@Url.Content("~/"+ViewBag.pathImage+item.Name+item.Extension)">
+            <div class="camera_caption fadeFromBottom">
+                @item.Name
+            </div>
+        </div>
+    }*@
+
+@*<div data-thumb="@Url.Content("~/Content/images/Banner/slides/bridge.jpg")" data-src="@Url.Content("~/Content/images/Banner/slides/bridge.jpg")">
+        <div class="camera_caption fadeFromBottom">
+            Golde Gate!!! <em>Majestic</em>
+        </div>
+    </div>
+    <div data-thumb="@Url.Content("~/Content/images/Banner/slides/leaf.jpg")" data-src="@Url.Content("~/Content/images/Banner/slides/leaf.jpg")">
+        <div class="camera_caption fadeFromBottom">
+            Nature Live <em>Amazing!!!</em>
+        </div>
+    </div>
+    <div data-thumb="@Url.Content("~/Content/images/Banner/slides/road.jpg")" data-src="@Url.Content("~/Content/images/Banner/slides/road.jpg")">
+        <div class="camera_caption fadeFromBottom">
+            <em>Natural Landscapes</em> (even if a donation is appreciated)
+        </div>
+    </div>
+    <div data-thumb="@Url.Content("~/Content/images/Banner/slides/sea.jpg")" data-src="@Url.Content("~/Content/images/Banner/slides/sea.jpg")">
+        @*<div class="camera_caption fadeFromBottom">
+                Camera slideshow provides many options <em>to customize your project</em> as more as possible
+            </div>*@
+@*</div>*@
+
+@*<link href="~/Content/SegmentEffect/css/component.css" rel="stylesheet" />
+    <link href="~/Content/SegmentEffect/css/demo.css" rel="stylesheet" />
+    <link href="~/Content/SegmentEffect/css/normalize.css" rel="stylesheet" />
+    <div class="segmenter" style="background-image: url(/Content/Images/Imagen3.png);background-size:contain"></div>
+    <h2 class="trigger-headline trigger-headline--hidden" style="text-align:center"><span style="color:black">Grupo Enel</span></h2>
+
+
+    <script src="~/Content/SegmentEffect/js/anime.min.js"></script>
+    <script src="~/Content/SegmentEffect/js/imagesloaded.pkgd.min.js"></script>
+    <script src="~/Content/SegmentEffect/js/main.js"></script>*@
+
+@*<script>
+        (function () {
+
+
+            var headline = document.querySelector('.trigger-headline'),
+                segmenter = new Segmenter(document.querySelector('.segmenter'), {
+                    pieces: 9,
+                    positions: [
+                        { top: 30, left: 05, width: 40, height: 80 },
+                        { top: 50, left: 25, width: 30, height: 30 },
+                        { top: 05, left: 75, width: 40, height: 20 },
+                        { top: 30, left: 45, width: 30, height: 20 },
+                        { top: 45, left: 15, width: 50, height: 40 },
+                        { top: 10, left: 40, width: 10, height: 20 },
+                        { top: 20, left: 50, width: 30, height: 70 },
+                        { top: 00, left: 10, width: 50, height: 60 },
+                        { top: 70, left: 40, width: 30, height: 30 },
+                        { top: 10, left: 24, width: 15, height: 10 }
+                    ],
+                    animation: {
+                        duration: 2000,
+                        easing: 'easeOutQuad',
+                        delay: 0,
+                        opacity: 1,
+                        translateZ: 85,
+                        translateX: { min: -20, max: 20 },
+                        translateY: { min: -20, max: 20 }
+                    },
+                    parallax: true,
+                    parallaxMovement: { min: 5, max: 10 },
+                    onReady: function () {
+                        segmenter.animate();
+                        headline.classList.remove('trigger-headline--hidden');
+
+                    }
+                });
+        })();
+    </script>*@

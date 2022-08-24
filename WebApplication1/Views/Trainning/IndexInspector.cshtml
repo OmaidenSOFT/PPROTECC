@@ -1,0 +1,86 @@
+﻿@using System.Data
+@model DataTable
+<style>
+    /*.ui.selection.dropdown {
+        padding: 0;
+    }*/
+
+    #modalLoadCourses {
+        height: 80vh;
+    }
+</style>
+<h3 class="titlesPages">PÁGINA INICIAL INGRESO DE INSPECTORES</h3>
+
+<table class="ui selectable celled table ui center aligned tablesInitial" id="tablesIndexperson">
+    <thead>
+        <tr>
+            @foreach (System.Data.DataColumn col in Model.Columns)
+            {
+                if (col.ColumnName != "Archivos")
+                {
+                    <th>@col.ColumnName</th>
+                }
+
+            }
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (System.Data.DataRow row in Model.Rows)
+        {
+            <tr>
+                @foreach (DataColumn col in Model.Columns)
+                {
+                    if (col.ColumnName != "Archivos")
+                    {
+                        if (col.ColumnName == "Nombre")
+                        {
+                            <td><a onclick="viewDocument('@row["Archivos"]')">@row[col.ColumnName].ToString().Split('/')[0]</a> </td>
+                        }
+                        else
+                        {
+                            <td>@row[col.ColumnName]</td>
+                        }
+                    }
+
+                }
+                <td>
+                    <a href="javascript:void(0)" onclick="cargarElement('@Url.Action("EditInspector",new { @idInspector=row["Nombre"].ToString().Split('/')[1]})')">Editar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="ui card cardTest" style="display:none">
+    <div class="content">
+        Informe:  <a href="" id="pdfref" target="_blank">
+            <i id="number"></i>
+        </a>
+        <div class="meta">
+            <i id="datefile"></i>
+        </div>
+
+    </div>
+</div>
+<div class="content">
+    <div class="renderImages ui cards" style="display:none"></div>
+</div>
+
+<script type="text/javascript">
+    var $element = $('.cardTest');
+    //LoadTables();
+    function viewDocument(path) {
+        var arrayDeCadenas = path.split('/');
+        //for (var i = 0; i < arrayDeCadenas.length; i++) {
+        $('.renderImages').html('');
+        $element.find($('#number').text(arrayDeCadenas[0]));
+        $element.find($('#pdfref').attr('href', '../PPROTECC/CERT_INS/' + arrayDeCadenas[0]));
+        //$element.find($('#type').text(type));
+        $element.find($('#datefile').text("Certificado en PDF"));
+        $('.renderImages').append('<div class="ui card cardTest"> ' + $element.html() + '</div>');
+
+        $('.renderImages').show('slow');
+
+        //}
+    }
+</script>

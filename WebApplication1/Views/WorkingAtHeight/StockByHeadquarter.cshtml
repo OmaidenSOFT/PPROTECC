@@ -1,0 +1,82 @@
+﻿@using System.Data
+@model DataTable
+<style>
+    .dynatable-per-page-select {
+        padding: 0px !important;
+    }
+
+    #modalStock embed {
+        width: 100%;
+        height: 80vh;
+    }
+</style>
+<table class="ui selectable celled table ui center aligned tablesInitial" id="tableStockByHeadquarter">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Sede</th>
+            <th>Elemento</th>
+            <th>TAG</th>
+            <th>Serial</th>
+            <th>Precinto</th>
+            <th>Estado</th>
+            <th>Fecha inspección</th>
+            <th>Vigencia</th>
+            <th style="display:none">Color</th>
+            @*<th>Color</th>*@
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (System.Data.DataRow row in Model.Rows)
+        {
+            <tr>
+                @foreach (DataColumn col in Model.Columns)
+                {
+
+                    if (col.ColumnName != "RutaHV")
+                    {
+                        if (col.ColumnName == "TAG")
+                        {
+                            <td><a onclick="viewDocument('@row["RutaHV"]')">@row[col.ColumnName]</a> </td>
+                        }
+
+                        else
+                        {
+                            <td>@row[col.ColumnName]</td>
+                        }
+
+                    }
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+@if (Model.Rows.Count > 0)
+{
+    <button class="ui button" id="btnExport" onclick="location.href='@Url.Action("DownloadFile","Download",new { fileName="StockPorSede",@id=ViewBag.id})'">Exportar</button>
+}
+<div class="ui modal" id="modalStock">
+    <div class="header">Hoja de vida</div>
+    <div class="scrolling content">
+        <embed id="pathStock" type='application/pdf'>
+    </div>
+</div>
+<script type="text/javascript">
+    var processingComplete = function () {
+        $.each($('#tableStockByHeadquarter tr'), function (index, value) {
+            var classElement = $(this).find('td:eq(9)').html();
+            classElement = classElement == "Rojo" ? "red" : classElement == "Amarillo" ? "yellow" : classElement == "Verde" ? "green" : "";
+            $(this).find('td:eq(8)').addClass(classElement);
+        });
+    }
+    //LoadTables();
+    $('#tableStockByHeadquarter').dynatable({
+    }).bind('dynatable:afterProcess', processingComplete);
+    processingComplete();
+
+    function viewDocument(path) {
+        $('#view').modal('hide');
+        $('#pathStock').attr("src", path);
+        $('#modalStock').modal('show');
+    }
+</script>

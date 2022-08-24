@@ -1,0 +1,459 @@
+﻿<h3 class="titlesPages">
+    CREAR INSPECCIÓN
+</h3>
+@using (Ajax.BeginForm("ProcessCreateInspections", "Inspections", null, new AjaxOptions()
+{
+    HttpMethod = "POST",
+    OnBegin = "return onBeginProcessCreateInspections()",
+    OnSuccess = "onSuccessProcessCreateInspections(data)",
+    OnFailure = "onFailureProcessCreateInspections()",
+}, new { @id = "formProcessCreateInspections" }))
+{
+    <input type="hidden" name="id" value="" id="id" />
+    <div class="ui equal width form">
+        <div class="fields">
+            <div class="field">
+                <label>Sede</label>
+                @Html.DropDownList("cbxHeadquarter", (SelectList)ViewBag.HeadquarterDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+            </div>
+            <div class="field">
+                <label>Elemento</label>
+                @Html.DropDownList("cbxElement", (SelectList)ViewBag.ElementDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown", @readonly = "readonly" })
+            </div>
+        </div>
+        <div class="fields">
+            <div class="four wide field">
+            </div>
+            <div class="eight wide field">
+                <label>TAG</label>
+                <input type="text" id="rfid" name="rfid" placeholder="TAG" autocomplete="off" maxlength="50" style="font-size:24px!important;text-align:center!important">
+            </div>
+            <div class="four wide field">
+            </div>
+        </div>
+        <div class="fields">
+            <div>
+                <h3 class="titlesPagesDescription">Encabezado</h3>
+            </div>
+        </div>
+
+        <div class="fields">
+            <div class="field">
+                <label>Modelo</label>
+                <input type="text" id="model" name="model" placeholder="Modelo" autocomplete="off" maxlength="50" readonly>
+            </div>
+
+
+        </div>
+
+        <div class="fields">
+            <div class="field">
+                <label>Ubicación</label>
+                @Html.DropDownList("cbxLocation", (SelectList)ViewBag.LocationDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+            </div>
+            <div class="field">
+                <label>Material</label>
+                <input type="text" id="material" name="material" placeholder="Material" autocomplete="off" maxlength="50" readonly>
+            </div>
+            <div class="field">
+                <label>Fecha Fabricación</label>
+                <input type="text" id="fabricationDate" placeholder="Fecha Fabricación" autocomplete="off" maxlength="50" readonly>
+            </div>
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>Marca</label>
+                <input type="text" id="mark" name="mark" placeholder="Marca" autocomplete="off" maxlength="50" readonly>
+            </div>
+            <div class="field">
+                <label>Serial</label>
+                <input type="text" id="serial" name="serial" placeholder="Serial" autocomplete="off" maxlength="50" readonly>
+            </div>
+
+            <div class="field">
+                <label>Fecha de Compra</label>
+                <input type="text" id="purchaseDate" placeholder="Fecha de Compra" autocomplete="off" maxlength="50" readonly>
+            </div>
+
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>Lote</label>
+                <input type="text" id="lot" name="lot" placeholder="Lote" autocomplete="off" maxlength="50" readonly>
+            </div>
+        </div>
+        <div class="fields">
+            <div>
+                <h3 class="titlesPagesDescription">Factores inspeccionados</h3>
+            </div>
+        </div>
+        <div class="fields">
+            <div class="field" id="detail">
+
+            </div>
+        </div>
+        <div class="fields">
+            <div>
+                <h3 class="titlesPagesDescription">Disposición General</h3>
+            </div>
+        </div>
+        <div class="fields">
+            <table class="ui selectable celled table ui center aligned">
+                <thead>
+                    <tr>
+                        <th>Aceptado/Rechazado</th>
+                        <th>Accion a Tomar</th>
+                        <th>Inspeccionado Por</th>
+                        <th>Fecha de inspección</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@Html.DropDownList("cbxFinalState", (SelectList)ViewBag.FinalStateDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })</td>
+                        <td>@Html.DropDownList("cbxActionResult", (SelectList)ViewBag.ActionResultDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })</td>
+                        <td>@Html.DropDownList("cbxInspector", (SelectList)ViewBag.InspectorDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })</td>
+                        <td>
+                            <div class="ui calendar calendarPicker" id="inspectionDate">
+                                <div class="ui input left icon">
+                                    <i class="calendar icon"></i>
+                                    <input type="text" placeholder="Fecha Inspección">
+                                </div>
+                            </div>
+                            <input type="hidden" name="cinspectionDate" id="cinspectionDate" autocomplete="off">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <button class="ui primary button" id="btnGuardar" type="button">
+            Guardar
+        </button>
+    </div>
+    <div class="ui floating warning message" style="width:50%;margin-left:25%;margin-right:25%;text-align:center;display:none" id="messageCreateInspections">
+        <div class="header">
+            Atención
+        </div>
+        <p id="textmessageCreateInspections"></p>
+    </div>
+}
+
+<script type="text/javascript">
+    $(function () {
+        var headquarterId = '@ViewBag.headquarterId';
+        var RFID = '@ViewBag.RFID';
+        if (headquarterId && RFID) {
+            $('#cbxHeadquarter').dropdown('set selected', headquarterId);
+            $('#rfid').val(RFID);
+            var rfid = RFID;
+            var headquarterid = headquarterId;
+            if (headquarterid != "" && headquarterid != null) {
+                var html = ' value =';
+                $.ajax({
+                    url: '@Url.Action("GetDataElementByRFID", "Inspections")',
+                    data: { rfid: rfid, headquaterid: headquarterid },
+                    type: 'POST',
+                    success: function (data) {
+                        if (data.result) {
+                            var element = data.data;
+                            if (element.length > 0) {
+                                $('#id').val(element[0]);
+                                $('#model').val(element[3]);
+                                $('#material').val(element[4]);
+                                $('#mark').val(element[6]);
+                                $('#serial').val(element[2]);
+                                $('#lot').val(element[7]);
+                                $('#cbxElement').dropdown('set selected', element[8]);
+                                $('#cbxLocation').val(element[30]);
+                                $('#fabricationDate').val(element[21]);
+                                $('#purchaseDate').val(element[22]);
+                                $('#cbxFinalState').dropdown('set selected', element[23]);
+                                $('#cbxActionResult').dropdown('set selected', element[24]);
+                                $('#inspectionDate').calendar('set date', element[25], true);
+                                $('#cbxInspector').dropdown('set selected', element[26]);
+                            };
+                        }
+                    }
+                });
+            }
+        }
+    });
+    LoadElementsDefault();
+    //$("#rfid").focus(function () {
+    //    var sedeId = $("#cbxHeadquarter").val();
+    //    if (sedeId == 16 || sedeId == 17)
+    //        {
+    //    $("#rfid").val("");
+    //    var customElement = $("<div>", {
+    //        "css": {
+    //            "font-family": "'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif",
+    //            "font-size": "40px",
+    //            "text-align": "center",
+    //            "white-space" : "pre-line"
+    //        },
+    //        "text": "Detectando Tag... \n\n\nPor favor, espere"
+    //    });
+    //    $.LoadingOverlay("show", {
+    //        image: "",
+    //        custom: customElement
+    //    });
+
+    //    var snd = new Audio("data:audio/wav;base64,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qJrx4KOQjahZxWbcZgztj2c49nKmkId44S71j0c8eV9yDK6uPRzx5X18eDvjvQ6yKo9ZSS6l//8elePK/Lf//IInrOF/FvDoADYAGBMGb7FtErm5MXMlmPAJQVgWta7Zx2go+8xJ0UiCb8LHHdftWyLJE0QIAIsI+UbXu67dZMjmgDGCGl1H+vpF4NSDckSIkk7Vd+sxEhBQMRU8j/12UIRhzSaUdQ+rQU5kGeFxm+hb1oh6pWWmv3uvmReDl0UnvtapVaIzo1jZbf/pD6ElLqSX+rUmOQNpJFa/r+sa4e/pBlAABoAAAAA3CUgShLdGIxsY7AUABPRrgCABdDuQ5GC7DqPQCgbbJUAoRSUj+NIEig0YfyWUho1VBBBA//uQZB4ABZx5zfMakeAAAAmwAAAAF5F3P0w9GtAAACfAAAAAwLhMDmAYWMgVEG1U0FIGCBgXBXAtfMH10000EEEEEECUBYln03TTTdNBDZopopYvrTTdNa325mImNg3TTPV9q3pmY0xoO6bv3r00y+IDGid/9aaaZTGMuj9mpu9Mpio1dXrr5HERTZSmqU36A3CumzN/9Robv/Xx4v9ijkSRSNLQhAWumap82WRSBUqXStV/YcS+XVLnSS+WLDroqArFkMEsAS+eWmrUzrO0oEmE40RlMZ5+ODIkAyKAGUwZ3mVKmcamcJnMW26MRPgUw6j+LkhyHGVGYjSUUKNpuJUQoOIAyDvEyG8S5yfK6dhZc0Tx1KI/gviKL6qvvFs1+bWtaz58uUNnryq6kt5RzOCkPWlVqVX2a/EEBUdU1KrXLf40GoiiFXK///qpoiDXrOgqDR38JB0bw7SoL+ZB9o1RCkQjQ2CBYZKd/+VJxZRRZlqSkKiws0WFxUyCwsKiMy7hUVFhIaCrNQsKkTIsLivwKKigsj8XYlwt/WKi2N4d//uQRCSAAjURNIHpMZBGYiaQPSYyAAABLAAAAAAAACWAAAAApUF/Mg+0aohSIRobBAsMlO//Kk4soosy1JSFRYWaLC4qZBYWFRGZdwqKiwkNBVmoWFSJkWFxX4FFRQWR+LsS4W/rFRb/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////VEFHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAU291bmRib3kuZGUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMjAwNGh0dHA6Ly93d3cuc291bmRib3kuZGUAAAAAAAAAACU=");
+    //    snd.play();
+    //    setTimeout(function () {
+    //        $.LoadingOverlay("hide");
+    //        var elementId = $("#cbxElement").val();
+    //        if (sedeId == 17) {
+    //            if (elementId == 8) {
+    //                $('#rfid').val('ENELBOGR0000000010');
+    //            }
+    //            if (elementId == 4) {
+    //                $('#rfid').val('ENELBOGR0000000658');
+    //            }
+    //        }
+    //        if (sedeId == 16) {
+
+    //            if (elementId == 1) {
+    //                $('#rfid').val('ENELBOGT0000000063');
+    //            }
+
+    //            if (elementId == 42) {
+    //                $('#rfid').val('ENELBOGT0000004068');
+    //            }
+    //        }
+           
+    //    }, 5000);
+    //    }
+
+    //});
+    $("#rfid").blur(function () {
+        var rfid = document.getElementById("rfid").value;
+        var headquarterid = $("#cbxHeadquarter").val();
+        if (headquarterid != "" && headquarterid != null) {
+            var html = ' value =';
+            $.ajax({
+                url: '@Url.Action("GetDataElementByRFID", "Inspections")',
+                data: { rfid: rfid, headquaterid: headquarterid },
+                type: 'POST',
+                success: function (data) {
+                    if (data.result) {
+                        var element = data.data;
+                        if (element.length > 0) {
+                            $('#id').val(element[0]);
+                            $('#model').val(element[3]);
+                            $('#material').val(element[4]);
+                            $('#mark').val(element[6]);
+                            $('#serial').val(element[2]);
+                            $('#lot').val(element[7]);
+                            $('#cbxElement').dropdown('set selected', element[8]);
+                            $('#cbxLocation').val(element[30]);
+                            $('#fabricationDate').val(element[21]);
+                            $('#purchaseDate').val(element[22]);
+                            $('#cbxFinalState').dropdown('set selected', element[23]);
+                            $('#cbxActionResult').dropdown('set selected', element[24]);
+                            $('#inspectionDate').calendar('set date', element[25], true);
+                            $('#cbxInspector').dropdown('set selected', element[26]);
+                        };
+                    }
+                }
+            });
+        }
+
+    });
+
+    $('#cbxFinalState').on('change', function () {
+        var html;
+        var value = $('option:selected', this).val();
+        $.ajax({
+            url: '@Url.Action("GetActionResultByState")',
+            data: { idState: value },
+            type: 'POST',
+            success: function (data) {
+                if (data.result) {
+                    $.each(data.data, function (index, value) {
+                        html = html + ' <option value="' + index + '">' + value + '</option>';
+                    });
+                    $('#cbxActionResult').dropdown('clear');
+                    $('#cbxActionResult').html(html);
+                }
+            }
+        });
+    })
+    $('#cbxElement').on('change', function () {
+        var html = '<table class="ui selectable celled table ui center aligned" >' +
+                            '<thead>' +
+                            '<tr>' +
+                            '<th>Categoria</th>' +
+                            '<th>Factor</th>' +
+                            '<th>Estado</th>' +
+                            '<th>Comentario</th>' +
+                        '</tr>' +
+                    '</thead>' +
+                    '<tbody>';
+        var rfid = $("#rfid").val();
+        var headquarterid = $("#cbxHeadquarter").val();
+        $.ajax({
+            data: { rfid: rfid, headquarterid: headquarterid },
+            url: '@Url.Action("GetFactorByElement")',
+            type: 'POST',
+            success: function (data) {
+                if (data.result) {
+                    $.each(data.data, function (cat, value) {
+                        if (value.toString().split("/")[2] == 1) {
+                            html = html +
+                         '<tr><td> ' + value.toString().split("/")[0] + '</td>' +
+                         '<td> ' + value.toString().split("/")[1] + '</td>' +
+                                '<td><select id="factor_' + cat + '" class="ui search dropdown" name="factor_' + cat + '">' +
+                         '<option selected="selected" value="1">Aceptado</option>' +
+                         '<option value="2">Rechazado</option>' +
+                         '</select></td>' +
+                                '<td><input type="text" id="comment_' + cat + '" class="comments" name="comment_' + cat + '" placeholder="comentario" autocomplete="off" maxlength="150" value="' + value.toString().split("/")[3] + '" >' +
+                    '</td>' +
+                    '</tr>';
+                        }
+                        else {
+                            html = html +
+                         '<tr><td> ' + value.toString().split("/")[0] + '</td>' +
+                         '<td> ' + value.toString().split("/")[1] + '</td>' +
+                                '<td><select id="factor_' + cat + '" class="ui search dropdown" name="factor_' + cat + '">' +
+                         '<option value="1">Aceptado</option>' +
+                         '<option selected="selected" value="2">Rechazado</option>' +
+                         '</select></td>' +
+                                '<td><input type="text" id="comment_' + cat + '" class="comments" name="comment_' + cat + '" placeholder="comentario" autocomplete="off" maxlength="150" value="' + value.toString().split("/")[3] + '" >' +
+                    '</td>' +
+                    '</tr>';
+                        }
+
+                    });
+                    html = html + '</tbody>' +
+                    '</table>';
+                    $('#detail').html(html);
+
+                }
+
+
+
+            }
+        });
+    });
+
+    $('#inspectionDate').calendar({
+        type: 'date',
+        text: {
+            days: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+            months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            today: 'Today',
+            now: 'Now',
+            am: 'AM',
+            pm: 'PM'
+        },
+        formatter: {
+            date: function (date, settings) {
+                if (!date) return '';
+                var day = date.getDate();
+                var month = date.getMonth() + 1;
+                var year = date.getFullYear();
+                return year + '-' + month + '-' + day;
+            }
+        },
+        onChange: function (date, text, mode) {
+            $('#cinspectionDate').val(text);
+        }
+    });
+
+    $('#formProcessCreateInspections').form({
+        fields: {
+            cbxLocation: {
+                identifier: 'cbxLocation',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe elegir un valor'
+                    },
+                ]
+            },
+            cbxFinalState: {
+                identifier: 'cbxFinalState',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe elegir un valor'
+                    },
+                ]
+            },
+            cbxActionResult: {
+                identifier: 'cbxActionResult',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe elegir un valor'
+                    },
+                ]
+            },
+            cbxInspector: {
+                identifier: 'cbxActionResult',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe elegir un valor'
+                    },
+                ]
+            },
+            cinspectionDate: {
+                identifier: 'cinspectionDate',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe elegir un valor'
+                    },
+                ]
+            },
+        }, inline: true,
+        on: 'blur'
+    });
+    $('#btnGuardar').on('click', function () {
+        $('#formProcessCreateInspections').submit();
+    });
+
+    function onBeginProcessCreateInspections() {
+        if (validComents()) {
+            $('#messageCreateInspections').hide();
+            $('#renderPages').addClass("loading");
+            return true;
+        } else {
+            $('#messageCreateInspections').show('slow').addClass("warning").removeClass("info");
+            $('#textmessageCreateInspections').text('Debe diligenciar todos los comentarios para los factores inspeccionados');
+            return false;
+        }
+    }
+
+    function onFailureProcessCreateInspections() {
+        $('#renderPages').removeClass("loading");
+        $('#messageCreateInspections').show('slow').addClass("warning").removeClass("info");
+        $('#textmessageCreateInspections').text("Ha ocurrido un error al procesar la solicitud");
+    }
+    function onSuccessProcessCreateInspections(data) {
+        $('#renderPages').removeClass("loading");
+        if (data.result) {
+            $('#messageCreateInspections').show('slow').removeClass("warning").addClass("info");
+            $('#textmessageCreateInspections').text("Proceso Completado");
+        } else {
+            $('#messageCreateInspections').show('slow').addClass("warning").removeClass("info");
+            $('#textmessageCreateInspections').text(data.message);
+        }
+    }
+    function validComents() {
+        var i = 0;
+        $('.comments').each(function (idx, val) {
+            if ($(val).val() === "") {
+                i = i + 1;
+            }
+        });
+        if (i > 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+</script>

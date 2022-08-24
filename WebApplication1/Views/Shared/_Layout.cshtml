@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title Grupo Enel - Programa de protección contra caídas</title>
+    <!-- Include media queries -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    @Styles.Render("~/bundles/SiteCss")
+    <link href="~/Content/SemanticUI/semantic.css" rel="stylesheet" />
+    <link href="~/Scripts/tables/jquery.dynatable.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Scripts/calendar/calendar.min.css" rel="stylesheet" />
+    <link href="~/Content/toastr.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/jqueryJs")
+    @Scripts.Render("~/bundles/semanticJs")
+    @Scripts.Render("~/bundles/loadingOverlayJs")
+    @Scripts.Render("~/bundles/jqueryUnobstriveJs")
+    <script type="text/javascript" src="~/Scripts/tables/jquery.dynatable.js"></script>
+    <script type="text/javascript" src="~/Scripts/calendar/calendar.min.js"></script>
+    <script src="~/Scripts/toastr.js"></script>
+    <script src="~/Scripts/dropzone/dropzone.min.js"></script>
+    <link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
+    <script src="~/Scripts/chartJs/Chart.bundle.min.js"></script>
+    <script src="~/Scripts/chartJs/Chart.min.js"></script>
+    <style type="text/css">
+        .bgimg {
+            background-image: url('/PPROTECC/Content/Images/header.jpg');
+        }
+
+        .main {
+            min-height: 100%;
+            padding-bottom: 60px;
+            box-sizing: border-box;
+        }
+
+        .footer {
+            background-color: #212121;
+            position: absolute;
+            /* bottom: 0;  remove this */
+            margin-top: -50px; /* add this */
+            left: 0;
+            width: 100%;
+            padding: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div class="ui grid">
+            <div class="sixteen wide column">
+                @Html.Partial("_LoginPartial")
+                <div id="menuPartial" style="display:none">
+                    @Html.Partial("_MenuPartial")
+                </div>
+            </div>
+        </div>
+        <div class="ui grid" style="margin-top:0px">
+            <img src="~/Content/Images/pantalla_inicio_2.jpg" style="border:none" />
+        </div>
+        <div class="ui grid">
+            <div class="sixteen wide stretched column">
+                <div class="ui segment" id="renderPages" style="min-height:700px !important">
+                    <h1 style="color:#41B9E6;text-align:center">BIENVENIDO AL PORTAL PPROTECC</h1>
+                    <br />
+                    <br />
+                    <div style="text-align:center;font-family:'Arial Unicode MS';font-size:16px">
+                        <p>PPROTECC,  es un software diseñado para garantizar la administración en tiempo real del programa para trabajo en alturas de la organización ENEL,  en este encontraras </p>
+                        <p>diferentes módulos que te guiaran en la gestión del programa, para  cada una de las sedes de la organización.</p>
+                        <br />
+                        <br />
+                        <p>PPROTECC fue pensado como herramienta de gestión para la prevención de accidentes de trabajo en alturas, para fortalecer la aplicación de las políticas organizacionales  y </p>
+                        <p>velar por el cumplimiento oportuno de la  legislación y normatividad vigente.</p>
+                        <br />
+                        <br />
+                        <h3>¡TE INVITAMOS A HACER PARTE DE ESTA EXPERIENCIA!</h3>
+                    </div>
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="ui container footerContainer">
+            <p class="ui center aligned"><a href="javascript:void(0)">Link 1</a>  | <a href="javascript:void(0)">Link 2</a> | <a href="javascript:void(0)">Link 3</a> | <a href="javascript:void(0)">Link 4</a></p>
+            <p class="ui center aligned">Trabajo en Alturas - Enel</p>
+        </div>
+    </footer>
+
+
+    <script type="text/javascript">
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-bottom-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "0",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+        $.fn.noop = function () { return this; };
+        toastr.options.hideMethod = 'noop';
+        @*$.ajax({
+            url: '@Url.Action("GetMissions", "Mission")',
+            type: 'POST',
+            success: function (data) {
+                toastr.info("Próximas Misiones");
+                if (data.result) {
+                    $.each(data.mission, function (index, value) {
+                        toastr.success("Fecha: " + value.date + " - " + value.city + '<br/> ' + value.description, value.name);
+                    });
+                }
+
+            }
+        });*@
+        function LoadElementsDefault() {
+            $('.ui.dropdown').dropdown();
+        }
+        $(function () {
+            LoadElementsDefault();
+        });
+        function LoadTables() {
+            $(function () {
+                $('.tablesInitial').dynatable();
+            });
+        }
+        $('#renderPages').on('click', function () {
+            $("#menuPartial").hide();
+        });
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

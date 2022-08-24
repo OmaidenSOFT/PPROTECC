@@ -1,0 +1,112 @@
+﻿@font-face {
+    font-family: arial;
+    src: url('/fonts/Arial/Arial Italic.ttf');
+}
+
+body {
+    /*background-image: url("/Content/Images/backPage.jpg") ;*/
+    font-family: 'arial';
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.green {
+    background-color: #00B5AD !important;
+    color: #FFFFFF !important;
+}
+
+.yellow {
+    background-color: #fbbd08 !important;
+    color: #FFFFFF !important;
+}
+
+.red {
+    background-color: #db2828 !important;
+    color: #FFFFFF !important;
+}
+
+#dropZone {
+    background: gray;
+    border: black dashed 3px;
+    width: 200px;
+    padding: 50px;
+    text-align: center;
+    color: white;
+}
+
+.dropzone {
+    border-style: dashed !important;
+    border-color: #21ba45 !important;
+}
+
+.titlesPages, .subtitlesPages {
+    color: #41B9E6;
+    text-align: center;
+}
+
+.titlesPagesDescription {
+    color: #41B9E6;
+    text-align: left !important;
+}
+
+.ui.primary.button {
+    background-color: #55BE5A !important;
+}
+
+.ui.action.file.input > input {
+    display: none;
+}
+
+.ui.action.file.input:not([class*="left action"]) > label {
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    border-right-color: transparent !important;
+}
+
+.ui.action.file.input > label:first-child {
+    cursor: pointer;
+    width: auto;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 0 auto;
+    -ms-flex: 1 0 auto;
+    flex: 1 0 auto;
+    outline: 0;
+    -webkit-tap-highlight-color: rgba(255,255,255,0);
+    padding: .67861429em 1em;
+    background: #FFF;
+    border: 1px solid rgba(34,36,38,.15);
+    color: rgba(0,0,0,.87);
+    border-radius: .28571429rem;
+    -webkit-transition: box-shadow .1s ease,border-color .1s ease;
+    transition: box-shadow .1s ease,border-color .1s ease;
+    box-shadow: none;
+}
+
+.ui.action.file.input > label:last-child {
+    border-radius: 0 .28571429rem .28571429rem 0 !important;
+}
+
+.tabsMenu > .item.active, .tabsMenu > .item:hover {
+    background-color: #FF5A0F !important;
+    color: white !important;
+}
+
+table thead tr th a {
+    color: black !important;
+}
+
+.footerContainer {
+    text-align: center;
+    color: white;
+}
+
+    .footerContainer p a {
+        color: white;
+    }
+
+@media only screen and (max-width: 1872px) {
+    #imageHeader {
+        display: none;
+    }
+}

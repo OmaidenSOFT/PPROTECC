@@ -1,0 +1,59 @@
+﻿@using System.Data
+@model DataTable
+<style>
+    .dynatable-per-page-select {
+        padding: 0px !important;
+    }
+</style>
+<table class="ui selectable celled table ui center aligned tablesInitial">
+    <thead>
+        <tr>
+            @foreach (System.Data.DataColumn col in Model.Columns)
+            {
+                if (col.ColumnName != "ID")
+                {
+                    <th>@col.ColumnName</th>
+                }
+
+            }
+            <th>Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (System.Data.DataRow row in Model.Rows)
+        {
+            <tr>
+                @foreach (DataColumn col in Model.Columns)
+                {
+                    if (col.ColumnName != "ID")
+                    {
+                        <td>@row[col.ColumnName]</td>
+                    }
+                }
+                <td>
+                    <a href="javascript:void(0)" onclick="deleteCoursesByPerson('@row["ID"].ToString()')">Eliminar</a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    LoadTables();
+    function deleteCoursesByPerson(id) {
+          if (confirm('¿Desea eliminar este curso para este usuario?')) {
+            $.ajax({
+                url: '@Url.Action("DeleteCoursesById")',
+                data: { id: id},
+                type: 'POST',
+                success: function (data) {
+                    if (data) {
+                        alert("Eliminación Exitosa");
+                        location.reload();
+                    }
+                }
+            });
+        }
+    }
+</script>

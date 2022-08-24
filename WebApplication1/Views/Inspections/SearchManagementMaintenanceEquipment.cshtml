@@ -1,0 +1,94 @@
+﻿@using System.Data
+@model DataTable
+<style>
+    .dynatable-per-page-select {
+        padding: 0px !important;
+    }
+</style>
+<table class="ui selectable celled table ui center aligned tablesInitial">
+    <thead>
+        <tr>
+            @foreach (System.Data.DataColumn col in Model.Columns)
+            {
+                if (col.ColumnName != "Archivo Evidencia" && col.ColumnName != "Verificado" && col.ColumnName != "SedeID")
+                {
+                    <th>@col.ColumnName</th>
+                }
+            }
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (System.Data.DataRow row in Model.Rows)
+        {
+            <tr>
+                @foreach (DataColumn col in Model.Columns)
+                {
+                    if (col.ColumnName == "TAG")
+                    {
+                        <td>
+                            <a href="../PPROTECC/MANAGMENTS_FILES/@row["Archivo Evidencia"].ToString()" id="pdfref" target="_blank">
+                                @row["TAG"]
+                            </a>
+                        </td>
+                    }
+                    else if (col.ColumnName != "Archivo Evidencia" && col.ColumnName != "SedeID")
+                    {
+                        if (col.ColumnName == "Verificado")
+                        {
+                            if (row[col.ColumnName].ToString() == "0")
+                            {
+                                <td>
+                                    <div class="ui toggle checkbox">
+                                        <input type="checkbox" name="public" data-id="@row["ID"].ToString()" data-tag="@row["TAG"].ToString()" data-sedeid="@row["SedeId"].ToString()" onclick="verificateGestion(this)">
+                                        <label>Verificar Plan de acción</label>
+                                    </div>
+                                </td>
+                            }
+                            else
+                            {
+
+                                <td>
+                                    <div class="ui toggle checkbox">
+                                        <input type="checkbox" name="public" checked="checked" disabled>
+                                        <label>Plan de acción verificado</label>
+                                    </div>
+                                </td>
+                            }
+                        }
+                        else
+                        {
+                            <td>@row[col.ColumnName]</td>
+                        }
+
+                    }
+                }
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    LoadTables();
+    function verificateGestion(element) {
+        var id = $(element).data("id");
+        var tag = $(element).data("tag");
+        var sedeid = $(element).data("sedeid");
+        if (confirm('¿Desea verificar esta gestión?')) {
+            $.ajax({
+                url: '@Url.Action("UpdateVerificateAction")',
+                data: { id: id},
+                type: 'POST',
+                success: function (data) {
+                    if (data) {
+                        cargarElement('@Url.Action("CreateInspections", "Inspections")?headquarterId='+sedeid+'&RFID='+tag);
+                    }
+                }
+            });
+        } else {
+            $(element).prop('checked', false);
+        }
+
+    }
+</script>

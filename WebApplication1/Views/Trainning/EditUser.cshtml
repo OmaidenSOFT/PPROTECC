@@ -1,0 +1,132 @@
+﻿@using System.Data
+@model DataTable
+<style>
+    /*.ui.selection.dropdown {
+        padding: 0;
+    }*/
+    #modalLoadCourses {
+        height: 80vh;
+    }
+</style>
+
+<h3 class="titlesPages">Programa de Protección contra caídas - Editar Persona</h3>
+
+@using (Ajax.BeginForm("ProcessEditUser", "Trainning", null, new AjaxOptions()
+{
+    HttpMethod = "POST",
+    OnBegin = "return onBeginProcessEditUser()",
+    OnSuccess = "onSuccessProcessEditUser(data)",
+    OnFailure = "onFailureProcessEditUser()",
+}, new { @id = "formProcessEditUser" }))
+{
+<div class="ui equal width form">
+    <div class="required inline fields">
+        <label>Tipo de Sede:</label>
+        <div class="field">
+            <div class="ui radio checkbox">
+                <input type="radio" name="headQuarterType" value="1" checked="checked">
+                <label>Térmicas</label>
+            </div>
+        </div>
+        <div class="field">
+            <div class="ui radio checkbox">
+                <input type="radio" name="headQuarterType" value="2">
+                <label>Renovables</label>
+            </div>
+        </div>
+    </div>
+    <div class="fields">
+        <input type="hidden" name="ID" value="@Model.Rows[0]["Usuario_ID"].ToString()" />
+        <div class="field">
+            <label>Nombre</label>
+            <input type="text" id="name" name="name" placeholder="Nombre" autocomplete="off" maxlength="50" value="@Model.Rows[0]["Nombres"].ToString()">
+        </div>
+        <div class="field">
+            <label>Apellido</label>
+            <input type="text" id="lastname" name="lastname" placeholder="Apellido" autocomplete="off" maxlength="50" value="@Model.Rows[0]["Apellidos"].ToString()">
+        </div>
+        <div class="field">
+            <label>Login</label>
+            <input type="text" id="login" name="login" placeholder="Usuario" autocomplete="off" maxlength="50" value="@Model.Rows[0]["Usuario"].ToString()">
+        </div>
+        <div class="field">
+            <label>Correo</label>
+            <input type="text" id="email" name="email" placeholder="Correo" autocomplete="off" maxlength="50" value="@Model.Rows[0]["Email"].ToString()">
+        </div>
+        <div class="field">
+            <label>Contraseña</label>
+            <input type="password" id="pass" name="pass" placeholder="Contraseña" autocomplete="off" maxlength="50" >
+        </div>
+    </div>
+    <div class="fields">
+        <div class="field">
+            <label>Rol</label>
+            @Html.DropDownList("cbxRole", (SelectList)ViewBag.RoleDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+        </div>
+    </div>
+</div>
+}
+<div class="ui modal" id="modalLoadCourses">
+    <div class="header">Carga de Cursos</div>
+    <div class="content" id="loadCourses">
+    </div>
+
+</div>
+<button class="ui primary button" id="btnGuardar">
+    Guardar
+</button>
+<button class="ui button" onclick="cargarElement('@Url.Action("IndexUser","Trainning")')">
+    Volver
+</button>
+<div class="ui floating warning message" style="width:50%;margin-left:25%;margin-right:25%;text-align:center;display:none" id="messageEditUser">
+    <div class="header">
+        Atención
+    </div>
+    <p id="textmessageEditUser"></p>
+</div>
+<script type="text/javascript">
+    $('#messageEditUser').hide();
+
+      $('#formProcessEditUser').form({
+            fields: {
+                cbxHeadquarter: {
+                    identifier: 'cbxHeadquarter',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Debe elegir un valor'
+                        },
+                    ]
+                },
+            }, inline: true,
+            on: 'blur'
+    });
+    $('#btnGuardar').on('click', function () {
+        $('#formProcessEditUser').submit();
+    });
+
+    function onBeginProcessEditUser() {
+        $('#renderPages').addClass("loading");
+        return true;
+    }
+
+
+
+    function onFailureProcessEditUser() {
+        $('#renderPages').removeClass("loading");
+        $('#messageEditUser').show('slow').addClass("warning").removeClass("info");
+        $('#textmessageEditUser').text("Ha ocurrido un error al procesar la solicitud");
+    }
+    function onSuccessProcessEditUser(data) {
+        $('#renderPages').removeClass("loading");
+        if (data.result) {
+            $('#messageEditUser').show('slow').removeClass("warning").addClass("info");
+            $('#textmessageEditUser').text("Proceso Completado");
+            
+
+        } else {
+            $('#messageEditUser').show('slow').addClass("warning").removeClass("info");
+            $('#textmessageEditUser').text(data.message);
+        }
+    }
+</script>

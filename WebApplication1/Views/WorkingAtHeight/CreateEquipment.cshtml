@@ -1,0 +1,472 @@
+﻿<style>
+    .ui.action.file.input > input {
+        display: none;
+    }
+
+    .ui.action.file.input:not([class*="left action"]) > label {
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+        border-right-color: transparent !important;
+    }
+
+    .ui.action.file.input > label:first-child {
+        cursor: pointer;
+        width: auto;
+        -webkit-box-flex: 1;
+        -webkit-flex: 1 0 auto;
+        -ms-flex: 1 0 auto;
+        flex: 1 0 auto;
+        outline: 0;
+        -webkit-tap-highlight-color: rgba(255,255,255,0);
+        padding: .67861429em 1em;
+        background: #FFF;
+        border: 1px solid rgba(34,36,38,.15);
+        color: rgba(0,0,0,.87);
+        border-radius: .28571429rem;
+        -webkit-transition: box-shadow .1s ease,border-color .1s ease;
+        transition: box-shadow .1s ease,border-color .1s ease;
+        box-shadow: none;
+    }
+
+    .ui.action.file.input > label:last-child {
+        border-radius: 0 .28571429rem .28571429rem 0 !important;
+    }
+</style>
+
+
+<center><h3 style="color:#41B9E6; ">PROGRAMA DE PROTECCIÓN CONTRA CAÍDAS | GESTIÓN DE EQUIPOS | INGRESO DE EQUIPOS</h3></center>
+<br />
+<br />
+<br />
+
+@using (Ajax.BeginForm("ProcessCreateEquipment", "WorkingAtHeight", null, new AjaxOptions()
+{
+    HttpMethod = "POST",
+    OnBegin = "onBeginProcessCreateEquipment()",
+    OnSuccess = "onSuccessProcessCreateEquipment(data)",
+    OnFailure = "onFailureProcessCreateEquipment()",
+}, new { @id = "formProcessCreateEquipment", @enctype = "multipart/form-data" }))
+{
+    <div class="ui equal width form">
+        <div class="fields">
+            <div class="field">
+                <label>TAG</label>
+                <input type="text" id="rFID" name="rFID" placeholder="TAG" autocomplete="off" maxlength="50">
+            </div>
+            <div class="field">
+                <label>Serial</label>
+                <input type="text" id="serial" name="serial" placeholder="Serial" autocomplete="off" maxlength="50">
+            </div>
+            <div class="field">
+                <label>Modelo</label>
+                <input type="text" id="model" name="model" placeholder="Modelo" autocomplete="off" maxlength="50">
+            </div>
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>Material</label>
+                <input type="text" id="material" name="material" placeholder="Material" autocomplete="off" maxlength="50">
+            </div>
+            <div class="field">
+                <label>Fecha Fabricación</label>
+                <div class="ui calendar calendarPicker" id="fabricationDate">
+                    <div class="ui input left icon">
+                        <i class="calendar icon"></i>
+                        <input type="text" placeholder="Fecha Fabricación">
+                    </div>
+                </div>
+                <input type="hidden" name="cfabricationDate" id="cfabricationDate" autocomplete="off">
+            </div>
+            <div class="field">
+                <label>Marca</label>
+                <input type="text" id="mark" name="mark" placeholder="Marca" autocomplete="off" maxlength="50">
+            </div>
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>Lote</label>
+                <input type="text" id="lot" name="lot" placeholder="Lote" autocomplete="off" maxlength="50">
+            </div>
+            <div class="field">
+                <label>Elemento</label>
+                @Html.DropDownList("cbxElement", (SelectList)ViewBag.ElementDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+            </div>
+            <div class="field">
+                <label>Sede</label>
+                @Html.DropDownList("cbxHeadquarter", (SelectList)ViewBag.HeadquarterDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+            </div>
+
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>Ubicación</label>
+                @Html.DropDownList("cbxLocation", (SelectList)ViewBag.LocationDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+            </div>
+            <div class="field">
+                <label>Fecha Compra</label>
+                <div class="ui calendar calendarPicker" id="purchaseDate">
+                    <div class="ui input left icon">
+                        <i class="calendar icon"></i>
+                        <input type="text" placeholder="Fecha Compra">
+                    </div>
+                </div>
+                <input type="hidden" name="cpurchaseDate" id="cpurchaseDate" autocomplete="off">
+            </div>
+
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>Lote</label>
+                <input type="text" id="lot" name="lot" placeholder="Lote" autocomplete="off" maxlength="50">
+            </div>
+            <div class="field">
+                <label>Elemento</label>
+                @Html.DropDownList("cbxElement", (SelectList)ViewBag.ElementDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+            </div>
+            <div class="field">
+                <label>Sede</label>
+                @Html.DropDownList("cbxHeadquarter", (SelectList)ViewBag.HeadquarterDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+            </div>
+
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>Asignar a</label>
+                <select id="cbxAssigned" name="cbxAssigned" class="ui search dropdown">
+                    <option value="">[-Seleccione una opción-]</option>
+                    <option value="1">Área</option>
+                    <option value="2">Recurso</option>
+                </select>
+            </div>
+            <div class="field" id="fieldAssigned">
+                <label id="labelFieldAssigned"></label>
+                <select id="cbxFieldAssigned" name="cbxFieldAssigned" class="ui search dropdown">
+                    <option value="">[-Seleccione una opción-]</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>Asignar Fecha Inspección</label>
+                <select id="cbxAssignedDate" name="cbxAssignedDate" class="ui search dropdown">
+                    <option value="">[-Seleccione una opción-]</option>
+                    <option value="1">Fecha Compra</option>
+                    <option value="2">Fecha Asignación</option>
+                </select>
+            </div>
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>Foto equipo Inspeccionado</label>
+                <input type="file" name="pic" accept="image/x-png,image/gif,image/jpeg">
+            </div></div>
+        <button class="ui primary button">
+            Guardar
+        </button>
+        <div class="ui floating warning message" style="width:50%;margin-left:25%;margin-right:25%;text-align:center" id="messageCreateEquipment">
+            <div class="header">
+                Atención
+            </div>
+            <p id="textmessageCreateEquipment"></p>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+
+
+    $('input:text, .ui.button', '.ui.action.input').on('click', function (e) {
+        $('input:file', $(e.target).parents()).click();
+    });
+
+    $('input:file', '.ui.action.input').on('change', function (e) {
+        var name = e.target.files[0].name;
+        $('input:text', $(e.target).parent()).val(name);
+    });
+
+    var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];
+    function ValidateFile(oInput) {
+        if (oInput.type == "file") {
+            var sFileName = oInput.value;
+            if (sFileName.length > 0) {
+                var blnValid = false;
+                for (var j = 0; j < _validFileExtensions.length; j++) {
+                    var sCurExtension = _validFileExtensions[j];
+                    if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
+                        blnValid = true;
+                        break;
+                    }
+                }
+                if (!blnValid) {
+                    alert("Atención, El archivo " + sFileName + " es inválido,sólo se permiten las siguientes extensiones " + _validFileExtensions.join(", "));
+                    oInput.value = "";
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    $('#fieldAssigned').hide();
+    $('#fabricationDate').calendar({
+        type: 'date',
+        text: {
+            days: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+            months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            today: 'Today',
+            now: 'Now',
+            am: 'AM',
+            pm: 'PM'
+        },
+        formatter: {
+            date: function (date, settings) {
+                if (!date) return '';
+                var day = date.getDate();
+                var month = date.getMonth() + 1;
+                var year = date.getFullYear();
+                return year + '-' + month + '-' + day;
+            }
+        },
+        onChange: function (date, text, mode) {
+            $('#cfabricationDate').val(text);
+        }
+    });
+    $('#purchaseDate').calendar({
+        type: 'date',
+        text: {
+            days: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+            months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            today: 'Today',
+            now: 'Now',
+            am: 'AM',
+            pm: 'PM'
+        },
+        formatter: {
+            date: function (date, settings) {
+                if (!date) return '';
+                var day = date.getDate();
+                var month = date.getMonth() + 1;
+                var year = date.getFullYear();
+                return year + '-' + month + '-' + day;
+            }
+        },
+        onChange: function (date, text, mode) {
+            $('#cpurchaseDate').val(text);
+        }
+    });
+    $('#cbxHeadquarter').on('change', function () {
+        $('#cbxAssigned').dropdown('clear');
+        //$("#cbxAssigned option:first").attr('selected', 'selected');
+    });
+    $('#cbxAssigned').on('change', function () {
+        $('#cbxFieldAssigned').dropdown('clear');
+        $('#cbxFieldAssigned').html("");
+        var value = $('option:selected', this).val();
+        var text = $('option:selected', this).text();
+        var idHeadquarter = $('#cbxHeadquarter option:selected').val();
+        if (idHeadquarter != "" && idHeadquarter != null) {
+            var html = ' <option value="">[-Seleccione una opción-]</option>';
+            if (value == "1") {
+                $.ajax({
+                    url: '@Url.Action("GetAreaDictionary")',
+                    type: 'POST',
+                    success: function (data) {
+                        if (data.result) {
+                            $.each(data.data, function (index, value) {
+                                html = html + ' <option value="' + index + '">' + value + '</option>';
+                            });
+                            $('#cbxFieldAssigned').dropdown('clear');
+                            $('#cbxFieldAssigned').html(html);
+
+                            $('#labelFieldAssigned').html(text);
+                            $('#fieldAssigned').show();
+                        }
+                    }
+                });
+            } else if (value == "2") {
+                $.ajax({
+                    data: { idHeadquarter: idHeadquarter },
+                    url: '@Url.Action("GetResourceByHeadquarter")',
+                    type: 'POST',
+                    success: function (data) {
+                        if (data.result) {
+                            $.each(data.data, function (index, value) {
+                                html = html + ' <option value="' + index + '">' + value + '</option>';
+                            });
+                            $('#cbxFieldAssigned').dropdown('clear');
+                            $('#cbxFieldAssigned').html(html);
+
+                            $('#labelFieldAssigned').html(text);
+                            $('#fieldAssigned').show();
+                        }
+                    }
+                });
+            }
+
+        }
+
+
+
+    });
+
+    $('#formProcessCreateEquipment').form({
+        fields: {
+            rFID: {
+                identifier: 'rFID',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar algun valor'
+                    },
+                ]
+            },
+            serial: {
+                identifier: 'serial',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar algun valor'
+                    },
+                ]
+            },
+            model: {
+                identifier: 'model',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar algun valor'
+                    },
+                ]
+            },
+            //material: {
+            //    identifier: 'material',
+            //    rules: [
+            //        {
+            //            type: 'empty',
+            //            prompt: 'Debe ingresar algun valor'
+            //        },
+            //    ]
+            //},
+            cfabricationDate: {
+                identifier: 'cfabricationDate',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe elegir una fecha'
+                    },
+                ]
+            },
+            mark: {
+                identifier: 'mark',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar un valor'
+                    },
+                ]
+            },
+            lot: {
+                identifier: 'lot',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar un valor'
+                    },
+                ]
+            },
+            cbxElement: {
+                identifier: 'cbxElement',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe elegir un valor'
+                    },
+                ]
+            },
+            cbxHeadquarter: {
+                identifier: 'cbxHeadquarter',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe elegir un valor'
+                    },
+                ]
+            },
+            ubication: {
+                identifier: 'ubication',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar un valor'
+                    },
+                ]
+            },
+            cpurchaseDate: {
+                identifier: 'cpurchaseDate',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe elegir una fecha'
+                    },
+                ]
+            },
+            //cbxAssigned: {
+            //    identifier: 'cbxAssigned',
+            //    rules: [
+            //        {
+            //            type: 'empty',
+            //            prompt: 'Debe elegir un valor'
+            //        },
+            //    ]
+            //},
+            //cbxFieldAssigned: {
+            //    identifier: 'cbxFieldAssigned',
+            //    rules: [
+            //        {
+            //            type: 'empty',
+            //            prompt: 'Debe elegir un valor'
+            //        },
+            //    ]
+            //},
+            cbxAssignedDate: {
+                identifier: 'cbxAssignedDate',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe elegir un valor'
+                    },
+                ]
+            },
+            //File: {
+            //    identifier: 'File',
+            //    rules: [
+            //        {
+            //            type: 'empty',
+            //            prompt: 'Debe elegir un archivo'
+            //        },
+            //    ]
+            //}
+        }, inline: true,
+        on: 'blur'
+    });
+    function onBeginProcessCreateEquipment() {
+        $('#renderPages').addClass("loading");
+    }
+    function onFailureProcessCreateEquipment() {
+        $('#renderPages').removeClass("loading");
+        $('#messageCreateEquipment').show('slow').addClass("warning").removeClass("info");
+        $('#textmessageCreateEquipment').text("Ha ocurrido un error al procesar la solicitud");
+    }
+    function onSuccessProcessCreateEquipment(data) {
+        $('#renderPages').removeClass("loading");
+        if (data.result) {
+            $('#messageCreateEquipment').show('slow').removeClass("warning").addClass("info");
+            $('#textmessageCreateEquipment').text("Proceso Completado");
+            setTimeout(function () {
+                location.reload();
+            }, 3000);
+        } else {
+            $('#messageCreateEquipment').show('slow').addClass("warning").removeClass("info");
+            $('#textmessageCreateEquipment').text(data.message);
+        }
+    }
+</script>

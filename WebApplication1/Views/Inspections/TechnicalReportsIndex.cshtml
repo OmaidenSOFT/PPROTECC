@@ -1,0 +1,54 @@
+﻿<h3 class="titlesPages">
+    PROGRAMA DE PROTECCIÓN CONTRA CAÍDAS | INSPECCIÓN Y MTO | INFORMES TÉCNICOS
+</h3>
+<div class="ui bottom attached tab segment active" data-tab="first">
+    @using (Ajax.BeginForm("SearchTechnicalReports", "Inspections", null, new AjaxOptions()
+    {
+        HttpMethod = "POST",
+        OnBegin = "onBeginProcessSearch()",
+        OnSuccess = "onSuccessProcessSearch(data)",
+        OnFailure = "onFailureProcessSearch()",
+    }, new { @id = "formProcessSearch" }))
+    {
+        <div class="ui equal width form">
+            <div class="fields">
+                <div class="field">
+                    <label>Sede</label>
+                    @Html.DropDownList("cbxHeadquarter", (SelectList)ViewBag.HeadquarterDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+                </div>
+            </div>
+            <button class="ui primary button">
+                Buscar
+            </button>
+        </div>
+    }
+</div>
+<div id="renderSearchTechnicalReportsInformation"></div>
+<script type="text/javascript">
+          $('#formProcessSearch').form({
+                fields: {
+                    cbxHeadquarter: {
+                        identifier: 'cbxHeadquarter',
+                        rules: [
+                            {
+                                type: 'empty',
+                                prompt: 'Debe elegir una sede'
+                            },
+                        ]
+                    },
+                }, inline: true,
+                on: 'blur'
+            });
+            function onBeginProcessSearch() {
+                $('#renderPages').addClass("loading");
+                $('#renderSearchTechnicalReportsInformation').empty();
+            }
+            function onFailureProcessSearch() {
+                $('#renderPages').removeClass("loading");
+            }
+
+            function onSuccessProcessSearch(data) {
+                $('#renderPages').removeClass("loading");
+                $('#renderSearchTechnicalReportsInformation').html(data);
+            }
+</script>

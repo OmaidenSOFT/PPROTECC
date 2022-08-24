@@ -1,0 +1,136 @@
+﻿@using System.Data
+@model DataTable
+<style>
+    /*.ui.selection.dropdown {
+        padding: 0;
+    }*/
+    #modalLoadCourses {
+        height: 80vh;
+    }
+</style>
+
+<h3 class="titlesPages">Programa de Protección contra caídas - Editar Persona</h3>
+
+@using (Ajax.BeginForm("ProcessEditPerson", "Trainning", null, new AjaxOptions()
+{
+    HttpMethod = "POST",
+    OnBegin = "return onBeginProcessEditPerson()",
+    OnSuccess = "onSuccessProcessEditPerson(data)",
+    OnFailure = "onFailureProcessEditPerson()",
+}, new { @id = "formProcessEditPerson" }))
+{
+    <div class="ui equal width form">
+        <div class="fields">
+            <div class="field">
+                <input type="hidden" name="ID" value="@Model.Rows[0]["ID"].ToString()" />
+                <label>Nombre</label>
+                <input type="text" id="name" name="name" placeholder="Nombre" autocomplete="off" maxlength="50" value="@Model.Rows[0]["Nombre"].ToString()">
+            </div>
+            <div class="field">
+                <label>Apellido</label>
+                <input type="text" id="lastName" name="lastName" placeholder="Apellido" autocomplete="off" maxlength="50" value="@Model.Rows[0]["Apellido"].ToString()">
+            </div>
+            <div class="field">
+                <label>Identificación</label>
+                <input type="text" id="identification" name="identification" placeholder="Identificación" autocomplete="off" maxlength="50" readonly="readonly" value="@Model.Rows[0]["Identificacion"].ToString()">
+            </div>
+
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>Asignado</label>
+                <input type="text" id="assigned" name="assigned" placeholder="Asignado" autocomplete="off" maxlength="50" readonly="readonly" value="@Model.Rows[0]["Asignado"].ToString()">
+            </div>
+            <div class="field">
+                <label>Sede</label>
+                @Html.DropDownList("cbxHeadquarter", (SelectList)ViewBag.HeadquarterDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+            </div>
+        </div>
+
+    </div>
+}
+<div class="ui modal" id="modalLoadCourses">
+    <div class="header">Carga de Cursos</div>
+    <div class="content" id="loadCourses">
+    </div>
+
+</div>
+<button class="ui primary button" id="btnGuardar">
+    Guardar
+</button>
+<button class="ui button" onclick="cargarElement('@Url.Action("IndexPerson","Trainning")')">
+    Volver
+</button>
+<div class="ui floating warning message" style="width:50%;margin-left:25%;margin-right:25%;text-align:center;display:none" id="messageEditPerson">
+    <div class="header">
+        Atención
+    </div>
+    <p id="textmessageEditPerson"></p>
+</div>
+<script type="text/javascript">
+    $('#messageEditPerson').hide();
+
+      $('#formProcessEditPerson').form({
+            fields: {
+                cbxHeadquarter: {
+                    identifier: 'cbxHeadquarter',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Debe elegir un valor'
+                        },
+                    ]
+                },
+            }, inline: true,
+            on: 'blur'
+    });
+    $('#btnGuardar').on('click', function () {
+        $('#formProcessEditPerson').submit();
+    });
+
+    function onBeginProcessEditPerson() {
+        $('#renderPages').addClass("loading");
+        return true;
+    }
+
+
+
+    function onFailureProcessEditPerson() {
+        $('#renderPages').removeClass("loading");
+        $('#messageEditPerson').show('slow').addClass("warning").removeClass("info");
+        $('#textmessageEditPerson').text("Ha ocurrido un error al procesar la solicitud");
+    }
+    function onSuccessProcessEditPerson(data) {
+        $('#renderPages').removeClass("loading");
+        if (data.result) {
+            $('#messageCreatePerson').show('slow').removeClass("warning").addClass("info");
+            $('#textmessageCreatePerson').text("Proceso Completado");
+            if (confirm('¿Desea agregar cursos de formación ahora?')) {
+                loadCourses(data.idPerson,data.identification);
+            } else {
+                setTimeout(function () {
+                    location.reload();
+                }, 3000);
+            }
+
+        } else {
+            $('#messageEditPerson').show('slow').addClass("warning").removeClass("info");
+            $('#textmessageEditPerson').text(data.message);
+        }
+    }
+    function loadCourses(id,cc) {
+        $.ajax({
+            data: { idPerson: id, identification: cc },
+            url: '@Url.Action("LoadCourses")',
+            type: 'POST',
+            success: function (data) {
+                if (data) {
+                    $('#loadCourses').html(data);
+                    $('#modalLoadCourses').modal({
+                        centered: false
+                    }).modal('show');
+                }
+            }
+        });
+    }
+</script>

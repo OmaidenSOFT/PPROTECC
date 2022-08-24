@@ -1,0 +1,86 @@
+﻿@using System.Data
+@model DataTable
+<table class="ui selectable celled table ui center aligned tablesInitial">
+    <thead>
+        <tr>
+            @foreach (System.Data.DataColumn col in Model.Columns)
+            {
+
+                if (@col.ColumnName != "Archivo")
+                {
+
+                    <th>@col.ColumnName</th>
+                }
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (System.Data.DataRow row in Model.Rows)
+            {
+            <tr>
+                @foreach (DataColumn col in Model.Columns)
+                {
+                    if (@col.ColumnName != "Archivo")
+                    {
+                        if (col.ColumnName == "Nombre")
+                        {
+                            <td>
+
+                                <div class="content">
+                                    Informe:  <a href="../PPROTECC/LEGALITY_reports/@row["Archivo"].ToString()" id="pdfref" target="_blank">
+                                        <i id="number">'@row["Archivo"].ToString()'</i>
+                                    </a>
+                                    <div class="meta">
+                                        <i id="datefile"></i>
+                                    </div>
+                                    <div class="description">
+                                        <i id="type">'@row["Nombre"].ToString()'</i>
+                                    </div>
+                                </div>
+                            </td>
+                        }
+
+                        else
+                        {
+                            <td>@row[col.ColumnName]</td>
+                        }
+                    }
+
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+<br />
+<div class="ui card cardTest" style="display:none">
+    @*<div class="image icon">
+           <i class="teal huge file pdf outline icon"></i>
+
+        </div>*@
+    <div class="content">
+        Informe:  <a href="" id="pdfref" target="_blank">
+            <i id="number"></i>
+        </a>
+        <div class="meta">
+            <i id="datefile"></i>
+        </div>
+        <div class="description">
+            <i id="type"></i>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <div class="renderImages ui cards" style="display:none"></div>
+</div>
+<script type="text/javascript">
+            var $element = $('.cardTest');
+            LoadTables();
+            function getDetailTechReports(pdfs, type) {
+                $('.renderImages').html('');
+                $element.find($('#number').text(pdfs));
+                $element.find($('#pdfref').attr('href', '../../PROCEDURE_reports/' + pdfs));
+                $element.find($('#type').text(type));
+                $('.renderImages').append('<div class="ui card cardTest"> ' + $element.html() + '</div>');
+                $('.renderImages').show('slow');
+            }
+</script>

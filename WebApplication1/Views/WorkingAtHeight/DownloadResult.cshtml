@@ -1,0 +1,23 @@
+﻿@using System.Data
+@model DataTable
+<h3 class="titlesPages">
+    GESTIÓN DE EQUIPOS | DESCARGA DE RESULTADOS
+</h3>
+<div class="ui bottom attached tab segment active" data-tab="first">
+    <div class="ui form">
+        <div class="three fields">
+            <div class="field">
+                <label>&nbsp;</label>
+                <a class="ui primary button" style="background-color:#55BE5A" href="@Url.Content("~/Matriz/Matriz_Elementos_EMGESA.xlsx") " target="_blank">Descargar Todos</a>
+            </div>
+            <div class="field">
+                <label>&nbsp;</label>
+                <a class="ui primary button" style="background-color:#55BE5A" href="@Url.Content("~/Matriz/Matriz_Elementos_EMGESA_T.xlsx")" target="_blank">Descargar Térmicas</a>
+            </div>
+            <div class="field">
+                <label>&nbsp;</label>
+                <a class="ui primary button" style="background-color:#55BE5A" href="@Url.Content("~/Matriz/Matriz_Elementos_EMGESA_R.xlsx")" target="_blank">Descargar Renovables</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,109 @@
+﻿@using System.Data
+@model DataTable
+<style>
+    .dynatable-per-page-select {
+        padding: 0px !important;
+    }
+
+    #modalCurriculum embed {
+        width: 100%;
+        height: 80vh;
+    }
+</style>
+<table class="ui selectable celled table ui center aligned tablesInitial">
+    <thead>
+        <tr>
+            @foreach (System.Data.DataColumn col in Model.Columns)
+            {
+                if (col.ColumnName != "Certificados")
+                {
+                    <th>@col.ColumnName</th>
+                }
+
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (System.Data.DataRow row in Model.Rows)
+        {
+            <tr>
+                @foreach (DataColumn col in Model.Columns)
+                {
+                    if (col.ColumnName != "Certificados")
+                    {
+                        if (col.ColumnName == "TAG")
+                        {
+                            <td><a onclick="viewDocument('@row["Certificados"]')">@row[col.ColumnName]</a> </td>
+                        }
+                        else
+                        {
+                            <td>@row[col.ColumnName]</td>
+                        }
+
+                    }
+
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="ui card cardTest" style="display:none">
+    @*<div class="image icon">
+           <i class="teal huge file pdf outline icon"></i>
+
+        </div>*@
+    <div class="content">
+        Informe:  <a href="" id="pdfref" target="_blank">
+            <i id="number"></i>
+        </a>
+        <div class="meta">
+            <i id="datefile"></i>
+        </div>
+
+    </div>
+</div>
+<div class="content">
+    <div class="renderImages ui cards" style="display:none"></div>
+</div>
+
+
+
+
+@*<div class="ui modal" id="modalCurriculum">
+    <div class="header">Hoja de vida</div>
+    <div class="scrolling content">
+        <embed id="pathCurriculum" type='application/pdf'>
+    </div>
+</div>
+@if (Model.Rows.Count == 1)
+{
+    <script type="text/javascript">
+        $('#pathCurriculum').attr("src",'@Model.Rows[0]["RutaHV"].ToString()');
+        $('#modalCurriculum').modal('show');
+    </script>
+}*@
+    @*<script type="text/javascript">
+    LoadTables();
+    $('#view').modal();
+    function viewDocument(path) {
+        $('#pathCurriculum').attr("src",path);
+        $('#modalCurriculum').modal('show');
+    }
+    </script>*@
+
+<script type="text/javascript">
+    var $element = $('.cardTest');
+    LoadTables();
+    function viewDocument(path) {
+        $('.renderImages').html('');
+        $element.find($('#number').text(path));
+        $element.find($('#pdfref').attr('href',  path));
+        //$element.find($('#type').text(type));
+        $element.find($('#datefile').text("Certificado en PDF"));
+        $('.renderImages').append('<div class="ui card cardTest"> ' + $element.html() + '</div>');
+
+        $('.renderImages').show('slow');
+    }
+</script>
+

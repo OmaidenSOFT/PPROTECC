@@ -1,0 +1,140 @@
+﻿
+@using (Ajax.BeginForm("ProcessCreate", "Ally", null, new AjaxOptions()
+{
+    HttpMethod = "POST",
+    OnBegin = "OnBeginProcessCreate()",
+    OnSuccess = "OnSuccessProcessCreate(data)",
+    OnFailure = "OnFailureProcessCreate(xhr)"
+}, new { @id = "formProcessCreate", @style = "padding:3%" }))
+{
+    <h3 class="ui header">
+        <i class="fa fa-address-card"></i>
+        <div class="content">
+            Administración de Aliados
+        </div>
+    </h3>
+    <br />
+    <div class="ui form">
+        <div class="field">
+
+            <div class="two fields">
+                <div class="field">
+                    <label>Nombre</label>
+                    <input type="text" name="name" placeholder="Nombre" maxlength="100" autocomplete="off">
+                </div>
+                <div class="field">
+                    <label>Habilidad</label>
+                    <input type="text" name="ability" placeholder="Habilidad" maxlength="100" autocomplete="off">
+                </div>
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    <label>Descripcion</label>
+                    <textarea name="description" placeholder="Descripcion" maxlength="100" autocomplete="off"/>
+                </div>
+                <div class="field">
+                    <label>Dirección</label>
+                    <input type="text" name="address" placeholder="Dirección" maxlength="100" autocomplete="off">
+                </div>
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    <label>Teléfono</label>
+                    <input type="number" name="phone" placeholder="Teléfono" maxlength="20" autocomplete="off">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="field">
+            <div class="ui toggle checkbox">
+                <input type="checkbox" name="state" checked="checked">
+                <label>Estado</label>
+            </div>
+        </div>
+        <br />
+        <button class="ui primary button" tabindex="0">Guardar Aliado</button>
+    </div>
+    <div class="ui floating warning message" style="width:50%;margin-left:25%;margin-right:25%;text-align:center" id="messageCreate">
+        <div class="header">
+            Atención
+        </div>
+        <p id="textmessageCreate"></p>
+    </div>
+}
+<script type="text/javascript">
+    $('#messageCreate').hide();
+    $('#formProcessCreate').form({
+        fields: {
+            name: {
+                identifier: 'name',
+                rules: [
+                  {
+                      type: 'empty',
+                      prompt: 'Debe ingresar un valor para el Nombre'
+                  },
+                ]
+            },
+            ability: {
+                identifier: 'ability',
+                rules: [
+                {
+                    type: 'empty',
+                    prompt: 'Ingrese un valor para la Habilidad'
+                },
+                ]
+            },
+            description: {
+                identifier: 'description',
+                rules: [
+                {
+                    type: 'empty',
+                    prompt: 'Ingrese un valor para la Descripción'
+                },
+                ]
+            },
+            address: {
+                identifier: 'address',
+                rules: [
+                {
+                    type: 'empty',
+                    prompt: 'Ingrese un valor para la dirección'
+                },
+                ]
+            },
+            phone: {
+                identifier: 'phone',
+                rules: [
+                {
+                    type: 'empty',
+                    prompt: 'Ingrese un número de teléfono'
+                },
+                ]
+            },
+        }, inline: true,
+        on: 'blur'
+    });
+    function OnBeginProcessCreate() {
+        $('#renderPages').addClass("loading");
+    }
+    function OnFailureProcessCreate() {
+        $('#renderPages').removeClass("loading");
+        $('#messageCreate').show('slow').addClass("warning").removeClass("info");
+        $('#textmessageCreate').text("Ha ocurrido un error al procesar la solicitud");
+    }
+
+    function OnSuccessProcessCreate(data) {
+        $('#renderPages').removeClass("loading");
+        if (data.result) {
+            $('#messageCreate').show('slow').removeClass("warning").addClass("info");
+            $('#textmessageCreate').text("Proceso Completado");
+            setTimeout(function () {
+                location.reload();
+            }, 300);
+        } else {
+            $('#messageCreate').show('slow').addClass("warning").removeClass("info");
+            $('#textmessageCreate').text(data.message);
+            console.log(data.messageEx);
+        }
+    }
+</script>

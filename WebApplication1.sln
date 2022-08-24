@@ -1,0 +1,110 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{80EDEAB6-0E0A-4C50-BC34-FD3393D144BE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Presentation", "1. Presentation", "{47370169-D049-446E-BCB6-48C5CE4AFCB7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. LogicBo", "2. LogicBo", "{17C30754-5624-4FCF-B6AB-A2888FDD355A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicBo", "LogicBo\LogicBo.csproj", "{85B67005-3726-401A-A3D3-9C5C5AD9D71E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Components", "3. Components", "{35D56068-59BA-4A04-A3BC-7E39B49BD0AA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.1. ADO", "3.1. ADO", "{F8D6643E-5482-45F4-896A-A477C4878C08}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADO", "ADO\ADO.csproj", "{94DBDEFD-36B6-4562-984D-5D25DB315983}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.3. Transversal", "3.3. Transversal", "{A58C2210-37C1-429E-9AF6-F7B030826DAE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.2. Entity", "3.2. Entity", "{C7924868-E682-4BE6-8F21-A98FB4F38E18}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entity", "Entity\Entity.csproj", "{A2E968B1-7F73-46DC-A1C5-37B3468E10DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tranversal", "Tranversal\Tranversal.csproj", "{2BA151F5-905D-498A-A292-E9ADAFF9E0DA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Utils", "4. Utils", "{4AD0824D-3B81-4689-9CA7-295E41DDEA2F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "Utils\Utils.csproj", "{1D80E38B-454A-4FA0-867F-86B59D3C9B15}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{80EDEAB6-0E0A-4C50-BC34-FD3393D144BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80EDEAB6-0E0A-4C50-BC34-FD3393D144BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80EDEAB6-0E0A-4C50-BC34-FD3393D144BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80EDEAB6-0E0A-4C50-BC34-FD3393D144BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85B67005-3726-401A-A3D3-9C5C5AD9D71E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85B67005-3726-401A-A3D3-9C5C5AD9D71E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85B67005-3726-401A-A3D3-9C5C5AD9D71E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85B67005-3726-401A-A3D3-9C5C5AD9D71E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94DBDEFD-36B6-4562-984D-5D25DB315983}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94DBDEFD-36B6-4562-984D-5D25DB315983}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94DBDEFD-36B6-4562-984D-5D25DB315983}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94DBDEFD-36B6-4562-984D-5D25DB315983}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2E968B1-7F73-46DC-A1C5-37B3468E10DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2E968B1-7F73-46DC-A1C5-37B3468E10DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2E968B1-7F73-46DC-A1C5-37B3468E10DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2E968B1-7F73-46DC-A1C5-37B3468E10DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BA151F5-905D-498A-A292-E9ADAFF9E0DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BA151F5-905D-498A-A292-E9ADAFF9E0DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BA151F5-905D-498A-A292-E9ADAFF9E0DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BA151F5-905D-498A-A292-E9ADAFF9E0DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D80E38B-454A-4FA0-867F-86B59D3C9B15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D80E38B-454A-4FA0-867F-86B59D3C9B15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D80E38B-454A-4FA0-867F-86B59D3C9B15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D80E38B-454A-4FA0-867F-86B59D3C9B15}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{80EDEAB6-0E0A-4C50-BC34-FD3393D144BE} = {47370169-D049-446E-BCB6-48C5CE4AFCB7}
+		{85B67005-3726-401A-A3D3-9C5C5AD9D71E} = {17C30754-5624-4FCF-B6AB-A2888FDD355A}
+		{F8D6643E-5482-45F4-896A-A477C4878C08} = {35D56068-59BA-4A04-A3BC-7E39B49BD0AA}
+		{94DBDEFD-36B6-4562-984D-5D25DB315983} = {F8D6643E-5482-45F4-896A-A477C4878C08}
+		{A58C2210-37C1-429E-9AF6-F7B030826DAE} = {35D56068-59BA-4A04-A3BC-7E39B49BD0AA}
+		{C7924868-E682-4BE6-8F21-A98FB4F38E18} = {35D56068-59BA-4A04-A3BC-7E39B49BD0AA}
+		{A2E968B1-7F73-46DC-A1C5-37B3468E10DD} = {C7924868-E682-4BE6-8F21-A98FB4F38E18}
+		{2BA151F5-905D-498A-A292-E9ADAFF9E0DA} = {A58C2210-37C1-429E-9AF6-F7B030826DAE}
+		{1D80E38B-454A-4FA0-867F-86B59D3C9B15} = {4AD0824D-3B81-4689-9CA7-295E41DDEA2F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {954E04F9-92A3-42DB-94EC-C4329C4F15C2}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 7
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://teamservicesm.visualstudio.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = ADO\\ADO.csproj
+		SccProjectTopLevelParentUniqueName1 = WebApplication1.sln
+		SccProjectName1 = ADO
+		SccLocalPath1 = ADO
+		SccProjectUniqueName2 = Entity\\Entity.csproj
+		SccProjectTopLevelParentUniqueName2 = WebApplication1.sln
+		SccProjectName2 = Entity
+		SccLocalPath2 = Entity
+		SccProjectUniqueName3 = LogicBo\\LogicBo.csproj
+		SccProjectTopLevelParentUniqueName3 = WebApplication1.sln
+		SccProjectName3 = LogicBo
+		SccLocalPath3 = LogicBo
+		SccProjectUniqueName4 = Tranversal\\Tranversal.csproj
+		SccProjectTopLevelParentUniqueName4 = WebApplication1.sln
+		SccProjectName4 = Tranversal
+		SccLocalPath4 = Tranversal
+		SccProjectUniqueName5 = WebApplication1\\WebApplication1.csproj
+		SccProjectTopLevelParentUniqueName5 = WebApplication1.sln
+		SccProjectName5 = WebApplication1
+		SccLocalPath5 = WebApplication1
+		SccProjectUniqueName6 = Utils\\Utils.csproj
+		SccProjectTopLevelParentUniqueName6 = WebApplication1.sln
+		SccProjectName6 = Utils
+		SccLocalPath6 = Utils
+	EndGlobalSection
+EndGlobal

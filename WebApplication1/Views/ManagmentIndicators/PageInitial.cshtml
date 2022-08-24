@@ -1,0 +1,485 @@
+﻿
+<style type="text/css">
+    canvas {
+        cursor: pointer;
+    }
+</style>
+
+<h3 class="titlesPages">
+    INDICADORES DE GESTIÓN
+</h3>
+
+<div class="ui bottom attached tab segment active" data-tab="second">
+    @using (Ajax.BeginForm("SearchScheduler", "Trainning", null, new AjaxOptions()
+    {
+        HttpMethod = "POST",
+        OnBegin = "return onBeginProcessSearch()"
+    }, new { @id = "formProcessManagment" }))
+    {
+        <div class="ui equal width form">
+            <div class="required inline fields">
+                <label>Tipo de Sede:</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="headQuarterType" value="1">
+                        <label>Térmicas</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="headQuarterType" value="2">
+                        <label>Renovables</label>
+                    </div>
+                </div>
+            </div>
+            <div class="two fields">
+                <div class="field" style="width: 30% !important;">
+                    <label>Año</label>
+                    <select class="ui search dropdown" id="year" name="year">
+                        <option value="2019">2019</option>
+                        <option value="2018">2018</option>
+                        <option value="2017">2017</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="ui primary button">
+                Buscar
+            </button>
+        </div>
+    }
+</div>
+
+<div class="ui grid" id="details">
+    <div class="eight wide column">
+        <h3 class="subtitlesPages">
+            TIPO INVENTARIO | INDICADOR: NÚMERO DE EQUIPOS
+        </h3>
+        <canvas id="Stock"></canvas>
+    </div>
+    <div class="eight wide column">
+        <h3 class="subtitlesPages">
+            TIPO CUMPLIMIENTO | INDICADOR: CUMPLIMIENTO INSPECCIONES
+        </h3>
+        <canvas id="Aims"></canvas>
+    </div>
+    <div class="eight wide column">
+        <h3 class="subtitlesPages">
+            TIPO COBERTURA | INDICADOR: FORMACIÓN
+        </h3>
+        <canvas id="Coverage"></canvas>
+    </div>
+    <div class="eight wide column">
+        <h3 class="subtitlesPages">
+            CUMPLIMIENTO | INDICADOR: CUMPLIMIENTO FORMACIÓN MES
+        </h3>
+        <canvas id="AimsTrainning"></canvas>
+
+    </div>
+    <div class="eight wide column">
+        <h3 class="subtitlesPages">
+            GESTIÓN | INDICADOR: GESTIÓN DE HALLAZGOS
+        </h3>
+        <canvas id="Managment"></canvas>
+    </div>
+    <div class="eight wide column">
+        <h3 class="subtitlesPages">
+            GESTIÓN | INDICADOR: GESTIÓN DE HALLAZGOS
+        </h3>
+        <canvas id="ManagmentFindings"></canvas>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var headquarterId;
+    var year;
+    var chartStock = null;
+    var chartAims = null;
+    var chartCoverage = null;
+    var chartAimsTrainning = null;
+    var chartManagment = null;
+    var chartManagmentFindings = null;
+
+    $(function () {
+        $('#details').hide();
+
+    });
+    $('#formProcessManagment').form({
+        fields: {
+            headQuarterType: {
+                identifier: 'headQuarterType',
+                rules: [{
+                    type: 'checked',
+                    prompt: 'Debe seleccionar una opción'
+                }]
+            },
+            year: {
+                identifier: 'year',
+                rules: [{
+                    type: 'empty',
+                    prompt: 'Debe seleccionar un año'
+                }]
+            },
+
+        }, inline: true,
+        on: 'blur'
+    });
+    function onBeginProcessSearch() {
+         headquarterId = $("input[type='radio']:checked").val();
+        year = $('#year option:selected').val();
+        getStock();
+        getAims();
+        getCoverage();
+        getAimsTrainning();
+        getManagment();
+        getFindingsTotal();
+        $('#details').show();
+        return false;
+    }
+    function getStock() {
+
+        $.ajax({
+            url: '@Url.Action("GetStock","ManagmentIndicators")',
+            type: 'POST',
+            data: { headquarterId: headquarterId, year: year},
+            success: function (getData) {
+                var stock = document.getElementById("Stock");
+                var labels = [];
+                var data = [];
+                var color= [];
+                if (getData.result) {
+                    $.each(getData.data, function (i, x) {
+                        labels.push(x.label);
+                        data.push(x.value);
+                        color.push(x.color);
+                    });
+                }
+                if (chartStock)
+                    chartStock.destroy();
+
+
+                chartStock = new Chart(stock, {
+                    type: 'doughnut',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: '# of Values',
+                            data: data,
+                            backgroundColor: color,
+                            borderColor: color,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        },
+                        //'onClick': function (evt, item) {
+
+                        //}
+
+                    }
+                });
+
+            }
+        })
+    }
+
+    function getAims() {
+        $.ajax({
+            url: '@Url.Action("GetAims", "ManagmentIndicators")',
+            type: 'POST',
+            data: { headquarterId: headquarterId, year: year },
+            success: function (getData) {
+                var aims = $("#Aims");
+                var dataSet = [];
+                if (getData) {
+                    $.each(getData.data, function (i, x) {
+                        var element = [x.Enero, x.Febrero, x.Marzo, x.Abril, x.Mayo, x.Junio, x.Julio, x.Agosto, x.Septiembre, x.Octubre, x.Noviembre, x.Diciembre];
+                        dataSet.push(element);
+                    });
+                }
+                if (chartAims)
+                    chartAims.destroy();
+
+                chartAims = new Chart(aims, {
+                    type: 'horizontalBar',
+                    data: {
+                        labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                        datasets: [
+                            {
+                                label: 'Planeados',
+                                backgroundColor: 'red',
+                                data: dataSet[0]
+                            },
+                            {
+                                label: 'Ejecutados',
+                                backgroundColor: 'blue',
+                                data: dataSet[1]
+                            }
+                        ]
+
+                    },
+                    options: {
+                        title: {
+                            display: true,
+                        },
+                        tooltips: {
+                            mode: 'index',
+                            intersect: false
+                        },
+                        responsive: true,
+                        scales: {
+                            xAxes: [{
+                                stacked: true,
+                            }],
+                            yAxes: [{
+                                stacked: true
+                            }]
+                        }
+                    }
+                });
+            }
+        })
+    }
+
+    function getCoverage() {
+        $.ajax({
+            url: '@Url.Action("GetCoverage", "ManagmentIndicators")',
+            type: 'POST',
+            data: { headquarterId: headquarterId, year: year },
+            success: function (getData) {
+                var coverage = document.getElementById("Coverage");
+                var labels = [];
+                var data = [];
+                var color = [];
+                if (getData.result) {
+                    $.each(getData.data, function (i, x) {
+                        labels.push(x.label);
+                        data.push(x.value);
+                        color.push(x.color);
+                    });
+                }
+                if (chartCoverage)
+                    chartCoverage.destroy();
+
+                chartCoverage = new Chart(coverage, {
+                    type: 'doughnut',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: '# of Values',
+                            data: data,
+                            backgroundColor:color,
+                            borderColor: color,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+            }
+        })
+    }
+
+    function getAimsTrainning() {
+        $.ajax({
+            url: '@Url.Action("GetAimsTrainning", "ManagmentIndicators")',
+            type: 'POST',
+            data: { headquarterId: headquarterId, year: year },
+            success: function (getData) {
+                var aimsTrainning = $("#AimsTrainning");
+                var dataSet = [];
+                if (getData) {
+                    $.each(getData.data, function (i, x) {
+                        var element = [x.Enero, x.Febrero, x.Marzo, x.Abril, x.Mayo, x.Junio, x.Julio, x.Agosto, x.Septiembre, x.Octubre, x.Noviembre, x.Diciembre];
+                        dataSet.push(element);
+                    });
+                }
+                if (chartAimsTrainning) 
+                    chartAimsTrainning.destroy();
+
+                chartAimsTrainning = new Chart(aimsTrainning, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                        datasets: [
+                            {
+                                label: 'Planeados',
+                                backgroundColor: 'red',
+                                data: dataSet[0]
+                            },
+                            {
+                                label: 'Ejecutados',
+                                backgroundColor: 'blue',
+                                data: dataSet[1]
+                            }
+                        ]
+
+                    },
+                    options: {
+                        title: {
+                            display: true,
+                        },
+                        tooltips: {
+                            mode: 'index',
+                            intersect: false
+                        },
+                        responsive: true,
+                        scales: {
+                            xAxes: [{
+                                stacked: true,
+                            }],
+                            yAxes: [{
+                                stacked: true
+                            }]
+                        }
+                    }
+                });
+            }
+        })
+    }
+
+    function getManagment() {
+           $.ajax({
+            url: '@Url.Action("GetFindingsByMonth", "ManagmentIndicators")',
+               type: 'POST',
+               data: { headquarterId: headquarterId, year: year },
+               success: function (getData) {
+                   var managment = $("#Managment")
+                   var dataSet = [];
+                   if (getData) {
+                       $.each(getData.data, function (i, x) {
+                           var element = [x.Enero, x.Febrero, x.Marzo, x.Abril, x.Mayo, x.Junio, x.Julio, x.Agosto, x.Septiembre, x.Octubre, x.Noviembre, x.Diciembre];
+                           dataSet.push(element);
+                       });
+                   }
+
+                   if (chartManagment)
+                       chartManagment.destroy();
+
+            chartManagment = new Chart(managment, {
+            type: 'bar',
+            data: {
+                labels: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+                datasets: [
+                    {
+                        label: "Total Hallazgos",
+                        data: dataSet[2],
+                        backgroundColor: "red",
+                        borderColor: "red",
+                        fill: false,
+                        lineTension: 0,
+                        radius: 5
+                    },
+                    {
+                        label: "Hallazgos Abiertos",
+                        data: dataSet[0],
+                        backgroundColor: "aqua",
+                        borderColor: "aqua",
+                        fill: false,
+                        lineTension: 0,
+                        radius: 5
+                    },
+                     {
+                         label: "Hallazgos Cerrados",
+                         data: dataSet[1],
+                         backgroundColor: "blue",
+                         borderColor: "blue",
+                         fill: false,
+                         lineTension: 0,
+                         radius: 5
+                     }
+
+                ]
+            },
+            options: {
+                title: {
+                    display: true,
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false
+                },
+                responsive: true,
+                scales: {
+                    xAxes: [{
+                        stacked: true,
+                    }],
+                    yAxes: [{
+                        stacked: true
+                    }]
+                }
+            }
+            //options: {
+            //    scales: {
+            //        yAxes: [{
+            //            ticks: {
+            //                beginAtZero: true
+            //            }
+            //        }]
+            //    }
+            //}
+        });
+            }
+        })
+    }
+
+    function getFindingsTotal() {
+        $.ajax({
+            url: '@Url.Action("GetFindingsTotal", "ManagmentIndicators")',
+            type: 'POST',
+            data: { headquarterId: headquarterId, year: year },
+            success: function (getData) {
+                var managmentFindings = document.getElementById("ManagmentFindings");
+                var labels = [];
+                var data = [];
+                var color = [];
+                if (getData.result) {
+                    $.each(getData.data, function (i, x) {
+                        labels.push(x.label);
+                        data.push(x.value);
+                        color.push(x.color);
+                    });
+                }
+                if (chartManagmentFindings)
+                    chartManagmentFindings.destroy();
+
+                chartManagmentFindings = new Chart(managmentFindings, {
+                    type: 'doughnut',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: '# of Values',
+                            data: data,
+                            backgroundColor: color,
+                            borderColor: color,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+            }
+        })
+    }
+
+</script>

@@ -1,0 +1,372 @@
+﻿@using System.Data
+@model DataTable
+<style>
+    #modalLoadCourses {
+        height: 80vh;
+        overflow-y: scroll;
+    }
+</style>
+<h3 class="titlesPages">
+    CREAR ROL
+</h3>
+@using (Ajax.BeginForm("ProcessCreateRol", "Trainning", null, new AjaxOptions()
+{
+    HttpMethod = "POST",
+    OnBegin = "return onBeginProcessCreateRol()",
+    OnSuccess = "onSuccessProcessCreateRol(data)",
+    OnFailure = "onFailureProcessCreateRol()",
+}, new { @id = "formProcessCreateRol" }))
+{
+    <div class="ui equal width form">
+        <div class="fields">
+            <div class="field">
+                <label>Rol</label>
+                <input type="text" id="rol" name="rol" placeholder="Nombre del rol" autocomplete="off" maxlength="50">
+            </div>
+        </div>
+        <table class="ui selectable celled table ui center aligned">
+
+            <thead>
+                <tr>
+                    <th>Opcion</th>
+                    <th>Item</th>
+                    <th>Subitem</th>
+                    <th>Crear</th>
+                    <th>Consultar</th>
+                </tr>
+            </thead>
+            <tbody>
+                  <tr>
+                                    <td>Programa Alturas</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><input type="checkbox" id="crear1" value="crear1"> </td>
+                                    <td><input type="checkbox" id="consultar1" value="crear1"> </td>
+                                </tr>
+
+                                <tr>
+                                    <td></td>
+                                    <td>Procedimientos</td>
+                                    <td></td>
+                                    <td><input type="checkbox" id="crear1" value="crear1"> </td>
+                                    <td><input type="checkbox" id="consultar1" value="crear1"> </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Formatos</td>
+                                    <td></td>
+                                    <td><input type="checkbox" id="crear1" value="crear1"> </td>
+                                    <td><input type="checkbox" id="consultar1" value="crear1"> </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Certificados de proveedores</td>
+                                    <td></td>
+                                    <td><input type="checkbox" id="crear1" value="crear1"> </td>
+                                    <td><input type="checkbox" id="consultar1" value="crear1"> </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Normatividad</td>
+                                    <td></td>
+                                    <td><input type="checkbox" id="crear1" value="crear1"> </td>
+                                    <td><input type="checkbox" id="consultar1" value="crear1"> </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Cargar Documentos</td>
+                                    <td></td>
+                                    <td><input type="checkbox" id="crear1" value="crear1"> </td>
+                                    <td><input type="checkbox" id="consultar1" value="crear1"> </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Gestión de Equipos</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><input type="checkbox" id="crear1" value="crear1"> </td>
+                                    <td><input type="checkbox" id="consultar1" value="crear1"> </td>
+                                </tr>
+
+                                <tr>
+                                    <td></td>
+                                    <td>Inventario</td>
+                                    <td></td>
+                                    <td><input type="checkbox" id="crear1" value="crear1"> </td>
+                                    <td><input type="checkbox" id="consultar1" value="crear1"> </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Fichas técnicas</td>
+                                    <td></td>
+                                    <td><input type="checkbox" id="crear1" value="crear1"> </td>
+                                    <td><input type="checkbox" id="consultar1" value="crear1"> </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Cargar Fichas técnicas</td>
+                                    <td></td>
+                                    <td><input type="checkbox" id="crear1" value="crear1"> </td>
+                                    <td><input type="checkbox" id="consultar1" value="crear1"> </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Hojas de Vida</td>
+                                    <td></td>
+                                    <td><input type="checkbox" id="crear1" value="crear1"> </td>
+                                    <td><input type="checkbox" id="consultar1" value="crear1"> </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Ingreso equipos</td>
+                                    <td>Página Inicial</td>
+                                    <td><input type="checkbox" id="crear1" value="crear1"> </td>
+                                    <td><input type="checkbox" id="consultar1" value="crear1"> </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Crear Nuevo</td>
+                                    <td><input type="checkbox" id="crear1" value="crear1"> </td>
+                                    <td><input type="checkbox" id="consultar1" value="crear1"> </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Matriz de Equipos</td>
+                                    <td><input type="checkbox" id="crear1" value="crear1"> </td>
+                                    <td><input type="checkbox" id="consultar1" value="crear1"> </td>
+                                </tr>
+
+
+
+
+
+                                <tr>
+                                    <td>Inspección y Mantenimiento</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><input type="checkbox" id="crear1" value="crear1"> </td>
+                                    <td><input type="checkbox" id="consultar1" value="crear1"> </td>
+                                </tr>
+
+                                <tr>
+                                    <td></td>
+                                    <td>Cronograma Inspecciones</td>
+                                    <td></td>
+                                    <td><input type="checkbox" id="crear1" value="crear1"> </td>
+                                    <td><input type="checkbox" id="consultar1" value="crear1"> </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Registros Inspecciones</td>
+                                    <td></td>
+                                    <td><input type="checkbox" id="crear1" value="crear1"> </td>
+                                    <td><input type="checkbox" id="consultar1" value="crear1"> </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Informes técnicos(LV)</td>
+                                    <td>Página Inicial</td>
+                                    <td><input type="checkbox" id="crear1" value="crear1"> </td>
+                                    <td><input type="checkbox" id="consultar1" value="crear1"> </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Crear Nuevo</td>
+                                    <td><input type="checkbox" id="crear1" value="crear1"> </td>
+                                    <td><input type="checkbox" id="consultar1" value="crear1"> </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Gestión de Hallazgos</td>
+                                    <td></td>
+                                    <td><input type="checkbox" id="crear1" value="crear1"> </td>
+                                    <td><input type="checkbox" id="consultar1" value="crear1"> </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Verificar Gestión</td>
+                                    <td></td>
+                                    <td><input type="checkbox" id="crear1" value="crear1"> </td>
+                                    <td><input type="checkbox" id="consultar1" value="crear1"> </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Formación y Competencia</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><input type="checkbox" id="crear1" value="crear1"> </td>
+                                    <td><input type="checkbox" id="consultar1" value="crear1"> </td>
+                                </tr>
+
+                                <tr>
+                                    <td></td>
+                                    <td>Listado/Rol/Aptitud</td>
+                                    <td></td>
+                                    <td><input type="checkbox" id="crear1" value="crear1"> </td>
+                                    <td><input type="checkbox" id="consultar1" value="crear1"> </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Cronograma Formación</td>
+                                    <td></td>
+                                    <td><input type="checkbox" id="crear1" value="crear1"> </td>
+                                    <td><input type="checkbox" id="consultar1" value="crear1"> </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Certificados</td>
+                                    <td></td>
+                                    <td><input type="checkbox" id="crear1" value="crear1"> </td>
+                                    <td><input type="checkbox" id="consultar1" value="crear1"> </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Ingreso Personas</td>
+                                    <td>Crear Nuevo</td>
+                                    <td><input type="checkbox" id="crear1" value="crear1"> </td>
+                                    <td><input type="checkbox" id="consultar1" value="crear1"> </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Página Inicial</td>
+                                    <td><input type="checkbox" id="crear1" value="crear1"> </td>
+                                    <td><input type="checkbox" id="consultar1" value="crear1"> </td>
+                                </tr>
+
+
+
+                                <tr>
+                        <td>Administración</td>
+                        <td></td>
+                        <td></td>
+                        <td><input type="checkbox" id="crear1" value="crear1"> </td>
+                        <td><input type="checkbox" id="consultar1" value="crear1"> </td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td>Usuarios</td>
+                        <td></td>
+                        <td><input type="checkbox" id="crear1" value="crear1"> </td>
+                        <td><input type="checkbox" id="consultar1" value="crear1"> </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Roles</td>
+                        <td></td>
+                        <td><input type="checkbox" id="crear1" value="crear1"> </td>
+                        <td><input type="checkbox" id="consultar1" value="crear1"> </td>
+                    </tr>
+
+                    <tr>
+                        <td>Indicadores de Gestión</td>
+                        <td></td>
+                        <td></td>
+                        <td><input type="checkbox" id="crear1" value="crear1"> </td>
+                        <td><input type="checkbox" id="consultar1" value="crear1"> </td>
+                    </tr>
+
+
+                    <tr>
+                        <td>Módulo Médico</td>
+                        <td></td>
+                        <td></td>
+                        <td><input type="checkbox" id="crear1" value="crear1"> </td>
+                        <td><input type="checkbox" id="consultar1" value="crear1"> </td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td>Conceptos de Aptitud</td>
+                        <td></td>
+                        <td><input type="checkbox" id="crear1" value="crear1"> </td>
+                        <td><input type="checkbox" id="consultar1" value="crear1"> </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Listado de Aptitud</td>
+                        <td></td>
+                        <td><input type="checkbox" id="crear1" value="crear1"> </td>
+                        <td><input type="checkbox" id="consultar1" value="crear1"> </td>
+                    </tr>
+                </tbody >
+
+                </table >
+    </div>
+}
+<button class="ui primary button" id="btnGuardar">
+    Guardar
+</button>
+<div class="ui floating warning message" style="width:50%;margin-left:25%;margin-right:25%;text-align:center;display:none" id="messageCreatePerson">
+    <div class="header">
+        Atención
+    </div>
+    <p id="textmessageCreatePerson"></p>
+</div>
+<script type="text/javascript">
+    $('#messageCreatePerson').hide();
+
+
+
+    $('#formProcessCreateRol').form({
+        fields: {
+            rol: {
+                identifier: 'rol',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar algun valor'
+                    },
+                ]
+            },
+        }, inline: true,
+        on: 'blur'
+    });
+    $('#btnGuardar').on('click', function () {
+        $('#formProcessCreateRol').submit();
+    });
+
+    function onBeginProcessCreatePerson() {
+        //if (myDropzoneFile.files.length == 0) {
+        //    if (myDropzonePhoto.files.length == 0) {
+                return true;
+        //    } else {
+        //        myDropzonePhoto.processQueue();
+        //        return false;
+        //    }
+        //} else {
+        //    $('#renderPages').addClass("loading");
+        //    myDropzoneFile.processQueue();
+        //    return false;
+        //}
+    }
+
+    function onFailureProcessCreatePerson() {
+        $('#renderPages').removeClass("loading");
+        $('#messageCreatePerson').show('slow').addClass("warning").removeClass("info");
+        $('#textmessageCreatePerson').text("Ha ocurrido un error al procesar la solicitud");
+    }
+    function onSuccessProcessCreatePerson(data) {
+        $('#renderPages').removeClass("loading");
+        if (data.result) {
+            $('#messageCreatePerson').show('slow').removeClass("warning").addClass("info");
+            $('#textmessageCreatePerson').text("Proceso Completado");
+            //if (confirm('¿Desea agregar cursos de formación ahora?')) {
+            //    loadCourses(data.idPerson, data.identification);
+            //} else {
+            //    setTimeout(function () {
+            //        location.reload();
+            //    }, 3000);
+            //}
+
+        } else {
+            $('#messageCreatePerson').show('slow').addClass("warning").removeClass("info");
+            $('#textmessageCreatePerson').text(data.message);
+        }
+    }
+
+</script>

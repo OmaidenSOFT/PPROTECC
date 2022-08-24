@@ -1,0 +1,78 @@
+﻿
+<style type="text/css">
+    canvas {
+        cursor: pointer;
+    }
+</style>
+
+<h3 class="titlesPages">
+    LISTADO APTITUD
+</h3>
+
+<div class="ui bottom attached tab segment active" data-tab="second">
+    @using (Ajax.BeginForm("SearchPageInitial", "MedicalConcepts", null, new AjaxOptions()
+    {
+        HttpMethod = "POST",
+        OnBegin = "onBeginProcessSearch()",
+        OnSuccess = "onSuccessProcessSearch(data)",
+        OnFailure = "onFailureProcessSearch()",
+    }, new { @id = "formProcessManagment" }))
+    {
+        <div class="ui equal width form">
+            <div class="required inline fields">
+                <label>Tipo de Sede:</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="headQuarterType" value="1">
+                        <label>Térmicas</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="headQuarterType" value="2">
+                        <label>Renovables</label>
+                    </div>
+                </div>
+            </div>
+           
+
+            <button class="ui primary button">
+                Buscar
+            </button>
+        </div>
+        <div id="renderSearchMedicalConcepts"></div>
+    }
+</div>
+
+
+<script type="text/javascript">
+
+    $('#formProcessManagment').form({
+        fields: {
+            headQuarterType: {
+                identifier: 'headQuarterType',
+                rules: [{
+                    type: 'checked',
+                    prompt: 'Debe seleccionar una opción'
+                }]
+            },
+            
+        }, inline: true,
+        on: 'blur'
+    });
+
+    function onBeginProcessSearch() {
+        $('#renderPages').addClass("loading");
+        $('#renderSearchMedicalConcepts').empty();
+    }
+    function onFailureProcessSearch() {
+        $('#renderPages').removeClass("loading");
+        $('#messageCreate').show('slow').addClass("warning").removeClass("info");
+        $('#textmessageCreate').text("Ha ocurrido un error al procesar la solicitud");
+    }
+
+    function onSuccessProcessSearch(data) {
+        $('#renderPages').removeClass("loading");
+        $('#renderSearchMedicalConcepts').html(data);
+    }
+</script>

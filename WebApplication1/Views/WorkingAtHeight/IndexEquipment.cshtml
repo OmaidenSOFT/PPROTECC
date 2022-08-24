@@ -1,0 +1,191 @@
+﻿@using System.Data
+@model DataTable
+<h3 class="titlesPages">
+    GESTIÓN DE EQUIPOS | INGRESO EQUIPOS
+</h3>
+<table class="ui selectable celled table ui center aligned tablesInitial" id="tablesIndexEquipment">
+    <thead>
+        <tr>
+            @foreach (System.Data.DataColumn col in Model.Columns)
+            {
+                if (col.ColumnName != "sedeid")
+                {
+                    <th>@col.ColumnName</th>
+                }
+
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (System.Data.DataRow row in Model.Rows)
+        {
+            <tr>
+                @foreach (DataColumn col in Model.Columns)
+                {
+                    if (col.ColumnName != "sedeid")
+                    {
+                        if (col.ColumnName == "TAG")
+                        {
+                            <td>
+                                @if (row["Asignado"].ToString() != "NO ASIGNADO")
+                                {
+                                    @row[col.ColumnName].ToString()
+                                }
+                                else
+                                {
+                                    <a href="javascript:void(0)" onclick="getDetail('@row["TAG"].ToString()','@row["sedeid"].ToString()')">@row[col.ColumnName].ToString()</a>
+
+                                }
+                            </td>
+                        }
+                        else
+                        {
+                            <td>@row[col.ColumnName]</td>
+                        }
+                    }
+
+                }
+                @*<td>
+                    @if (@row["Estado"].ToString() != "Rojo")
+                    {
+                        <a href="javascript:void(0)" onclick="unsubscribe('@row["TAG"].ToString()')">Dar de Baja</a>
+                    }
+                </td>*@
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="ui modal" id="getDetail">
+    <i class="close icon"></i>
+    <div class="header" id="headerModal">Asignar Equipo</div>
+    <div class="content" id="getDetailContent">
+    </div>
+</div>
+
+<div class="ui modal" id="modalUnsuscribe">
+    <i class="close icon"></i>
+    <div class="header" id="headerModal">Dar de Baja</div>
+    <div class="content">
+        @using (Ajax.BeginForm("ProcessUnsuscribe", "WorkingAtHeight", null, new AjaxOptions()
+        {
+            HttpMethod = "POST",
+            OnBegin = "onBeginProcessUnsuscribe()",
+            OnSuccess = "onSuccessProcessUnsuscribe(data)",
+            OnFailure = "onFailureProcessUnsuscribe()",
+        }, new { @id = "formProcessUnsuscribe" }))
+        {
+            <div class="ui segment" id="segmentUnsuscribe">
+                <div class="ui form">
+                    <div class="fields">
+                        <form action="" method="post" enctype="multipart/form-data">
+
+                            <label for="file1">Nombre Archivo:</label>
+                            <input type="file" name="files" id="file1" />
+
+                            <input type="submit" />
+                        </form>
+                    </div>
+                    <h4 class="ui dividing header">Añadir Comentario</h4>
+                    <div class="field">
+                        <input type="hidden" name="TAG" id="TAG" />
+                        <label>Comentario</label>
+                        <textarea id="comment" name="comment" maxlength="200"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="ui floating warning message" style="width:50%;margin-left:25%;margin-right:25%;text-align:center" id="messageUnsuscribe">
+                <div class="header">
+                    Atención
+                </div>
+                <p id="textmessageUnsuscribe"></p>
+            </div>
+        }
+    </div>
+    <div class="actions">
+        <button class="ui green button" id="btnSendUnsuscribe">Enviar</button>
+    </div>
+</div>
+<script type="text/javascript">
+    var processingComplete = function () {
+        $.each($('#tablesIndexEquipment tr'), function (index, value) {
+            var classElement = $(this).find('td:eq(5)').html();
+            classElement = classElement == "Rojo" ? "red" : classElement == "Amarillo" ? "yellow" : classElement == "Verde" ? "green" : "";
+
+            $(this).find('td:eq(5)').addClass(classElement);
+
+            if (classElement == "red")
+                $(this).find('td:eq(5)').text("Rechazado");
+
+            if (classElement == "yellow")
+                $(this).find('td:eq(5)').text("Para mantenimiento");
+
+            if (classElement == "green")
+                $(this).find('td:eq(5)').text("Aceptado");
+
+            //$(this).find('td:eq(5)').html('');
+        });
+    }
+    //LoadTables();
+    $('#tablesIndexEquipment').dynatable({
+    }).bind('dynatable:afterProcess', processingComplete);
+    processingComplete();
+
+    $('#messageUnsuscribe').hide();
+    function unsubscribe(tag) {
+        $('#modalUnsuscribe').modal('show');
+        $('#TAG').val(tag);
+        $('#comment').val('');
+    }
+    $('#btnSendUnsuscribe').on('click', function () {
+        $('#formProcessUnsuscribe').submit();
+    });
+
+    $('#formProcessUnsuscribe').form({
+        fields: {
+            comment: {
+                identifier: 'comment',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar algún valor'
+                    },
+                ]
+            },
+        }, inline: true,
+        on: 'blur'
+    });
+    function onBeginProcessUnsuscribe() {
+        $('#segmentUnsuscribe').addClass("loading");
+    }
+    function onFailureProcessUnsuscribe() {
+        $('#segmentUnsuscribe').removeClass("loading");
+        $('#messageUnsuscribe').show('slow').addClass("warning").removeClass("info");
+        $('#textmessageUnsuscribe').text("Ha ocurrido un error al procesar la solicitud");
+    }
+
+    function onSuccessProcessUnsuscribe(data) {
+        $('#segmentUnsuscribe').removeClass("loading");
+        if (data.result) {
+            $('#messageUnsuscribe').show('slow').removeClass("warning").addClass("info");
+            $('#textmessageUnsuscribe').text("Proceso Completado");
+            setTimeout(function () {
+                location.reload();
+            }, 3000);
+        } else {
+            $('#messageUnsuscribe').show('slow').addClass("warning").removeClass("info");
+            $('#textmessageUnsuscribe').text(data.message);
+        }
+    }
+    function getDetail(tag,sedeid) {
+        $.ajax({
+                    url: '@Url.Action("AssignEquipment")',
+            type: 'POST',
+            data: { tag: tag, sedeid: sedeid},
+            success: function (data) {
+                $('#getDetailContent').html(data);
+                        $('#getDetail').modal('show');
+                    }
+                });
+    }
+
+</script>

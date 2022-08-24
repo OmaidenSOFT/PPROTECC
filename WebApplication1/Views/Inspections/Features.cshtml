@@ -1,0 +1,181 @@
+﻿<h3 class="titlesPages">
+    PROGRAMA ALTURAS | CARGAR DOCUMENTOS
+</h3>
+@using (Ajax.BeginForm("FeaturesCreate", "Inspections", null, new AjaxOptions()
+{
+    HttpMethod = "POST",
+    OnBegin = "return onBeginCreateFeature()",
+    OnSuccess = "onSuccessCreateFeature(data)",
+    OnFailure = "onFailureCreateFeature()",
+}, new { @id = "formProcessCreateFeature" }))
+{
+    <div class="ui equal width form">
+        <div class="required inline fields">
+            <label>Tipo de Sede:</label>
+            <div class="field">
+                <div class="ui radio checkbox">
+                    <input type="radio" name="headQuarterType" value="1">
+                    <label>Térmicas</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui radio checkbox">
+                    <input type="radio" name="headQuarterType" value="2">
+                    <label>Renovables</label>
+                </div>
+            </div>
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>Tipo</label>
+                @Html.DropDownList("cbxFeatures", (SelectList)ViewBag.FeaturesDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+            </div>
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>Nombre</label>
+                <input type="text" id="name" name="name" placeholder="Nombre del Formato" autocomplete="off" maxlength="50">
+            </div>
+        </div>
+    </div>
+}
+<div class="ui equal width form">
+    <div class="fields">
+        <div class="field">
+            <label>Archivo</label>
+            <form action="@Url.Action("UploadFile")" method="POST" class="dropzone" id="file">
+                <input type="hidden" name="type" value="file" />
+            </form>
+            <div class="ui floating message info" style="width: 50%; margin-left: 25%; margin-right: 25%; text-align: center;display:none" id="messageFile">
+                <div class="header">
+                    Atención
+                </div>
+                <p>El archivo ya ha sido registrado en nuestro sistema, al guardar se finalizará el proceso</p>
+            </div>
+        </div>
+    </div>
+</div>
+<button class="ui primary button" id="btnGuardar">
+    Guardar
+</button>
+<div class="ui floating warning message" style="width:50%;margin-left:25%;margin-right:25%;text-align:center;display:none" id="messageCreateFeature">
+    <div class="header">
+        Atención
+    </div>
+    <p id="textmessageCreateFeature"></p>
+</div>
+
+<script type="text/javascript">
+    $('#messageCreateFeature').hide();
+    var myDropzoneFile;
+    var idVariedad;
+    var _thisFile;
+    var countFile = 0;
+    $("#file").dropzone({
+        autoProcessQueue: false,
+        addRemoveLinks: true,
+        maxFiles: 1,
+        acceptedFiles: ".docx,.xlsx,.pdf",
+        init: function () {
+            myDropzoneFile = this; // closure
+            this.on("addedfile", function (file) {
+                var re = /(?:\.([^.]+))?$/;
+                var ext = re.exec(file.name)[1];
+                ext = ext.toUpperCase();
+                _thisFile = this;
+                if (ext == "DOCX" || ext == "XLSX" || ext == "PDF") {
+                } else {
+                    _thisFile.removeFile(file);
+                }
+            });
+            this.on("removedfile", function (file) {
+            });
+            this.on("success", function (file, data, response) {
+                if (data.result) {
+                    countFile = countFile + 1;
+                    _thisFile.removeFile(file);
+                    if (myDropzoneFile.files.length == 0) {
+                        $('#messageFile').show();
+                        $('#formProcessCreateFeature').submit();
+                    }
+                } else {
+                    alert("A ocurrido un eror");
+                    console.warn(data.message);
+                }
+            });
+            this.on("uploadprogress", function (file) {
+                $('.btnEliminar').attr('disabled', true);
+            });
+            this.on("error", function (xhr) {
+                $('.btnEliminar').attr('disabled', false);
+                console.warn(xhr);
+            });
+            this.on("maxfilesexceeded", function (file) {
+                this.removeFile(file);
+            });
+        }
+    });
+    $('#formProcessCreateFeature').form({
+        fields: {
+            headQuarterType: {
+                identifier: 'headQuarterType',
+                rules: [
+                    {
+                        type: 'checked',
+                        prompt: 'Debe seleccionar una opción'
+                    },
+                ]
+            },
+            cbxFeatures: {
+                identifier: 'cbxFeatures',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe elegir un valor'
+                    },
+                ]
+            },
+            name: {
+                identifier: 'name',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar algún valor'
+                    },
+                ]
+            },
+        }, inline: true,
+        on: 'blur'
+    });
+    $('#btnGuardar').on('click', function () {
+        $('#formProcessCreateFeature').submit();
+    });
+    function onBeginCreateFeature() {
+        if (countFile == 0) {
+            if (myDropzoneFile.files.length == 0) {
+                alert("Debe seleccionar el archivo a cargar");
+                return false;
+            } else {
+                $('#renderPages').addClass("loading");
+                myDropzoneFile.processQueue();
+                return false;
+            }
+        }
+    }
+    function onFailureCreateFeature() {
+        $('#renderPages').removeClass("loading");
+        $('#messageCreateFeature').show('slow').addClass("warning").removeClass("info");
+        $('#textmessageCreateFeature').text("Ha ocurrido un error al procesar la solicitud");
+    }
+
+    function onSuccessCreateFeature(data) {
+        $('#renderPages').removeClass("loading");
+        if (data.result) {
+            $('#messageCreateFeature').show('slow').removeClass("warning").addClass("info");
+            $('#textmessageCreateFeature').text("Proceso Completado");
+        } else {
+            $('#messageCreateFeature').show('slow').addClass("warning").removeClass("info");
+            $('#textmessageCreateFeature').text(data.message);
+        }
+    }
+</script>

@@ -1,0 +1,161 @@
+﻿<h3 class="titlesPages">
+    CREAR USUARIO
+</h3>
+@using (Ajax.BeginForm("ProcessCreateUser", "Trainning", null, new AjaxOptions()
+{
+    HttpMethod = "POST",
+    OnBegin = "return onBeginProcessCreateUser()",
+    OnSuccess = "onSuccessProcessCreateUser(data)",
+    OnFailure = "onFailureProcessCreateUser()",
+}, new { @id = "formProcessCreateUser" }))
+{
+
+   
+
+    <div class="ui equal width form">
+        <div class="required inline fields">
+            <label>Tipo de Sede:</label>
+            <div class="field">
+                <div class="ui radio checkbox">
+                    <input type="radio" name="headQuarterType" value="1">
+                    <label>Térmicas</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui radio checkbox">
+                    <input type="radio" name="headQuarterType" value="2">
+                    <label>Renovables</label>
+                </div>
+            </div>
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>Nombre</label>
+                <input type="text" id="name" name="name" placeholder="Nombre" autocomplete="off" maxlength="50">
+            </div>
+            <div class="field">
+                <label>Apellido</label>
+                <input type="text" id="lastname" name="lastname" placeholder="Apellido" autocomplete="off" maxlength="50">
+            </div>
+            <div class="field">
+                <label>Login</label>
+                <input type="text" id="login" name="login" placeholder="Usuario" autocomplete="off" maxlength="50">
+            </div>
+            <div class="field">
+                <label>Correo</label>
+                <input type="text" id="email" name="email" placeholder="Correo" autocomplete="off" maxlength="50">
+            </div>
+            <div class="field">
+                <label>Contraseña</label>
+                <input type="password" id="pass" name="pass" placeholder="Contraseña" autocomplete="off" maxlength="50">
+            </div>
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>Rol</label>
+                @Html.DropDownList("cbxRole", (SelectList)ViewBag.RoleDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+            </div>
+        </div>
+    </div>
+}
+<button class="ui primary button" id="btnGuardar">
+    Guardar
+</button>
+<div class="ui floating warning message" style="width:50%;margin-left:25%;margin-right:25%;text-align:center;display:none" id="messageCreatePerson">
+    <div class="header">
+        Atención
+    </div>
+    <p id="textmessageCreatePerson"></p>
+</div>
+<script type="text/javascript">
+    $('#messageCreatePerson').hide();
+
+
+
+    $('#formProcessCreateUser').form({
+         fields: {
+            name: {
+                identifier: 'name',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar algun valor'
+                    },
+                ]
+            },
+            lastname: {
+                identifier: 'lastname',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar algun valor'
+                    },
+                ]
+            },
+            login: {
+                identifier: 'login',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar algun valor'
+                    },
+                ]
+            },
+            email: {
+                identifier: 'email',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar algun valor'
+                    },
+                ]
+            },
+            pass: {
+                identifier: 'pass',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar algun valor'
+                    },
+                ]
+            },
+        }, inline: true,
+        on: 'blur'
+    });
+    $('#btnGuardar').on('click', function () {
+           $('#formProcessCreateUser').submit();
+    });
+
+    function onBeginProcessCreateUser() {
+        //if (myDropzoneFile.files.length == 0) {
+        //    if (myDropzonePhoto.files.length == 0) {
+        //        return true;
+        //    } else {
+        //        myDropzonePhoto.processQueue();
+        //        return false;
+        //    }
+        //} else {
+        //    $('#renderPages').addClass("loading");
+        //    myDropzoneFile.processQueue();
+        //    return false;
+        //}
+        return true;
+    }
+
+    function onFailureProcessCreateUser() {
+        $('#renderPages').removeClass("loading");
+        $('#messageCreatePerson').show('slow').addClass("warning").removeClass("info");
+        $('#textmessageCreatePerson').text("Ha ocurrido un error al procesar la solicitud");
+    }
+    function onSuccessProcessCreateUser(data) {
+        $('#renderPages').removeClass("loading");
+        if (data.result) {
+            $('#messageCreatePerson').show('slow').removeClass("warning").addClass("info");
+            $('#textmessageCreatePerson').text("Proceso Completado");
+        } else {
+            $('#messageCreatePerson').show('slow').addClass("warning").removeClass("info");
+            $('#textmessageCreatePerson').text(data.message);
+        }
+    }
+
+</script>

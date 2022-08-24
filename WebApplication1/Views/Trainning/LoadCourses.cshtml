@@ -1,0 +1,265 @@
+﻿<style>
+    .ui.action.file.input > input {
+        display: none;
+    }
+
+    .ui.action.file.input:not([class*="left action"]) > label {
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+        border-right-color: transparent !important;
+    }
+
+    .ui.action.file.input > label:first-child {
+        cursor: pointer;
+        width: auto;
+        -webkit-box-flex: 1;
+        -webkit-flex: 1 0 auto;
+        -ms-flex: 1 0 auto;
+        flex: 1 0 auto;
+        outline: 0;
+        -webkit-tap-highlight-color: rgba(255,255,255,0);
+        padding: .67861429em 1em;
+        background: #FFF;
+        border: 1px solid rgba(34,36,38,.15);
+        color: rgba(0,0,0,.87);
+        border-radius: .28571429rem;
+        -webkit-transition: box-shadow .1s ease,border-color .1s ease;
+        transition: box-shadow .1s ease,border-color .1s ease;
+        box-shadow: none;
+    }
+
+    .ui.action.file.input > label:last-child {
+        border-radius: 0 .28571429rem .28571429rem 0 !important;
+    }
+</style>
+@using (Ajax.BeginForm("ProcessCreateCourse", "Trainning", null, new AjaxOptions()
+{
+    HttpMethod = "POST",
+    OnBegin = "return onBeginProcessCreateCourse()",
+    OnSuccess = "onSuccessProcessCreateCourse(data)",
+    OnFailure = "onFailureProcessCreateCourse()",
+}, new { @id = "formProcessCreateCourse" }))
+{
+    var pathImage = @ViewBag.identification + ".png";
+    <div class="ui small bordered image">
+        <img src="@Url.Content("~/Person/Images/"+@ViewBag.idPerson+'/'+pathImage)">
+    </div>
+    <div class="ui equal width form">
+        <input type="hidden" name="idPerson" id="idPerson" value="@ViewBag.idPerson" />
+        <input type="hidden" name="identification" id="identification" value="@ViewBag.identification" />
+        <div class="fields">
+            <div class="field">
+                <label>Curso</label>
+                @Html.DropDownList("cbxCourse", (SelectList)ViewBag.CourseDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+
+            </div>
+            <div class="field">
+                <label>Fecha Curso</label>
+                <div class="ui calendar calendarPicker" id="courseDate">
+                    <div class="ui input left icon">
+                        <i class="calendar icon"></i>
+                        <input type="text" placeholder="Fecha Inicial">
+                    </div>
+                </div>
+                <input type="hidden" name="ccourseDate" id="ccourseDate" autocomplete="off">
+            </div>
+        </div>
+
+
+    </div>
+}
+<div class="ui equal width form">
+    <div class="fields">
+        <div class="field">
+            <label>Archivo Curso Inicial</label>
+            <form action="@Url.Action("UploadFile")" method="POST" class="dropzone" id="filePersonCourses">
+                <input type="hidden" name="type" value="OtherCourse" />
+            </form>
+            <div class="ui floating message info" style="width: 50%; margin-left: 25%; margin-right: 25%; text-align: center;display:none" id="messageFilePersonCourses">
+                <div class="header">
+                    Atención
+                </div>
+                <p>El archivo ya ha sido registrado en nuestro sistema, al guardar se finalizará el proceso</p>
+            </div>
+        </div>
+    </div>
+</div>
+<button class="ui primary button" id="btnGuardar">
+    Guardar
+</button>
+<div class="ui floating warning message" style="width:50%;margin-left:25%;margin-right:25%;text-align:center" id="messageCreateCourse">
+    <div class="header">
+        Atención
+    </div>
+    <p id="textmessageCreateCourse"></p>
+</div>
+<div id="renderSearchCourses"></div>
+@if (@ViewBag.isView)
+{
+    <button class="ui button" onclick="cargarElement('@Url.Action("IndexPerson","Trainning")')">
+        Volver
+    </button>
+}
+<script type="text/javascript">
+     loadCoursesByPerson('@ViewBag.idPerson');
+    $('#messageCreateCourse').hide();
+    $('input:text, .ui.button', '.ui.action.input').on('click', function (e) {
+        $('input:file', $(e.target).parents()).click();
+    });
+    var myDropzoneFile;
+    var _thisFile;
+    var countFile = 0;
+    $('#btnGuardar').on('click', function () {
+        $('#formProcessCreateCourse').submit();
+    });
+    $("#filePersonCourses").dropzone({
+        autoProcessQueue: false,
+        addRemoveLinks: true,
+        maxFiles: 1,
+        acceptedFiles: ".pdf",
+        init: function () {
+            myDropzoneFile = this; // closure
+            this.on("addedfile", function (file) {
+                var re = /(?:\.([^.]+))?$/;
+                var ext = re.exec(file.name)[1];
+                ext = ext.toUpperCase();
+                _thisFile = this;
+                if (ext == "PDF") {
+                } else {
+                    _thisFile.removeFile(file);
+                }
+            });
+            this.on("removedfile", function (file) {
+            });
+            this.on("success", function (file, data, response) {
+                if (data.result) {
+                    countFile = countFile + 1;
+                    _thisFile.removeFile(file);
+                    if (myDropzoneFile.files.length == 0) {
+                        $('#messageFilePersonCourses').show();
+                        $('#filePersonCourses').hide();
+                        $('#formProcessCreateCourse').submit();
+                    }
+                } else {
+                    alert("Ha ocurrido un error");
+                    console.warn(data.message);
+                }
+            });
+            this.on("uploadprogress", function (file) {
+                $('.btnEliminar').attr('disabled', true);
+            });
+            this.on("error", function (xhr) {
+                $('.btnEliminar').attr('disabled', false);
+                console.warn(xhr);
+            });
+            this.on("maxfilesexceeded", function (file) {
+                this.removeFile(file);
+            });
+        }
+    });
+
+    $(function () {
+        $('#courseDate').calendar({
+            type: 'date',
+            text: {
+                days: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+                months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                today: 'Today',
+                now: 'Now',
+                am: 'AM',
+                pm: 'PM'
+            },
+            formatter: {
+                date: function (date, settings) {
+                    if (!date) return '';
+                    var day = date.getDate();
+                    var month = date.getMonth() + 1;
+                    var year = date.getFullYear();
+                    return year + '-' + month + '-' + day;
+                }
+            },
+            onChange: function (date, text, mode) {
+                $('#ccourseDate').val(text);
+            }
+        });
+        $('#cbxCourse').dropdown();
+    });
+
+    $('#formProcessCreateCourse').form({
+        fields: {
+            cbxHeadquarter: {
+                identifier: 'cbxHeadquarter',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe seleccionar algun valor'
+                    },
+                ]
+            },
+            ccourseDate: {
+                identifier: 'ccourseDate',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe elegir una fecha'
+                    },
+                ]
+            },
+            File: {
+                identifier: 'File',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe seleccionar un archivo'
+                    },
+                ]
+            },
+
+        }, inline: true,
+        on: 'blur'
+    });
+    function onBeginProcessCreateCourse() {
+        if (countFile == 0) {
+            if (myDropzoneFile.files.length == 0) {
+                alert("Debe seleccionar el archivo para el curso");
+                return false;
+            } else {
+                $('#renderPages').addClass("loading");
+                myDropzoneFile.processQueue();
+                return false;
+            }
+        }
+        $('#renderSearchCurriculum').empty();
+        return true;
+
+    }
+    function onFailureProcessCreateCourse() {
+        $('#renderPages').removeClass("loading");
+        $('#messageCreateCourse').show('slow').addClass("warning").removeClass("info");
+        $('#textmessageCreateCourse').text("Ha ocurrido un error al procesar la solicitud");
+    }
+
+    function onSuccessProcessCreateCourse(data) {
+        $('#renderPages').removeClass("loading");
+        if (data.result) {
+            $('#messageCreateCourse').hide('slow')
+            loadCoursesByPerson('@ViewBag.idPerson');
+        } else {
+            $('#messageCreateCourse').show('slow').addClass("warning").removeClass("info");
+            $('#textmessageCreateCourse').text(data.message);
+        }
+    }
+    function loadCoursesByPerson(id) {
+            $.ajax({
+                data: { idPerson: id},
+                url: '@Url.Action("LoadCoursesByPerson")',
+                type: 'POST',
+                success: function (data) {
+                    if (data) {
+                        $('#renderSearchCourses').html(data);
+                    }
+                }
+            });
+    }
+</script>

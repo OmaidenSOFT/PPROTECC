@@ -1,0 +1,174 @@
+﻿@using System.Data
+@model DataTable
+<style>
+    /*.ui.selection.dropdown {
+        padding: 0;
+    }*/
+</style>
+<center><h3 style="color:#41B9E6; ">PROGRAMA DE PROTECCIÓN CONTRA CAÍDAS | GESTIÓN DE EQUIPOS | CERIFICADOS DE INSPECCION</h3></center>
+<br />
+<br />
+<br />
+
+<div class="ui top attached tabular menu tabsMenu" >
+    <a class="item active" data-tab="first">Búsqueda por TAG</a>
+    <a class="item" data-tab="second">Búsqueda avanzada</a>
+</div>
+<div class="ui bottom attached tab segment active" data-tab="first">
+    @using (Ajax.BeginForm("SearchInspectionCert", "WorkingAtHeight", null, new AjaxOptions()
+    {
+        HttpMethod = "POST",
+        OnBegin = "onBeginProcessSearch()",
+        OnSuccess = "onSuccessProcessSearch(data)",
+        OnFailure = "onFailureProcessSearch()",
+    }, new { @id = "formProcessSearchByTag" }))
+    {
+        <input type="hidden" name="cbxHeadquarter" />
+        <input type="hidden" name="cbxCategory" />
+        <input type="hidden" name="cbxElement" />
+        <div class="ui form">
+            <div class="two fields">
+                <div class="eight wide field">
+                    <label for="rFID">TAG</label>
+                    <input type="text" id="rFID" name="rFID" maxlength="20" placeholder="Digite el valor del TAG" autocomplete="off">
+                </div>
+                <div class="eight wide field">
+                    <label>&nbsp;</label>
+                    <button class="ui primary button" style="background-color:#55BE5A">
+                        Buscar
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div class="ui bottom attached tab segment" data-tab="second">
+    @using (Ajax.BeginForm("SearchInspectionCert", "WorkingAtHeight", null, new AjaxOptions()
+    {
+        HttpMethod = "POST",
+        OnBegin = "onBeginProcessSearch()",
+        OnSuccess = "onSuccessProcessSearch(data)",
+        OnFailure = "onFailureProcessSearch()",
+    }, new { @id = "formProcessSearch" }))
+    {
+        <input type="hidden" name="rFID" />
+        <div class="ui equal width form">
+            <div class="fields">
+                <div class="field">
+                    <label>Sede</label>
+                    @Html.DropDownList("cbxHeadquarter", (SelectList)ViewBag.HeadquarterDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+                </div>
+                <div class="field">
+                    <label>Categoria</label>
+                    @Html.DropDownList("cbxCategory", (SelectList)ViewBag.CategoryDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+                </div>
+                <div class="field">
+                    <label>Elemento</label>
+                    <select id="cbxElement" name="cbxElement" class="ui search dropdown">
+                        <option value="">[-Seleccione una Opción-]</option>
+                    </select>
+                </div>
+            </div>
+            <button class="ui primary button" style="background-color:#55BE5A">
+                Buscar
+            </button>
+        </div>
+    }
+</div>
+
+<div id="renderSearchCurriculum"></div>
+
+<script type="text/javascript">
+    $('.menu .item').tab(
+        {
+            'onVisible': function () {
+                $('#renderSearchCurriculum').empty();
+
+                
+            }
+        }
+    );
+    $('#cbxCategory').on('change', function () {
+            var html = ' <option value="">[-Seleccione una opción-]</option>';
+            var value = $('#cbxCategory option:selected').val();
+            $.ajax({
+                data: { idCategory: value },
+                url: '@Url.Action("GetElementByCategory")',
+                type: 'POST',
+                success: function (data) {
+                    if (data.result) {
+                        $.each(data.data, function (index, value) {
+                            html = html + ' <option value="' + index + '">' + value + '</option>';
+                        });
+                        $('#cbxElement').dropdown('clear');
+                        $('#cbxElement').html(html);
+                    }
+                }
+            });
+    });
+
+        $('#formProcessSearchByTag').form({
+            fields: {
+                rFID: {
+                    identifier: 'rFID',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Debe ingresar algun valor'
+                        },
+                        {
+                                type   : 'minLength[3]',
+                                prompt : 'Debe digitar más de 3 caracteres'
+                         }
+                    ]
+                },
+            }, inline: true,
+            on: 'blur'
+        });
+    $('#formProcessSearch').form({
+        fields: {
+            cbxHeadquarter: {
+                identifier: 'cbxHeadquarter',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe elegir una sede'
+                    },
+                ]
+            },
+            cbxCategory: {
+                identifier: 'cbxCategory',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe elegir una categoria'
+                    },
+                ]
+            },
+            cbxElement: {
+                identifier: 'cbxElement',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe elegir un elemento'
+                    },
+                ]
+            },
+        }, inline: true,
+        on: 'blur'
+    });
+    function onBeginProcessSearch() {
+        $('#renderPages').addClass("loading");
+        $('#renderSearchCurriculum').empty();
+    }
+    function onFailureProcessSearch() {
+        $('#renderPages').removeClass("loading");
+        $('#messageCreate').show('slow').addClass("warning").removeClass("info");
+        $('#textmessageCreate').text("Ha ocurrido un error al procesar la solicitud");
+    }
+
+    function onSuccessProcessSearch(data) {
+        $('#renderPages').removeClass("loading");
+        $('#renderSearchCurriculum').html(data);
+    }
+</script>

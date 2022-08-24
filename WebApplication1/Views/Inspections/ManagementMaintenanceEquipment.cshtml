@@ -1,0 +1,53 @@
+﻿<h3 class="titlesPages">
+    INSPECCIÓN Y MANTENIMIENTO | GESTIÓN DE HALLAZGOS
+</h3>
+@using (Ajax.BeginForm("SearchManagementMaintenanceEquipment", "Inspections", null, new AjaxOptions()
+{
+    HttpMethod = "POST",
+    OnBegin = "onBeginProcessSearch()",
+    OnSuccess = "onSuccessProcessSearch(data)",
+    OnFailure = "onFailureProcessSearch()",
+}, new { @id = "formProcessSearch" }))
+{
+    <div class="ui equal width form">
+        <div class="fields">
+            <div class="field">
+                <label>Sede</label>
+                @Html.DropDownList("cbxHeadquarter", (SelectList)ViewBag.HeadquarterDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown background-color: #EDE8E8;" })
+            </div>
+
+        </div>
+        <button class="ui primary button">
+            Buscar
+        </button>
+    </div>
+    <div id="renderSearchFinding"></div>
+}
+
+<script type="text/javascript">
+    $('#formProcessSearch').form({
+        fields: {
+            cbxHeadquarter: {
+                identifier: 'cbxHeadquarter',
+                rules: [{
+                    type: 'empty',
+                    prompt: 'Debe seleccionar una opción'
+                }]
+            },
+
+        }, inline: true,
+        on: 'blur'
+    });
+
+    function onBeginProcessSearch() {
+        $('#renderPages').addClass("loading");
+        $('#renderSearchFinding').empty();
+    }
+    function onFailureProcessSearch() {
+        $('#renderPages').removeClass("loading");
+    }
+    function onSuccessProcessSearch(data) {
+        $('#renderPages').removeClass("loading");
+        $('#renderSearchFinding').html(data);
+    }
+</script>

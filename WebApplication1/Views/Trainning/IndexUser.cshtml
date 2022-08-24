@@ -1,0 +1,61 @@
+﻿@using System.Data
+@model DataTable
+<style>
+    /*.ui.selection.dropdown {
+        padding: 0;
+    }*/
+
+    #modalLoadCourses {
+        height: 80vh;
+    }
+</style>
+
+
+<h3 class="titlesPages">PÁGINA INICIAL INGRESO DE USUARIOS</h3>
+
+<table class="ui selectable celled table ui center aligned tablesInitial" id="tablesIndexperson">
+    <thead>
+        <tr>
+            @foreach (System.Data.DataColumn col in Model.Columns)
+            {
+                <th>@col.ColumnName</th>
+            }
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (System.Data.DataRow row in Model.Rows)
+        {
+            <tr>
+                @foreach (DataColumn col in Model.Columns)
+                {
+                    <td>@row[col.ColumnName]</td>
+                }
+                    <td>
+                        <a href="javascript:void(0)" onclick="cargarElement('@Url.Action("EditUser",new { @idUser=row["Usuario_ID"].ToString()})')">Editar</a>
+                    </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script type="text/javascript">
+    $('#tablesIndexperson').dynatable({
+    }).bind('dynatable:afterProcess', processingComplete);
+    processingComplete();
+
+    function getDetail(id,cc) {
+        $.ajax({
+            data: { idPerson: id, identification:cc },
+            url: '@Url.Action("LoadCourses")',
+            type: 'POST',
+            success: function (data) {
+                if (data) {
+                    $('#loadCourses').html(data);
+                    $('#modalLoadCourses').modal({
+                        centered: false
+                    }).modal('show');
+                }
+            }
+        });
+    }
+</script>

@@ -1,0 +1,68 @@
+﻿@using System.Data
+@model DataTable
+<style>
+    .dynatable-per-page-select {
+        padding: 0px !important;
+    }
+
+    #modalTechnicalInformation embed {
+        width: 100%;
+        height: 80vh;
+    }
+</style>
+<table class="ui selectable celled table ui center aligned tablesInitial">
+    <thead>
+        <tr>
+            @foreach (System.Data.DataColumn col in Model.Columns)
+            {
+                
+                if (col.ColumnName != "ruta")
+                {
+                    <th>@col.ColumnName</th>
+                }
+
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (System.Data.DataRow row in Model.Rows)
+        {
+            <tr>
+                @foreach (DataColumn col in Model.Columns)
+                {
+                    if (col.ColumnName == "Ficha Técnica")
+                    {
+                        <td><a onclick="viewTechnicalInformation('@row["ruta"]@row["Ficha Técnica"]')">@row[col.ColumnName]</a> </td>
+                    }
+                    else if(col.ColumnName != "ruta")
+                    {
+                        <td>@row[col.ColumnName]</td>
+                    }
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="ui modal" id="modalTechnicalInformation">
+    <div class="header" id="headerModal">Información Técnica</div>
+    <div class="scrolling content">
+        <embed id="pathTechnicalInformation" type='application/pdf'>
+    </div>
+</div>
+@if (Model.Rows.Count == 1)
+{
+    <script type="text/javascript">
+        viewTechnicalInformation('@Model.Rows[0]["ruta"].ToString()+@Model.Rows[0]["Ficha Técnica"].ToString() ','@Model.Rows[0]["Observaciones"].ToString()');
+    </script>
+}
+
+<script type="text/javascript">
+    LoadTables();
+    function viewTechnicalInformation(path, header) {
+        $('#pathTechnicalInformation').attr("src", path);
+        if (header != null && header != "") {
+            $('#headerModal').html("Dirígase a:" + header);
+        }
+        $('#modalTechnicalInformation').modal('show');
+    }
+</script>

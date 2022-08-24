@@ -1,0 +1,40 @@
+﻿@using System.Data
+@model DataTable
+<style>
+    .dynatable-per-page-select {
+        padding: 0px !important;
+    }
+</style>
+<br />
+<table class="ui selectable celled table ui center aligned tablesInitial" id="tableLoadDetailsUser">
+    <thead>
+        <tr>
+            @foreach (System.Data.DataColumn col in Model.Columns)
+            {
+
+                <th>@col.ColumnName</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (System.Data.DataRow row in Model.Rows)
+        {
+            <tr>
+                @foreach (DataColumn col in Model.Columns)
+                {
+                    <td>
+                        @row[col.ColumnName]
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+@if (Model.Rows.Count>0)
+{
+<button class="ui button" id="btnExport" onclick="location.href='@Url.Action("DownloadFile","Download",new { fileName="DetalleUsuario",@id=ViewBag.userId})'">Exportar</button>
+}
+
+<script type="text/javascript">
+    LoadTables();
+</script>

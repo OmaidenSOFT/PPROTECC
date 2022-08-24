@@ -1,0 +1,274 @@
+﻿@using System.Data
+@model DataTable
+<style>
+    .ui.selection.dropdown {
+        padding: 0;
+    }
+
+    .circleR {
+        height: 20px;
+        width: 20px;
+        background-color: salmon;
+        border-radius: 50%;
+    }
+
+    .circleA {
+        height: 20px;
+        width: 20px;
+        background-color: turquoise;
+        border-radius: 50%;
+    }
+
+    .circleY {
+        height: 20px;
+        width: 20px;
+        background-color: yellow;
+        border-radius: 50%;
+    }
+
+    .circleG {
+        height: 20px;
+        width: 20px;
+        background-color: green;
+        border-radius: 50%;
+    }
+
+    .circleD {
+        height: 20px;
+        width: 20px;
+        background-color: red;
+        border-radius: 50%;
+    }
+</style>
+<center><h3 style="color:#41B9E6; ">PROGRAMA DE PROTECCIÓN CONTRA CAÍDAS | GESTIÓN DE EQUIPOS | INVENTARIO</h3></center>
+<br />
+<br />
+<table class="ui selectable celled table ui center aligned">
+
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Sede</th>
+            <th>Total</th>
+            <th colspan="2">Aceptados</th>
+            <th colspan="2">Para Mantenimiento</th>
+            <th colspan="3">Rechazos</th>
+            @* <th>Dados de Baja</th>*@
+            <th colspan="3">Estado inspección</th>
+        </tr>
+        <tr>
+            <th colspan="3"></th>
+            <th>Total Aceptados</th>
+            <th>%</th>
+            <th>Total para mantenimiento</th>
+            <th>%</th>
+            <th>Total Rechazados</th>
+            <th>%</th>
+            <th>Total Dados de Baja</th>
+            <th>Vigentes <div class="circleG"></div></th>
+            <th>Por Vencer <div class="circleY"></div></th>
+            <th>Vencidos <div class="circleR"></div></th>
+        </tr>
+    </thead>
+
+
+
+    <tbody>
+        @foreach (System.Data.DataRow row in Model.Rows)
+        {
+            <tr>
+                @foreach (DataColumn col in Model.Columns)
+                {
+                    if (col.ColumnName != "CodigoSucursal")
+                    {
+                        if (col.ColumnName == "Sede")
+                        {
+                            <td><a href="javascript:void(0)" onclick="getDetail('@row["CodigoSucursal"].ToString()')">@row[col.ColumnName]</a></td>
+                        }
+                        else if (col.ColumnName == "Total Aceptados")
+                        {
+                            <td> @row[col.ColumnName] <div class="circleA"></div></td>
+                        }
+                        else if (col.ColumnName == "Total Mantenimiento")
+                        {
+                            <td> <a href="javascript:void(0)" onclick="getDetailMant('@row["CodigoSucursal"].ToString()')">@row[col.ColumnName]</a> <div class="circleY"></div></td>
+                        }
+                        else if (col.ColumnName == "Total Rechazados")
+                        {
+                            <td> <a href="javascript:void(0)" onclick="getDetailRechazados('@row["CodigoSucursal"].ToString()')">@row[col.ColumnName]</a> <div class="circleR"></div></td>
+                        }
+                        else if (col.ColumnName == "Total Dados de Baja")
+                        {
+                            <td><a href="javascript:void(0)" onclick="getDetailDadosBaja('@row["CodigoSucursal"].ToString()')">@row[col.ColumnName]</a> <div class="circleD"></div></td>
+                        }
+                        else if (col.ColumnName == "Vigentes")
+                        {
+                            if (Convert.ToInt32(row[col.ColumnName]) != 0)
+                            {
+                                <td><a href="javascript:void(0)" onclick="getDetailVig('@row["CodigoSucursal"].ToString()')" style="font-size:larger; color:green; font-style:italic" data-toggle="tooltip" title='@row[col.ColumnName] OK'>@row[col.ColumnName]</a> </td>
+                            }
+                            else
+                            {
+                                <td></td>
+                            }
+                        }
+                        else if (col.ColumnName == "PorVencer")
+                        {
+                            if (Convert.ToInt32(row[col.ColumnName]) != 0)
+                            {
+                                <td><a href="javascript:void(0)" onclick="getDetailPor('@row["CodigoSucursal"].ToString()')" style="font-size:larger; color: greenyellow; font-style:italic" data-toggle="tooltip" title='@row[col.ColumnName] Próximas'>@row[col.ColumnName]</a></td>
+                            }
+                            else
+                            {
+                                <td></td>
+                            }
+                        }
+                        else if (col.ColumnName == "Vencidos")
+                        {
+                            if (Convert.ToInt32(row[col.ColumnName]) != 0)
+                            {
+                                <td><a href="javascript:void(0)" onclick="getDetailVen('@row["CodigoSucursal"].ToString()')" style="font-size:larger; color:red; font-style:italic" data-toggle="tooltip" title='@row[col.ColumnName] Pendientes'>@row[col.ColumnName]</a></td>
+                            }
+                            else
+                            {
+                                <td></td>
+                            }
+                        }
+
+                        @*else if (col.ColumnName == "Vigencia")
+                            {
+                                var classElement = @row[col.ColumnName].ToString().Split('-')[1];
+                                classElement = classElement == "Rojo" ? "" : classElement == "Amarillo" ? "yellow" : classElement == "Verde" ? "green" : "";
+
+
+                                var classEl1 = @row[col.ColumnName].ToString().Split('-')[1];
+                                classEl1 = classEl1 == "Rojo" ? "font color='red'" : "font color='white'";
+
+
+                                <td class="@classElement @classEl1">@row[col.ColumnName].ToString().Split('-')[0]</td>
+
+                            }*@
+                        else
+                        {
+                            <td>@row[col.ColumnName]</td>
+                        }
+                    }
+
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+<button class="ui button" id="btnExport" onclick="location.href='@Url.Action("DownloadFile","Download",new { fileName="Stock"})'">Exportar</button>
+<div class="ui modal" id="modalInformationByHeadquarter">
+    <div class="header" id="headerModal">Información Por sede</div>
+    <div class="scrolling content">
+        <div id="renderSearchInformationByHeadquarter"></div>
+    </div>
+</div>
+<script type="text/javascript">
+    function getDetail(id) {
+        if (id > 0) {
+            $.ajax({
+                url: '@Url.Action("StockByHeadquarter", "WorkingAtHeight")',
+                data: { headquarterId: id },
+                type: 'POST',
+                success: function (data) {
+
+                    $('#renderSearchInformationByHeadquarter').html(data);
+                    $('#modalInformationByHeadquarter').modal('show');
+                }
+            });
+        }
+    }
+
+
+     function getDetailRechazados(id) {
+	 if (id > 0) {
+            $.ajax({
+                url: '@Url.Action("StockByHeadquarterRechazos", "WorkingAtHeight")',
+                data: { headquarterId: id },
+                type: 'POST',
+                success: function (data) {
+
+                    $('#renderSearchInformationByHeadquarter').html(data);
+                    $('#modalInformationByHeadquarter').modal('show');
+                }
+            });
+        }
+    }
+     function getDetailDadosBaja(id) {
+	 if (id > 0) {
+            $.ajax({
+                url: '@Url.Action("StockByHeadquarterDados", "WorkingAtHeight")',
+                data: { headquarterId: id },
+                type: 'POST',
+                success: function (data) {
+
+                    $('#renderSearchInformationByHeadquarter').html(data);
+                    $('#modalInformationByHeadquarter').modal('show');
+                }
+            });
+        }
+    }
+
+	 function getDetailMant(id) {
+	 if (id > 0) {
+            $.ajax({
+                url: '@Url.Action("StockByHeadquarterMant", "WorkingAtHeight")',
+                data: { headquarterId: id },
+                type: 'POST',
+                success: function (data) {
+
+                    $('#renderSearchInformationByHeadquarter').html(data);
+                    $('#modalInformationByHeadquarter').modal('show');
+                }
+            });
+        }
+    }
+
+    function getDetailVig(id) {
+        if (id > 0) {
+            $.ajax({
+                url: '@Url.Action("StockByHeadquarterByStateVig", "WorkingAtHeight")',
+                data: { headquarterId: id},
+                type: 'POST',
+                success: function (data) {
+                    $('#renderSearchInformationByHeadquarter').html(data);
+                    $('#modalInformationByHeadquarter').modal('show');
+                }
+            });
+        }
+    }
+    function getDetailVen(id) {
+        if (id > 0) {
+            $.ajax({
+                url: '@Url.Action("StockByHeadquarterByStateVen", "WorkingAtHeight")',
+                data: { headquarterId: id},
+                type: 'POST',
+                success: function (data) {
+                    $('#renderSearchInformationByHeadquarter').html(data);
+                    $('#modalInformationByHeadquarter').modal('show');
+                }
+            });
+        }
+    }
+     function getDetailPor(id) {
+        if (id > 0) {
+            $.ajax({
+                url: '@Url.Action("StockByHeadquarterByStatePor", "WorkingAtHeight")',
+                data: { headquarterId: id},
+                type: 'POST',
+                success: function (data) {
+                    $('#renderSearchInformationByHeadquarter').html(data);
+                    $('#modalInformationByHeadquarter').modal('show');
+                }
+            });
+        }
+    }
+
+
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>

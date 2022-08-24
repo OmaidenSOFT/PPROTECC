@@ -1,0 +1,84 @@
+﻿@using System.Data
+@model DataTable
+<style>
+    /*.ui.selection.dropdown {
+        padding: 0;
+    }*/
+
+    #modalLoadCourses {
+        height: 80vh;
+    }
+</style>
+<div class="ui modal" id="modalLoadCourses">
+    <div class="header">Carga de Cursos</div>
+    <div class="content" id="loadCourses">
+    </div>
+
+</div>
+
+<h3 class="titlesPages">PÁGINA INICIAL INGRESO DE PERSONAS</h3>
+
+<table class="ui selectable celled table ui center aligned tablesInitial" id="tablesIndexperson">
+    <thead>
+        <tr>
+            @foreach (System.Data.DataColumn col in Model.Columns)
+            {
+                <th>@col.ColumnName</th>
+            }
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (System.Data.DataRow row in Model.Rows)
+        {
+            <tr>
+                @foreach (DataColumn col in Model.Columns)
+                {
+
+                    if (col.ColumnName == "Identificacion")
+                    {
+                        <td><a href="javascript:void(0)" onclick="cargarElement('@Url.Action("LoadCourses",new { @idPerson=row["ID"].ToString(),@identification=@row["Identificacion"].ToString(),@isView=true})')">@row[col.ColumnName]</a></td>
+                    }
+                    else
+                    {
+                        <td>@row[col.ColumnName]</td>
+                    }
+                }
+                <td>
+                    <a href="javascript:void(0)" onclick="cargarElement('@Url.Action("EditPerson",new { @idPerson=row["ID"].ToString()})')">Editar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script type="text/javascript">
+    //LoadTables();
+    var processingComplete = function () {
+        $.each($('#tablesIndexperson tr'), function (index, value) {
+            var classElement = $(this).find('td:eq(6)').html();
+            classElement = classElement == "Rojo" ? "red" : classElement == "Amarillo" ? "yellow" : classElement == "Verde" ? "green" : "";
+            $(this).find('td:eq(6)').addClass(classElement);
+            $(this).find('td:eq(6)').html('');
+        });
+    }
+    //LoadTables();
+    $('#tablesIndexperson').dynatable({
+    }).bind('dynatable:afterProcess', processingComplete);
+    processingComplete();
+
+    function getDetail(id,cc) {
+        $.ajax({
+            data: { idPerson: id, identification:cc },
+            url: '@Url.Action("LoadCourses")',
+            type: 'POST',
+            success: function (data) {
+                if (data) {
+                    $('#loadCourses').html(data);
+                    $('#modalLoadCourses').modal({
+                        centered: false
+                    }).modal('show');
+                }
+            }
+        });
+    }
+</script>

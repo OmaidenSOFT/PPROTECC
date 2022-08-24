@@ -1,0 +1,67 @@
+﻿
+@model List<Entity.Ally>
+<style type="text/css">
+    .ui.selection.dropdown {
+        padding: 0;
+    }
+</style>
+<h4 class="ui dividing header">Aliados</h4>
+<table class="ui selectable celled table tablesInitial">
+    <thead>
+        <tr>
+            <th>Nombre Aliado</th>
+            <th>Habilidad</th>
+            <th>Descripción</th>
+            <th>Teléfono</th>
+            <th>Dirección</th>
+            <th>Estado</th>
+            <th>Fecha Creación</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.name
+                </td>
+                <td>
+                    @item.ability
+                </td>
+                <td>
+                    @item.description
+                </td>
+                <td>
+                    @item.phone
+                </td>
+                <td>
+                    @item.address
+                </td>
+
+                <td>
+                    @if (Convert.ToBoolean(item.state))
+                    {
+                        <div class="ui toggle checkbox">
+                            <input type="checkbox" disabled="disabled" checked="checked">
+                        </div>
+
+                    }
+                    else
+                    {
+                        <div class="ui toggle checkbox">
+                            <input type="checkbox" disabled="disabled">
+                        </div>
+                    }
+                </td>
+                <td>
+                    @item.createDate.ToString("yyyy-MM-dd")
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+<script type="text/javascript">
+    LoadTables();
+</script>

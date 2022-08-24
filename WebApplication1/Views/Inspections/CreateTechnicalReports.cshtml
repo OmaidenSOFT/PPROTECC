@@ -1,0 +1,170 @@
+﻿<h3 class="titlesPages">
+    @ViewBag.ApplicationName | CRONOGRAMA DE INSPECCIONES
+</h3>
+@using (Ajax.BeginForm("TechnicalReportsResult", "Inspections", null, new AjaxOptions()
+{
+    HttpMethod = "POST",
+    OnBegin = "onBeginProcessSearch()",
+    OnSuccess = "onSuccessProcessSearch(data)",
+    OnFailure = "onFailureProcessSearch()",
+}, new { @id = "formProcessTechnicalReports" }))
+{
+    <div class="ui equal width form">
+        <div class="fields">
+            <div class="field">
+                <label>Sede</label>
+                @Html.DropDownList("cbxHeadquarter", (SelectList)ViewBag.HeadquarterDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+            </div>
+            <div class="field">
+                <label>Año</label>
+                <select class="ui search dropdown" id="cbxAnio">
+                    <option value="">[-Seleccione una opción-]</option>
+                    <option value="2018">2018</option>
+                </select>
+            </div>
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>Empresa</label>
+                <input type="text" name="factory" autocomplete="off" placeholder="Empresa" maxlength="200" />
+            </div>
+            <div class="field">
+                <label>Tipo Informe</label>
+                @Html.DropDownList("cbxTypeReport", (SelectList)ViewBag.TypeReportDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+            </div>
+        </div>
+
+    </div>
+}
+<div class="ui form">
+    <div class="fields">
+        <div class="field">
+            <label>Informe</label>
+            <form action="@Url.Action("UploadFile")" method="POST" class="dropzone" id="filePerson">
+                <input type="hidden" name="type" value="CourseInitial" />
+            </form>
+            <div class="ui floating message info" style="width: 50%; margin-left: 25%; margin-right: 25%; text-align: center;display:none" id="messageFilePerson">
+                <div class="header">
+                    Atención
+                </div>
+                <p>El archivo ya ha sido registrado en nuestro sistema, al guardar se finalizará el proceso</p>
+            </div>
+        </div>
+    </div>
+</div>
+<hr />
+<button class="ui primary button" id="btnGuardar">
+    Subir Informe
+</button>
+<div id="renderSearchFinding"></div>
+
+
+<script type="text/javascript">
+    $("#filePerson").dropzone({
+        autoProcessQueue: false,
+        addRemoveLinks: true,
+        maxFiles: 1,
+        acceptedFiles: ".pdf,.xlsx",
+        init: function () {
+            myDropzoneFile = this; // closure
+            this.on("addedfile", function (file) {
+                var re = /(?:\.([^.]+))?$/;
+                var ext = re.exec(file.name)[1];
+                ext = ext.toUpperCase();
+                _thisFile = this;
+                if (ext == "PDF" || ext == "XLSX") {
+                } else {
+                    _thisFile.removeFile(file);
+                }
+            });
+            this.on("removedfile", function (file) {
+            });
+            this.on("success", function (file, data, response) {
+                if (data.result) {
+                    countFile = countFile + 1;
+                    _thisFile.removeFile(file);
+                    if (myDropzoneFile.files.length == 0) {
+                        $('#messageFilePerson').show();
+                        $('#filePerson').hide();
+                        $('#formProcessCreatePerson').submit();
+                    }
+                } else {
+                    alert("A ocurrido un eror");
+                    console.warn(data.message);
+                }
+            });
+            this.on("uploadprogress", function (file) {
+                $('.btnEliminar').attr('disabled', true);
+            });
+            this.on("error", function (xhr) {
+                $('.btnEliminar').attr('disabled', false);
+                console.warn(xhr);
+            });
+            this.on("maxfilesexceeded", function (file) {
+                this.removeFile(file);
+            });
+        }
+    });
+    $('#formProcessSearch').form({
+        fields: {
+            cbxHeadquarter: {
+                identifier: 'cbxHeadquarter',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe elegir un valor'
+                    },
+                ]
+            },
+            cbxAnio: {
+                identifier: 'cbxAnio',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe elegir un valor'
+                    },
+                ]
+            },
+            cbxTypeReport: {
+                identifier: 'cbxTypeReport',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe elegir un valor'
+                    },
+                ]
+            },
+            factory: {
+                identifier: 'factory',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe escribir un valor'
+                    },
+                ]
+            },
+        }, inline: true,
+        on: 'blur'
+    });
+
+    function onBeginProcessSearch() {
+        $('#renderPages').addClass("loading");
+        $('#renderSearchFinding').empty();
+    }
+    function onFailureProcessSearch() {
+        $('#renderPages').removeClass("loading");
+        $('#messageCreate').show('slow').addClass("warning").removeClass("info");
+        $('#textmessageCreate').text("Ha ocurrido un error al procesar la solicitud");
+    }
+
+    function onSuccessProcessSearch(data) {
+        $('#renderPages').removeClass("loading");
+        $('#renderSearchFinding').html(data);
+    }
+    $('#cbxHeadquarter').on('change', function () {
+        $('#cbxAssigned').dropdown('clear');
+    });
+    $('#btnGuardar').on('click', function () {
+        $('#formProcessTechnicalReports').submit();
+    });
+</script>

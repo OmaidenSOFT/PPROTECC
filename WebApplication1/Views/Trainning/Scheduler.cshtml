@@ -1,0 +1,104 @@
+﻿@using System.Data
+@model DataTable
+<style>
+    /*.ui.selection.dropdown {
+        padding: 0;
+    }*/
+</style>
+
+    <h3  class="titlesPages">CRONOGRAMA DE FORMACIÓN</h3>
+
+<div class="ui top attached tabular menu">
+    <a class="item active" data-tab="second">Búsqueda avanzada</a>
+</div>
+<div class="ui bottom attached tab segment active" data-tab="second">
+    @using (Ajax.BeginForm("SearchScheduler", "Trainning", null, new AjaxOptions()
+    {
+        HttpMethod = "POST",
+        OnBegin = "onBeginProcessSearch()",
+        OnSuccess = "onSuccessProcessSearch(data)",
+        OnFailure = "onFailureProcessSearch()",
+    }, new { @id = "formProcessSearch" }))
+    {
+    <div class="ui equal width form">
+        <div class="required inline fields">
+            <label>Tipo de Sede:</label>
+            <div class="field">
+                <div class="ui radio checkbox">
+                    <input type="radio" name="headQuarterType" value="1">
+                    <label>Térmicas</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui radio checkbox">
+                    <input type="radio" name="headQuarterType" value="2">
+                    <label>Renovables</label>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="required inline fields">
+                        <label>Tipo de Cronograma:</label>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="frequency" value="1">
+                        <label>Por Año</label>
+
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui radio checkbox">
+                        <input type="radio" name="frequency" value="2">
+                        <label>Por Mes</label>
+                    </div>
+                </div>
+            </div>
+
+        <button class="ui primary button">
+            Buscar
+        </button>
+    </div>
+    }
+</div>
+
+<div id="renderSearchScheduler"></div>
+
+<script type="text/javascript">
+
+    $('#formProcessSearch').form({
+        fields: {
+            headQuarterType: {
+                identifier: 'headQuarterType',
+                rules: [{
+                    type: 'checked',
+                    prompt: 'Debe seleccionar una opción'
+                }]
+            },
+            frequency: {
+                identifier: 'frequency',
+                rules: [{
+                    type: 'checked',
+                    prompt: 'Debe seleccionar una opción'
+                }]
+            },
+            
+        }, inline: true,
+        on: 'blur'
+    });
+    function onBeginProcessSearch() {
+        $('#renderPages').addClass("loading");
+        $('#renderSearchScheduler').empty();
+    }
+    function onFailureProcessSearch() {
+        $('#renderPages').removeClass("loading");
+        $('#messageCreate').show('slow').addClass("warning").removeClass("info");
+        $('#textmessageCreate').text("Ha ocurrido un error al procesar la solicitud");
+    }
+
+    function onSuccessProcessSearch(data) {
+        $('#renderPages').removeClass("loading");
+        $('#renderSearchScheduler').html(data);
+    }
+</script>

@@ -1,0 +1,2408 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="EntityModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AccionTomar">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Activo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LineaId" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="TipoActivoId" Type="int" Nullable="false" />
+          <Property Name="SedeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ActivoInspeccion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="ActivoID" Type="int" Nullable="false" />
+          <Property Name="RFID" Type="varchar" MaxLength="50" />
+          <Property Name="Serial" Type="varchar" MaxLength="50" />
+          <Property Name="Modelo" Type="varchar" MaxLength="50" />
+          <Property Name="Material" Type="varchar" MaxLength="50" />
+          <Property Name="Marca" Type="varchar" MaxLength="50" />
+          <Property Name="Imagen" Type="text" />
+        </EntityType>
+        <EntityType Name="Cargo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="150" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Inspections.dbo.Certificacion_Inspector' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Certificacion_Inspector">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="certificacionid" Type="int" />
+          <Property Name="Inspectorid" Type="int" />
+        </EntityType>
+        <EntityType Name="Certificaciones">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Inspections.dbo.Curso' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Curso">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Curso" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Curso_Inspector">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Cursoid" Type="int" />
+          <Property Name="Inspectorid" Type="int" />
+        </EntityType>
+        <EntityType Name="Elemento">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="Categoriaid" Type="int" />
+          <Property Name="Formato" Type="varchar" MaxLength="150" />
+          <Property Name="Codigo" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Elementos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Elemento" Type="varchar" MaxLength="50" />
+          <Property Name="Imagen" Type="text" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Inspections.dbo.Empleado' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Empleado">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="Identificacion" Type="varchar" MaxLength="50" />
+          <Property Name="Sedeid" Type="int" />
+          <Property Name="CargoID" Type="int" />
+        </EntityType>
+        <EntityType Name="Empresa">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="Paisid" Type="int" />
+        </EntityType>
+        <EntityType Name="Encabezado">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RFID" Type="varchar" MaxLength="50" />
+          <Property Name="Serial" Type="varchar" MaxLength="50" />
+          <Property Name="Modelo" Type="varchar" MaxLength="50" />
+          <Property Name="Material" Type="varchar" MaxLength="50" />
+          <Property Name="FechaFabricacion" Type="datetime" />
+          <Property Name="Marca" Type="varchar" MaxLength="50" />
+          <Property Name="Lote" Type="varchar" MaxLength="50" />
+          <Property Name="ElementoID" Type="int" />
+          <Property Name="Sedeid" Type="int" />
+          <Property Name="Ubicacion" Type="varchar" MaxLength="150" />
+          <Property Name="NroFoto" Type="varchar" MaxLength="50" />
+          <Property Name="FechaCompra" Type="datetime" />
+          <Property Name="Observaciones" Type="varchar(max)" />
+          <Property Name="RutaHojadeVida" Type="varchar" MaxLength="100" />
+          <Property Name="TAG" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="EncabezadoFactor">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Encabezadoid" Type="int" />
+          <Property Name="Factorid" Type="int" />
+        </EntityType>
+        <EntityType Name="Estado">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="EstadoFinal">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="FactorElemento">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Encabezadoid" Type="int" />
+          <Property Name="Factorid" Type="int" />
+          <Property Name="Estadoid" Type="int" />
+          <Property Name="Comentario" Type="varchar" MaxLength="8000" />
+        </EntityType>
+        <EntityType Name="Factores">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Categoria" Type="varchar" MaxLength="8000" />
+          <Property Name="Factor" Type="varchar" MaxLength="8000" />
+          <Property Name="Elementoid" Type="int" />
+        </EntityType>
+        <EntityType Name="FichasTec">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Sedeid" Type="int" Nullable="false" />
+          <Property Name="ElementoID" Type="int" />
+          <Property Name="Marca" Type="varchar" MaxLength="50" />
+          <Property Name="Modelo" Type="varchar" MaxLength="50" />
+          <Property Name="Observaciones" Type="varchar" MaxLength="200" />
+          <Property Name="Ficha" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="FotoEncabezado">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Encabezadoid" Type="int" />
+          <Property Name="Archivo" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Grupo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Inspeccion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Sedeid" Type="int" Nullable="false" />
+          <Property Name="FechaInicio" Type="datetime" Nullable="false" />
+          <Property Name="FechaFinal" Type="datetime" Nullable="false" />
+          <Property Name="Numero" Type="int" />
+          <Property Name="Ano" Type="int" />
+        </EntityType>
+        <EntityType Name="Inspeccion_Elemento">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Inspeccionid" Type="int" />
+          <Property Name="Elementoid" Type="int" />
+        </EntityType>
+        <EntityType Name="Inspeccion_Elementos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="InspeccionID" Type="int" />
+          <Property Name="Encabezadoid" Type="int" />
+        </EntityType>
+        <EntityType Name="Inspeccion_inspectores">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Inspeccionid" Type="int" />
+          <Property Name="Inspectorid" Type="int" />
+        </EntityType>
+        <EntityType Name="InspeccionFactor">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="Encabezadoid" Type="int" />
+          <Property Name="FactorElementoID" Type="int" />
+        </EntityType>
+        <EntityType Name="Inspector_certificacion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="Inspectorid" Type="int" />
+          <Property Name="Certificacionid" Type="int" />
+        </EntityType>
+        <EntityType Name="Inspectores">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="Identificacion" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Linea">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GrupoID" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Pais">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Resultado">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Encabezadoid" Type="int" />
+          <Property Name="EstadoFinalId" Type="int" />
+          <Property Name="AccionTomarId" Type="int" />
+          <Property Name="InspectorID" Type="int" />
+          <Property Name="FechaInspeccion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Sede">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="Ubicacion" Type="varchar" MaxLength="50" />
+          <Property Name="Empresaid" Type="int" />
+          <Property Name="EnelCode" Type="varchar" MaxLength="50" />
+          <Property Name="SedeCategoriaid" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Inspections.dbo.SedeCategoria' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="SedeCategoria">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TipoActivo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TSA">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Inspector" Type="varchar" MaxLength="50" />
+          <Property Name="RutaPDF" Type="varchar" MaxLength="100" />
+          <Property Name="Sedeid" Type="int" />
+          <Property Name="Cursoid" Type="int" />
+          <Property Name="Identificacion" Type="varchar" MaxLength="50" />
+          <Property Name="Ano" Type="int" />
+        </EntityType>
+        <EntityType Name="TSA_Empleado">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmpleadoID" Type="int" />
+          <Property Name="CursoID" Type="int" />
+          <Property Name="RutaPDF" Type="varchar" MaxLength="100" />
+          <Property Name="Mes" Type="int" />
+          <Property Name="Ano" Type="int" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="Usuario_ID" />
+          </Key>
+          <Property Name="Usuario_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Usuario" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Pass" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Nombres" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Apellidos" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Activo" Type="int" Nullable="false" />
+          <Property Name="Celular" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="Extension" Type="varchar" MaxLength="50" />
+          <Property Name="Ciudad" Type="varchar" MaxLength="50" />
+          <Property Name="PasswordMD5" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Inspections.dbo.usuario_Rol' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="usuario_Rol">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UsuarioID" Type="int" />
+          <Property Name="RolId" Type="int" />
+        </EntityType>
+        <EntityType Name="Usuario_Sede">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UsuarioID" Type="int" Nullable="false" />
+          <Property Name="SedeID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Activo_Linea">
+          <End Role="Linea" Type="Self.Linea" Multiplicity="1" />
+          <End Role="Activo" Type="Self.Activo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Linea">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Activo">
+              <PropertyRef Name="LineaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Activo_Sede">
+          <End Role="Sede" Type="Self.Sede" Multiplicity="1" />
+          <End Role="Activo" Type="Self.Activo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sede">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Activo">
+              <PropertyRef Name="SedeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Activo_TipoActivo">
+          <End Role="TipoActivo" Type="Self.TipoActivo" Multiplicity="1" />
+          <End Role="Activo" Type="Self.Activo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoActivo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Activo">
+              <PropertyRef Name="TipoActivoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ActivoInspeccion_Activo">
+          <End Role="Activo" Type="Self.Activo" Multiplicity="1" />
+          <End Role="ActivoInspeccion" Type="Self.ActivoInspeccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Activo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ActivoInspeccion">
+              <PropertyRef Name="ActivoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Curso_Inspector_Curso_Inspector">
+          <End Role="Curso_Inspector" Type="Self.Curso_Inspector" Multiplicity="1" />
+          <End Role="Curso_Inspector1" Type="Self.Curso_Inspector" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Curso_Inspector">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Curso_Inspector1">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Elemento_Categoria">
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="0..1" />
+          <End Role="Elemento" Type="Self.Elemento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Elemento">
+              <PropertyRef Name="Categoriaid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Empleado_Cargo">
+          <End Role="Cargo" Type="Self.Cargo" Multiplicity="0..1" />
+          <End Role="Empleado" Type="Self.Empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cargo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Empleado">
+              <PropertyRef Name="CargoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Empleado_Sede">
+          <End Role="Sede" Type="Self.Sede" Multiplicity="0..1" />
+          <End Role="Empleado" Type="Self.Empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sede">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Empleado">
+              <PropertyRef Name="Sedeid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Empresa_Pais">
+          <End Role="Pais" Type="Self.Pais" Multiplicity="0..1" />
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pais">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Empresa">
+              <PropertyRef Name="Paisid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Encabezado_Elemento">
+          <End Role="Elemento" Type="Self.Elemento" Multiplicity="0..1" />
+          <End Role="Encabezado" Type="Self.Encabezado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Elemento">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Encabezado">
+              <PropertyRef Name="ElementoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Encabezado_Sede">
+          <End Role="Sede" Type="Self.Sede" Multiplicity="0..1" />
+          <End Role="Encabezado" Type="Self.Encabezado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sede">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Encabezado">
+              <PropertyRef Name="Sedeid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EncabezadoFactor_Encabezado">
+          <End Role="Encabezado" Type="Self.Encabezado" Multiplicity="0..1" />
+          <End Role="EncabezadoFactor" Type="Self.EncabezadoFactor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Encabezado">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="EncabezadoFactor">
+              <PropertyRef Name="Encabezadoid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FactorElemento_Encabezado">
+          <End Role="Encabezado" Type="Self.Encabezado" Multiplicity="0..1" />
+          <End Role="FactorElemento" Type="Self.FactorElemento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Encabezado">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="FactorElemento">
+              <PropertyRef Name="Encabezadoid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FactorElemento_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="0..1" />
+          <End Role="FactorElemento" Type="Self.FactorElemento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="FactorElemento">
+              <PropertyRef Name="Estadoid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FactorElemento_Factores">
+          <End Role="Factores" Type="Self.Factores" Multiplicity="0..1" />
+          <End Role="FactorElemento" Type="Self.FactorElemento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Factores">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="FactorElemento">
+              <PropertyRef Name="Factorid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inspeccion_Elemento_Elemento">
+          <End Role="Elemento" Type="Self.Elemento" Multiplicity="0..1" />
+          <End Role="Inspeccion_Elemento" Type="Self.Inspeccion_Elemento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Elemento">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Inspeccion_Elemento">
+              <PropertyRef Name="Elementoid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inspeccion_Elemento_Inspeccion">
+          <End Role="Inspeccion" Type="Self.Inspeccion" Multiplicity="0..1" />
+          <End Role="Inspeccion_Elemento" Type="Self.Inspeccion_Elemento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inspeccion">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Inspeccion_Elemento">
+              <PropertyRef Name="Inspeccionid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inspeccion_Elementos_Encabezado">
+          <End Role="Encabezado" Type="Self.Encabezado" Multiplicity="0..1" />
+          <End Role="Inspeccion_Elementos" Type="Self.Inspeccion_Elementos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Encabezado">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Inspeccion_Elementos">
+              <PropertyRef Name="Encabezadoid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inspeccion_Elementos_Inspeccion">
+          <End Role="Inspeccion" Type="Self.Inspeccion" Multiplicity="0..1" />
+          <End Role="Inspeccion_Elementos" Type="Self.Inspeccion_Elementos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inspeccion">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Inspeccion_Elementos">
+              <PropertyRef Name="InspeccionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inspeccion_inspectores_Inspeccion">
+          <End Role="Inspeccion" Type="Self.Inspeccion" Multiplicity="0..1" />
+          <End Role="Inspeccion_inspectores" Type="Self.Inspeccion_inspectores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inspeccion">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Inspeccion_inspectores">
+              <PropertyRef Name="Inspeccionid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inspeccion_inspectores_Inspectores">
+          <End Role="Inspectores" Type="Self.Inspectores" Multiplicity="0..1" />
+          <End Role="Inspeccion_inspectores" Type="Self.Inspeccion_inspectores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inspectores">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Inspeccion_inspectores">
+              <PropertyRef Name="Inspectorid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inspeccion_Sede">
+          <End Role="Sede" Type="Self.Sede" Multiplicity="1" />
+          <End Role="Inspeccion" Type="Self.Inspeccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sede">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Inspeccion">
+              <PropertyRef Name="Sedeid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inspector_certificacion_Certificaciones">
+          <End Role="Certificaciones" Type="Self.Certificaciones" Multiplicity="0..1" />
+          <End Role="Inspector_certificacion" Type="Self.Inspector_certificacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Certificaciones">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Inspector_certificacion">
+              <PropertyRef Name="Certificacionid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inspector_certificacion_Inspectores">
+          <End Role="Inspectores" Type="Self.Inspectores" Multiplicity="0..1" />
+          <End Role="Inspector_certificacion" Type="Self.Inspector_certificacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inspectores">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Inspector_certificacion">
+              <PropertyRef Name="Inspectorid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Linea_Grupo">
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="1" />
+          <End Role="Linea" Type="Self.Linea" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grupo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Linea">
+              <PropertyRef Name="GrupoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Resultado_AccionTomar">
+          <End Role="AccionTomar" Type="Self.AccionTomar" Multiplicity="0..1" />
+          <End Role="Resultado" Type="Self.Resultado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccionTomar">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Resultado">
+              <PropertyRef Name="AccionTomarId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Resultado_EstadoFinal">
+          <End Role="EstadoFinal" Type="Self.EstadoFinal" Multiplicity="0..1" />
+          <End Role="Resultado" Type="Self.Resultado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstadoFinal">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Resultado">
+              <PropertyRef Name="EstadoFinalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Resultado_Inspectores">
+          <End Role="Inspectores" Type="Self.Inspectores" Multiplicity="0..1" />
+          <End Role="Resultado" Type="Self.Resultado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inspectores">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Resultado">
+              <PropertyRef Name="InspectorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sede_Empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="0..1" />
+          <End Role="Sede" Type="Self.Sede" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Sede">
+              <PropertyRef Name="Empresaid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_usuario_Rol_Rol">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="0..1" />
+          <End Role="usuario_Rol" Type="Self.usuario_Rol" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="usuario_Rol">
+              <PropertyRef Name="RolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_usuario_Rol_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="usuario_Rol" Type="Self.usuario_Rol" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Usuario_ID" />
+            </Principal>
+            <Dependent Role="usuario_Rol">
+              <PropertyRef Name="UsuarioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EntityModelStoreContainer">
+          <EntitySet Name="AccionTomar" EntityType="Self.AccionTomar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Activo" EntityType="Self.Activo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ActivoInspeccion" EntityType="Self.ActivoInspeccion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cargo" EntityType="Self.Cargo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Certificaciones" EntityType="Self.Certificaciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Curso_Inspector" EntityType="Self.Curso_Inspector" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Elemento" EntityType="Self.Elemento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Elementos" EntityType="Self.Elementos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Empresa" EntityType="Self.Empresa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Encabezado" EntityType="Self.Encabezado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EncabezadoFactor" EntityType="Self.EncabezadoFactor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Estado" EntityType="Self.Estado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EstadoFinal" EntityType="Self.EstadoFinal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FactorElemento" EntityType="Self.FactorElemento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Factores" EntityType="Self.Factores" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FichasTec" EntityType="Self.FichasTec" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FotoEncabezado" EntityType="Self.FotoEncabezado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Grupo" EntityType="Self.Grupo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Inspeccion" EntityType="Self.Inspeccion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Inspeccion_Elemento" EntityType="Self.Inspeccion_Elemento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Inspeccion_Elementos" EntityType="Self.Inspeccion_Elementos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Inspeccion_inspectores" EntityType="Self.Inspeccion_inspectores" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InspeccionFactor" EntityType="Self.InspeccionFactor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Inspector_certificacion" EntityType="Self.Inspector_certificacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Inspectores" EntityType="Self.Inspectores" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Linea" EntityType="Self.Linea" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pais" EntityType="Self.Pais" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Resultado" EntityType="Self.Resultado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sede" EntityType="Self.Sede" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoActivo" EntityType="Self.TipoActivo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TSA" EntityType="Self.TSA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TSA_Empleado" EntityType="Self.TSA_Empleado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario_Sede" EntityType="Self.Usuario_Sede" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Certificacion_Inspector" EntityType="Self.Certificacion_Inspector" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Certificacion_Inspector].[id] AS [id], 
+    [Certificacion_Inspector].[certificacionid] AS [certificacionid], 
+    [Certificacion_Inspector].[Inspectorid] AS [Inspectorid]
+    FROM [dbo].[Certificacion_Inspector] AS [Certificacion_Inspector]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Curso" EntityType="Self.Curso" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Curso].[id] AS [id], 
+    [Curso].[Curso] AS [Curso]
+    FROM [dbo].[Curso] AS [Curso]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Empleado" EntityType="Self.Empleado" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Empleado].[ID] AS [ID], 
+    [Empleado].[Nombre] AS [Nombre], 
+    [Empleado].[Identificacion] AS [Identificacion], 
+    [Empleado].[Sedeid] AS [Sedeid], 
+    [Empleado].[CargoID] AS [CargoID]
+    FROM [dbo].[Empleado] AS [Empleado]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="SedeCategoria" EntityType="Self.SedeCategoria" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [SedeCategoria].[id] AS [id], 
+    [SedeCategoria].[Descripcion] AS [Descripcion]
+    FROM [dbo].[SedeCategoria] AS [SedeCategoria]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="usuario_Rol" EntityType="Self.usuario_Rol" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [usuario_Rol].[id] AS [id], 
+    [usuario_Rol].[UsuarioID] AS [UsuarioID], 
+    [usuario_Rol].[RolId] AS [RolId]
+    FROM [dbo].[usuario_Rol] AS [usuario_Rol]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Activo_Linea" Association="Self.FK_Activo_Linea">
+            <End Role="Linea" EntitySet="Linea" />
+            <End Role="Activo" EntitySet="Activo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Activo_Sede" Association="Self.FK_Activo_Sede">
+            <End Role="Sede" EntitySet="Sede" />
+            <End Role="Activo" EntitySet="Activo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Activo_TipoActivo" Association="Self.FK_Activo_TipoActivo">
+            <End Role="TipoActivo" EntitySet="TipoActivo" />
+            <End Role="Activo" EntitySet="Activo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ActivoInspeccion_Activo" Association="Self.FK_ActivoInspeccion_Activo">
+            <End Role="Activo" EntitySet="Activo" />
+            <End Role="ActivoInspeccion" EntitySet="ActivoInspeccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Curso_Inspector_Curso_Inspector" Association="Self.FK_Curso_Inspector_Curso_Inspector">
+            <End Role="Curso_Inspector" EntitySet="Curso_Inspector" />
+            <End Role="Curso_Inspector1" EntitySet="Curso_Inspector" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Elemento_Categoria" Association="Self.FK_Elemento_Categoria">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Elemento" EntitySet="Elemento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Empleado_Cargo" Association="Self.FK_Empleado_Cargo">
+            <End Role="Cargo" EntitySet="Cargo" />
+            <End Role="Empleado" EntitySet="Empleado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Empleado_Sede" Association="Self.FK_Empleado_Sede">
+            <End Role="Sede" EntitySet="Sede" />
+            <End Role="Empleado" EntitySet="Empleado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Empresa_Pais" Association="Self.FK_Empresa_Pais">
+            <End Role="Pais" EntitySet="Pais" />
+            <End Role="Empresa" EntitySet="Empresa" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Encabezado_Elemento" Association="Self.FK_Encabezado_Elemento">
+            <End Role="Elemento" EntitySet="Elemento" />
+            <End Role="Encabezado" EntitySet="Encabezado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Encabezado_Sede" Association="Self.FK_Encabezado_Sede">
+            <End Role="Sede" EntitySet="Sede" />
+            <End Role="Encabezado" EntitySet="Encabezado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EncabezadoFactor_Encabezado" Association="Self.FK_EncabezadoFactor_Encabezado">
+            <End Role="Encabezado" EntitySet="Encabezado" />
+            <End Role="EncabezadoFactor" EntitySet="EncabezadoFactor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FactorElemento_Encabezado" Association="Self.FK_FactorElemento_Encabezado">
+            <End Role="Encabezado" EntitySet="Encabezado" />
+            <End Role="FactorElemento" EntitySet="FactorElemento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FactorElemento_Estado" Association="Self.FK_FactorElemento_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="FactorElemento" EntitySet="FactorElemento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FactorElemento_Factores" Association="Self.FK_FactorElemento_Factores">
+            <End Role="Factores" EntitySet="Factores" />
+            <End Role="FactorElemento" EntitySet="FactorElemento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inspeccion_Elemento_Elemento" Association="Self.FK_Inspeccion_Elemento_Elemento">
+            <End Role="Elemento" EntitySet="Elemento" />
+            <End Role="Inspeccion_Elemento" EntitySet="Inspeccion_Elemento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inspeccion_Elemento_Inspeccion" Association="Self.FK_Inspeccion_Elemento_Inspeccion">
+            <End Role="Inspeccion" EntitySet="Inspeccion" />
+            <End Role="Inspeccion_Elemento" EntitySet="Inspeccion_Elemento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inspeccion_Elementos_Encabezado" Association="Self.FK_Inspeccion_Elementos_Encabezado">
+            <End Role="Encabezado" EntitySet="Encabezado" />
+            <End Role="Inspeccion_Elementos" EntitySet="Inspeccion_Elementos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inspeccion_Elementos_Inspeccion" Association="Self.FK_Inspeccion_Elementos_Inspeccion">
+            <End Role="Inspeccion" EntitySet="Inspeccion" />
+            <End Role="Inspeccion_Elementos" EntitySet="Inspeccion_Elementos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inspeccion_inspectores_Inspeccion" Association="Self.FK_Inspeccion_inspectores_Inspeccion">
+            <End Role="Inspeccion" EntitySet="Inspeccion" />
+            <End Role="Inspeccion_inspectores" EntitySet="Inspeccion_inspectores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inspeccion_inspectores_Inspectores" Association="Self.FK_Inspeccion_inspectores_Inspectores">
+            <End Role="Inspectores" EntitySet="Inspectores" />
+            <End Role="Inspeccion_inspectores" EntitySet="Inspeccion_inspectores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inspeccion_Sede" Association="Self.FK_Inspeccion_Sede">
+            <End Role="Sede" EntitySet="Sede" />
+            <End Role="Inspeccion" EntitySet="Inspeccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inspector_certificacion_Certificaciones" Association="Self.FK_Inspector_certificacion_Certificaciones">
+            <End Role="Certificaciones" EntitySet="Certificaciones" />
+            <End Role="Inspector_certificacion" EntitySet="Inspector_certificacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inspector_certificacion_Inspectores" Association="Self.FK_Inspector_certificacion_Inspectores">
+            <End Role="Inspectores" EntitySet="Inspectores" />
+            <End Role="Inspector_certificacion" EntitySet="Inspector_certificacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Linea_Grupo" Association="Self.FK_Linea_Grupo">
+            <End Role="Grupo" EntitySet="Grupo" />
+            <End Role="Linea" EntitySet="Linea" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Resultado_AccionTomar" Association="Self.FK_Resultado_AccionTomar">
+            <End Role="AccionTomar" EntitySet="AccionTomar" />
+            <End Role="Resultado" EntitySet="Resultado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Resultado_EstadoFinal" Association="Self.FK_Resultado_EstadoFinal">
+            <End Role="EstadoFinal" EntitySet="EstadoFinal" />
+            <End Role="Resultado" EntitySet="Resultado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Resultado_Inspectores" Association="Self.FK_Resultado_Inspectores">
+            <End Role="Inspectores" EntitySet="Inspectores" />
+            <End Role="Resultado" EntitySet="Resultado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sede_Empresa" Association="Self.FK_Sede_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Sede" EntitySet="Sede" />
+          </AssociationSet>
+          <AssociationSet Name="FK_usuario_Rol_Rol" Association="Self.FK_usuario_Rol_Rol">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="usuario_Rol" EntitySet="usuario_Rol" />
+          </AssociationSet>
+          <AssociationSet Name="FK_usuario_Rol_Usuario" Association="Self.FK_usuario_Rol_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="usuario_Rol" EntitySet="usuario_Rol" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EntityModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AccionTomar">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Resultado" Relationship="Self.FK_Resultado_AccionTomar" FromRole="AccionTomar" ToRole="Resultado" />
+        </EntityType>
+        <EntityType Name="Activo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LineaId" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TipoActivoId" Type="Int32" Nullable="false" />
+          <Property Name="SedeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Linea" Relationship="Self.FK_Activo_Linea" FromRole="Activo" ToRole="Linea" />
+          <NavigationProperty Name="Sede" Relationship="Self.FK_Activo_Sede" FromRole="Activo" ToRole="Sede" />
+          <NavigationProperty Name="TipoActivo" Relationship="Self.FK_Activo_TipoActivo" FromRole="Activo" ToRole="TipoActivo" />
+          <NavigationProperty Name="ActivoInspeccion" Relationship="Self.FK_ActivoInspeccion_Activo" FromRole="Activo" ToRole="ActivoInspeccion" />
+        </EntityType>
+        <EntityType Name="ActivoInspeccion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ActivoID" Type="Int32" Nullable="false" />
+          <Property Name="RFID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Serial" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Modelo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Material" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Marca" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Imagen" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Activo" Relationship="Self.FK_ActivoInspeccion_Activo" FromRole="ActivoInspeccion" ToRole="Activo" />
+        </EntityType>
+        <EntityType Name="Cargo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Empleado" Relationship="Self.FK_Empleado_Cargo" FromRole="Cargo" ToRole="Empleado" />
+        </EntityType>
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Elemento" Relationship="Self.FK_Elemento_Categoria" FromRole="Categoria" ToRole="Elemento" />
+        </EntityType>
+        <EntityType Name="Certificaciones">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Inspector_certificacion" Relationship="Self.FK_Inspector_certificacion_Certificaciones" FromRole="Certificaciones" ToRole="Inspector_certificacion" />
+        </EntityType>
+        <EntityType Name="Curso_Inspector">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cursoid" Type="Int32" />
+          <Property Name="Inspectorid" Type="Int32" />
+          <NavigationProperty Name="Curso_Inspector1" Relationship="Self.FK_Curso_Inspector_Curso_Inspector" FromRole="Curso_Inspector" ToRole="Curso_Inspector1" />
+          <NavigationProperty Name="Curso_Inspector2" Relationship="Self.FK_Curso_Inspector_Curso_Inspector" FromRole="Curso_Inspector1" ToRole="Curso_Inspector" />
+        </EntityType>
+        <EntityType Name="Elemento">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Categoriaid" Type="Int32" />
+          <Property Name="Formato" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Categoria" Relationship="Self.FK_Elemento_Categoria" FromRole="Elemento" ToRole="Categoria" />
+          <NavigationProperty Name="Encabezado" Relationship="Self.FK_Encabezado_Elemento" FromRole="Elemento" ToRole="Encabezado" />
+          <NavigationProperty Name="Inspeccion_Elemento" Relationship="Self.FK_Inspeccion_Elemento_Elemento" FromRole="Elemento" ToRole="Inspeccion_Elemento" />
+        </EntityType>
+        <EntityType Name="Elementos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Elemento" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Imagen" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Empresa">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Paisid" Type="Int32" />
+          <NavigationProperty Name="Pais" Relationship="Self.FK_Empresa_Pais" FromRole="Empresa" ToRole="Pais" />
+          <NavigationProperty Name="Sede" Relationship="Self.FK_Sede_Empresa" FromRole="Empresa" ToRole="Sede" />
+        </EntityType>
+        <EntityType Name="Encabezado">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RFID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Serial" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Modelo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Material" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaFabricacion" Type="DateTime" Precision="3" />
+          <Property Name="Marca" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Lote" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ElementoID" Type="Int32" />
+          <Property Name="Sedeid" Type="Int32" />
+          <Property Name="Ubicacion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="NroFoto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaCompra" Type="DateTime" Precision="3" />
+          <Property Name="Observaciones" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="RutaHojadeVida" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TAG" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Elemento" Relationship="Self.FK_Encabezado_Elemento" FromRole="Encabezado" ToRole="Elemento" />
+          <NavigationProperty Name="Sede" Relationship="Self.FK_Encabezado_Sede" FromRole="Encabezado" ToRole="Sede" />
+          <NavigationProperty Name="EncabezadoFactor" Relationship="Self.FK_EncabezadoFactor_Encabezado" FromRole="Encabezado" ToRole="EncabezadoFactor" />
+          <NavigationProperty Name="FactorElemento" Relationship="Self.FK_FactorElemento_Encabezado" FromRole="Encabezado" ToRole="FactorElemento" />
+          <NavigationProperty Name="Inspeccion_Elementos" Relationship="Self.FK_Inspeccion_Elementos_Encabezado" FromRole="Encabezado" ToRole="Inspeccion_Elementos" />
+        </EntityType>
+        <EntityType Name="EncabezadoFactor">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Encabezadoid" Type="Int32" />
+          <Property Name="Factorid" Type="Int32" />
+          <NavigationProperty Name="Encabezado" Relationship="Self.FK_EncabezadoFactor_Encabezado" FromRole="EncabezadoFactor" ToRole="Encabezado" />
+        </EntityType>
+        <EntityType Name="Estado">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="FactorElemento" Relationship="Self.FK_FactorElemento_Estado" FromRole="Estado" ToRole="FactorElemento" />
+        </EntityType>
+        <EntityType Name="EstadoFinal">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Resultado" Relationship="Self.FK_Resultado_EstadoFinal" FromRole="EstadoFinal" ToRole="Resultado" />
+        </EntityType>
+        <EntityType Name="FactorElemento">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Encabezadoid" Type="Int32" />
+          <Property Name="Factorid" Type="Int32" />
+          <Property Name="Estadoid" Type="Int32" />
+          <Property Name="Comentario" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Encabezado" Relationship="Self.FK_FactorElemento_Encabezado" FromRole="FactorElemento" ToRole="Encabezado" />
+          <NavigationProperty Name="Estado" Relationship="Self.FK_FactorElemento_Estado" FromRole="FactorElemento" ToRole="Estado" />
+          <NavigationProperty Name="Factores" Relationship="Self.FK_FactorElemento_Factores" FromRole="FactorElemento" ToRole="Factores" />
+        </EntityType>
+        <EntityType Name="Factores">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Categoria" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="Factor" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="Elementoid" Type="Int32" />
+          <NavigationProperty Name="FactorElemento" Relationship="Self.FK_FactorElemento_Factores" FromRole="Factores" ToRole="FactorElemento" />
+        </EntityType>
+        <EntityType Name="FichasTec">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Sedeid" Type="Int32" Nullable="false" />
+          <Property Name="ElementoID" Type="Int32" />
+          <Property Name="Marca" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Modelo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Observaciones" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Ficha" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="FotoEncabezado">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Encabezadoid" Type="Int32" />
+          <Property Name="Archivo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Grupo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Linea" Relationship="Self.FK_Linea_Grupo" FromRole="Grupo" ToRole="Linea" />
+        </EntityType>
+        <EntityType Name="Inspeccion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Sedeid" Type="Int32" Nullable="false" />
+          <Property Name="FechaInicio" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaFinal" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Numero" Type="Int32" />
+          <Property Name="Ano" Type="Int32" />
+          <NavigationProperty Name="Inspeccion_Elemento" Relationship="Self.FK_Inspeccion_Elemento_Inspeccion" FromRole="Inspeccion" ToRole="Inspeccion_Elemento" />
+          <NavigationProperty Name="Inspeccion_Elementos" Relationship="Self.FK_Inspeccion_Elementos_Inspeccion" FromRole="Inspeccion" ToRole="Inspeccion_Elementos" />
+          <NavigationProperty Name="Inspeccion_inspectores" Relationship="Self.FK_Inspeccion_inspectores_Inspeccion" FromRole="Inspeccion" ToRole="Inspeccion_inspectores" />
+          <NavigationProperty Name="Sede" Relationship="Self.FK_Inspeccion_Sede" FromRole="Inspeccion" ToRole="Sede" />
+        </EntityType>
+        <EntityType Name="Inspeccion_Elemento">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Inspeccionid" Type="Int32" />
+          <Property Name="Elementoid" Type="Int32" />
+          <NavigationProperty Name="Elemento" Relationship="Self.FK_Inspeccion_Elemento_Elemento" FromRole="Inspeccion_Elemento" ToRole="Elemento" />
+          <NavigationProperty Name="Inspeccion" Relationship="Self.FK_Inspeccion_Elemento_Inspeccion" FromRole="Inspeccion_Elemento" ToRole="Inspeccion" />
+        </EntityType>
+        <EntityType Name="Inspeccion_Elementos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="InspeccionID" Type="Int32" />
+          <Property Name="Encabezadoid" Type="Int32" />
+          <NavigationProperty Name="Encabezado" Relationship="Self.FK_Inspeccion_Elementos_Encabezado" FromRole="Inspeccion_Elementos" ToRole="Encabezado" />
+          <NavigationProperty Name="Inspeccion" Relationship="Self.FK_Inspeccion_Elementos_Inspeccion" FromRole="Inspeccion_Elementos" ToRole="Inspeccion" />
+        </EntityType>
+        <EntityType Name="Inspeccion_inspectores">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Inspeccionid" Type="Int32" />
+          <Property Name="Inspectorid" Type="Int32" />
+          <NavigationProperty Name="Inspeccion" Relationship="Self.FK_Inspeccion_inspectores_Inspeccion" FromRole="Inspeccion_inspectores" ToRole="Inspeccion" />
+          <NavigationProperty Name="Inspectores" Relationship="Self.FK_Inspeccion_inspectores_Inspectores" FromRole="Inspeccion_inspectores" ToRole="Inspectores" />
+        </EntityType>
+        <EntityType Name="InspeccionFactor">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Encabezadoid" Type="Int32" />
+          <Property Name="FactorElementoID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Inspector_certificacion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Inspectorid" Type="Int32" />
+          <Property Name="Certificacionid" Type="Int32" />
+          <NavigationProperty Name="Certificaciones" Relationship="Self.FK_Inspector_certificacion_Certificaciones" FromRole="Inspector_certificacion" ToRole="Certificaciones" />
+          <NavigationProperty Name="Inspectores" Relationship="Self.FK_Inspector_certificacion_Inspectores" FromRole="Inspector_certificacion" ToRole="Inspectores" />
+        </EntityType>
+        <EntityType Name="Inspectores">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Identificacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Inspeccion_inspectores" Relationship="Self.FK_Inspeccion_inspectores_Inspectores" FromRole="Inspectores" ToRole="Inspeccion_inspectores" />
+          <NavigationProperty Name="Inspector_certificacion" Relationship="Self.FK_Inspector_certificacion_Inspectores" FromRole="Inspectores" ToRole="Inspector_certificacion" />
+          <NavigationProperty Name="Resultado" Relationship="Self.FK_Resultado_Inspectores" FromRole="Inspectores" ToRole="Resultado" />
+        </EntityType>
+        <EntityType Name="Linea">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GrupoID" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Activo" Relationship="Self.FK_Activo_Linea" FromRole="Linea" ToRole="Activo" />
+          <NavigationProperty Name="Grupo" Relationship="Self.FK_Linea_Grupo" FromRole="Linea" ToRole="Grupo" />
+        </EntityType>
+        <EntityType Name="Pais">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Empresa" Relationship="Self.FK_Empresa_Pais" FromRole="Pais" ToRole="Empresa" />
+        </EntityType>
+        <EntityType Name="Resultado">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Encabezadoid" Type="Int32" />
+          <Property Name="EstadoFinalId" Type="Int32" />
+          <Property Name="AccionTomarId" Type="Int32" />
+          <Property Name="InspectorID" Type="Int32" />
+          <Property Name="FechaInspeccion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="AccionTomar" Relationship="Self.FK_Resultado_AccionTomar" FromRole="Resultado" ToRole="AccionTomar" />
+          <NavigationProperty Name="EstadoFinal" Relationship="Self.FK_Resultado_EstadoFinal" FromRole="Resultado" ToRole="EstadoFinal" />
+          <NavigationProperty Name="Inspectores" Relationship="Self.FK_Resultado_Inspectores" FromRole="Resultado" ToRole="Inspectores" />
+        </EntityType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="usuario_Rol" Relationship="Self.FK_usuario_Rol_Rol" FromRole="Rol" ToRole="usuario_Rol" />
+        </EntityType>
+        <EntityType Name="Sede">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Ubicacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Empresaid" Type="Int32" />
+          <Property Name="EnelCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SedeCategoriaid" Type="Int32" />
+          <NavigationProperty Name="Activo" Relationship="Self.FK_Activo_Sede" FromRole="Sede" ToRole="Activo" />
+          <NavigationProperty Name="Empresa" Relationship="Self.FK_Sede_Empresa" FromRole="Sede" ToRole="Empresa" />
+          <NavigationProperty Name="Encabezado" Relationship="Self.FK_Encabezado_Sede" FromRole="Sede" ToRole="Encabezado" />
+          <NavigationProperty Name="Inspeccion" Relationship="Self.FK_Inspeccion_Sede" FromRole="Sede" ToRole="Inspeccion" />
+          <NavigationProperty Name="Empleado" Relationship="Self.FK_Empleado_Sede" FromRole="Sede" ToRole="Empleado" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TipoActivo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Activo" Relationship="Self.FK_Activo_TipoActivo" FromRole="TipoActivo" ToRole="Activo" />
+        </EntityType>
+        <EntityType Name="TSA">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Inspector" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RutaPDF" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Sedeid" Type="Int32" />
+          <Property Name="Cursoid" Type="Int32" />
+          <Property Name="Identificacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Ano" Type="Int32" />
+        </EntityType>
+        <EntityType Name="TSA_Empleado">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmpleadoID" Type="Int32" />
+          <Property Name="CursoID" Type="Int32" />
+          <Property Name="RutaPDF" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Mes" Type="Int32" />
+          <Property Name="Ano" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="Usuario_ID" />
+          </Key>
+          <Property Name="Usuario_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Usuario1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Pass" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nombres" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Apellidos" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Activo" Type="Int32" Nullable="false" />
+          <Property Name="Celular" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Extension" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Ciudad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="usuario_Rol" Relationship="Self.FK_usuario_Rol_Usuario" FromRole="Usuario" ToRole="usuario_Rol" />
+          <Property Name="PasswordMD5" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Usuario_Sede">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UsuarioID" Type="Int32" Nullable="false" />
+          <Property Name="SedeID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Certificacion_Inspector">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="certificacionid" Type="Int32" />
+          <Property Name="Inspectorid" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Curso">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Curso1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Empleado">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Identificacion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Sedeid" Type="Int32" />
+          <Property Name="CargoID" Type="Int32" />
+          <NavigationProperty Name="Cargo" Relationship="Self.FK_Empleado_Cargo" FromRole="Empleado" ToRole="Cargo" />
+          <NavigationProperty Name="Sede" Relationship="Self.FK_Empleado_Sede" FromRole="Empleado" ToRole="Sede" />
+        </EntityType>
+        <EntityType Name="SedeCategoria">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="usuario_Rol">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UsuarioID" Type="Int32" />
+          <Property Name="RolId" Type="Int32" />
+          <NavigationProperty Name="Rol" Relationship="Self.FK_usuario_Rol_Rol" FromRole="usuario_Rol" ToRole="Rol" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_usuario_Rol_Usuario" FromRole="usuario_Rol" ToRole="Usuario" />
+        </EntityType>
+        <Association Name="FK_Resultado_AccionTomar">
+          <End Role="AccionTomar" Type="Self.AccionTomar" Multiplicity="0..1" />
+          <End Role="Resultado" Type="Self.Resultado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccionTomar">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Resultado">
+              <PropertyRef Name="AccionTomarId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Activo_Linea">
+          <End Role="Linea" Type="Self.Linea" Multiplicity="1" />
+          <End Role="Activo" Type="Self.Activo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Linea">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Activo">
+              <PropertyRef Name="LineaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Activo_Sede">
+          <End Role="Sede" Type="Self.Sede" Multiplicity="1" />
+          <End Role="Activo" Type="Self.Activo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sede">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Activo">
+              <PropertyRef Name="SedeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Activo_TipoActivo">
+          <End Role="TipoActivo" Type="Self.TipoActivo" Multiplicity="1" />
+          <End Role="Activo" Type="Self.Activo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoActivo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Activo">
+              <PropertyRef Name="TipoActivoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ActivoInspeccion_Activo">
+          <End Role="Activo" Type="Self.Activo" Multiplicity="1" />
+          <End Role="ActivoInspeccion" Type="Self.ActivoInspeccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Activo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ActivoInspeccion">
+              <PropertyRef Name="ActivoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Empleado_Cargo">
+          <End Role="Cargo" Type="Self.Cargo" Multiplicity="0..1" />
+          <End Role="Empleado" Type="Self.Empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cargo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Empleado">
+              <PropertyRef Name="CargoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Elemento_Categoria">
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="0..1" />
+          <End Role="Elemento" Type="Self.Elemento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Elemento">
+              <PropertyRef Name="Categoriaid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inspector_certificacion_Certificaciones">
+          <End Role="Certificaciones" Type="Self.Certificaciones" Multiplicity="0..1" />
+          <End Role="Inspector_certificacion" Type="Self.Inspector_certificacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Certificaciones">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Inspector_certificacion">
+              <PropertyRef Name="Certificacionid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Curso_Inspector_Curso_Inspector">
+          <End Role="Curso_Inspector" Type="Self.Curso_Inspector" Multiplicity="1" />
+          <End Role="Curso_Inspector1" Type="Self.Curso_Inspector" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Curso_Inspector">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Curso_Inspector1">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Encabezado_Elemento">
+          <End Role="Elemento" Type="Self.Elemento" Multiplicity="0..1" />
+          <End Role="Encabezado" Type="Self.Encabezado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Elemento">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Encabezado">
+              <PropertyRef Name="ElementoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inspeccion_Elemento_Elemento">
+          <End Role="Elemento" Type="Self.Elemento" Multiplicity="0..1" />
+          <End Role="Inspeccion_Elemento" Type="Self.Inspeccion_Elemento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Elemento">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Inspeccion_Elemento">
+              <PropertyRef Name="Elementoid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Empresa_Pais">
+          <End Role="Pais" Type="Self.Pais" Multiplicity="0..1" />
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pais">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Empresa">
+              <PropertyRef Name="Paisid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sede_Empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="0..1" />
+          <End Role="Sede" Type="Self.Sede" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Sede">
+              <PropertyRef Name="Empresaid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Encabezado_Sede">
+          <End Role="Sede" Type="Self.Sede" Multiplicity="0..1" />
+          <End Role="Encabezado" Type="Self.Encabezado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sede">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Encabezado">
+              <PropertyRef Name="Sedeid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EncabezadoFactor_Encabezado">
+          <End Role="Encabezado" Type="Self.Encabezado" Multiplicity="0..1" />
+          <End Role="EncabezadoFactor" Type="Self.EncabezadoFactor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Encabezado">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="EncabezadoFactor">
+              <PropertyRef Name="Encabezadoid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FactorElemento_Encabezado">
+          <End Role="Encabezado" Type="Self.Encabezado" Multiplicity="0..1" />
+          <End Role="FactorElemento" Type="Self.FactorElemento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Encabezado">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="FactorElemento">
+              <PropertyRef Name="Encabezadoid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inspeccion_Elementos_Encabezado">
+          <End Role="Encabezado" Type="Self.Encabezado" Multiplicity="0..1" />
+          <End Role="Inspeccion_Elementos" Type="Self.Inspeccion_Elementos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Encabezado">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Inspeccion_Elementos">
+              <PropertyRef Name="Encabezadoid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FactorElemento_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="0..1" />
+          <End Role="FactorElemento" Type="Self.FactorElemento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="FactorElemento">
+              <PropertyRef Name="Estadoid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Resultado_EstadoFinal">
+          <End Role="EstadoFinal" Type="Self.EstadoFinal" Multiplicity="0..1" />
+          <End Role="Resultado" Type="Self.Resultado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstadoFinal">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Resultado">
+              <PropertyRef Name="EstadoFinalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FactorElemento_Factores">
+          <End Role="Factores" Type="Self.Factores" Multiplicity="0..1" />
+          <End Role="FactorElemento" Type="Self.FactorElemento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Factores">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="FactorElemento">
+              <PropertyRef Name="Factorid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Linea_Grupo">
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="1" />
+          <End Role="Linea" Type="Self.Linea" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grupo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Linea">
+              <PropertyRef Name="GrupoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inspeccion_Elemento_Inspeccion">
+          <End Role="Inspeccion" Type="Self.Inspeccion" Multiplicity="0..1" />
+          <End Role="Inspeccion_Elemento" Type="Self.Inspeccion_Elemento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inspeccion">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Inspeccion_Elemento">
+              <PropertyRef Name="Inspeccionid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inspeccion_Elementos_Inspeccion">
+          <End Role="Inspeccion" Type="Self.Inspeccion" Multiplicity="0..1" />
+          <End Role="Inspeccion_Elementos" Type="Self.Inspeccion_Elementos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inspeccion">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Inspeccion_Elementos">
+              <PropertyRef Name="InspeccionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inspeccion_inspectores_Inspeccion">
+          <End Role="Inspeccion" Type="Self.Inspeccion" Multiplicity="0..1" />
+          <End Role="Inspeccion_inspectores" Type="Self.Inspeccion_inspectores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inspeccion">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Inspeccion_inspectores">
+              <PropertyRef Name="Inspeccionid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inspeccion_Sede">
+          <End Role="Sede" Type="Self.Sede" Multiplicity="1" />
+          <End Role="Inspeccion" Type="Self.Inspeccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sede">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Inspeccion">
+              <PropertyRef Name="Sedeid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inspeccion_inspectores_Inspectores">
+          <End Role="Inspectores" Type="Self.Inspectores" Multiplicity="0..1" />
+          <End Role="Inspeccion_inspectores" Type="Self.Inspeccion_inspectores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inspectores">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Inspeccion_inspectores">
+              <PropertyRef Name="Inspectorid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inspector_certificacion_Inspectores">
+          <End Role="Inspectores" Type="Self.Inspectores" Multiplicity="0..1" />
+          <End Role="Inspector_certificacion" Type="Self.Inspector_certificacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inspectores">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Inspector_certificacion">
+              <PropertyRef Name="Inspectorid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Resultado_Inspectores">
+          <End Role="Inspectores" Type="Self.Inspectores" Multiplicity="0..1" />
+          <End Role="Resultado" Type="Self.Resultado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inspectores">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Resultado">
+              <PropertyRef Name="InspectorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_usuario_Rol_Rol">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="0..1" />
+          <End Role="usuario_Rol" Type="Self.usuario_Rol" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="usuario_Rol">
+              <PropertyRef Name="RolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Empleado_Sede">
+          <End Role="Sede" Type="Self.Sede" Multiplicity="0..1" />
+          <End Role="Empleado" Type="Self.Empleado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sede">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Empleado">
+              <PropertyRef Name="Sedeid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_usuario_Rol_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="usuario_Rol" Type="Self.usuario_Rol" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Usuario_ID" />
+            </Principal>
+            <Dependent Role="usuario_Rol">
+              <PropertyRef Name="UsuarioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AccionTomar" EntityType="Self.AccionTomar" />
+          <EntitySet Name="Activo" EntityType="Self.Activo" />
+          <EntitySet Name="ActivoInspeccion" EntityType="Self.ActivoInspeccion" />
+          <EntitySet Name="Cargo" EntityType="Self.Cargo" />
+          <EntitySet Name="Categoria" EntityType="Self.Categoria" />
+          <EntitySet Name="Certificaciones" EntityType="Self.Certificaciones" />
+          <EntitySet Name="Curso_Inspector" EntityType="Self.Curso_Inspector" />
+          <EntitySet Name="Elemento" EntityType="Self.Elemento" />
+          <EntitySet Name="Elementos" EntityType="Self.Elementos" />
+          <EntitySet Name="Empresa" EntityType="Self.Empresa" />
+          <EntitySet Name="Encabezado" EntityType="Self.Encabezado" />
+          <EntitySet Name="EncabezadoFactor" EntityType="Self.EncabezadoFactor" />
+          <EntitySet Name="Estado" EntityType="Self.Estado" />
+          <EntitySet Name="EstadoFinal" EntityType="Self.EstadoFinal" />
+          <EntitySet Name="FactorElemento" EntityType="Self.FactorElemento" />
+          <EntitySet Name="Factores" EntityType="Self.Factores" />
+          <EntitySet Name="FichasTec" EntityType="Self.FichasTec" />
+          <EntitySet Name="FotoEncabezado" EntityType="Self.FotoEncabezado" />
+          <EntitySet Name="Grupo" EntityType="Self.Grupo" />
+          <EntitySet Name="Inspeccion" EntityType="Self.Inspeccion" />
+          <EntitySet Name="Inspeccion_Elemento" EntityType="Self.Inspeccion_Elemento" />
+          <EntitySet Name="Inspeccion_Elementos" EntityType="Self.Inspeccion_Elementos" />
+          <EntitySet Name="Inspeccion_inspectores" EntityType="Self.Inspeccion_inspectores" />
+          <EntitySet Name="InspeccionFactor" EntityType="Self.InspeccionFactor" />
+          <EntitySet Name="Inspector_certificacion" EntityType="Self.Inspector_certificacion" />
+          <EntitySet Name="Inspectores" EntityType="Self.Inspectores" />
+          <EntitySet Name="Linea" EntityType="Self.Linea" />
+          <EntitySet Name="Pais" EntityType="Self.Pais" />
+          <EntitySet Name="Resultado" EntityType="Self.Resultado" />
+          <EntitySet Name="Rol" EntityType="Self.Rol" />
+          <EntitySet Name="Sede" EntityType="Self.Sede" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="TipoActivo" EntityType="Self.TipoActivo" />
+          <EntitySet Name="TSA" EntityType="Self.TSA" />
+          <EntitySet Name="TSA_Empleado" EntityType="Self.TSA_Empleado" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+          <EntitySet Name="Usuario_Sede" EntityType="Self.Usuario_Sede" />
+          <EntitySet Name="Certificacion_Inspector" EntityType="Self.Certificacion_Inspector" />
+          <EntitySet Name="Curso" EntityType="Self.Curso" />
+          <EntitySet Name="Empleado" EntityType="Self.Empleado" />
+          <EntitySet Name="SedeCategoria" EntityType="Self.SedeCategoria" />
+          <EntitySet Name="usuario_Rol" EntityType="Self.usuario_Rol" />
+          <AssociationSet Name="FK_Resultado_AccionTomar" Association="Self.FK_Resultado_AccionTomar">
+            <End Role="AccionTomar" EntitySet="AccionTomar" />
+            <End Role="Resultado" EntitySet="Resultado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Activo_Linea" Association="Self.FK_Activo_Linea">
+            <End Role="Linea" EntitySet="Linea" />
+            <End Role="Activo" EntitySet="Activo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Activo_Sede" Association="Self.FK_Activo_Sede">
+            <End Role="Sede" EntitySet="Sede" />
+            <End Role="Activo" EntitySet="Activo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Activo_TipoActivo" Association="Self.FK_Activo_TipoActivo">
+            <End Role="TipoActivo" EntitySet="TipoActivo" />
+            <End Role="Activo" EntitySet="Activo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ActivoInspeccion_Activo" Association="Self.FK_ActivoInspeccion_Activo">
+            <End Role="Activo" EntitySet="Activo" />
+            <End Role="ActivoInspeccion" EntitySet="ActivoInspeccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Empleado_Cargo" Association="Self.FK_Empleado_Cargo">
+            <End Role="Cargo" EntitySet="Cargo" />
+            <End Role="Empleado" EntitySet="Empleado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Elemento_Categoria" Association="Self.FK_Elemento_Categoria">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Elemento" EntitySet="Elemento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inspector_certificacion_Certificaciones" Association="Self.FK_Inspector_certificacion_Certificaciones">
+            <End Role="Certificaciones" EntitySet="Certificaciones" />
+            <End Role="Inspector_certificacion" EntitySet="Inspector_certificacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Curso_Inspector_Curso_Inspector" Association="Self.FK_Curso_Inspector_Curso_Inspector">
+            <End Role="Curso_Inspector" EntitySet="Curso_Inspector" />
+            <End Role="Curso_Inspector1" EntitySet="Curso_Inspector" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Encabezado_Elemento" Association="Self.FK_Encabezado_Elemento">
+            <End Role="Elemento" EntitySet="Elemento" />
+            <End Role="Encabezado" EntitySet="Encabezado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inspeccion_Elemento_Elemento" Association="Self.FK_Inspeccion_Elemento_Elemento">
+            <End Role="Elemento" EntitySet="Elemento" />
+            <End Role="Inspeccion_Elemento" EntitySet="Inspeccion_Elemento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Empresa_Pais" Association="Self.FK_Empresa_Pais">
+            <End Role="Pais" EntitySet="Pais" />
+            <End Role="Empresa" EntitySet="Empresa" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sede_Empresa" Association="Self.FK_Sede_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Sede" EntitySet="Sede" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Encabezado_Sede" Association="Self.FK_Encabezado_Sede">
+            <End Role="Sede" EntitySet="Sede" />
+            <End Role="Encabezado" EntitySet="Encabezado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EncabezadoFactor_Encabezado" Association="Self.FK_EncabezadoFactor_Encabezado">
+            <End Role="Encabezado" EntitySet="Encabezado" />
+            <End Role="EncabezadoFactor" EntitySet="EncabezadoFactor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FactorElemento_Encabezado" Association="Self.FK_FactorElemento_Encabezado">
+            <End Role="Encabezado" EntitySet="Encabezado" />
+            <End Role="FactorElemento" EntitySet="FactorElemento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inspeccion_Elementos_Encabezado" Association="Self.FK_Inspeccion_Elementos_Encabezado">
+            <End Role="Encabezado" EntitySet="Encabezado" />
+            <End Role="Inspeccion_Elementos" EntitySet="Inspeccion_Elementos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FactorElemento_Estado" Association="Self.FK_FactorElemento_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="FactorElemento" EntitySet="FactorElemento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Resultado_EstadoFinal" Association="Self.FK_Resultado_EstadoFinal">
+            <End Role="EstadoFinal" EntitySet="EstadoFinal" />
+            <End Role="Resultado" EntitySet="Resultado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FactorElemento_Factores" Association="Self.FK_FactorElemento_Factores">
+            <End Role="Factores" EntitySet="Factores" />
+            <End Role="FactorElemento" EntitySet="FactorElemento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Linea_Grupo" Association="Self.FK_Linea_Grupo">
+            <End Role="Grupo" EntitySet="Grupo" />
+            <End Role="Linea" EntitySet="Linea" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inspeccion_Elemento_Inspeccion" Association="Self.FK_Inspeccion_Elemento_Inspeccion">
+            <End Role="Inspeccion" EntitySet="Inspeccion" />
+            <End Role="Inspeccion_Elemento" EntitySet="Inspeccion_Elemento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inspeccion_Elementos_Inspeccion" Association="Self.FK_Inspeccion_Elementos_Inspeccion">
+            <End Role="Inspeccion" EntitySet="Inspeccion" />
+            <End Role="Inspeccion_Elementos" EntitySet="Inspeccion_Elementos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inspeccion_inspectores_Inspeccion" Association="Self.FK_Inspeccion_inspectores_Inspeccion">
+            <End Role="Inspeccion" EntitySet="Inspeccion" />
+            <End Role="Inspeccion_inspectores" EntitySet="Inspeccion_inspectores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inspeccion_Sede" Association="Self.FK_Inspeccion_Sede">
+            <End Role="Sede" EntitySet="Sede" />
+            <End Role="Inspeccion" EntitySet="Inspeccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inspeccion_inspectores_Inspectores" Association="Self.FK_Inspeccion_inspectores_Inspectores">
+            <End Role="Inspectores" EntitySet="Inspectores" />
+            <End Role="Inspeccion_inspectores" EntitySet="Inspeccion_inspectores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inspector_certificacion_Inspectores" Association="Self.FK_Inspector_certificacion_Inspectores">
+            <End Role="Inspectores" EntitySet="Inspectores" />
+            <End Role="Inspector_certificacion" EntitySet="Inspector_certificacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Resultado_Inspectores" Association="Self.FK_Resultado_Inspectores">
+            <End Role="Inspectores" EntitySet="Inspectores" />
+            <End Role="Resultado" EntitySet="Resultado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_usuario_Rol_Rol" Association="Self.FK_usuario_Rol_Rol">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="usuario_Rol" EntitySet="usuario_Rol" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Empleado_Sede" Association="Self.FK_Empleado_Sede">
+            <End Role="Sede" EntitySet="Sede" />
+            <End Role="Empleado" EntitySet="Empleado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_usuario_Rol_Usuario" Association="Self.FK_usuario_Rol_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="usuario_Rol" EntitySet="usuario_Rol" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EntityModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="AccionTomar">
+            <EntityTypeMapping TypeName="EntityModel.AccionTomar">
+              <MappingFragment StoreEntitySet="AccionTomar">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Activo">
+            <EntityTypeMapping TypeName="EntityModel.Activo">
+              <MappingFragment StoreEntitySet="Activo">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="LineaId" ColumnName="LineaId" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="TipoActivoId" ColumnName="TipoActivoId" />
+                <ScalarProperty Name="SedeId" ColumnName="SedeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ActivoInspeccion">
+            <EntityTypeMapping TypeName="EntityModel.ActivoInspeccion">
+              <MappingFragment StoreEntitySet="ActivoInspeccion">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ActivoID" ColumnName="ActivoID" />
+                <ScalarProperty Name="RFID" ColumnName="RFID" />
+                <ScalarProperty Name="Serial" ColumnName="Serial" />
+                <ScalarProperty Name="Modelo" ColumnName="Modelo" />
+                <ScalarProperty Name="Material" ColumnName="Material" />
+                <ScalarProperty Name="Marca" ColumnName="Marca" />
+                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cargo">
+            <EntityTypeMapping TypeName="EntityModel.Cargo">
+              <MappingFragment StoreEntitySet="Cargo">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categoria">
+            <EntityTypeMapping TypeName="EntityModel.Categoria">
+              <MappingFragment StoreEntitySet="Categoria">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Certificaciones">
+            <EntityTypeMapping TypeName="EntityModel.Certificaciones">
+              <MappingFragment StoreEntitySet="Certificaciones">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Curso_Inspector">
+            <EntityTypeMapping TypeName="EntityModel.Curso_Inspector">
+              <MappingFragment StoreEntitySet="Curso_Inspector">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Cursoid" ColumnName="Cursoid" />
+                <ScalarProperty Name="Inspectorid" ColumnName="Inspectorid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Elemento">
+            <EntityTypeMapping TypeName="EntityModel.Elemento">
+              <MappingFragment StoreEntitySet="Elemento">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Categoriaid" ColumnName="Categoriaid" />
+                <ScalarProperty Name="Formato" ColumnName="Formato" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Elementos">
+            <EntityTypeMapping TypeName="EntityModel.Elementos">
+              <MappingFragment StoreEntitySet="Elementos">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Elemento" ColumnName="Elemento" />
+                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Empresa">
+            <EntityTypeMapping TypeName="EntityModel.Empresa">
+              <MappingFragment StoreEntitySet="Empresa">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Paisid" ColumnName="Paisid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Encabezado">
+            <EntityTypeMapping TypeName="EntityModel.Encabezado">
+              <MappingFragment StoreEntitySet="Encabezado">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="RFID" ColumnName="RFID" />
+                <ScalarProperty Name="Serial" ColumnName="Serial" />
+                <ScalarProperty Name="Modelo" ColumnName="Modelo" />
+                <ScalarProperty Name="Material" ColumnName="Material" />
+                <ScalarProperty Name="FechaFabricacion" ColumnName="FechaFabricacion" />
+                <ScalarProperty Name="Marca" ColumnName="Marca" />
+                <ScalarProperty Name="Lote" ColumnName="Lote" />
+                <ScalarProperty Name="ElementoID" ColumnName="ElementoID" />
+                <ScalarProperty Name="Sedeid" ColumnName="Sedeid" />
+                <ScalarProperty Name="Ubicacion" ColumnName="Ubicacion" />
+                <ScalarProperty Name="NroFoto" ColumnName="NroFoto" />
+                <ScalarProperty Name="FechaCompra" ColumnName="FechaCompra" />
+                <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
+                <ScalarProperty Name="RutaHojadeVida" ColumnName="RutaHojadeVida" />
+                <ScalarProperty Name="TAG" ColumnName="TAG" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EncabezadoFactor">
+            <EntityTypeMapping TypeName="EntityModel.EncabezadoFactor">
+              <MappingFragment StoreEntitySet="EncabezadoFactor">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Encabezadoid" ColumnName="Encabezadoid" />
+                <ScalarProperty Name="Factorid" ColumnName="Factorid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Estado">
+            <EntityTypeMapping TypeName="EntityModel.Estado">
+              <MappingFragment StoreEntitySet="Estado">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EstadoFinal">
+            <EntityTypeMapping TypeName="EntityModel.EstadoFinal">
+              <MappingFragment StoreEntitySet="EstadoFinal">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FactorElemento">
+            <EntityTypeMapping TypeName="EntityModel.FactorElemento">
+              <MappingFragment StoreEntitySet="FactorElemento">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Encabezadoid" ColumnName="Encabezadoid" />
+                <ScalarProperty Name="Factorid" ColumnName="Factorid" />
+                <ScalarProperty Name="Estadoid" ColumnName="Estadoid" />
+                <ScalarProperty Name="Comentario" ColumnName="Comentario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Factores">
+            <EntityTypeMapping TypeName="EntityModel.Factores">
+              <MappingFragment StoreEntitySet="Factores">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Categoria" ColumnName="Categoria" />
+                <ScalarProperty Name="Factor" ColumnName="Factor" />
+                <ScalarProperty Name="Elementoid" ColumnName="Elementoid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FichasTec">
+            <EntityTypeMapping TypeName="EntityModel.FichasTec">
+              <MappingFragment StoreEntitySet="FichasTec">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Sedeid" ColumnName="Sedeid" />
+                <ScalarProperty Name="ElementoID" ColumnName="ElementoID" />
+                <ScalarProperty Name="Marca" ColumnName="Marca" />
+                <ScalarProperty Name="Modelo" ColumnName="Modelo" />
+                <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
+                <ScalarProperty Name="Ficha" ColumnName="Ficha" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FotoEncabezado">
+            <EntityTypeMapping TypeName="EntityModel.FotoEncabezado">
+              <MappingFragment StoreEntitySet="FotoEncabezado">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Encabezadoid" ColumnName="Encabezadoid" />
+                <ScalarProperty Name="Archivo" ColumnName="Archivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Grupo">
+            <EntityTypeMapping TypeName="EntityModel.Grupo">
+              <MappingFragment StoreEntitySet="Grupo">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Inspeccion">
+            <EntityTypeMapping TypeName="EntityModel.Inspeccion">
+              <MappingFragment StoreEntitySet="Inspeccion">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Sedeid" ColumnName="Sedeid" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="FechaFinal" ColumnName="FechaFinal" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="Ano" ColumnName="Ano" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Inspeccion_Elemento">
+            <EntityTypeMapping TypeName="EntityModel.Inspeccion_Elemento">
+              <MappingFragment StoreEntitySet="Inspeccion_Elemento">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Inspeccionid" ColumnName="Inspeccionid" />
+                <ScalarProperty Name="Elementoid" ColumnName="Elementoid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Inspeccion_Elementos">
+            <EntityTypeMapping TypeName="EntityModel.Inspeccion_Elementos">
+              <MappingFragment StoreEntitySet="Inspeccion_Elementos">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="InspeccionID" ColumnName="InspeccionID" />
+                <ScalarProperty Name="Encabezadoid" ColumnName="Encabezadoid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Inspeccion_inspectores">
+            <EntityTypeMapping TypeName="EntityModel.Inspeccion_inspectores">
+              <MappingFragment StoreEntitySet="Inspeccion_inspectores">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Inspeccionid" ColumnName="Inspeccionid" />
+                <ScalarProperty Name="Inspectorid" ColumnName="Inspectorid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InspeccionFactor">
+            <EntityTypeMapping TypeName="EntityModel.InspeccionFactor">
+              <MappingFragment StoreEntitySet="InspeccionFactor">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Encabezadoid" ColumnName="Encabezadoid" />
+                <ScalarProperty Name="FactorElementoID" ColumnName="FactorElementoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Inspector_certificacion">
+            <EntityTypeMapping TypeName="EntityModel.Inspector_certificacion">
+              <MappingFragment StoreEntitySet="Inspector_certificacion">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Inspectorid" ColumnName="Inspectorid" />
+                <ScalarProperty Name="Certificacionid" ColumnName="Certificacionid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Inspectores">
+            <EntityTypeMapping TypeName="EntityModel.Inspectores">
+              <MappingFragment StoreEntitySet="Inspectores">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Identificacion" ColumnName="Identificacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Linea">
+            <EntityTypeMapping TypeName="EntityModel.Linea">
+              <MappingFragment StoreEntitySet="Linea">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="GrupoID" ColumnName="GrupoID" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pais">
+            <EntityTypeMapping TypeName="EntityModel.Pais">
+              <MappingFragment StoreEntitySet="Pais">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Resultado">
+            <EntityTypeMapping TypeName="EntityModel.Resultado">
+              <MappingFragment StoreEntitySet="Resultado">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Encabezadoid" ColumnName="Encabezadoid" />
+                <ScalarProperty Name="EstadoFinalId" ColumnName="EstadoFinalId" />
+                <ScalarProperty Name="AccionTomarId" ColumnName="AccionTomarId" />
+                <ScalarProperty Name="InspectorID" ColumnName="InspectorID" />
+                <ScalarProperty Name="FechaInspeccion" ColumnName="FechaInspeccion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rol">
+            <EntityTypeMapping TypeName="EntityModel.Rol">
+              <MappingFragment StoreEntitySet="Rol">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sede">
+            <EntityTypeMapping TypeName="EntityModel.Sede">
+              <MappingFragment StoreEntitySet="Sede">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Ubicacion" ColumnName="Ubicacion" />
+                <ScalarProperty Name="Empresaid" ColumnName="Empresaid" />
+                <ScalarProperty Name="EnelCode" ColumnName="EnelCode" />
+                <ScalarProperty Name="SedeCategoriaid" ColumnName="SedeCategoriaid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="EntityModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoActivo">
+            <EntityTypeMapping TypeName="EntityModel.TipoActivo">
+              <MappingFragment StoreEntitySet="TipoActivo">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TSA">
+            <EntityTypeMapping TypeName="EntityModel.TSA">
+              <MappingFragment StoreEntitySet="TSA">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Inspector" ColumnName="Inspector" />
+                <ScalarProperty Name="RutaPDF" ColumnName="RutaPDF" />
+                <ScalarProperty Name="Sedeid" ColumnName="Sedeid" />
+                <ScalarProperty Name="Cursoid" ColumnName="Cursoid" />
+                <ScalarProperty Name="Identificacion" ColumnName="Identificacion" />
+                <ScalarProperty Name="Ano" ColumnName="Ano" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TSA_Empleado">
+            <EntityTypeMapping TypeName="EntityModel.TSA_Empleado">
+              <MappingFragment StoreEntitySet="TSA_Empleado">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="EmpleadoID" ColumnName="EmpleadoID" />
+                <ScalarProperty Name="CursoID" ColumnName="CursoID" />
+                <ScalarProperty Name="RutaPDF" ColumnName="RutaPDF" />
+                <ScalarProperty Name="Mes" ColumnName="Mes" />
+                <ScalarProperty Name="Ano" ColumnName="Ano" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="EntityModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="PasswordMD5" ColumnName="PasswordMD5" />
+                <ScalarProperty Name="Usuario_ID" ColumnName="Usuario_ID" />
+                <ScalarProperty Name="Usuario1" ColumnName="Usuario" />
+                <ScalarProperty Name="Pass" ColumnName="Pass" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Celular" ColumnName="Celular" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Extension" ColumnName="Extension" />
+                <ScalarProperty Name="Ciudad" ColumnName="Ciudad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario_Sede">
+            <EntityTypeMapping TypeName="EntityModel.Usuario_Sede">
+              <MappingFragment StoreEntitySet="Usuario_Sede">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+                <ScalarProperty Name="SedeID" ColumnName="SedeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Certificacion_Inspector">
+            <EntityTypeMapping TypeName="EntityModel.Certificacion_Inspector">
+              <MappingFragment StoreEntitySet="Certificacion_Inspector">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="certificacionid" ColumnName="certificacionid" />
+                <ScalarProperty Name="Inspectorid" ColumnName="Inspectorid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Curso">
+            <EntityTypeMapping TypeName="EntityModel.Curso">
+              <MappingFragment StoreEntitySet="Curso">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Curso1" ColumnName="Curso" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Empleado">
+            <EntityTypeMapping TypeName="EntityModel.Empleado">
+              <MappingFragment StoreEntitySet="Empleado">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Identificacion" ColumnName="Identificacion" />
+                <ScalarProperty Name="Sedeid" ColumnName="Sedeid" />
+                <ScalarProperty Name="CargoID" ColumnName="CargoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SedeCategoria">
+            <EntityTypeMapping TypeName="EntityModel.SedeCategoria">
+              <MappingFragment StoreEntitySet="SedeCategoria">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usuario_Rol">
+            <EntityTypeMapping TypeName="EntityModel.usuario_Rol">
+              <MappingFragment StoreEntitySet="usuario_Rol">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+                <ScalarProperty Name="RolId" ColumnName="RolId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

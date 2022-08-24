@@ -1,0 +1,22 @@
+﻿@using WebApplication1.Models;
+@{
+    var session = Session["SessionUser"] as SessionModels;
+}
+<div class="ui menu" style="background: #000000 !important;">
+    <div class="left menu" id="imageHeader">
+        <img src="@Url.Content("~/Content/Images/header.jpg")" style="width:1325px" />
+    </div>
+    <div class="right menu">
+        <div class="item" style="background-color:black">
+            <h4 style="color: white">@session.NameUser </h4>
+           </div>
+        <div class="item" style="cursor:pointer" id="iMenu">
+            <i class="ellipsis vertical icon" style="color:white !important;"></i>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $('#iMenu').on('click', function () {
+        $("#menuPartial").toggle();
+    });
+</script>

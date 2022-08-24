@@ -1,0 +1,358 @@
+﻿@using System.Data
+@model DataTable
+<style>
+    #modalLoadCourses {
+        height: 80vh;
+        overflow-y: scroll;
+    }
+</style>
+<h3 class="titlesPages">
+    CREAR PERSONA
+</h3>
+@using (Ajax.BeginForm("ProcessCreatePerson", "Trainning", null, new AjaxOptions()
+{
+    HttpMethod = "POST",
+    OnBegin = "return onBeginProcessCreatePerson()",
+    OnSuccess = "onSuccessProcessCreatePerson(data)",
+    OnFailure = "onFailureProcessCreatePerson()",
+}, new { @id = "formProcessCreatePerson" }))
+{
+    <div class="ui equal width form">
+        <div class="fields">
+            <div class="field">
+                <label>Nombre</label>
+                <input type="text" id="name" name="name" placeholder="Nombre" autocomplete="off" maxlength="50">
+            </div>
+            <div class="field">
+                <label>Apellido</label>
+                <input type="text" id="name" name="lastname" placeholder="Apellido" autocomplete="off" maxlength="50">
+            </div>
+            <div class="field">
+                <label>Identificación</label>
+                <input type="text" id="identification" name="identification" placeholder="Identificación" autocomplete="off" maxlength="50">
+            </div>
+            <div class="field">
+                <label>Asignado</label>
+                <input type="text" id="assigned" name="assigned" placeholder="Asignado" autocomplete="off" maxlength="50">
+            </div>
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>Sede</label>
+                @Html.DropDownList("cbxHeadquarter", (SelectList)ViewBag.HeadquarterDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+            </div>
+
+            <div class="field">
+                <label>Curso Inicial</label>
+                @Html.DropDownList("cbxCourseInitial", (SelectList)ViewBag.CourseInitialDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+            </div>
+            <div class="field">
+                <label>Fecha Curso Inicial</label>
+                <div class="ui calendar calendarPicker" id="initialDate">
+                    <div class="ui input left icon">
+                        <i class="calendar icon"></i>
+                        <input type="text" placeholder="Fecha Curso Inicial">
+                    </div>
+                </div>
+                <input type="hidden" name="cinitialDate" id="cinitialDate" autocomplete="off">
+            </div>
+        </div>
+
+    </div>
+}
+<div class="ui equal width form">
+    <div class="fields">
+        <div class="field">
+            <label>Foto</label>
+            <form action="@Url.Action("UploadFile")" method="POST" class="dropzone" id="photoPerson">
+                <input type="hidden" name="type" value="Photo" />
+            </form>
+            <div class="ui floating message info" style="width: 50%; margin-left: 25%; margin-right: 25%; text-align: center;display:none" id="messagePhotoPerson">
+                <div class="header">
+                    Atención
+                </div>
+                <p>La imagen ya ha sido registrada en nuestro sistema, al guardar se finalizará el proceso</p>
+            </div>
+        </div>
+        <div class="field">
+            <label>Archivo Curso Inicial</label>
+            <form action="@Url.Action("UploadFile")" method="POST" class="dropzone" id="filePerson">
+                <input type="hidden" name="type" value="CourseInitial" />
+            </form>
+            <div class="ui floating message info" style="width: 50%; margin-left: 25%; margin-right: 25%; text-align: center;display:none" id="messageFilePerson">
+                <div class="header">
+                    Atención
+                </div>
+                <p>El archivo ya ha sido registrado en nuestro sistema, al guardar se finalizará el proceso</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ui modal" id="modalLoadCourses">
+    <div class="header">Carga de Cursos</div>
+    <div class="content" id="loadCourses">
+    </div>
+
+</div>
+<button class="ui primary button" id="btnGuardar">
+    Guardar
+</button>
+<div class="ui floating warning message" style="width:50%;margin-left:25%;margin-right:25%;text-align:center;display:none" id="messageCreatePerson">
+    <div class="header">
+        Atención
+    </div>
+    <p id="textmessageCreatePerson"></p>
+</div>
+<script type="text/javascript">
+    $('#messageCreatePerson').hide();
+    var myDropzonePhoto;
+    var myDropzoneFile;
+    var idVariedad;
+    var _thisPhoto;
+    var _thisFile;
+    var countPhoto = 0;
+    var countFile = 0;
+    $("#photoPerson").dropzone({
+        autoProcessQueue: false,
+        addRemoveLinks: true,
+        maxFiles: 1,
+        acceptedFiles: "image/png",
+        init: function () {
+            myDropzonePhoto = this; // closure
+            this.on("addedfile", function (file) {
+                var re = /(?:\.([^.]+))?$/;
+                var ext = re.exec(file.name)[1];
+                ext = ext.toUpperCase();
+                _thisPhoto = this;
+                if (ext == "PNG") {
+                } else {
+                    _thisPhoto.removeFile(file);
+                }
+            });
+            this.on("removedfile", function (file) {
+            });
+            this.on("success", function (file, data, response) {
+                if (data.result) {
+                    countPhoto = countPhoto + 1;
+                    _thisPhoto.removeFile(file);
+                    if (myDropzonePhoto.files.length == 0) {
+                        $('#messagePhotoPerson').show();
+                        $('#photoPerson').hide();
+                        $('#formProcessCreatePerson').submit();
+                    }
+                } else {
+                    alert("A ocurrido un eror");
+                    console.warn(data.message);
+                }
+            });
+            this.on("uploadprogress", function (file) {
+                $('.btnEliminar').attr('disabled', true);
+            });
+            this.on("error", function (xhr) {
+                $('.btnEliminar').attr('disabled', false);
+                console.warn(xhr);
+            });
+            this.on("maxfilesexceeded", function (file) {
+                this.removeFile(file);
+            });
+        }
+    });
+
+    $("#filePerson").dropzone({
+        autoProcessQueue: false,
+        addRemoveLinks: true,
+        maxFiles: 1,
+        acceptedFiles: ".pdf",
+        init: function () {
+            myDropzoneFile = this; // closure
+            this.on("addedfile", function (file) {
+                var re = /(?:\.([^.]+))?$/;
+                var ext = re.exec(file.name)[1];
+                ext = ext.toUpperCase();
+                _thisFile = this;
+                if (ext == "PDF") {
+                } else {
+                    _thisFile.removeFile(file);
+                }
+            });
+            this.on("removedfile", function (file) {
+            });
+            this.on("success", function (file, data, response) {
+                if (data.result) {
+                    countFile = countFile + 1;
+                    _thisFile.removeFile(file);
+                    if (myDropzoneFile.files.length == 0) {
+                        $('#messageFilePerson').show();
+                        $('#filePerson').hide();
+                        $('#formProcessCreatePerson').submit();
+                    }
+                } else {
+                    alert("A ocurrido un eror");
+                    console.warn(data.message);
+                }
+            });
+            this.on("uploadprogress", function (file) {
+                $('.btnEliminar').attr('disabled', true);
+            });
+            this.on("error", function (xhr) {
+                $('.btnEliminar').attr('disabled', false);
+                console.warn(xhr);
+            });
+            this.on("maxfilesexceeded", function (file) {
+                this.removeFile(file);
+            });
+        }
+    });
+
+
+    $('#initialDate').calendar({
+        type: 'date',
+        text: {
+            days: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+            months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            today: 'Today',
+            now: 'Now',
+            am: 'AM',
+            pm: 'PM'
+        },
+        formatter: {
+            date: function (date, settings) {
+                if (!date) return '';
+                var day = date.getDate();
+                var month = date.getMonth() + 1;
+                var year = date.getFullYear();
+                return year + '-' + month + '-' + day;
+            }
+        },
+        onChange: function (date, text, mode) {
+            $('#cinitialDate').val(text);
+        }
+    });
+
+    $('#formProcessCreatePerson').form({
+        fields: {
+            name: {
+                identifier: 'name',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar algun valor'
+                    },
+                ]
+            },
+            lastname: {
+                identifier: 'lastname',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar algun valor'
+                    },
+                ]
+            },
+            identification: {
+                identifier: 'identification',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar algun valor'
+                    },
+                ]
+            },
+            assigned: {
+                identifier: 'assigned',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar algun valor'
+                    },
+                ]
+            },
+            cbxHeadquarter: {
+                identifier: 'cbxHeadquarter',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe elegir un valor'
+                    },
+                ]
+            },
+            //cbxCourseInitial: {
+            //    identifier: 'cbxCourseInitial',
+            //    rules: [
+            //        {
+            //            type: 'empty',
+            //            prompt: 'Debe elegir un valor'
+            //        },
+            //    ]
+            //},
+            //cinitialDate: {
+            //    identifier: 'cinitialDate',
+            //    rules: [
+            //        {
+            //            type: 'empty',
+            //            prompt: 'Debe elegir una fecha'
+            //        },
+            //    ]
+            //},
+        }, inline: true,
+        on: 'blur'
+    });
+    $('#btnGuardar').on('click', function () {
+        $('#formProcessCreatePerson').submit();
+    });
+
+    function onBeginProcessCreatePerson() {
+        if (myDropzoneFile.files.length == 0) {
+            if (myDropzonePhoto.files.length == 0) {
+                return true;
+            } else {
+                myDropzonePhoto.processQueue();
+                return false;
+            }
+        } else {
+            $('#renderPages').addClass("loading");
+            myDropzoneFile.processQueue();
+            return false;
+        }
+    }
+
+    function onFailureProcessCreatePerson() {
+        $('#renderPages').removeClass("loading");
+        $('#messageCreatePerson').show('slow').addClass("warning").removeClass("info");
+        $('#textmessageCreatePerson').text("Ha ocurrido un error al procesar la solicitud");
+    }
+    function onSuccessProcessCreatePerson(data) {
+        $('#renderPages').removeClass("loading");
+        if (data.result) {
+            $('#messageCreatePerson').show('slow').removeClass("warning").addClass("info");
+            $('#textmessageCreatePerson').text("Proceso Completado");
+            if (confirm('¿Desea agregar cursos de formación ahora?')) {
+                loadCourses(data.idPerson, data.identification);
+            } else {
+                setTimeout(function () {
+                    location.reload();
+                }, 3000);
+            }
+
+        } else {
+            $('#messageCreatePerson').show('slow').addClass("warning").removeClass("info");
+            $('#textmessageCreatePerson').text(data.message);
+        }
+    }
+    function loadCourses(id, cc) {
+        $.ajax({
+            data: { idPerson: id, identification: cc },
+            url: '@Url.Action("LoadCourses")',
+            type: 'POST',
+            success: function (data) {
+                if (data) {
+                    $('#loadCourses').html(data);
+                    $('#modalLoadCourses').modal({
+                        centered: false
+                    }).modal('show');
+                }
+            }
+        });
+    }
+</script>

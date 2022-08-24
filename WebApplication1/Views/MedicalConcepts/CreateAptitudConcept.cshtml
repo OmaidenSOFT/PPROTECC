@@ -1,0 +1,249 @@
+﻿@using System.Data
+@model DataTable
+<style>
+    #modalLoadCourses {
+        height: 80vh;
+        overflow-y: scroll;
+    }
+</style>
+<h3 class="titlesPages">
+    CREAR NUEVO
+</h3>
+@using (Ajax.BeginForm("ProcessCreateAptitudConcept", "MedicalConcepts", null, new AjaxOptions()
+{
+    HttpMethod = "POST",
+    OnBegin = "return onBeginProcessAptitudConcept()",
+    OnSuccess = "onSuccessProcessAptitudConcept(data)",
+    OnFailure = "onFailureProcessAptitudConcept()",
+}, new { @id = "formProcessCreateAptitudConcept" }))
+{
+    <div class="ui equal width form">
+        <div class="fields">
+            <div class="field">
+                <label>Sucursal</label>
+                @Html.DropDownList("cbxHeadquarter", (SelectList)ViewBag.HeadquarterDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+            </div>
+
+            <div class="field">
+                <label>Empleado</label>
+                <select id="cbxEmployee" name="cbxEmployee" class="ui search dropdown">
+                    <option value="">[-Seleccione una Opción-]</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>Concepto de Aptitud</label>
+                @Html.DropDownList("cbxConcept", (SelectList)ViewBag.ConceptsDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+            </div>
+            <div class="field">
+                <label>Fecha Concepto</label>
+                <div class="ui calendar calendarPicker" id="conceptDate">
+                    <div class="ui input left icon">
+                        <i class="calendar icon"></i>
+                        <input type="text" placeholder="Fecha Concepto">
+                    </div>
+                </div>
+                <input type="hidden" name="cconceptDate" id="cconceptDate" autocomplete="off">
+            </div>
+        </div>
+    </div>
+}
+<div class="ui equal width form">
+    <div class="fields">
+        <div class="field">
+            <label>Archivo</label>
+            <form action="@Url.Action("UploadFile")" method="POST" class="dropzone" id="fileConcept">
+                <input type="hidden" name="type" value="Concept" />
+            </form>
+            <div class="ui floating message info" style="width: 50%; margin-left: 25%; margin-right: 25%; text-align: center;display:none" id="messagefileConcept">
+                <div class="header">
+                    Atención
+                </div>
+                <p>El archivo ya ha sido registrado en nuestro sistema, al guardar se finalizará el proceso</p>
+            </div>
+        </div>
+    </div>
+</div>
+<button class="ui primary button" id="btnGuardar">
+    Guardar
+</button>
+<div class="ui floating warning message" style="width:50%;margin-left:25%;margin-right:25%;text-align:center;display:none" id="messageCreateAptitudConcept">
+    <div class="header">
+        Atención
+    </div>
+    <p id="textmessageCreateAptitudConcept"></p>
+</div>
+<script type="text/javascript">
+    $('#messageCreateAptitudConcept').hide();
+    var myDropzoneFile;
+    var idVariedad;
+    var _thisPhoto;
+    var _thisFile;
+    var countPhoto = 0;
+    var countFile= 0;
+
+    $("#fileConcept").dropzone({
+        autoProcessQueue: false,
+        addRemoveLinks: true,
+        maxFiles: 1,
+        acceptedFiles: ".pdf",
+        init: function () {
+            myDropzoneFile = this; // closure
+            this.on("addedfile", function (file) {
+                var re = /(?:\.([^.]+))?$/;
+                var ext = re.exec(file.name)[1];
+                ext = ext.toUpperCase();
+                _thisFile = this;
+                if (ext=="PDF") {
+                } else {
+                    _thisFile.removeFile(file);
+                }
+            });
+            this.on("removedfile", function (file) {
+            });
+            this.on("success", function (file, data, response) {
+                if (data.result) {
+                    countFile = countFile + 1;
+                    _thisFile.removeFile(file);
+                    if (myDropzoneFile.files.length == 0) {
+                        $('#messagefileConcept').show();
+                        $('#fileConcept').hide();
+                        $('#formProcessCreateAptitudConcept').submit();
+                    }
+                } else {
+                    alert("A ocurrido un eror");
+                    console.warn(data.message);
+                }
+            });
+            this.on("uploadprogress", function (file) {
+                $('.btnEliminar').attr('disabled', true);
+            });
+            this.on("error", function (xhr) {
+                $('.btnEliminar').attr('disabled', false);
+                console.warn(xhr);
+            });
+            this.on("maxfilesexceeded", function (file) {
+                this.removeFile(file);
+            });
+        }
+    });
+
+
+    $('#conceptDate').calendar({
+        type: 'date',
+        text: {
+            days: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+            months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            today: 'Today',
+            now: 'Now',
+            am: 'AM',
+            pm: 'PM'
+        },
+        formatter: {
+            date: function (date, settings) {
+                if (!date) return '';
+                var day = date.getDate();
+                var month = date.getMonth() + 1;
+                var year = date.getFullYear();
+                return year + '-' + month + '-' + day;
+            }
+        },
+        onChange: function (date, text, mode) {
+            $('#cconceptDate').val(text);
+        }
+    });
+
+    $('#formProcessCreateAptitudConcept').form({
+            fields: {
+                cbxHeadquarter: {
+                    identifier: 'cbxHeadquarter',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Debe elegir un valor'
+                        },
+                    ]
+                },
+                cbxEmployee: {
+                    identifier: 'cbxEmployee',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Debe elegir un valor'
+                        },
+                    ]
+                },
+                cbxConcept: {
+                    identifier: 'cbxConcept',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Debe elegir un valor'
+                        },
+                    ]
+                },
+                cconceptDate: {
+                    identifier: 'cconceptDate',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Debe elegir un valor'
+                        },
+                    ]
+                },
+
+            }, inline: true,
+            on: 'blur'
+    });
+    $('#btnGuardar').on('click', function () {
+        $('#formProcessCreateAptitudConcept').submit();
+    });
+
+    function onBeginProcessAptitudConcept() {
+        if (countFile == 0) {
+            if (myDropzoneFile.files.length == 0) {
+                alert("Debe seleccionar el archivo");
+                return false;
+            } else {
+                $('#renderPages').addClass("loading");
+                myDropzoneFile.processQueue();
+                return false;
+            }
+        }
+    }
+
+    function onFailureProcessAptitudConcept() {
+        $('#renderPages').removeClass("loading");
+        $('#messageCreateAptitudConcept').show('slow').addClass("warning").removeClass("info");
+        $('#textmessageCreateAptitudConcept').text("Ha ocurrido un error al procesar la solicitud");
+    }
+    function onSuccessProcessAptitudConcept(data) {
+        $('#renderPages').removeClass("loading");
+        if (data.result) {
+            $('#messageCreateAptitudConcept').show('slow').removeClass("warning").addClass("info");
+            $('#textmessageCreateAptitudConcept').text("Proceso Completado");
+        } else {
+            $('#messageCreateAptitudConcept').show('slow').addClass("warning").removeClass("info");
+            $('#textmessageCreateAptitudConcept').text(data.message);
+        }
+    }
+
+    $('#cbxHeadquarter').on('change', function () {
+            var html = ' <option value="">[-Seleccione una opción-]</option>';
+        var value = $('#cbxHeadquarter option:selected').val();
+            $.ajax({
+                data: { idHeadquarter: value },
+                url: '@Url.Action("GetEmployeeByHeadquarter")',
+                type: 'POST',
+                success: function (data) {
+                    if (data.result) {
+                        $.each(data.data, function (index, value) {
+                            html = html + ' <option value="' + index + '">' + value + '</option>';
+                        });
+                        $('#cbxEmployee').dropdown('clear');
+                        $('#cbxEmployee').html(html);
+                    }
+                }
+            });
+    });
+</script>

@@ -1,0 +1,127 @@
+﻿@using (Ajax.BeginForm("AssignEquipmentSave", "WorkingAtHeight", null, new AjaxOptions()
+{
+    HttpMethod = "POST",
+    OnBegin = "onBeginAssignEquipment()",
+    OnSuccess = "onSuccessAssignEquipment(data)",
+    OnFailure = "onFailureAssignEquipment()",
+}, new { @id = "formAssignEquipment" }))
+{
+    <input type="hidden" name="sedeid" id="sedeid" value="@ViewBag.sedeid" />
+    <input type="hidden" name="tag" id="tag" value="@ViewBag.tag" />
+    <div class="ui equal width form">
+        <div class="fields">
+            <div class="field">
+                <label>Asignar a</label>
+                <select id="cbxAssigned" name="cbxAssigned" class="ui search dropdown">
+                    <option value="">[-Seleccione una opción-]</option>
+                    <option value="1">Área</option>
+                    <option value="2">Recurso</option>
+                </select>
+            </div>
+            <div class="field" id="fieldAssigned">
+                <label id="labelFieldAssigned"></label>
+                <select id="cbxFieldAssigned" name="cbxFieldAssigned" class="ui search dropdown">
+                    <option value="">[-Seleccione una opción-]</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <button class="ui primary button">
+        Guardar
+    </button>
+    <div class="ui floating warning message" style="width:50%;margin-left:25%;margin-right:25%;text-align:center" id="messageAssignEquipment">
+        <div class="header">
+            Atención
+        </div>
+        <p id="textmessageAssignEquipment"></p>
+    </div>
+}
+
+<script type="text/javascript">
+    $('#messageAssignEquipment').hide();
+    $('#fieldAssigned').hide();
+    LoadElementsDefault();
+    $('#cbxAssigned').on('change', function () {
+        $('#cbxFieldAssigned').dropdown('clear');
+        $('#cbxFieldAssigned').html("");
+        var value = $('option:selected', this).val();
+        var text = $('option:selected', this).text();
+        var idHeadquarter = $('#sedeid').val();
+        if (idHeadquarter != "" && idHeadquarter != null) {
+            var html = ' <option value="">[-Seleccione una opción-]</option>';
+            if (value == "1") {
+                $.ajax({
+                    url: '@Url.Action("GetAreaDictionary")',
+                    type: 'POST',
+                    success: function (data) {
+                        if (data.result) {
+                            $.each(data.data, function (index, value) {
+                                html = html + ' <option value="' + index + '">' + value + '</option>';
+                            });
+                            $('#cbxFieldAssigned').dropdown('clear');
+                            $('#cbxFieldAssigned').html(html);
+
+                            $('#labelFieldAssigned').html(text);
+                            $('#fieldAssigned').show();
+                        }
+                    }
+                });
+            } else if (value == "2") {
+                $.ajax({
+                    data: { idHeadquarter: idHeadquarter },
+                    url: '@Url.Action("GetResourceByHeadquarter")',
+                    type: 'POST',
+                    success: function (data) {
+                        if (data.result) {
+                            $.each(data.data, function (index, value) {
+                                html = html + ' <option value="' + index + '">' + value + '</option>';
+                            });
+                            $('#cbxFieldAssigned').dropdown('clear');
+                            $('#cbxFieldAssigned').html(html);
+
+                            $('#labelFieldAssigned').html(text);
+                            $('#fieldAssigned').show();
+                        }
+                    }
+                });
+            }
+
+        }
+    });
+    $('#formAssignEquipment').form({
+        fields: {
+            cbxFieldAssigned: {
+                identifier: 'cbxFieldAssigned',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe elegir un valor'
+                    },
+                ]
+
+            }
+        }, inline: true,
+        on: 'blur'
+    });
+    function onBeginAssignEquipment() {
+        $('#renderPages').addClass("loading");
+    }
+    function onFailureAssignEquipment() {
+        $('#renderPages').removeClass("loading");
+        $('#messageAssignEquipment').show('slow').addClass("warning").removeClass("info");
+        $('#textmessageAssignEquipment').text("Ha ocurrido un error al procesar la solicitud");
+    }
+    function onSuccessAssignEquipment(data) {
+        $('#renderPages').removeClass("loading");
+        if (data.result) {
+            $('#messageAssignEquipment').show('slow').removeClass("warning").addClass("info");
+            $('#textmessageAssignEquipment').text("Proceso Completado");
+            setTimeout(function () {
+                location.reload();
+            }, 3000);
+        } else {
+            $('#messageAssignEquipment').show('slow').addClass("warning").removeClass("info");
+            $('#textmessageAssignEquipment').text(data.message);
+        }
+    }
+</script>

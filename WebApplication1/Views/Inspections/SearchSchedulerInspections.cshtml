@@ -1,0 +1,68 @@
+﻿@using System.Data
+@model DataTable
+<style>
+    .dynatable-per-page-select {
+        padding: 0px !important;
+    }
+</style>
+<table class="ui selectable celled table ui center aligned tablesInitial">
+    <thead>
+        <tr>
+            @foreach (System.Data.DataColumn col in Model.Columns)
+            {
+                <th>@col.ColumnName</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (System.Data.DataRow row in Model.Rows)
+        {
+            <tr>
+                @foreach (DataColumn col in Model.Columns)
+                {
+                    if (col.ColumnName == "TAG")
+                    {
+                        <td><a href="javascript:void(0)" onclick="loadDetails('@row["TAG"].ToString()','@ViewBag.id','@row["ID"].ToString()','@row["Descripcion"].ToString()')">@row[col.ColumnName]</a></td>
+                    }
+                    else
+                    {
+                        <td>@row[col.ColumnName]</td>
+                    }
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="ui modal fullscreen" id="modalDetailsEquipment">
+    <div class="header">
+        <h3 class="titlesPages">
+            INSPECCIÓN Y MANTENIMIENTO | GESTIÓN DE HALLAZGOS
+        </h3>
+    </div>
+
+    <div class="content" id="loadDetailsEquipment">
+
+    </div>
+</div>
+<script type="text/javascript">
+    LoadTables();
+    function loadDetails(tag, headquarteid, id, stateid) {
+        var state;
+        if(stateid =='Rechazado')
+            state=2;
+        if(stateid =='Para Mantenimiento')
+            state = 3;
+        $.ajax({
+            url: '@Url.Action("LoadDetailsEquipment")',
+               data: { tag: tag, headquarteid: headquarteid, id: id, stateid: state },
+            type: 'POST',
+            success: function (data) {
+                if (data) {
+                    $('#stateEquipment').text(stateid);
+                    $('#loadDetailsEquipment').html(data);
+                    $('#modalDetailsEquipment').modal('show');
+                }
+            }
+        })
+    }
+</script>

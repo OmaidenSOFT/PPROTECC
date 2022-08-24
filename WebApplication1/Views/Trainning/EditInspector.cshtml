@@ -1,0 +1,306 @@
+﻿@using System.Data
+@model DataTable
+<style>
+    #modalLoadCourses {
+        height: 80vh;
+        overflow-y: scroll;
+    }
+</style>
+<h3 class="titlesPages">
+    EDITAR INSPECTOR
+</h3>
+@using (Ajax.BeginForm("ProcessEditInspector", "Trainning", null, new AjaxOptions()
+{
+    HttpMethod = "POST",
+    OnBegin = "return onBeginProcessEditInspector()",
+    OnSuccess = "onSuccessProcessEditInspector(data)",
+    OnFailure = "onFailureProcessEditInspector()",
+}, new { @id = "formProcessEditInspector" }))
+{
+    <div class="ui equal width form">
+        <div class="fields">
+            <input type="hidden" name="ID" value="@Model.Rows[0]["Id"].ToString()" />
+            <div class="field">
+                <label>Nombre</label>
+                <input type="text" id="name" name="name" placeholder="Nombre" autocomplete="off" maxlength="50" value="@Model.Rows[0]["Nombre"].ToString()" readonly>
+            </div>
+        </div>
+        <div class="required inline fields">
+            <div class="field">
+                <div class="ui radio checkbox">
+                    @if (Convert.ToInt32(@Model.Rows[0]["Activo"]) == 0)
+                    {
+                        <input type="radio" name="enabledInspector" value="1">
+                    }
+                    else
+                    {
+                        <input type="radio" name="enabledInspector" value="1" checked>
+                    }
+                    <label>Activo</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui radio checkbox">
+                    @if (Convert.ToInt32(@Model.Rows[0]["Activo"]) == 1)
+                    {
+                        <input type="radio" name="enabledInspector" value="2">
+                    }
+                    else
+                    {
+                        <input type="radio" name="enabledInspector" value="2" checked>
+                    }
+                    <label>Inactivo</label>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+}
+<button class="ui primary button" id="btnGuardar">
+    Guardar
+</button>
+<button class="ui button" onclick="cargarElement('@Url.Action("IndexInspector","Trainning")')">
+    Volver
+</button>
+<div class="ui floating warning message" style="width:50%;margin-left:25%;margin-right:25%;text-align:center;display:none" id="messageEditInspector">
+    <div class="header">
+        Atención
+    </div>
+    <p id="textmessageEditInspector"></p>
+</div>
+<script type="text/javascript">
+    $('#messageEditInspector').hide();
+
+    $('#formProcessEditInspector').form({
+        fields: {
+            name: {
+                identifier: 'name',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar algun valor'
+                    },
+                ]
+            },
+            lastname: {
+                identifier: 'lastname',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar algun valor'
+                    },
+                ]
+            },
+            identification: {
+                identifier: 'identification',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar algun valor'
+                    },
+                ]
+            },
+
+
+            login: {
+                identifier: 'login',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar algun valor'
+                    },
+                ]
+            },
+            pass: {
+                identifier: 'pass',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar algun valor'
+                    },
+                ]
+            },
+        }, inline: true,
+        on: 'blur'
+    });
+    $('#btnGuardar').on('click', function () {
+        $('#formProcessEditInspector').submit();
+    });
+
+
+
+
+    var myDropzoneFile;
+    var idVariedad;
+    var _thisFile;
+    var countFile = 0;
+
+    $("#filePerson").dropzone({
+        autoProcessQueue: false,
+        addRemoveLinks: true,
+        maxFiles: 1,
+        acceptedFiles: ".pdf",
+        init: function () {
+            myDropzoneFile = this; // closure
+            this.on("addedfile", function (file) {
+                var re = /(?:\.([^.]+))?$/;
+                var ext = re.exec(file.name)[1];
+                ext = ext.toUpperCase();
+                _thisFile = this;
+                if (ext == "PDF") {
+                } else {
+                    _thisFile.removeFile(file);
+                }
+            });
+            this.on("removedfile", function (file) {
+            });
+            this.on("success", function (file, data, response) {
+                if (data.result) {
+                    countFile = countFile + 1;
+                    _thisFile.removeFile(file);
+                    if (myDropzoneFile.files.length == 0) {
+                        $('#messageFileInspector').show();
+                        $('#filePerson').hide();
+                        //$('#formProcessEditInspector').submit();
+                    }
+                } else {
+                    alert("A ocurrido un eror");
+                    console.warn(data.message);
+                }
+            });
+            this.on("uploadprogress", function (file) {
+                $('.btnEliminar').attr('disabled', true);
+            });
+            this.on("error", function (xhr) {
+                $('.btnEliminar').attr('disabled', false);
+                console.warn(xhr);
+            });
+            this.on("maxfilesexceeded", function (file) {
+                this.removeFile(file);
+            });
+        }
+    });
+
+
+
+
+
+    $('#formProcessEditInspector').form({
+        fields: {
+            name: {
+                identifier: 'name',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar algun valor'
+                    },
+                ]
+            },
+            lastname: {
+                identifier: 'lastname',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar algun valor'
+                    },
+                ]
+            },
+            login: {
+                identifier: 'login',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar algun valor'
+                    },
+                ]
+            },
+            identification: {
+                identifier: 'identification',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar algun valor'
+                    },
+                ]
+            },
+            assigned: {
+                identifier: 'assigned',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar algun valor'
+                    },
+                ]
+            },
+            cbxHeadquarter: {
+                identifier: 'cbxHeadquarter',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe elegir un valor'
+                    },
+                ]
+            },
+            //cbxCourseInitial: {
+            //    identifier: 'cbxCourseInitial',
+            //    rules: [
+            //        {
+            //            type: 'empty',
+            //            prompt: 'Debe elegir un valor'
+            //        },
+            //    ]
+            //},
+            //cinitialDate: {
+            //    identifier: 'cinitialDate',
+            //    rules: [
+            //        {
+            //            type: 'empty',
+            //            prompt: 'Debe elegir una fecha'
+            //        },
+            //    ]
+            //},
+        }, inline: true,
+        on: 'blur'
+    });
+    $('#btnGuardar').on('click', function () {
+        $('#formProcessEditInspector').submit();
+        $('#textmessageEditInspector').text("Proceso Completado");
+    });
+
+    function onBeginProcessEditInspector() {
+        //if (myDropzoneFile.files.length == 0) {
+        //    if (myDropzonePhoto.files.length == 0) {
+        //        return true;
+        //    } else {
+        //        myDropzonePhoto.processQueue();
+        //        return false;
+        //    }
+        //} else {
+        //    $('#renderPages').addClass("loading");
+        //    myDropzoneFile.processQueue();
+        //    return false;
+        //}
+        return true;
+    }
+
+    function onFailureProcessEditPerson() {
+        $('#renderPages').removeClass("loading");
+        $('#messageEditInspector').show('slow').addClass("warning").removeClass("info");
+        $('#textmessageEditInspector').text("Ha ocurrido un error al procesar la solicitud");
+    }
+    function onSuccessProcessEditInspector(data) {
+        $('#renderPages').removeClass("loading");
+        if (data.result) {
+            $('#messageEditInspector').show('slow').removeClass("warning").addClass("info");
+            $('#textmessageEditInspector').text("Proceso Completado");
+
+
+        } else {
+            $('#messageEditInspector').show('slow').addClass("warning").removeClass("info");
+            $('#textmessageEditInspector').text(data.message);
+        }
+    }
+
+
+</script>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Segment Effect | Demo 5 | Codrops</title>
+		<meta name="description" content="Background image segment effect" />
+		<meta name="keywords" content="css, html, backgorund image, effect, boxes, segments" />
+		<meta name="author" content="Codrops" />
+		<link rel="shortcut icon" href="favicon.ico">
+		<link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+		<link rel="stylesheet" type="text/css" href="css/demo.css" />
+		<link rel="stylesheet" type="text/css" href="css/component.css" />
+		<!--[if IE]>
+			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		<script>
+		document.documentElement.className = 'js';
+		</script>
+	</head>
+	<body >
+					<!-- Initial markup -->
+			<div class="segmenter" style="background-image: url(img/6.jpg)"></div>
+			<h2 class="trigger-headline trigger-headline--hidden"><span>B</span><span>o</span><span>t</span><span>i</span><span>o</span><span>n</span></h2>
+			<div class="bottom-nav">
+				<button class="btn btn--trigger">Show Effect</button>
+				<nav class="codrops-demos">
+					<span>Examples: </span>
+					<a href="index.html">1</a>
+					<a href="index2.html">2</a>
+					<a href="index3.html">3</a>
+					<a href="index4.html">4</a>
+					<a href="index5.html">5</a>
+					<a class="current-demo" href="index6.html">6</a>
+				</nav>
+			</div>
+		<script src="js/anime.min.js"></script>
+		<script src="js/imagesloaded.pkgd.min.js"></script>
+		<script src="js/main.js"></script>
+		<script>
+		(function() {
+			var headline = document.querySelector('.trigger-headline'),
+				trigger = document.querySelector('.btn--trigger'),
+				segmenter = new Segmenter(document.querySelector('.segmenter'), {
+					pieces: 9,
+					positions: [
+						{top: 30, left: 5, width: 40, height: 80},
+						{top: 50, left: 25, width: 30, height: 30},
+						{top: 5, left: 75, width: 40, height: 20},
+						{top: 30, left: 45, width: 40, height: 20},
+						{top: 45, left: 15, width: 50, height: 40},
+						{top: 10, left: 40, width: 10, height: 20},
+						{top: 20, left: 50, width: 30, height: 70},
+						{top: 0, left: 10, width: 50, height: 60},
+						{top: 70, left: 40, width: 30, height: 30}
+					],
+					animation: {
+						duration: 2000,
+						easing: 'easeInOutCubic',
+						delay: 0,
+						opacity: 1,
+						translateZ: 85,
+						translateX: {min: -20, max: 20},
+						translateY: {min: -20, max: 20}
+					},
+					parallax: true,
+					parallaxMovement: {min: 5, max: 10},
+					onReady: function() {
+						trigger.classList.remove('btn--hidden');
+						trigger.addEventListener('click', function() {
+							segmenter.animate();
+							headline.classList.remove('trigger-headline--hidden');
+							this.classList.add('btn--hidden');
+						});
+					}
+				});
+		})();
+		</script>
+	</body>
+</html>

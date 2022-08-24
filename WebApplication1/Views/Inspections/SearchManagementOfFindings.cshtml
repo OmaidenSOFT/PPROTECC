@@ -1,0 +1,98 @@
+﻿@using System.Data
+@model DataTable
+<style>
+    .dynatable-per-page-select {
+        padding: 0px !important;
+    }
+</style>
+<table class="ui selectable celled table ui center aligned tablesInitial" id="tablesFindings">
+    <thead>
+        <tr>
+            @foreach (System.Data.DataColumn col in Model.Columns)
+            {
+                <th>@col.ColumnName</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (System.Data.DataRow row in Model.Rows)
+        {
+            <tr>
+                @foreach (DataColumn col in Model.Columns)
+                {
+                    if (col.ColumnName == "TAG")
+                    {
+                        <td>
+                            @if (row["Estado plan de acción"].ToString() != "Cerrado")
+                            {
+                                <a href="javascript:void(0)" onclick="loadDetails('@row["ID"].ToString()')">@row[col.ColumnName]</a>
+
+                            }
+                            else
+                            {
+                                @row[col.ColumnName]
+                            }
+
+                        </td>
+                    }
+                    else
+                    {
+                        <td>@row[col.ColumnName]</td>
+                    }
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+@if (Model.Rows.Count > 0)
+{
+    <button class="ui button" id="btnExport" onclick="location.href='@Url.Action("DownloadFile", "Download", new { fileName = "Hallazgos", @id = ViewBag.id })'">Exportar</button>
+}
+<div class="ui modal fullscreen" id="modalDetailsEquipment">
+    <div class="header">
+        <h3 class="titlesPages">
+            INSPECCIÓN Y MANTENIMIENTO | GESTIÓN DE HALLAZGOS
+        </h3>
+    </div>
+
+    <div class="content" id="loadDetailsEquipment">
+
+    </div>
+</div>
+<script type="text/javascript">
+    var processingComplete = function () {
+        $.each($('#tablesFindings tr'), function (index, value) {
+            var classElement = $(this).find('td:eq(6)').html();
+            if (classElement == "Sin Gestión")
+                classElement = "red";
+            else if (classElement == "Abierto")
+                classElement = "yellow";
+            else if (classElement == "Cerrado Verificado")
+                classElement = "green";
+            else if (classElement == "Cerrado sin Verificación")
+                classElement = "orange";
+            else
+                classElement = "";
+            //classElement = classElement == "Sin Gestión" ? "red" : classElement == "Abierto" ? "yellow" : classElement == "Cerrado Verificado" ? "green" : classElement == "Cerrado sin Verificación" ? "teal":"";
+                       $(this).find('td:eq(6)').addClass(classElement);
+            //$(this).find('td:eq(6)').html('');
+        });
+    }
+    $('#tablesFindings').dynatable({
+    }).bind('dynatable:afterProcess', processingComplete);
+    processingComplete();
+
+    function loadDetails(id) {
+        $.ajax({
+            url: '@Url.Action("LoadDetailsEquipment")',
+               data: { id: id},
+            type: 'POST',
+            success: function (data) {
+                if (data) {
+                    $('#loadDetailsEquipment').html(data);
+                    $('#modalDetailsEquipment').modal('show');
+                }
+            }
+        })
+    }
+</script>

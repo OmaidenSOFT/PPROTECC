@@ -1,0 +1,145 @@
+﻿@using System.Data
+<h3 class="titlesPages">
+    PROGRAMA DE PROTECCIÓN CONTRA CAÍDAS | GESTIÓN DE EQUIPOS | FICHAS TECNICAS
+</h3>
+<div class="ui bottom attached tab segment active" data-tab="first">
+    @using (Ajax.BeginForm("SearchTechnicalInformation", "WorkingAtHeight", null, new AjaxOptions()
+    {
+        HttpMethod = "POST",
+        OnBegin = "onBeginProcessSearch()",
+        OnSuccess = "onSuccessProcessSearch(data)",
+        OnFailure = "onFailureProcessSearch()",
+    }, new { @id = "formProcessSearch" }))
+    {
+        <div class="ui equal width form">
+            <div class="fields">
+                <div class="field">
+                    <label>Sede</label>
+                    @Html.DropDownList("cbxHeadquarter", (SelectList)ViewBag.HeadquarterDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+                </div>
+                <div class="field">
+                    <label>Categoria</label>
+                    @Html.DropDownList("cbxCategory", (SelectList)ViewBag.CategoryDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+                </div>
+            </div>
+            <div class="fields">
+                <div class="field">
+                    <label>Elemento</label>
+                    <select id="cbxElement" name="cbxElement" class="ui search dropdown">
+                        <option value="">[-Seleccione una Opción-]</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Marca</label>
+                    <select id="cbxMark" name="cbxMark" class="ui search dropdown">
+                        <option value="">[-Seleccione una Opción-]</option>
+                    </select>
+                </div>
+            </div>
+            <button class="ui primary button" style="background-color:#55BE5A">
+                Buscar
+            </button>
+        </div>
+    }
+</div>
+
+<div id="renderSearchTechnicalInformation"></div>
+
+<script type="text/javascript">
+    $('.menu .item').tab();
+
+       $('#cbxCategory').on('change', function () {
+            var html = '<option value="">[-Seleccione una opción-]</option>';
+            var value = $('#cbxCategory option:selected').val();
+            $.ajax({
+                data: { idCategory: value },
+                url: '@Url.Action("GetElementByCategory")',
+                type: 'POST',
+                success: function (data) {
+                    if (data.result) {
+                        $.each(data.data, function (index, value) {
+                            html = html + ' <option value="' + index + '">' + value + '</option>';
+                        });
+                        $('#cbxElement').dropdown('clear');
+                        $('#cbxElement').html(html);
+                    }
+                }
+            });
+       });
+            $('#cbxElement').on('change', function () {
+            var html = ' <option value="">[-Seleccione una opción-]</option>';
+            var valueHeadquarter = $('#cbxHeadquarter option:selected').val();
+            var valueElement = $('#cbxElement option:selected').val();
+            $.ajax({
+                data: { idHeadquarter: valueHeadquarter, idElement: valueElement},
+                url: '@Url.Action("GetMarkByHeadquarterElement")',
+                type: 'POST',
+                success: function (data) {
+                    if (data.result) {
+                        $.each(data.data, function (index, value) {
+                            html = html + ' <option value="' + index + '">' + value + '</option>';
+                        });
+                        $('#cbxMark').dropdown('clear');
+                        $('#cbxMark').html(html);
+                    }
+                }
+            });
+       });
+
+            $('#formProcessSearch').form({
+                fields: {
+                    cbxHeadquarter: {
+                        identifier: 'cbxHeadquarter',
+                        rules: [
+                            {
+                                type: 'empty',
+                                prompt: 'Debe elegir una sede'
+                            },
+                        ]
+                    },
+                    cbxCategory: {
+                        identifier: 'cbxCategory',
+                        rules: [
+                            {
+                                type: 'empty',
+                                prompt: 'Debe elegir una categoria'
+                            },
+                        ]
+                    },
+                    cbxElement: {
+                        identifier: 'cbxElement',
+                        rules: [
+                            {
+                                type: 'empty',
+                                prompt: 'Debe elegir un elemento'
+                            },
+                        ]
+                    },
+
+                    cbxMark: {
+                        identifier: 'cbxMark',
+                        rules: [
+                            {
+                                type: 'empty',
+                                prompt: 'Debe elegir una marca'
+                            },
+                        ]
+                    },
+                }, inline: true,
+                on: 'blur'
+            });
+            function onBeginProcessSearch() {
+                $('#renderPages').addClass("loading");
+                $('#renderSearchTechnicalInformation').empty();
+            }
+            function onFailureProcessSearch() {
+                $('#renderPages').removeClass("loading");
+                $('#messageCreate').show('slow').addClass("warning").removeClass("info");
+                $('#textmessageCreate').text("Ha ocurrido un error al procesar la solicitud");
+            }
+
+            function onSuccessProcessSearch(data) {
+                $('#renderPages').removeClass("loading");
+                $('#renderSearchTechnicalInformation').html(data);
+            }
+</script>

@@ -1,0 +1,80 @@
+﻿@using System.Data
+@model DataTable
+<style>
+    .dynatable-per-page-select {
+        padding: 0px !important;
+    }
+
+    #modalCurriculum embed {
+        width: 100%;
+        height: 80vh;
+    }
+</style>
+<table class="ui selectable celled table ui center aligned tablesInitial" id="tableSearchPageInitial">
+    <thead>
+        <tr>
+            @foreach (System.Data.DataColumn col in Model.Columns)
+            {
+                if (col.ColumnName != "Ruta")
+                {
+                    <th>@col.ColumnName</th>
+                }
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (System.Data.DataRow row in Model.Rows)
+        {
+            <tr>
+                @foreach (DataColumn col in Model.Columns)
+                {
+                    if (col.ColumnName != "Ruta")
+                    {
+                        if (col.ColumnName == "Archivo")
+                        {
+                            <td><a href="/@row["Ruta"]" target="_blank">@row[col.ColumnName]</a> </td>
+                        }
+                        else
+                        {
+                            <td>@row[col.ColumnName]</td>
+                        }
+
+                    }
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    var processingComplete = function () {
+        $.each($('#tableSearchPageInitial tr'), function (index, value) {
+            var classElement = $(this).find('td:eq(6)').html();
+            classElement = classElement == "Rojo" ? "red" : classElement == "Amarillo" ? "yellow" : classElement == "Verde" ? "green" : "";
+            $(this).find('td:eq(6)').addClass(classElement);
+
+            if (classElement == "red")
+                $(this).find('td:eq(6)').html('Vencido');
+            if (classElement == "yellow")
+                $(this).find('td:eq(6)').html('Por Vencer');
+            if (classElement == "green")
+                $(this).find('td:eq(6)').html('Vigente');
+
+        });
+    }
+    $('#tableSearchPageInitial').dynatable({
+    }).bind('dynatable:afterProcess', processingComplete);
+    processingComplete();
+
+    var processingComplete1 = function () {
+        $.each($('#tableSearchPageInitial tr'), function (index, value) {
+            var classElement = $(this).find('td:eq(7)').html();
+            classElement = classElement == "No apto" ? "red" : classElement == "Aplazado" ? "" : classElement == "Apto" ? "" : "";
+            $(this).find('td:eq(7)').addClass(classElement);
+            //$(this).find('td:eq(7)').html('');
+        });
+    }
+    $('#tableSearchPageInitial').dynatable({
+    }).bind('dynatable:afterProcess', processingComplete1);
+    processingComplete1();
+</script>

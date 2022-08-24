@@ -1,0 +1,73 @@
+﻿@using System.Data
+@model DataTable
+<style>
+    .ui.selection.dropdown {
+        padding: 0;
+    }
+</style>
+
+    <h3 class="titlesPages">
+        CERTIFICADOS
+    </h3>
+
+<div class="ui equal width form">
+    @using (Ajax.BeginForm("SearchCertificate", "Trainning", null, new AjaxOptions()
+    {
+        HttpMethod = "POST",
+        OnBegin = "onBeginProcessSearch()",
+        OnSuccess = "onSuccessProcessSearch(data)",
+        OnFailure = "onFailureProcessSearch()",
+    }, new { @id = "formProcessSearchCertificate" }))
+    {
+        <div class="ui form">
+            <div class="fields">
+                <div class="field">
+                    <label>Nombre</label>
+                    <input type="text" id="name" name="name" placeholder="Nombre" autocomplete="off" maxlength="50">
+                </div>
+                <div class="field">
+                    <label>Identificación</label>
+                    <input type="text" id="identification" name="identification" placeholder="Identificación" autocomplete="off" maxlength="50">
+                </div>
+            </div>
+            <button class="ui primary button" id="btnForm">
+                Buscar
+            </button>
+            <div class="ui floating warning message" style="width:50%;margin-left:25%;margin-right:25%;text-align:center" id="messageSearch">
+                <div class="header">
+                    Atención
+                </div>
+                <p id="textmessageSearch"></p>
+            </div>
+        </div>
+    }
+</div>
+<div id="renderSearchCertificate"></div>
+<script type="text/javascript">
+    $('#btnForm').on('click', function (e) {
+        var name = $('#name').val();
+        var identification = $('#identification').val();
+        if (name == "" && identification ==  "") {
+            $('#messageSearch').show('slow').addClass("warning").removeClass("info");
+            $('#textmessageSearch').text("Debe completar alguno de los campos");
+            $('#renderSearchCertificate').empty();
+            return false;
+        }
+        $('#messageSearch').hide('slow');
+        return true;
+    });
+    function onBeginProcessSearch() {
+        $('#renderPages').addClass("loading");
+        $('#renderSearchCurriculum').empty();
+    }
+    function onSuccessProcessSearch(data) {
+        $('#renderPages').removeClass("loading");
+        $('#renderSearchCertificate').html(data);
+    }
+    function onFailureProcessSearch() {
+        $('#renderPages').removeClass("loading");
+        $('#messageSearch').show('slow').addClass("warning").removeClass("info");
+        $('#textmessageSearch').text("Ha ocurrido un error al procesar la solicitud");
+    }
+</script>
+@*igual que search Curriculum*@

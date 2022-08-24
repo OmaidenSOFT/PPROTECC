@@ -1,0 +1,76 @@
+﻿<style>
+   
+</style>
+    <h3 class="titlesPages">PROGRAMA DE PROTECCIÓN CONTRA CAÍDAS | INSPECCIÓN Y MANTENIMIENTO | CRONOGRAMA DE INSPECCIONES</h3>
+
+@using (Ajax.BeginForm("SearchSchedulerInspections", "Inspections", null, new AjaxOptions()
+{
+    HttpMethod = "POST",
+    OnBegin = "onBeginProcessSearch()",
+    OnSuccess = "onSuccessProcessSearch(data)",
+    OnFailure = "onFailureProcessSearch()",
+}, new { @id = "formProcessSearch" }))
+{
+    <div class="ui equal width form">
+        <div class="fields">
+            <div class="field">
+                <label>Sede</label>
+                @Html.DropDownList("cbxHeadquarter", (SelectList)ViewBag.HeadquarterDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+            </div>
+            <div class="field">
+                <label>Elemento</label>
+                @Html.DropDownList("cbxElement", (SelectList)ViewBag.ElementDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+            </div>
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>Tipo de Cronograma</label>
+                @Html.DropDownList("cbxScheduleType", (SelectList)ViewBag.TypeDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+            </div>
+        </div>
+         <button class="ui primary button">
+            Generar
+        </button>
+    </div>
+    <div id="renderSearchScheduler">
+
+    </div>
+}
+
+<script type="text/javascript">
+    $('#formProcessSearch').form({
+        fields: {
+            headQuarterType: {
+                identifier: 'headQuarterType',
+                rules: [{
+                    type: 'checked',
+                    prompt: 'Debe seleccionar una opción'
+                }]
+            },
+            frequency: {
+                identifier: 'frequency',
+                rules: [{
+                    type: 'checked',
+                    prompt: 'Debe seleccionar una opción'
+                }]
+            },
+
+        }, inline: true,
+        on: 'blur'
+    });
+
+    function onBeginProcessSearch() {
+        $('#renderPages').addClass("loading");
+        $('#renderSearchScheduler').empty();
+    }
+    function onFailureProcessSearch() {
+        $('#renderPages').removeClass("loading");
+        $('#messageCreate').show('slow').addClass("warning").removeClass("info");
+        $('#textmessageCreate').text("Ha ocurrido un error al procesar la solicitud");
+    }
+
+    function onSuccessProcessSearch(data) {
+        $('#renderPages').removeClass("loading");
+        $('#renderSearchScheduler').html(data);
+    }
+</script>
