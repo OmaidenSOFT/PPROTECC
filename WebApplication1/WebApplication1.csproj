@@ -670,7 +670,7 @@
     <Content Include="Views\WorkingAtHeight\TechnicalInformation.cshtml" />
     <Content Include="Views\WorkingAtHeight\SearchCurriculum.cshtml" />
     <Content Include="Views\WorkingAtHeight\SearchTechnicalInformation.cshtml" />
-    <Content Include="Views\WorkingAtHeight\CreateEquipment.cshtml" />
+    <Content Include="Views\WorkingAtHeight\CreateSede.cshtml" />
     <Content Include="Views\WorkingAtHeight\IndexEquipment.cshtml" />
     <Content Include="Views\WorkingAtHeight\StockByHeadquarter.cshtml" />
     <Content Include="Views\Trainning\Trainning.cshtml" />
@@ -729,6 +729,8 @@
     <Content Include="Views\WorkingAtHeight\InspectionCert.cshtml" />
     <Content Include="Views\WorkingAtHeight\SearchInspectionCert.cshtml" />
     <Content Include="Views\WorkingAtHeight\CreateEquipmentIzage.cshtml" />
+    <Content Include="Views\WorkingAtHeight\CreateEquipment - Copia.cshtml" />
+    <Content Include="Views\WorkingAtHeight\IndexSede.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

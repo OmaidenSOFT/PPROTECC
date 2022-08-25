@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,18 @@ namespace LogicBo
         {
             var result = executeProcedures.DataTable("ENEL_LoadSedes", null);
             return result.AsEnumerable().ToDictionary(row => row["id"].ToString(),row => row["Sede"].ToString());
+        }
+
+        public DataTable GetIndex(int CountryID)
+        {
+
+            List<SqlParameter> parameters = new List<SqlParameter> {
+                new SqlParameter(){ ParameterName="PaisID", SqlDbType=SqlDbType.Int,Value=CountryID},
+            };
+
+            var result = executeProcedures.DataTable("ENEL_LoadSedesBYCountry", parameters);
+            
+            return result;
         }
 
         public Dictionary<string, string> GetRoleDictionary()

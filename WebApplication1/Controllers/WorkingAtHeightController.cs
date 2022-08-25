@@ -18,6 +18,7 @@ namespace WebApplication1.Controllers
     public class WorkingAtHeightController : Controller
     {
         #region Properties
+        private readonly AccountBo _accountBo = new AccountBo();
         WorkingAtHeightBo _workingAtHeightBo = new WorkingAtHeightBo();
         HeadquarterBo _headquarterBo = new HeadquarterBo();
         CategoryBo _categoryBo = new CategoryBo();
@@ -70,6 +71,11 @@ namespace WebApplication1.Controllers
             var result = _equipmentBo.GetIndex();
             return PartialView(result);
         }
+        public ActionResult IndexSede()
+        {
+            var result = _headquarterBo.GetIndex(2);
+            return PartialView(result);
+        }
         public ActionResult DownloadResult()
         {
             return PartialView();
@@ -79,6 +85,13 @@ namespace WebApplication1.Controllers
             ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(), "Key", "Value");
             ViewBag.ElementDictionary = new SelectList(_elementBo.GetDictionary(), "Key", "Value");
             ViewBag.LocationDictionary = new SelectList(_locationBo.GetDictionary(), "Key", "Value");
+            return PartialView();
+        }
+
+        public ActionResult CreateSede()
+        {
+            base.ViewBag.CountryDictionary = new SelectList(_accountBo.GetDictionary(), "Key", "Value");
+
             return PartialView();
         }
         public ActionResult CreateEquipmentIzage()
