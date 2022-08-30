@@ -34,59 +34,37 @@
 </style>
 
 
-<center><h3 style="color:#41B9E6; ">PROGRAMA DE PROTECCIÓN CONTRA CAÍDAS | GESTIÓN DE SEDES | INGRESO DE SEDES</h3></center>
+<center><h3 style="color:#41B9E6; ">PROGRAMA DE PROTECCIÓN CONTRA CAÍDAS | ADMINISTRADOR | INGRESO DE CATEGORIA DE SEDES</h3></center>
 <br />
 <br />
 <br />
 
-@using (Ajax.BeginForm("ProcessCreateSede", "WorkingAtHeight", null, new AjaxOptions()
+@using (Ajax.BeginForm("ProcessCreateCategoriaSede", "WorkingAtHeight", null, new AjaxOptions()
 {
     HttpMethod = "POST",
-    OnBegin = "onBeginProcessCreateSede()",
-    OnSuccess = "onSuccessProcessCreateSede(data)",
-    OnFailure = "onFailureProcessCreateSede()",
-}, new { @id = "formProcessCreateSede", @enctype = "multipart/form-data" }))
+    OnBegin = "onBeginProcessCreateCategoriaSede()",
+    OnSuccess = "onSuccessProcessCreateCategoriaSede(data)",
+    OnFailure = "onFailureProcessCreateCategoriaSede()",
+}, new { @id = "formProcessCreateCategoriaSede", @enctype = "multipart/form-data" }))
 {
-<div class="ui equal width form">
-    <div class="fields">
-        <div class="field">
-            <label>País</label>
-            @Html.DropDownList("cbxCountry", (SelectList)ViewBag.CountryDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+    <div class="ui equal width form">
+        <div class="fields">
+            <div class="field">
+                <label>Tipo de Tecnologías de las sedes</label>
+                <input type="text" id="sedecategoria" name="sedecategoria" placeholder="Tipo de Tecnologías de las sedes" autocomplete="off" maxlength="50">
+            </div>
         </div>
-
-        <div class="field">
-            <label>Tecnología</label>
-            @Html.DropDownList("cbxSedeCategoria", (SelectList)ViewBag.CategoryDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
-        </div>
-
-
-        <div class="field">
-            <label>Nombre Sede</label>
-            <input type="text" id="sede" name="sede" placeholder="Nombre Sede" autocomplete="off" maxlength="50">
-        </div>
-    </div>
-    <div class="fields">
-        <div class="field">
-            <label>Ubicación</label>
-            <input type="text" id="ubicacion" name="ubicacion" placeholder="Ubicación Sede" autocomplete="off" maxlength="50">
-        </div>
-
-        <div class="field">
-            <label>Código ENEL</label>
-            <input type="text" id="codeENEL" name="codeENEL" placeholder="Código ENEL para la sede" autocomplete="off" maxlength="50">
+       
+        <button class="ui primary button">
+            Guardar
+        </button>
+        <div class="ui floating warning message" style="width:50%;margin-left:25%;margin-right:25%;text-align:center" id="messageCreateCategoriaSede">
+            <div class="header">
+                Atención
+            </div>
+            <p id="textmessageCreateCategoriaSede"></p>
         </div>
     </div>
-
-    <button class="ui primary button">
-        Guardar
-    </button>
-    <div class="ui floating warning message" style="width:50%;margin-left:25%;margin-right:25%;text-align:center" id="messageCreateSede">
-        <div class="header">
-            Atención
-        </div>
-        <p id="textmessageCreateSede"></p>
-    </div>
-</div>
 }
 
 <script type="text/javascript">
@@ -227,7 +205,7 @@
 
     });
 
-    $('#formProcessCreateSede').form({
+    $('#formProcessCreateCategoriaSede').form({
         fields: {
             rFID: {
                 identifier: 'rFID',
@@ -367,25 +345,25 @@
         }, inline: true,
         on: 'blur'
     });
-    function onBeginProcessCreateSede() {
+    function onBeginProcessCreateCategoriaSede() {
         $('#renderPages').addClass("loading");
     }
-    function onFailureProcessCreateSede() {
+    function onFailureProcessCreateCategoriaSede() {
         $('#renderPages').removeClass("loading");
-        $('#messageCreateSede').show('slow').addClass("warning").removeClass("info");
-        $('#textmessageCreateSede').text("Ha ocurrido un error al procesar la solicitud");
+        $('#messageCreateCategoriaSede').show('slow').addClass("warning").removeClass("info");
+        $('#textmessageCreateCategoriaSede').text("Ha ocurrido un error al procesar la solicitud");
     }
-    function onSuccessProcessCreateSede(data) {
+    function onSuccessProcessCreateCategoriaSede(data) {
         $('#renderPages').removeClass("loading");
         if (data.result) {
-            $('#messageCreateSede').show('slow').removeClass("warning").addClass("info");
-            $('#textmessageCreateSede').text("Proceso Completado");
+            $('#messageCreateCategoriaSede').show('slow').removeClass("warning").addClass("info");
+            $('#textmessageCreateCategoriaSede').text("Proceso Completado");
             setTimeout(function () {
                 location.reload();
             }, 3000);
         } else {
-            $('#messageCreateSede').show('slow').addClass("warning").removeClass("info");
-            $('#textmessageCreateSede').text(data.message);
+            $('#messageCreateCategoriaSede').show('slow').addClass("warning").removeClass("info");
+            $('#textmessageCreateCategoriaSede').text(data.message);
         }
     }
 </script>

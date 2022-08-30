@@ -36,7 +36,34 @@ namespace LogicBo
             
             return result;
         }
-  public DataTable GetResultbyElement(int Id)
+
+
+        public string GetCountryNameByID(int countryID)
+        {
+            string pais = String.Empty;
+            List<SqlParameter> parameters = new List<SqlParameter> {
+                new SqlParameter(){ ParameterName="countryID", SqlDbType=SqlDbType.Int,Value=countryID}
+                 };
+            var result = executeProcedures.DataTable("ENEL_LoadCountryByRFID", parameters);
+            
+            pais = result.Rows[0]["Nombre"].ToString();
+            return pais;
+        }
+
+
+        public string GetFlagNameByID(int countryID)
+        {
+            string pais = String.Empty;
+            List<SqlParameter> parameters = new List<SqlParameter> {
+                new SqlParameter(){ ParameterName="countryID", SqlDbType=SqlDbType.Int,Value=countryID}
+                 };
+            var result = executeProcedures.DataTable("ENEL_LoadFlagCountryByRFID", parameters);
+
+            pais = result.Rows[0]["Bandera"].ToString();
+            return pais;
+        }
+
+        public DataTable GetResultbyElement(int Id)
         {
             List<SqlParameter> parameters = new List<SqlParameter> {
                 new SqlParameter(){ ParameterName="Encabezadoid", SqlDbType=SqlDbType.Int,Value=Id}

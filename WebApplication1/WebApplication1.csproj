@@ -206,6 +206,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\argentina.png" />
     <Content Include="Content\Bootstrap\css\bootstrap-grid.css" />
     <Content Include="Content\Bootstrap\css\bootstrap-grid.min.css" />
     <Content Include="Content\Bootstrap\css\bootstrap-reboot.css" />
@@ -216,6 +217,9 @@
     <Content Include="Content\Bootstrap\js\bootstrap.bundle.min.js" />
     <Content Include="Content\Bootstrap\js\bootstrap.js" />
     <Content Include="Content\Bootstrap\js\bootstrap.min.js" />
+    <Content Include="Content\Chile.jpg" />
+    <Content Include="Content\Colombia.png" />
+    <Content Include="Content\Ecuador.jpg" />
     <Content Include="Content\font-awesome-4.7.0\css\font-awesome.css" />
     <Content Include="Content\font-awesome-4.7.0\css\font-awesome.min.css" />
     <Content Include="Content\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
@@ -236,9 +240,11 @@
     <Content Include="Content\Images\Semaforo_Amarrillo.jpg" />
     <Content Include="Content\Images\Semaforo_rojo.jpg" />
     <Content Include="Content\Images\Semaforo_Verde.jpg" />
+    <Content Include="Content\Italia.png" />
     <Content Include="Content\LoadingOverlay\src\loading.gif" />
     <Content Include="Content\LoadingOverlay\src\loadingoverlay.js" />
     <Content Include="Content\LoadingOverlay\src\loadingoverlay.min.js" />
+    <Content Include="Content\Peru.png" />
     <Content Include="Content\SegmentEffect\css\component.css" />
     <Content Include="Content\SegmentEffect\css\demo.css" />
     <Content Include="Content\SegmentEffect\css\normalize.css" />
@@ -406,6 +412,7 @@
     <Content Include="Content\SemanticUI\themes\default\assets\fonts\icons.svg" />
     <Content Include="Content\SemanticUI\themes\default\assets\images\flags.png" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\spain.png" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
     <Content Include="favicon.ico" />
@@ -729,8 +736,12 @@
     <Content Include="Views\WorkingAtHeight\InspectionCert.cshtml" />
     <Content Include="Views\WorkingAtHeight\SearchInspectionCert.cshtml" />
     <Content Include="Views\WorkingAtHeight\CreateEquipmentIzage.cshtml" />
-    <Content Include="Views\WorkingAtHeight\CreateEquipment - Copia.cshtml" />
+    <Content Include="Views\WorkingAtHeight\CreateEquipment.cshtml" />
     <Content Include="Views\WorkingAtHeight\IndexSede.cshtml" />
+    <Content Include="Views\WorkingAtHeight\CreatePais.cshtml" />
+    <Content Include="Views\WorkingAtHeight\CreateCategoriaSede.cshtml" />
+    <Content Include="Views\WorkingAtHeight\IndexPais.cshtml" />
+    <Content Include="Views\WorkingAtHeight\IndexSedeCategoria.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

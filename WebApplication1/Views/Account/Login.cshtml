@@ -3,23 +3,36 @@
 @{ ViewBag.Title = "Login"; Layout = "~/Views/Shared/_LayoutLogin.cshtml"; } @using (Ajax.BeginForm("ValidateLogin", "Account", null, new AjaxOptions() { OnBegin = "OnBeginLogin()", OnSuccess = "OnSuccessLogin(data)", OnFailure = "OnError(xhr)", HttpMethod = "POST" }, new { @id = "formLogin" }))
 {
 
+
     <div class="ui form">
         <div class="field">
-            <label for="nameUser">Usuario:</label>
+            <label for="language-picker-select">Seleccione su idioma</label>
+
+            <select name="cbxlanguage" id="cbxlanguage" onchange="detectChange(this)">
+                <option lang="de" value="english">English</option>
+                <option lang="en" value="spain" selected>Español</option>
+                <option lang="it" value="italiano">Italiano</option>
+                <!-- other language options -->
+            </select>
+        </div>
+
+
+        <div class="field">
+            <label for="nameUser" id="user">Usuario:</label>
             <div class="ui right icon input">
                 <input type="text" name="nameUser" id="nameUser" data-validate="nameUser" placeholder="Usuario" autocomplete="off">
                 <i class="user secret icon"></i>
             </div>
         </div>
         <div class="field">
-            <label for="password">Contraseña:</label>
+            <label for="password" id="pass">Contraseña:</label>
             <div class="ui right icon input">
                 <input type="password" name="password" id="password" placeholder="Contraseña" autocomplete="off">
                 <i class="lock icon"></i>
             </div>
         </div>
         <div class="field">
-            <label for="password">País:</label>
+            <label for="password" id="pais">País:</label>
             <div class="ui right icon input">
                 @Html.DropDownList("cbxCountry", (SelectList)ViewBag.CountryDictionary, new { @class = "ui search dropdown" })
             </div>
@@ -35,7 +48,8 @@
     <div class="ui warning message very container" id="messageResultLogin" style="text-align:center"></div>}
 
 <script type="text/javascript">
-    var message = '<div class="header" >¡Atención!</div>{message}';
+
+    var message = '<div class="header" >¡!</div>{message}';
     $(function () {
         $('#messageResultLogin').hide();
     });
@@ -73,6 +87,33 @@
     }
     );
     ;
+
+    function detectChange(selectOS) {
+        if (selectOS.value == "italiano") {
+            $('#titulo1').html("Lavori in quota");
+            $('#user').html("Nome utente");
+            $('#pass').html("Parola d'ordine");
+            $('#pais').html("Paese");
+            $('#btnIniciarSesion').html("Invia");
+        }
+        else if (selectOS.value == "english") {
+            $('#titulo1').html("Working at Height");
+            $('#user').html("User Name");
+            $('#pass').html("Password");
+            $('#pais').html("Country");
+            $('#btnIniciarSesion').html("Submit");
+        }
+        else if (selectOS.value == "spain")
+        {
+            $('#titulo1').html("Trabajo en alturas");
+            $('#user').html("Usuario");
+            $('#pass').html("Contraseña");
+            $('#pais').html("País");
+            $('#btnIniciarSesion').html("Iniciar sesión");
+        }
+
+        console.log()
+    }
     function OnBeginLogin() {
         $('#messageResultLogin').hide();
         $.LoadingOverlay("show", {

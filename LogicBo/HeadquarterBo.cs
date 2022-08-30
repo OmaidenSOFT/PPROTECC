@@ -27,14 +27,10 @@ namespace LogicBo
             return result.AsEnumerable().ToDictionary(row => row["id"].ToString(),row => row["Sede"].ToString());
         }
 
-        public DataTable GetIndex(int CountryID)
+        public DataTable GetIndex()
         {
 
-            List<SqlParameter> parameters = new List<SqlParameter> {
-                new SqlParameter(){ ParameterName="PaisID", SqlDbType=SqlDbType.Int,Value=CountryID},
-            };
-
-            var result = executeProcedures.DataTable("ENEL_LoadSedesBYCountry", parameters);
+            var result = executeProcedures.DataTable("ENEL_LoadSedesTotal", null);
             
             return result;
         }

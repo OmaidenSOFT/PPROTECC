@@ -81,6 +81,73 @@ namespace LogicBo
 
         }
 
+        public int CreateSede(string NombreSede, int Paisid, int SedeCategoriaID,string ubicacion, string codeENEL)
+        {
+            try
+            {
+                List<SqlParameter> parameters = new List<SqlParameter> {
+                new SqlParameter(){ ParameterName="NombreSede", SqlDbType=SqlDbType.VarChar,Value=NombreSede},
+                new SqlParameter(){ ParameterName="Ubicacion", SqlDbType=SqlDbType.VarChar,Value=ubicacion},
+                new SqlParameter(){ ParameterName="EnelCode", SqlDbType=SqlDbType.VarChar,Value=codeENEL},
+                new SqlParameter(){ ParameterName="SedeCategoriaID", SqlDbType=SqlDbType.Int,Value=SedeCategoriaID},
+                new SqlParameter(){ ParameterName="PaisID", SqlDbType=SqlDbType.Int,Value=Paisid}
+            };
+                var result = executeProcedures.DataTable("ENEL_CreateSede", parameters);
+                if (!Convert.ToBoolean(result?.Rows[0][0].ToString()))
+                    throw new Exception(result.Rows[0][1].ToString());
+
+
+                return int.Parse(result.Rows[0][2].ToString());
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+        }
+
+
+
+        public int CreatePais(string pais)
+        {
+            try
+            {
+                List<SqlParameter> parameters = new List<SqlParameter> {
+                new SqlParameter(){ ParameterName="NombrePais", SqlDbType=SqlDbType.VarChar,Value=pais}
+                };
+                var result = executeProcedures.DataTable("ENEL_CreatePais", parameters);
+                if (!Convert.ToBoolean(result?.Rows[0][0].ToString()))
+                    throw new Exception(result.Rows[0][1].ToString());
+
+                return int.Parse(result.Rows[0][2].ToString());
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+        }
+
+        public int CreateSedeCategoria(string NombreCategoriaSede)
+        {
+            try
+            {
+                List<SqlParameter> parameters = new List<SqlParameter> {
+                new SqlParameter(){ ParameterName="NombreCategoriaSede", SqlDbType=SqlDbType.VarChar,Value=NombreCategoriaSede}
+                };
+                var result = executeProcedures.DataTable("ENEL_CreateSedeCategoria", parameters);
+                if (!Convert.ToBoolean(result?.Rows[0][0].ToString()))
+                    throw new Exception(result.Rows[0][1].ToString());
+
+                return int.Parse(result.Rows[0][2].ToString());
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+        }
+
         #region Entity
         #endregion
     }

@@ -11,6 +11,15 @@ namespace WebApplication1.Models
         public string LoginUser { get; set; }
         public int? SedeCategoriaId { get; set; }
         public int? RolId { get; set; }
+        public string Pais { get; set; }
+        public string Bandera { get; set; }
+        public string Welcome { get; set; }
+        public string Invite { get; set; }
+        public string TextoPro1 { get; set; }
+        public string TextoPro2 { get; set; }
+        public string TextoPro3 { get; set; }
+        public string TextoPro4 { get; set; }
+
     }
     public class RoleListModels
     {

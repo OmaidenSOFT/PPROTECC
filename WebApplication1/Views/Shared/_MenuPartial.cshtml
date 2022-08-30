@@ -121,16 +121,18 @@
                 <li class="menu__item"><a class="menu__link" href="@Url.Action("CreatePerson", "Trainning")">Crear Nuevo</a></li>
             </ul>
             <!-- Submenu 5 -->
-            <ul data-menu="submenu-5" class="menu__level">
-                @*<li class="menu__item"><a class="menu__link" href="@Url.Action("CreateUser", "Trainning")">Usuarios</a></li>*@
-                <li class="menu__item"><a class="menu__link" data-submenu="submenu-5-1">Usuarios</a></li>
-                <li class="menu__item"><a class="menu__link" data-submenu="submenu-5-2">Roles</a></li>
-                <li class="menu__item"><a class="menu__link" data-submenu="submenu-5-3">Inspectores</a></li>
-                <li class="menu__item"><a class="menu__link" data-submenu="submenu-5-4">Sedes</a></li>
+    <ul data-menu="submenu-5" class="menu__level">
+        @*<li class="menu__item"><a class="menu__link" href="@Url.Action("CreateUser", "Trainning")">Usuarios</a></li>*@
+        <li class="menu__item"><a class="menu__link" data-submenu="submenu-5-1">Usuarios</a></li>
+        <li class="menu__item"><a class="menu__link" data-submenu="submenu-5-2">Roles</a></li>
+        <li class="menu__item"><a class="menu__link" data-submenu="submenu-5-3">Inspectores</a></li>
+        <li class="menu__item"><a class="menu__link" data-submenu="submenu-5-4">Categoria Sedes</a></li>
+        <li class="menu__item"><a class="menu__link" data-submenu="submenu-5-5">Países</a></li>
+        <li class="menu__item"><a class="menu__link" data-submenu="submenu-5-6">Sedes</a></li>
 
 
 
-            </ul>
+    </ul>
             <!-- Submenu 5-1 -->
             <ul data-menu="submenu-5-1" class="menu__level">
                 <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexUser", "Trainning")">Página Inicial</a></li>
@@ -148,9 +150,25 @@
             </ul>
             <!-- Submenu 5-4 -->
             <ul data-menu="submenu-5-4" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexSedeCategoria", "WorkingAtHeight")">Página Inicial</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateCategoriaSede", "WorkingAtHeight")">Categoria Sedes</a></li>
+            </ul>
+
+
+            <!-- Submenu 5-5 -->
+            <ul data-menu="submenu-5-5" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexPais", "WorkingAtHeight")">Página Inicial</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreatePais", "WorkingAtHeight")">Países</a></li>
+            </ul>
+
+
+            <!-- Submenu 5-6 -->
+            <ul data-menu="submenu-5-6" class="menu__level">
                 <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexSede", "WorkingAtHeight")">Página Inicial</a></li>
                 <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateSede", "WorkingAtHeight")">Sedes</a></li>
             </ul>
+
+
 
 
 

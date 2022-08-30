@@ -73,9 +73,22 @@ namespace WebApplication1.Controllers
         }
         public ActionResult IndexSede()
         {
-            var result = _headquarterBo.GetIndex(2);
+            var result = _headquarterBo.GetIndex();
             return PartialView(result);
         }
+        public ActionResult IndexPais()
+        {
+            var result = _accountBo.GetCountries();
+            return PartialView(result);
+        }
+
+        public ActionResult IndexSedeCategoria()
+        {
+            var result = _accountBo.GetCategories();
+            return PartialView(result);
+        }
+
+        
         public ActionResult DownloadResult()
         {
             return PartialView();
@@ -91,7 +104,18 @@ namespace WebApplication1.Controllers
         public ActionResult CreateSede()
         {
             base.ViewBag.CountryDictionary = new SelectList(_accountBo.GetDictionary(), "Key", "Value");
+            base.ViewBag.CategoryDictionary = new SelectList(_accountBo.GetCategoryDictionary(), "Key", "Value");
 
+
+            return PartialView();
+        }
+
+        public ActionResult CreatePais()
+        {
+            return PartialView();
+        }
+        public ActionResult CreateCategoriaSede()
+        {
             return PartialView();
         }
         public ActionResult CreateEquipmentIzage()
@@ -173,6 +197,85 @@ namespace WebApplication1.Controllers
 
                 util = new Util();
                 util.CreateCurriculum(idEquipment);
+                return Json(new { result = true }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { result = false, message = ex.Message.ToString() }, JsonRequestBehavior.AllowGet);
+                throw;
+            }
+        }
+
+
+
+        [HttpPost]
+        public JsonResult ProcessCreatePais(FormCollection collection)
+        {
+            try
+            {
+                var session = Session["SessionUser"] as SessionModels;
+                if (session == null)
+                    throw new Exception("Se ha perdido la sesión del Usuario");
+
+                string pais = collection["pais"];
+                var idEquipment = _curriculumBo.CreatePais(pais);
+                return Json(new { result = true }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { result = false, message = ex.Message.ToString() }, JsonRequestBehavior.AllowGet);
+                throw;
+            }
+        }
+
+
+
+
+        [HttpPost]
+        public JsonResult ProcessCreateSede(FormCollection collection)
+        {
+            try
+            {
+                var session = Session["SessionUser"] as SessionModels;
+                if (session == null)
+                    throw new Exception("Se ha perdido la sesión del Usuario");
+                
+
+                    
+                    
+
+
+                string nombreSede = collection["sede"];
+
+                int paisid = collection["cbxCountry"].ToString() != string.Empty ? Convert.ToInt32(collection["cbxCountry"].ToString()) : 0; ;
+                int sedecategoriaid= collection["cbxSedeCategoria"].ToString() != string.Empty ? Convert.ToInt32(collection["cbxSedeCategoria"].ToString()) : 0; ;
+                string codeENEL = collection["codeENEL"];
+                string ubicacion = collection["ubicaciuon"];
+
+                var idEquipment = _curriculumBo.CreateSede(nombreSede, paisid, sedecategoriaid, ubicacion, codeENEL);
+                return Json(new { result = true }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { result = false, message = ex.Message.ToString() }, JsonRequestBehavior.AllowGet);
+                throw;
+            }
+        }
+
+
+
+
+        [HttpPost]
+        public JsonResult ProcessCreateCategoriaSede(FormCollection collection)
+        {
+            try
+            {
+                var session = Session["SessionUser"] as SessionModels;
+                if (session == null)
+                    throw new Exception("Se ha perdido la sesión del Usuario");
+
+                string categoria = collection["sedecategoria"];
+                var idEquipment = _curriculumBo.CreateSedeCategoria(categoria);
                 return Json(new { result = true }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)

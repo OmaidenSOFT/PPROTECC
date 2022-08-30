@@ -25,6 +25,19 @@ namespace LogicBo
         {
             return executeProcedures.DataTable("ENEL_LoadCountries", null).AsEnumerable().ToDictionary((DataRow row) => row["id"].ToString(), (DataRow row) => row["Nombre"].ToString());
         }
+        public DataTable GetCountries()
+        {
+            return executeProcedures.DataTable("ENEL_LoadCountries", null);
+        }
+        public Dictionary<string, string> GetCategoryDictionary()
+        {
+            return executeProcedures.DataTable("ENEL_LoadSedeCategoria", null).AsEnumerable().ToDictionary((DataRow row) => row["id"].ToString(), (DataRow row) => row["Descripcion"].ToString());
+        }
+
+        public DataTable GetCategories()
+        {
+            return executeProcedures.DataTable("ENEL_LoadSedeCategoria", null);
+        }
         /// <summary>
         /// Realiza la validacion del Usuario (A la espera de base de datos)
         /// </summary>
@@ -101,7 +114,6 @@ namespace LogicBo
             }
 
         }
-
 
 
 
