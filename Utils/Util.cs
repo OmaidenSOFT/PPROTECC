@@ -155,7 +155,6 @@ namespace Utils
                 celda1.Padding = 5;
                 celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_LEFT;
                 celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
-                celda1.Border = Rectangle.NO_BORDER;
                 table.AddCell(celda1);
 
                 celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase(dsResultEnc.Tables[0].Rows[i]["Nombre"].ToString(), fuenteEncabezado));
