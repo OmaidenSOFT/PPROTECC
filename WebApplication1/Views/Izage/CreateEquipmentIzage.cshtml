@@ -30,16 +30,16 @@
 
     .ui.action.file.input > label:last-child {
         border-radius: 0 .28571429rem .28571429rem 0 !important;
-    }
+    }7
 </style>
 
 
-<center><h3 style="color:#41B9E6; ">PROGRAMA DE PROTECCIÓN CONTRA CAÍDAS | IZAGE DE CARGAS | INGRESO DE EQUIPOS</h3></center>
+<center><h3 style="color:#41B9E6; ">PROGRAMA DE PROTECCIÓN CONTRA CAÍDAS | IZAJE DE CARGAS | INGRESO DE EQUIPOS</h3></center>
 <br />
 <br />
 <br />
 
-@using (Ajax.BeginForm("ProcessCreateEquipmentIzage", "WorkingAtHeight", null, new AjaxOptions()
+@using (Ajax.BeginForm("ProcessCreateEquipmentIzage", "Izage", FormMethod.Post, new AjaxOptions()
 {
     HttpMethod = "POST",
     OnBegin = "onBeginProcessCreateEquipmentIzage()",
@@ -50,8 +50,8 @@
     <div class="ui equal width form">
         <div class="fields">
             <div class="field">
-                <label>Equipo/Elemento</label>
-                <input type="text" id="nombreEquipo" name="nombreEquipo" placeholder="Nombre del equipo o elemento" autocomplete="off" maxlength="50" >
+                <label>Tipo equipo</label>
+                @Html.DropDownList("cbxTipoEquipo", (SelectList)ViewBag.GetTipoEquipoDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
             </div>
             <div class="field">
                 <label>Marca</label>
@@ -119,13 +119,16 @@
 
         </div>
         <div class="fields">
-            <div class="field">
-                <label>Ubicacion</label>
-                @Html.DropDownList("cbxUbicacion", (SelectList)ViewBag.LocationDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
-            </div>
+
             <div class="field">
                 <label>Sede</label>
                 @Html.DropDownList("cbxHeadquarter", (SelectList)ViewBag.HeadquarterDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+            </div>
+            <div class="field">
+                <label>Ubicacion</label>
+                <input type="text" id="txbUbicacion" name="txbUbicacion" autocomplete="off" maxlength="50">
+
+                @*@Html.DropDownList("cbxUbicacion", (SelectList)ViewBag.LocationDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })*@
             </div>
             <div class="field">
                 <label>Fecha Inspección Inicial</label>
@@ -143,13 +146,7 @@
                 <label>Observación</label>
                 <input type="text" id="observacion" name="observacion" placeholder="Observacion" autocomplete="off" maxlength="2000" multiple>
             </div>
-            
         </div>
-        <div class="fields">
-            <div class="field">
-                <label>Foto equipo </label>
-                <input type="file" name="pic" accept="image/x-png,image/gif,image/jpeg">
-            </div></div>
         <button class="ui primary button">
             Guardar
         </button>
@@ -162,9 +159,28 @@
     </div>
 }
 
+@*<div id="fup">
+    <div class="ui equal width form">
+        <div class="fields">
+            <div class="field">
+                @using (Html.BeginForm("Archivo", "Izage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <label>Foto equipo </label>
+                    <input type="file" name="postedFile" accept="image/png,image/gif,image/jpeg" />
+                    <hr />
+                    <input type="submit" value="Upload" />
+                    <div class="field">
+                        <input name="txbId" hidden />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>*@
 <script type="text/javascript">
+    
 
-
+    $('#fup').hide();
     $('input:text, .ui.button', '.ui.action.input').on('click', function (e) {
         $('input:file', $(e.target).parents()).click();
     });
@@ -329,15 +345,6 @@
                     },
                 ]
             },
-            //material: {
-            //    identifier: 'material',
-            //    rules: [
-            //        {
-            //            type: 'empty',
-            //            prompt: 'Debe ingresar algun valor'
-            //        },
-            //    ]
-            //},
             cfabricationDate: {
                 identifier: 'cfabricationDate',
                 rules: [
@@ -401,24 +408,6 @@
                     },
                 ]
             },
-            //cbxAssigned: {
-            //    identifier: 'cbxAssigned',
-            //    rules: [
-            //        {
-            //            type: 'empty',
-            //            prompt: 'Debe elegir un valor'
-            //        },
-            //    ]
-            //},
-            //cbxFieldAssigned: {
-            //    identifier: 'cbxFieldAssigned',
-            //    rules: [
-            //        {
-            //            type: 'empty',
-            //            prompt: 'Debe elegir un valor'
-            //        },
-            //    ]
-            //},
             cbxAssignedDate: {
                 identifier: 'cbxAssignedDate',
                 rules: [
@@ -428,15 +417,6 @@
                     },
                 ]
             },
-            //File: {
-            //    identifier: 'File',
-            //    rules: [
-            //        {
-            //            type: 'empty',
-            //            prompt: 'Debe elegir un archivo'
-            //        },
-            //    ]
-            //}
         }, inline: true,
         on: 'blur'
     });
@@ -452,10 +432,10 @@
         $('#renderPages').removeClass("loading");
         if (data.result) {
             $('#messageCreateEquipment').show('slow').removeClass("warning").addClass("info");
-            $('#textmessageCreateEquipment').text("Proceso Completado");
-            setTimeout(function () {
-                location.reload();
-            }, 3000);
+            $('#textmessageCreateEquipment').text("Proceso completado, por favor agregue la fotografía general del equipo desde la edición del mismo en la tabla principal para que la Hoja de vida se pueda exportar completamente.");
+            $('#fup').show();
+            var inputNombre = document.getElementById("txbId");
+            inputNombre.value = data.id;
         } else {
             $('#messageCreateEquipment').show('slow').addClass("warning").removeClass("info");
             $('#textmessageCreateEquipment').text(data.message);

@@ -1,0 +1,394 @@
+﻿@using System.Data
+@model DataTable
+<style>
+    .dynatable-per-page-select {
+        padding: 0px !important;
+    }
+</style>
+@if (Model.Rows[0]["EstadoGestionID"].ToString() == "1")
+{
+    using (Ajax.BeginForm("SaveDetailsEquipmentWMan", "FindingIzaje", null, new AjaxOptions()
+    {
+        HttpMethod = "POST",
+        OnBegin = "onBeginWMAN()",
+        OnSuccess = "onSuccessWMAN(data)",
+        OnFailure = "onFailureWMAN()",
+    }, new { @id = "formProcessWMan" }))
+    {
+        <input type="hidden" name="id" value="@ViewBag.id" />
+        <h3 class="titlesPagesDescription">
+            Detalle equipo
+        </h3>
+        <table class="ui selectable celled table ui center aligned tablesInitial">
+            <thead>
+                <tr>
+                    <th>TAG</th>
+                    <th>Equipo</th>
+                    <th>Ubicación</th>
+                    <th>Estado</th>
+                    <th>Plan de acción</th>
+                    <th></th>
+
+                </tr>
+
+            </thead>
+            <tbody>
+                @foreach (System.Data.DataRow row in Model.Rows)
+                {
+                    <tr>
+                        @foreach (DataColumn col in Model.Columns)
+                        {
+                            
+                            if (col.ColumnName == "TAG" || col.ColumnName == "Equipo" || col.ColumnName == "Ubicacion" || col.ColumnName == "Estado" || col.ColumnName == "Plan de accion")
+                            {
+                                <td>@row[col.ColumnName]</td>
+                            }
+                        }
+                        @*<td>@Html.DropDownList("cbxActionResult", (SelectList)ViewBag.ActionResultDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })</td>*@
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        var element = (DataTable)ViewBag.finding;
+        <h3 class="titlesPagesDescription">
+            Detalle plan de acción
+        </h3>
+
+        <div class="ui equal width form">
+            <div class="fields">
+                <div class="field">
+                    <label>Hallazgo</label>
+                    <textarea id="finding" name="finding" autocomplete="off" style="height:auto" readonly>@element.Rows[0][6].ToString()</textarea>
+                </div>
+                <div class="field">
+                    <label>Gestión a realizar</label>
+                    <textarea id="gestion" name="gestionRealizar" placeholder="Gestión a realizar" autocomplete="off" maxlength="500"></textarea>
+                </div>
+            </div>
+
+            <div class="fields">
+                <div class="field">
+                    <label>Responsable</label>
+                    <input type="text" id="responsable" name="responsable" placeholder="Responsable de la Gestión" autocomplete="off" maxlength="50">
+                </div>
+
+                <div class="field">
+                    <label>Fecha a realizar la gestión</label>
+                    <div class="ui calendar calendarPicker" id="managmentDate">
+                        <div class="ui input left icon">
+                            <i class="calendar icon"></i>
+                            <input type="text" placeholder="Fecha a realizar la gestión">
+                        </div>
+                    </div>
+                    <input type="hidden" name="cManagmentDate" id="cManagmentDate" autocomplete="off">
+                </div>
+            </div>
+            <div class="fields">
+
+            </div>
+            <button class="ui primary button">
+                Guardar
+            </button>
+        </div>
+    }
+}
+@if (Model.Rows[0]["EstadoGestionID"].ToString() == "2")
+{
+    using (Ajax.BeginForm("SaveDetailsEquipmentOpen", "FindingIzaje", null, new AjaxOptions()
+    {
+        HttpMethod = "POST",
+        OnBegin = "return onBeginOpen()",
+        OnSuccess = "onSuccessOpen(data)",
+        OnFailure = "onFailureOpen()",
+    }, new { @id = "formProcessOpen" }))
+    {
+        <input type="hidden" name="id" value="@ViewBag.id" />
+        <h3 class="titlesPagesDescription">
+            Detalle equipo
+        </h3>
+        <table class="ui selectable celled table ui center aligned tablesInitial">
+            <thead>
+                <tr>
+                    <th>TAG</th>
+                    <th>Equipo</th>
+                    <th>Ubicación</th>
+                    <th>Estado</th>
+                </tr>
+
+            </thead>
+            <tbody>
+                @foreach (System.Data.DataRow row in Model.Rows)
+                {
+                    <tr>
+                        @foreach (DataColumn col in Model.Columns)
+                        {
+
+                            if (col.ColumnName == "TAG" || col.ColumnName == "Equipo" || col.ColumnName == "Ubicacion" || col.ColumnName == "Estado")
+                            {
+                                <td>@row[col.ColumnName]</td>
+                            }
+                        }
+                        @*<td>@Html.DropDownList("cbxActionResult", (SelectList)ViewBag.ActionResultDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })</td>*@
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        var element = (DataTable)ViewBag.finding;
+        <div class="ui equal width form">
+            <div class="fields">
+                <div class="field">
+                    <label>Gestión a realizar</label>
+                    <textarea placeholder="Gestión a realizar" name="gestionRealizar" autocomplete="off" maxlength="500" readonly>@element.Rows[0][9].ToString()</textarea>
+                </div>
+                <div class="field">
+                    <label>Fecha a realizar la gestión</label>
+                    <input readonly value="@element.Rows[0][7].ToString()" />
+                </div>
+            </div>
+            <div class="fields">
+                <div class="field">
+                    <label>Gestión realizada</label>
+                    <textarea id="gestion" name="gestionRealizada" placeholder="Gestión realizada" autocomplete="off" maxlength="500"></textarea>
+                </div>
+                <div class="field">
+                    <label>Fecha realizado</label>
+                    <div class="ui calendar calendarPicker" id="managmentDate">
+                        <div class="ui input left icon">
+                            <i class="calendar icon"></i>
+                            <input type="text" placeholder="Fecha a realizar la gestión">
+                        </div>
+                    </div>
+                    <input type="hidden" name="cManagmentDate" id="cManagmentDate" autocomplete="off">
+                </div>
+            </div>
+        </div>
+        <input type="hidden" name="cManagmentDate2" id="cManagmentDate2" value="@element.Rows[0][7].ToString()" autocomplete="off">
+        <input type="text" id="responsable" name="responsable" value="@element.Rows[0][8].ToString()" hidden>
+
+    }
+    <div class="ui equal width form">
+        <div class="fields">
+            <div class="field">
+                <label>Archivo</label>
+                <form action="@Url.Action("UploadFile")" method="POST" class="dropzone" id="file">
+                    <input type="hidden" name="type" value="file" />
+                </form>
+                <div class="ui floating message info" style="width: 50%; margin-left: 25%; margin-right: 25%; text-align: center;display:none" id="messageFile">
+                    <div class="header">
+                        Atención
+                    </div>
+                    <p>El archivo ya ha sido registrado en nuestro sistema, al guardar se finalizará el proceso</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="ui primary button" id="btnGuardar">
+        Guardar
+    </button>
+
+
+}
+<div class="ui floating warning message" style="width:50%;margin-left:25%;margin-right:25%;text-align:center;display:none" id="messageSave">
+    <div class="header">
+        Atención
+    </div>
+    <p id="textmessageSave"></p>
+</div>
+<script type="text/javascript">
+    var myDropzoneFile;
+    var idVariedad;
+    var _thisFile;
+    var countFile = 0;
+    $("#file").dropzone({
+        autoProcessQueue: false,
+        addRemoveLinks: true,
+        maxFiles: 1,
+        acceptedFiles: ".pdf",
+        init: function () {
+            myDropzoneFile = this; // closure
+            this.on("addedfile", function (file) {
+                var re = /(?:\.([^.]+))?$/;
+                var ext = re.exec(file.name)[1];
+                ext = ext.toUpperCase();
+                _thisFile = this;
+                if (ext == "PDF") {
+                } else {
+                    _thisFile.removeFile(file);
+                }
+            });
+            this.on("removedfile", function (file) {
+            });
+            this.on("success", function (file, data, response) {
+                if (data.result) {
+                    countFile = countFile + 1;
+                    _thisFile.removeFile(file);
+                    if (myDropzoneFile.files.length == 0) {
+                        $('#messageFile').show();
+                        $('#formProcessOpen').submit();
+                    }
+                } else {
+                    alert("A ocurrido un eror");
+                    console.warn(data.message);
+                }
+            });
+            this.on("uploadprogress", function (file) {
+                $('.btnEliminar').attr('disabled', true);
+            });
+            this.on("error", function (xhr) {
+                $('.btnEliminar').attr('disabled', false);
+                console.warn(xhr);
+            });
+            this.on("maxfilesexceeded", function (file) {
+                this.removeFile(file);
+            });
+        }
+    });
+    $('#nameEquipment').text('@Html.Raw(@Model.Rows[0]["Equipo"].ToString())');
+    $('#managmentDate').calendar({
+        type: 'date',
+        text: {
+            days: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+            months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            today: 'Today',
+            now: 'Now',
+            am: 'AM',
+            pm: 'PM'
+        },
+        formatter: {
+            date: function (date, settings) {
+                if (!date) return '';
+                var day = date.getDate();
+                var month = date.getMonth() + 1;
+                var year = date.getFullYear();
+                return year + '-' + month + '-' + day;
+            }
+        },
+        onChange: function (date, text, mode) {
+            $('#cManagmentDate').val(text);
+        }
+    });
+    $(function () {
+        $('#messageSave').hide();
+        LoadElementsDefault();
+
+    });
+
+    function onBeginWMAN() {
+        $('#renderPages').addClass("loading");
+    }
+    function onFailureWMAN() {
+        $('#renderPages').removeClass("loading");
+        $('#messageSave').show('slow').addClass("warning").removeClass("info");
+        $('#textmessageSave').text("Ha ocurrido un error al procesar la solicitud");
+    }
+
+    function onSuccessWMAN(data) {
+                $('#renderPages').removeClass("loading");
+                if (data.result) {
+                    $('#messageSave').show('slow').removeClass("warning").addClass("info");
+                    $('#textmessageSave').text("Proceso Completado");
+                } else {
+                    $('#messageSave').show('slow').addClass("warning").removeClass("info");
+                    $('#textmessageSave').text(data.message);
+                }
+            }
+
+    $('#formProcessWMan').form({
+        fields: {
+            cbxActionResult: {
+                identifier: 'cbxActionResult',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe seleccionar una opción'
+                    },
+                ]
+            },
+            gestion: {
+                identifier: 'gestion',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar algún valor'
+                    },
+                ]
+            },
+            responsable: {
+                identifier: 'responsable',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar algún valor'
+                    },
+                ]
+            },
+            cManagmentDate: {
+                identifier: 'cManagmentDate',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe seleccionar una fecha'
+                    },
+                ]}
+        }, inline: true,
+        on: 'blur'
+    });
+
+    $('#formProcessOpen').form({
+        fields: {
+            gestion: {
+                identifier: 'gestion',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar algún valor'
+                    },
+                ]
+            },
+            cManagmentDate: {
+                identifier: 'cManagmentDate',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe seleccionar una fecha'
+                    },
+                ]
+            }
+        }, inline: true,
+        on: 'blur'
+    });
+
+    $('#btnGuardar').on('click', function () {
+        $('#formProcessOpen').submit();
+    });
+    function onBeginOpen() {
+        if (countFile == 0) {
+            if (myDropzoneFile.files.length == 0) {
+                alert("Debe seleccionar el archivo a cargar");
+                return false;
+            } else {
+                $('#renderPages').addClass("loading");
+                myDropzoneFile.processQueue();
+                return false;
+            }
+        }
+    }
+    function onSuccessOpen(data) {
+        $('#renderPages').removeClass("loading");
+        if (data.result) {
+            $('#messageSave').show('slow').removeClass("warning").addClass("info");
+            $('#textmessageSave').text("Proceso Completado");
+        } else {
+            $('#messageSave').show('slow').addClass("warning").removeClass("info");
+            $('#textmessageSave').text(data.message);
+        }
+    }
+    function onFailureOpen() {
+        $('#renderPages').removeClass("loading");
+        $('#messageSave').show('slow').addClass("warning").removeClass("info");
+        $('#textmessageSave').text("Ha ocurrido un error al procesar la solicitud");
+    }
+</script>

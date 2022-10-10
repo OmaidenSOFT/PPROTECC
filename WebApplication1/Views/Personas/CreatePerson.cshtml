@@ -1,0 +1,229 @@
+﻿<style>
+    .ui.action.file.input > input {
+        display: none;
+    }
+
+    .ui.action.file.input:not([class*="left action"]) > label {
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+        border-right-color: transparent !important;
+    }
+
+    .ui.action.file.input > label:first-child {
+        cursor: pointer;
+        width: auto;
+        -webkit-box-flex: 1;
+        -webkit-flex: 1 0 auto;
+        -ms-flex: 1 0 auto;
+        flex: 1 0 auto;
+        outline: 0;
+        -webkit-tap-highlight-color: rgba(255,255,255,0);
+        padding: .67861429em 1em;
+        background: #FFF;
+        border: 1px solid rgba(34,36,38,.15);
+        color: rgba(0,0,0,.87);
+        border-radius: .28571429rem;
+        -webkit-transition: box-shadow .1s ease,border-color .1s ease;
+        transition: box-shadow .1s ease,border-color .1s ease;
+        box-shadow: none;
+    }
+
+    .ui.action.file.input > label:last-child {
+        border-radius: 0 .28571429rem .28571429rem 0 !important;
+    }
+
+    7
+</style>
+
+
+<center><h3 style="color:#41B9E6; ">PROGRAMA DE PROTECCIÓN CONTRA CAÍDAS | IZAJE DE CARGAS | INGRESO DE EQUIPOS</h3></center>
+<br />
+<br />
+<br />
+
+@using (Ajax.BeginForm("ProcessCreatePerson", "Personas", FormMethod.Post, new AjaxOptions()
+{
+    HttpMethod = "POST",
+    OnBegin = "onBeginProcessCreatePerson()",
+    OnSuccess = "onSuccessProcessCreatePerson(data)",
+    OnFailure = "onFailureProcessCreatePerson()",
+}, new { @id = "formProcessCreatePerson", @enctype = "multipart/form-data" }))
+{
+    <div class="ui equal width form">
+        <div class="fields">
+            <div class="field">
+                <label>Nombre</label>
+                <input type="text" id="txbNombre" name="txbNombre" autocomplete="off" maxlength="50">
+            </div>
+            <div class="field">
+                <label>Apellido</label>
+                <input type="text" id="txbApellido" name="txbApellido" autocomplete="off" maxlength="50">
+            </div>
+            <div class="field">
+                <label>Identificación</label>
+                <input type="text" id="txbIdentificacion" name="txbIdentificacion" autocomplete="off" maxlength="50">
+            </div>
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>Telefono</label>
+                <input type="text" id="txbTelefono" name="txbTelefono" autocomplete="off" maxlength="50">
+            </div>
+            <div class="field">
+                <label>Celular</label>
+                <input type="text" id="txbCelular" name="txbCelular" autocomplete="off" maxlength="50">
+            </div>
+            <div class="field">
+                <label>Correo</label>
+                <input type="text" id="txbCorreo" name="txbCorreo" autocomplete="off" maxlength="50">
+            </div>
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>Asignado</label>
+                <input type="text" id="txbAsignado" name="txbAsignado" autocomplete="off" maxlength="50">
+            </div>
+            <div class="field">
+                <label>Sede</label>
+                @Html.DropDownList("cbxHeadquarter", (SelectList)ViewBag.HeadquarterDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+            </div>
+            <div class="field">
+                <label>Cursos</label>
+                @Html.DropDownList("cbxCourse", (SelectList)ViewBag.CourseDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+            </div>
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>Fecha Curso Inicial</label>
+                <div class="ui calendar calendarPicker" id="FechaInicioCurso">
+                    <div class="ui input left icon">
+                        <i class="calendar icon"></i>
+                        <input type="text" placeholder="Fecha Compra">
+                    </div>
+                </div>
+                <input type="hidden" name="cFechaInicioCurso" id="cFechaInicioCurso" autocomplete="off">
+            </div>
+            <div class="field">
+                <label>Estado</label>
+                <select id="cbxEstado" name="cbxEstado" class="ui search dropdown">
+                    <option value="">[-Seleccione una opción-]</option>
+                    <option value="1">Activo</option>
+                    <option value="2">Inactivo</option>
+                </select>
+            </div>
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>Observacion</label>
+                <input type="text" id="txbObservacion" name="txbObservacion" autocomplete="off" maxlength="50">
+            </div>
+        </div>
+        <button class="ui primary button">
+            Guardar
+        </button>
+        <div class="ui floating warning message" style="width:50%;margin-left:25%;margin-right:25%;text-align:center" id="messageCreatePerson">
+            <div class="header">
+                Atención
+            </div>
+            <p id="textmessageCreatePerson"></p>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    $('#FechaInicioCurso').calendar({
+        type: 'date',
+        text: {
+            days: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+            months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            today: 'Today',
+            now: 'Now',
+            am: 'AM',
+            pm: 'PM'
+        },
+        formatter: {
+            date: function (date, settings) {
+                if (!date) return '';
+                var day = date.getDate();
+                var month = date.getMonth() + 1;
+                var year = date.getFullYear();
+                return year + '-' + month + '-' + day;
+            }
+        },
+        onChange: function (date, text, mode) {
+            $('#cFechaInicioCurso').val(text);
+        }
+    });
+    $('#formProcessCreatePerson').form({
+        fields: {
+            txbNombre: {
+                identifier: 'txbNombre',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar algun valor'
+                    },
+                ]
+            },
+            txbApellido: {
+                identifier: 'txbApellido',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar algun valor'
+                    },
+                ]
+            },
+            txbIdentificacion: {
+                identifier: 'txbIdentificacion',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar algun valor'
+                    },
+                ]
+            },
+            
+            txbCelular: {
+                identifier: 'txbCelular',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar algun valor'
+                    },
+                ]
+            },
+            txbCorreo: {
+                identifier: 'txbCorreo',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar algun valor'
+                    },
+                ]
+            },
+        }, inline: true,
+        on: 'blur'
+    });
+    function onBeginProcessCreatePerson() {
+        $('#renderPages').addClass("loading");
+    }
+    function onFailureProcessCreatePerson() {
+        $('#renderPages').removeClass("loading");
+        $('#messageCreatePerson').show('slow').addClass("warning").removeClass("info");
+        $('#textmessageCreatePerson').text("Ha ocurrido un error al procesar la solicitud");
+    }
+    function onSuccessProcessCreatePerson(data) {
+        $('#renderPages').removeClass("loading");
+        if (data.result) {
+            $('#messageCreatePerson').show('slow').removeClass("warning").addClass("info");
+            $('#textmessageCreatePerson').text("Proceso completado");
+            $('#fup').show();
+            var inputNombre = document.getElementById("txbId");
+            inputNombre.value = data.id;
+        } else {
+            $('#messageCreatePerson').show('slow').addClass("warning").removeClass("info");
+            $('#textmessageCreatePerson').text(data.message);
+        }
+    }
+</script>

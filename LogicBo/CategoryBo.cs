@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Web;
 namespace LogicBo
 {
     public class CategoryBo
@@ -14,7 +8,7 @@ namespace LogicBo
 
         #region Properties
         private readonly Entity.ModelEntities entities = new Entity.ModelEntities();
-        private readonly ADO.ExecuteProcedures executeProcedures= new ADO.ExecuteProcedures();
+        private readonly ADO.ExecuteProcedures executeProcedures = new ADO.ExecuteProcedures();
         #endregion
         /// <summary>
         /// Get All Category active for list

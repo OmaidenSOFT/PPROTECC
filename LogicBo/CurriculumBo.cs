@@ -2,12 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Web;
 namespace LogicBo
 {
     public class CurriculumBo
@@ -43,11 +37,11 @@ namespace LogicBo
             return result;
         }
 
-        
 
 
 
-        public int Create(string rFID, string serial, string model, string material, DateTime fabricationDate, string mark, string lot, int elementId, int headquarterId, DateTime purchaseDate, int? areaId,int? employedId,int assignedDate,int ubicacionID)
+
+        public int Create(string rFID, string serial, string model, string material, DateTime fabricationDate, string mark, string lot, int elementId, int headquarterId, DateTime purchaseDate, int? areaId, int? employedId, int assignedDate, int ubicacionID)
         {
             try
             {
@@ -71,8 +65,8 @@ namespace LogicBo
                 if (!Convert.ToBoolean(result?.Rows[0][0].ToString()))
                     throw new Exception(result.Rows[0][1].ToString());
 
-                
-                    return int.Parse(result.Rows[0][2].ToString());
+
+                return int.Parse(result.Rows[0][2].ToString());
             }
             catch (Exception ex)
             {

@@ -1,0 +1,59 @@
+﻿@using System.Data
+@model DataTable
+
+<table class="ui selectable celled table ui center aligned tablesInitial" id="tablesIndexEquipment">
+    <thead>
+        <tr>
+            @foreach (System.Data.DataColumn col in Model.Columns)
+            {
+                <th>@col.ColumnName</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (System.Data.DataRow row in Model.Rows)
+        {
+            <tr>
+                @foreach (DataColumn col in Model.Columns)
+                {
+
+                    <th>@row[col.ColumnName]</th>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="ui card cardTest" style="display:none">
+    <div class="image icon">
+           <i class="teal huge file pdf outline icon"></i>
+
+        </div>
+    <div class="content">
+        Informe:  <a href="" id="pdfref" target="_blank">
+            <i id="number"></i>
+        </a>
+        <div class="meta">
+            <i id="datefile"></i>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="renderImages ui cards" style="display:none"></div>
+</div>
+
+<script type="text/javascript">
+    var $element = $('.cardTest');
+    LoadTables();
+    function viewDocument(path) {
+        $('.renderImages').html('');
+        $element.find($('#number').text(path));
+        $element.find($('#pdfref').attr('href', path));
+        //$element.find($('#type').text(type));
+        $element.find($('#datefile').text("Certificado en PDF"));
+        $('.renderImages').append('<div class="ui card cardTest"> ' + $element.html() + '</div>');
+
+        $('.renderImages').show('slow');
+    }
+</script>

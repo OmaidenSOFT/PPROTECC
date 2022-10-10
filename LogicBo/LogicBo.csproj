@@ -55,7 +55,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CategoriaIzajeBo.cs" />
+    <Compile Include="CronogramaIzajeBo.cs" />
     <Compile Include="EquipoIzage.cs" />
+    <Compile Include="FactoresIzajeBo.cs" />
+    <Compile Include="IndicadoresBo.cs" />
+    <Compile Include="InspectionIzaje.cs" />
+    <Compile Include="InspectionIzajeBo.cs" />
     <Compile Include="IzageBo.cs" />
     <Compile Include="MedicalConceptsBo.cs" />
     <Compile Include="ManagmentIndicatorsBo.cs" />
@@ -68,6 +74,7 @@
     <Compile Include="ElementBo.cs" />
     <Compile Include="HeadquarterBo.cs" />
     <Compile Include="CategoryBo.cs" />
+    <Compile Include="PersonBo.cs" />
     <Compile Include="TechnicalInformationBo.cs" />
     <Compile Include="UsersAndRolesBo.cs" />
     <Compile Include="TrainningBo.cs" />

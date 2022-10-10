@@ -1,15 +1,9 @@
 ﻿using LogicBo;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using WebApplication1.Filters;
-using OfficeOpenXml;
-using OfficeOpenXml.Drawing;
-using System.IO;
 using Utils;
+using WebApplication1.Filters;
 using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
@@ -28,7 +22,7 @@ namespace WebApplication1.Controllers
         TechnicalInformationBo _technicalInformationBo = new TechnicalInformationBo();
         EquipmentBo _equipmentBo = new EquipmentBo();
         Util util;
-        IzageBo _izageBo= new IzageBo();
+        IzageBo _izageBo = new IzageBo();
         #endregion
         public ActionResult Stock()
         {
@@ -84,7 +78,7 @@ namespace WebApplication1.Controllers
         public ActionResult CreateEquipmentIzage()
         {
             ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(), "Key", "Value");
-            ViewBag.UnidadMedidaDictionary= new SelectList(_izageBo.GetUnidadDictionary(), "Key", "Value");
+            ViewBag.UnidadMedidaDictionary = new SelectList(_izageBo.GetUnidadDictionary(), "Key", "Value");
             ViewBag.ElementDictionary = new SelectList(_elementBo.GetDictionary(), "Key", "Value");
             ViewBag.LocationDictionary = new SelectList(_locationBo.GetDictionary(), "Key", "Value");
             return PartialView();
@@ -171,46 +165,47 @@ namespace WebApplication1.Controllers
 
 
 
-        [HttpPost]
-        public JsonResult ProcessCreateEquipmentIzage(FormCollection collection, HttpPostedFileBase file)
-        {
-            try
-            {
-                var session = Session["SessionUser"] as SessionModels;
-                if (session == null)
-                    throw new Exception("Se ha perdido la sesión del Usuario");
-                EquipoIzage equipoI=new EquipoIzage();
-                equipoI.Equipo=collection["nombreEquipo"];
-                equipoI.Marca = collection["marca"];
-                equipoI.Modelo = collection["model"];
-                equipoI.Serial=collection["serial"];
-                equipoI.Lote = collection["lote"];
-                equipoI.Tag = collection["rfid"];
-                equipoI.Maxcapacidad = collection["maxCapacidad"];
-                equipoI.Unidadcapacidad= collection["cbxUnidad"].ToString() != string.Empty ? Convert.ToInt32(collection["cbxUnidad"].ToString()) : 0;
-                equipoI.Accesorio = collection["accesorio"];
-                equipoI.Asignadoa = collection["asignadoa"];
-                equipoI.FechaCompra=Convert.ToDateTime(collection["cpurchaseDate"]);
-                equipoI.FechaFabricacion=Convert.ToDateTime(collection["cfabricationDate"]);
-                equipoI.Ubicacion = collection["cbxUbicacion"].ToString() != string.Empty ? Convert.ToInt32(collection["cbxUbicacion"].ToString()) : 0;
-                equipoI.Sede= collection["cbxHeadquarter"].ToString() != string.Empty ? Convert.ToInt32(collection["cbxHeadquarter"].ToString()) : 0;
-                int fechaInspInicial= collection["cbxAssignedDate"].ToString() != string.Empty ? Convert.ToInt32(collection["cbxAssignedDate"].ToString()) : 0;
-                if(fechaInspInicial==1)
-                    equipoI.FechaInspeccionInicial= Convert.ToDateTime(collection["cpurchaseDate"]);
-                else if(fechaInspInicial==2)
-                 equipoI.FechaInspeccionInicial= Convert.ToDateTime(collection["cfabricationDate"]);
-                equipoI.Observaciones = collection["observacion"];
-                
-                var idEquipment = _izageBo.Create(equipoI);
+        //[HttpPost]
+        //public JsonResult ProcessCreateEquipmentIzage(FormCollection collection, HttpPostedFileBase file)
+        //{
+        //    try
+        //    {
+        //        var session = Session["SessionUser"] as SessionModels;
+        //        if (session == null)
+        //            throw new Exception("Se ha perdido la sesión del Usuario");
+        //        EquipoIzage equipoI = new EquipoIzage();
+        //        equipoI.Equipo = collection["nombreEquipo"];
+        //        equipoI.Marca = collection["marca"];
+        //        equipoI.Modelo = collection["model"];
+        //        equipoI.Serial = collection["serial"];
+        //        equipoI.Lote = collection["lote"];
+        //        equipoI.Tag = collection["rfid"];
+        //        equipoI.Maxcapacidad = collection["maxCapacidad"];
+        //        equipoI.Unidadcapacidad = collection["cbxUnidad"].ToString() != string.Empty ? Convert.ToInt32(collection["cbxUnidad"].ToString()) : 0;
+        //        equipoI.Accesorio = collection["accesorio"];
+        //        equipoI.Asignadoa = collection["asignadoa"];
+        //        equipoI.FechaCompra = Convert.ToDateTime(collection["cpurchaseDate"]);
+        //        equipoI.FechaFabricacion = Convert.ToDateTime(collection["cfabricationDate"]);
+        //        equipoI.Ubicacion = collection["cbxUbicacion"].ToString() != string.Empty ? Convert.ToInt32(collection["cbxUbicacion"].ToString()) : 0;
+        //        equipoI.Sede = collection["cbxHeadquarter"].ToString() != string.Empty ? Convert.ToInt32(collection["cbxHeadquarter"].ToString()) : 0;
+        //        int fechaInspInicial = collection["cbxAssignedDate"].ToString() != string.Empty ? Convert.ToInt32(collection["cbxAssignedDate"].ToString()) : 0;
+        //        if (fechaInspInicial == 1)
+        //            equipoI.FechaInspeccionInicial = Convert.ToDateTime(collection["cpurchaseDate"]);
+        //        else if (fechaInspInicial == 2)
+        //            equipoI.FechaInspeccionInicial = Convert.ToDateTime(collection["cfabricationDate"]);
+        //        equipoI.Observaciones = collection["observacion"];
 
-                return Json(new { result = true }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                return Json(new { result = false, message = ex.Message.ToString() }, JsonRequestBehavior.AllowGet);
-                throw;
-            }
-        }
+        //        var idEquipment = _izageBo.Create(equipoI);
+        //        util = new Util();
+        //        util.CreateHVIzaje(idEquipment);
+        //        return Json(new { result = true }, JsonRequestBehavior.AllowGet);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Json(new { result = false, message = ex.Message.ToString() }, JsonRequestBehavior.AllowGet);
+        //        throw;
+        //    }
+        //}
 
 
 
@@ -365,7 +360,7 @@ namespace WebApplication1.Controllers
             }
         }
 
-        
+
         [HttpPost]
         public PartialViewResult SearchTechnicalInformation(FormCollection collection)
         {
@@ -400,7 +395,7 @@ namespace WebApplication1.Controllers
 
 
         [HttpPost]
-        public PartialViewResult AssignEquipment(string tag,int sedeid)
+        public PartialViewResult AssignEquipment(string tag, int sedeid)
         {
             ViewBag.tag = tag;
             ViewBag.sedeid = sedeid;

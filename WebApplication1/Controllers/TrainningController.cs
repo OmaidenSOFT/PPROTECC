@@ -2,13 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
+using System.IO;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication1.Filters;
-using OfficeOpenXml;
-using OfficeOpenXml.Drawing;
-using System.IO;
 using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
@@ -110,7 +107,7 @@ namespace WebApplication1.Controllers
         }
         public ActionResult EditInspector(int idInspector)
         {
-             var model = _trainningBo.GetInfoInspector(idInspector);
+            var model = _trainningBo.GetInfoInspector(idInspector);
             return PartialView(model);
         }
 
@@ -338,7 +335,7 @@ namespace WebApplication1.Controllers
                 var passwordEncrypt = encryptData.Encrypt(password, true);
                 int enabledType = collection["enabledInspector"].ToString() != string.Empty ? Convert.ToInt32(collection["enabledInspector"].ToString()) : 0;
 
-                var idUser = _trainningBo.CreateInspector(login, nombres, apellidos, identificacion, passwordEncrypt, 4,0, enabledType);
+                var idUser = _trainningBo.CreateInspector(login, nombres, apellidos, identificacion, passwordEncrypt, 4, 0, enabledType);
 
                 if (idUser > 0)
                 {

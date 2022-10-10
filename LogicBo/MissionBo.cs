@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LogicBo
+﻿namespace LogicBo
 {
     public class MissionBo
     {
@@ -64,9 +58,10 @@ namespace LogicBo
         //}
     }
     #region Propiedades
-    public class ReturnMission {
+    public class ReturnMission
+    {
         public string name { get; set; }
-        public string description{ get; set; }
+        public string description { get; set; }
         public string date { get; set; }
         public string city { get; set; }
     }

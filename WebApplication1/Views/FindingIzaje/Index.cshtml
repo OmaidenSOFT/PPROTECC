@@ -1,0 +1,167 @@
+﻿
+@using (Ajax.BeginForm("Index", "FindingIzaje", null, new AjaxOptions()
+{
+    HttpMethod = "POST",
+    OnBegin = "onBeginProcessSearch()",
+    OnSuccess = "onSuccessProcessSearch(data)",
+    OnFailure = "onFailureProcessSearch()",
+}, new { @id = "formProcessSearch" }))
+{<div>
+        <h3 class="titlesPages">
+            ADMINISTRADOR DE INSPECCIONES EN EQUIPOS DE IZAJE
+        </h3>
+        <br />
+        <div class="ui equal width form">
+            <div class="fields">
+                <div class="field">
+                    <label>Equipo/Elemento</label>
+                    <input type="text" id="txbEquipo" name="txbEquipo" placeholder="Equipo" autocomplete="off" maxlength="50">
+                </div>
+                <div class="field">
+                    <label>Serial</label>
+                    <input type="text" id="txbSerial" name="txbSerial" placeholder="Serial" autocomplete="off" maxlength="50">
+                </div>
+                <div class="field">
+                    <label>TAG ENEL</label>
+                    <input type="text" id="txbTag" name="txbTag" placeholder="Tag" autocomplete="off" maxlength="50">
+                </div>
+            </div>
+            <div class="fields">
+                <div class="field">
+                    <label>Sede</label>
+                    @Html.DropDownList("cbxHeadquarter", (SelectList)ViewBag.HeadquarterDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+                </div>
+                <div class="field">
+                    <label>Descripción</label>
+                    <select id="cbxAssignedCondition" name="cbxAssignedCondition" class="ui search dropdown">
+                        <option value="">[-Seleccione una opción-]</option>
+                        <option value="Rechazado">Rechazado</option>
+                        <option value="Para Mantenimiento">Para Mantenimiento</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Plan de acción</label>
+                    <select id="cbxAssignedCondition" name="cbxAssignedCondition" class="ui search dropdown">
+                        <option value="">[-Seleccione una opción-]</option>
+                        <option value="Sin Gestión">Sin Gestión</option>
+                        <option value="Abierto">Abierto</option>
+                        <option value="Rechazado">Rechazado</option>
+                    </select>
+                </div>
+            </div>
+            <div class="fields">
+                <div class="field"></div>
+                <div class="field"></div>
+                <div class="field"></div>
+                <div class="field"></div>
+                <div class="field"></div>
+                <div class="field"></div>
+                <div class="field"></div>
+                <div class="field"></div>
+                <div class="field">
+                    <button class="ui primary button">
+                        Buscar
+                    </button>
+                    <button class="ui primary button" href="javascript:void(0)" onclick="location.href='@Url.Action("DownloadFile", "Download", new { fileName = "InspeccionIzaje", @id="0"})'">
+                        Exportar
+                    </button>
+                </div>
+            </div>
+        </div>
+        @*<div id="renderSearchIzage">
+
+            </div>*@
+    </div>
+}
+@using System.Data
+@model DataTable
+<div>
+    <table class="ui selectable celled table ui center aligned tablesInitial" id="tablesIndexEquipment">
+        <thead>
+            <tr>
+                @foreach (System.Data.DataColumn col in Model.Columns)
+                {
+                    if (col.ColumnName != "Id")
+                    {
+                        <th>@col.ColumnName</th>
+                    }
+                }
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (System.Data.DataRow row in Model.Rows)
+            {
+                <tr>
+                    @foreach (DataColumn col in Model.Columns)
+                    {
+                        if (col.ColumnName != "Id" && col.ColumnName != "Plan de acción")
+                        {
+                            <th>@row[col.ColumnName]</th>
+                        }
+                        else if (col.ColumnName == "Plan de acción")
+                        {
+                            switch (row[col.ColumnName].ToString())
+                            {
+                                case "Sin Gestión":
+                                    <th style="background-color: red; color: white;">@row[col.ColumnName]</th>
+                                    break;
+                                case "Abierto":
+                                    <th style="background-color: green; color: white;">@row[col.ColumnName]</th>
+                                    break;
+                                default:
+                                    <th>@row[col.ColumnName]</th>
+                                    break;
+                            }
+                        }
+                    }
+                    <td>
+                        <a href="javascript:void(0)" onclick="cargarElement('@Url.Action("LoadDetailsEquipment","FindingIzaje",new { @id=row["Id"].ToString()})')">Editar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript">
+
+
+    LoadTables();
+
+    $('#formProcessSearch').form({
+        fields: {
+            headQuarterType: {
+                identifier: 'headQuarterType',
+                rules: [{
+                    type: 'checked',
+                    prompt: 'Debe seleccionar una opción'
+                }]
+            },
+            frequency: {
+                identifier: 'frequency',
+                rules: [{
+                    type: 'checked',
+                    prompt: 'Debe seleccionar una opción'
+                }]
+            },
+
+        }, inline: true,
+        on: 'blur'
+    });
+
+    function onBeginProcessSearch() {
+        $('#renderPages').addClass("loading");
+        $('#renderSearchIzage').empty();
+    }
+    function onFailureProcessSearch() {
+        $('#renderPages').removeClass("loading");
+        $('#messageCreate').show('slow').addClass("warning").removeClass("info");
+        $('#textmessageCreate').text("Ha ocurrido un error al procesar la solicitud");
+    }
+
+    function onSuccessProcessSearch(data) {
+        $('#renderPages').removeClass("loading");
+        $('#renderSearchIzage').html(data);
+    }
+</script>
+

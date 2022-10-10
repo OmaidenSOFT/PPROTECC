@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Web;
 using System.Data.SqlClient;
+using System.Linq;
 namespace LogicBo
 {
     public class InspectionsBo
@@ -180,11 +175,9 @@ namespace LogicBo
                     new SqlParameter(){ ParameterName="Sedeid", SqlDbType=SqlDbType.Int,Value=headQuarterTypeid},
                     new SqlParameter(){ ParameterName="Typeid", SqlDbType=SqlDbType.Int,Value=Typeid},
                     new SqlParameter(){ ParameterName="ElementID", SqlDbType=SqlDbType.Int,Value=ElementID},
-        };
+            };
             var result = executeProcedures.DataTable("ENEL_LOADSCHEINSPECTIONS", parameters);
             return result;
-
-
         }
         public DataTable ManagementMaintenanceEquipment(int headQuarterTypeid)
         {
@@ -235,7 +228,7 @@ namespace LogicBo
             }
 
         }
-        public bool TechInfoCreate(int headQuarterType, int Elementoid, string marca, string modelo,string observaciones, string file)
+        public bool TechInfoCreate(int headQuarterType, int Elementoid, string marca, string modelo, string observaciones, string file)
         {
             try
             {
@@ -333,7 +326,6 @@ namespace LogicBo
             {
                 throw;
             }
-
         }
         public bool UpdateVerificateActionPlan(int id)
         {
@@ -349,8 +341,6 @@ namespace LogicBo
             {
                 throw;
             }
-
         }
-
     }
 }

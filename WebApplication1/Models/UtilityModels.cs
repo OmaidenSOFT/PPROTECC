@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
-
-namespace WebApplication1.Models
+﻿namespace WebApplication1.Models
 {
     public class UtilityModels
     {

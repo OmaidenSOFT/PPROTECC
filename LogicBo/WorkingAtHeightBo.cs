@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Web;
 using System.Data.SqlClient;
+using System.Linq;
 namespace LogicBo
 {
     public class WorkingAtHeightBo
@@ -33,10 +28,10 @@ namespace LogicBo
                 new SqlParameter(){ ParameterName="SedeId", SqlDbType=SqlDbType.Int,Value=headquarterId}
                  };
             var result = executeProcedures.DataTable("ENEL_LoadStockBySede", parameters);
-            
+
             return result;
         }
-  public DataTable GetResultbyElement(int Id)
+        public DataTable GetResultbyElement(int Id)
         {
             List<SqlParameter> parameters = new List<SqlParameter> {
                 new SqlParameter(){ ParameterName="Encabezadoid", SqlDbType=SqlDbType.Int,Value=Id}
@@ -47,13 +42,13 @@ namespace LogicBo
         }
 
 
-        
 
 
 
 
 
-        
+
+
 
 
 
@@ -80,7 +75,7 @@ namespace LogicBo
             var result = executeProcedures.DataTable("ENEL_LoadEmployee", parameters);
             return result.AsEnumerable().ToDictionary(row => row["ID"].ToString(), row => row["Inspector"].ToString());
         }
-        public bool Unsuscribe(string tag,string comment)
+        public bool Unsuscribe(string tag, string comment)
         {
             List<SqlParameter> parameters = new List<SqlParameter> {
                 new SqlParameter(){ ParameterName="RFID", SqlDbType=SqlDbType.VarChar,Value=tag},
@@ -92,7 +87,7 @@ namespace LogicBo
 
             return true;
         }
-        public bool EditEquipment(string RFID,int areaid, int empleadoid)
+        public bool EditEquipment(string RFID, int areaid, int empleadoid)
         {
             try
             {
@@ -131,7 +126,7 @@ namespace LogicBo
             }
 
         }
-        public bool AssignEquipmentSave(string tag,int headquarterid, int? areaid,int? employedId)
+        public bool AssignEquipmentSave(string tag, int headquarterid, int? areaid, int? employedId)
         {
             try
             {

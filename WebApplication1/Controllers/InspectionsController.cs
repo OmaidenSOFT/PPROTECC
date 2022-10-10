@@ -1,15 +1,12 @@
 ﻿using LogicBo;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using WebApplication1.Filters;
-using OfficeOpenXml;
-using OfficeOpenXml.Drawing;
-using System.IO;
 using Utils;
+using WebApplication1.Filters;
 using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
@@ -350,7 +347,7 @@ namespace WebApplication1.Controllers
                 string Marca = collection["mark"];
                 string Modelo = collection["model"];
                 string Observaciones = collection["obser"];
-                
+
 
 
                 string folderName = string.Empty;
@@ -378,7 +375,7 @@ namespace WebApplication1.Controllers
                 }
                 Session["FilesInspections"] = null;
 
-                var result = _inspectionsBo.TechInfoCreate(headQuarterType, Elementoid,Marca,Modelo,Observaciones,fileName);
+                var result = _inspectionsBo.TechInfoCreate(headQuarterType, Elementoid, Marca, Modelo, Observaciones, fileName);
 
 
                 return Json(new { result = true }, JsonRequestBehavior.AllowGet);
@@ -774,7 +771,7 @@ namespace WebApplication1.Controllers
             }
         }
 
-        
+
 
 
         [HttpPost]

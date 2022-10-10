@@ -1,0 +1,31 @@
+﻿@using System.Data
+@model DataTable
+
+
+<table class="ui selectable celled table ui center aligned tablesInitial" id="tablesIndexEquipment">
+    <thead>
+        <tr>
+            @foreach (System.Data.DataColumn col in Model.Columns)
+            {
+                if (col.ColumnName != "IdSede")
+                {
+                    <th>@col.ColumnName</th>
+                }
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (System.Data.DataRow row in Model.Rows)
+        {
+            <tr>
+                @foreach (DataColumn col in Model.Columns)
+                {
+                    if (col.ColumnName != "IdSede")
+                    {
+                        <th>@row[col.ColumnName]</th>
+                    }
+                }
+            </tr>
+        }
+    </tbody>
+</table>

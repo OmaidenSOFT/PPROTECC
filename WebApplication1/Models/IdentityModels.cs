@@ -13,5 +13,7 @@ namespace WebApplication1.Models
             : base("DefaultConnection")
         {
         }
+
+        public System.Data.Entity.DbSet<Entity.AccionTomar> AccionTomars { get; set; }
     }
 }

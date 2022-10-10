@@ -1,0 +1,172 @@
+﻿<h3 class="titlesPages">
+    GESTIÓN DE EQUIPOS | INGRESO EQUIPOS DE IZAJE
+</h3>
+<br />
+@using System.Data
+@model DataTable
+
+@{
+    System.Data.DataTable dt = Model;
+}
+
+@using (Ajax.BeginForm("SearchEquipmentIzage", "Izage", null, new AjaxOptions()
+{
+    HttpMethod = "POST",
+    OnBegin = "onBeginProcessSearch()",
+    OnSuccess = "onSuccessProcessSearch(data)",
+    OnFailure = "onFailureProcessSearch()",
+}, new { @id = "formProcessSearch" }))
+{
+    <div class="ui equal width form">
+        <div class="fields">
+            <div class="field">
+                <label>Serial</label>
+                <input type="text" id="txbSerial" name="txbSerial" placeholder="Serial" autocomplete="off" maxlength="50">
+            </div>
+            <div class="field">
+                <label>Sede</label>
+                @Html.DropDownList("cbxHeadquarter", (SelectList)ViewBag.HeadquarterDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+            </div>
+            <div class="field">
+                <label>Equipo/Elemento</label>
+                <input type="text" id="txbEquipo" name="txbEquipo" placeholder="Equipo" autocomplete="off" maxlength="50">
+            </div>
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>Marca/Modelo</label>
+                <input type="text" id="txbMarca" name="txbMarca" placeholder="Marca" autocomplete="off" maxlength="50">
+            </div>
+            <div class="field">
+                <label>Estado</label>
+                <select id="cbxAssignedCondition" name="cbxAssignedCondition" class="ui search dropdown">
+                    <option value="">[-Seleccione una opción-]</option>
+                    <option value="Vigente">Vigente</option>
+                    <option value="Por vencer">Por vencer</option>
+                    <option value="Vencido">Vencido</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>TAG ENEL</label>
+                <input type="text" id="txbTag" name="txbTag" placeholder="Tag" autocomplete="off" maxlength="50">
+            </div>
+        </div>
+        <div class="fields">
+            <div class="field"></div>
+            <div class="field"></div>
+            <div class="field"></div>
+            <div class="field"></div>
+            <div class="field"></div>
+            <div class="field"></div>
+            <div class="field"></div>
+            <div class="field"></div>
+            <div class="field">
+                <button class="ui primary button">
+                    Buscar
+                </button>
+                <button class="ui primary button" href="javascript:void(0)" onclick="location.href='@Url.Action("DownloadFile", "Download", new { fileName = "Izaje", @id="0"})'">
+                    Exportar
+                </button>
+            </div>
+        </div>
+        <div id="renderSearchIzage">
+            <table class="ui selectable celled table ui center aligned tablesInitial" id="tablesIndexEquipment">
+                <thead>
+                    <tr>
+                        @foreach (System.Data.DataColumn col in dt.Columns)
+                        {
+                            if (col.ColumnName != "Certificados")
+                            {
+                                <th>@col.ColumnName</th>
+                            }
+                        }
+                        <th></th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (System.Data.DataRow row in dt.Rows)
+                    {
+                        <tr>
+                            @foreach (DataColumn col in dt.Columns)
+                            {
+                                if (col.ColumnName != "Certificados")
+                                {
+                                    if (col.ColumnName == "Fecha Ult. Inspeccion")
+                                    {
+                                        <th>@DateTime.Parse(row[col.ColumnName].ToString()).ToString("d")</th>
+                                    }
+                                    else if (col.ColumnName == "Estado")
+                                    {
+                                        switch (row[col.ColumnName].ToString())
+                                        {
+                                            case "Vigente":
+                                                <th style="background-color:green; color:white;">@row[col.ColumnName]</th>
+                                                break;
+                                            case "Por vencer":
+                                                <th style="background-color:yellow; color:black;">@row[col.ColumnName]</th>
+                                                break;
+                                            case "Vencido":
+                                                <th style="background-color:red; color:white;">@row[col.ColumnName]</th>
+                                                break;
+                                            default:
+                                                <th>@row[col.ColumnName]</th>
+                                                break;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <th>@row[col.ColumnName]</th>
+                                    }
+                                }
+                            }
+                            <td>
+                                <a href="javascript:void(0)" onclick="cargarElement('@Url.Action("EditEquipmentIzage",new { @id=row["id"].ToString()})')">Editar</a>
+                            </td>
+                            <td>
+                                <a onclick="viewDocument('@row["Certificados"]')">Ver HV</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    $('#formProcessSearch').form({
+        fields: {
+            headQuarterType: {
+                identifier: 'headQuarterType',
+                rules: [{
+                    type: 'checked',
+                    prompt: 'Debe seleccionar una opción'
+                }]
+            },
+            frequency: {
+                identifier: 'frequency',
+                rules: [{
+                    type: 'checked',
+                    prompt: 'Debe seleccionar una opción'
+                }]
+            },
+
+        }, inline: true,
+        on: 'blur'
+    });
+
+    function onBeginProcessSearch() {
+        $('#renderPages').addClass("loading");
+        $('#renderSearchIzage').empty();
+    }
+    function onFailureProcessSearch() {
+        $('#renderPages').removeClass("loading");
+        $('#messageCreate').show('slow').addClass("warning").removeClass("info");
+        $('#textmessageCreate').text("Ha ocurrido un error al procesar la solicitud");
+    }
+
+    function onSuccessProcessSearch(data) {
+        $('#renderPages').removeClass("loading");
+        $('#renderSearchIzage').html(data);
+    }
+</script>

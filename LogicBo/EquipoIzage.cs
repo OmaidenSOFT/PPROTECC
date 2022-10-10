@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LogicBo
 {
     public class EquipoIzage
     {
-        private string equipo;
         private string marca;
         private string modelo;
         private string serial;
@@ -25,8 +20,10 @@ namespace LogicBo
         private DateTime fechaInspeccionInicial;
         private int cbxAssigned;
         private string observaciones;
+        private string imagen;
+        private int idTipoEquipo;
 
-        public string Equipo { get => equipo; set => equipo = value; }
+        public int IdTipoEquipo { get => idTipoEquipo; set => idTipoEquipo = value; }
         public string Marca { get => marca; set => marca = value; }
         public string Modelo { get => modelo; set => modelo = value; }
         public string Serial { get => serial; set => serial = value; }
@@ -43,5 +40,6 @@ namespace LogicBo
         public DateTime FechaInspeccionInicial { get => fechaInspeccionInicial; set => fechaInspeccionInicial = value; }
         public int CbxAssigned { get => cbxAssigned; set => cbxAssigned = value; }
         public string Observaciones { get => observaciones; set => observaciones = value; }
+        public string Imagen { get => imagen; set => imagen = value; }
     }
 }
