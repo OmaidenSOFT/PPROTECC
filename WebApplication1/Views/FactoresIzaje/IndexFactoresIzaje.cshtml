@@ -12,19 +12,11 @@
             {<div class="ui top attached block header" style="padding:50px">
                     <div class="card-header">
                         <div class="fields">
-                            <div class="field"></div>
-                            <div class="field"></div>
-                            <div class="field"></div>
                             <div class="field">
                                 <h3 style="color: #41B9E6; text-align: center;">
-                                    CATEGORÍAS
+                                    IZAJE DE CARGAS | EQUIPOS DE IZAJE | CATEGORÍAS
                                 </h3>
                                 <br />
-                            </div>
-                            <div class="field"></div>
-                            <div class="field"></div>
-                            <div class="field">
-
                             </div>
                         </div>
                     </div>
@@ -43,32 +35,29 @@
 
                                 </div>
                             </div>
-                            <div class="fields">
-                                <div class="field"></div>
-                                <div class="field"></div>
-                                <div class="field"></div>
-                                <div class="field"></div>
-                                <div class="field"></div>
-                                <div class="field"></div>
-                                <div class="field"></div>
+                            <div class="fields" style="text-align:right !important">
                                 <div class="field">
                                     <button class="ui primary button">
                                         Buscar
                                     </button>
                                 </div>
                             </div>
-                            <div id="renderSearchFactoresIzage">
-                            </div>
+                        </div>
+                        <div id="renderSearchFactoresIzage">
                         </div>
                     </div>
                 </div>
             }
             <script type="text/javascript">
+                $('#tablesIndexEquipment').dynatable({
+                }).bind('dynatable:afterProcess', processingComplete);
+                processingComplete();
 
                 function onBeginProcessSearchFactores() {
                     $('#renderPages').addClass("loading");
                     $('#renderSearchFactoresIzage').empty();
                 }
+
                 function onFailureProcessSearchFactores() {
                     $('#renderPages').removeClass("loading");
                     $('#messageCreate').show('slow').addClass("warning").removeClass("info");
@@ -94,14 +83,14 @@
                 <div class="ui top attached block header" style="padding:50px">
                     <div class="card-header">
                         <h3 style="color: #41B9E6; text-align: center;">
-                            FACTORES
+                            IZAJE DE CARGAS | EQUIPOS DE IZAJE | FACTORES
                         </h3>
                         <br />
                     </div>
                     <div class="ui equal width form">
                         <div class="fields">
                             <div class="field">
-                                <label>Categoria</label>
+                                <label>Categoría</label>
                                 @Html.DropDownList("cbxCategoria", (SelectList)ViewBag.GetCategoriaDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
                             </div>
                         </div>
@@ -112,29 +101,23 @@
                             </div>
                         </div>
                         <br />
-                        <div class="fields">
-                            <div class="field"></div>
-                            <div class="field"></div>
-                            <div class="field"></div>
-                            <div class="field"></div>
-                            <div class="field"></div>
-                            <div class="field"></div>
-                            <div class="field"></div>
-                            
+                        <div class="fields" style="text-align:right !important">
                             <div class="field">
                                 <button class="ui primary button">
                                     Buscar
                                 </button>
                             </div>
                         </div>
-                        <div id="renderSearchCategoriasIzage">
+                    </div>
+                    <div id="renderSearchCategoriasIzage">
 
-                        </div>
                     </div>
                 </div>
             }
             <script type="text/javascript">
-
+                $('#tablesIndexEquipment').dynatable({
+                }).bind('dynatable:afterProcess', processingComplete);
+                processingComplete();
 
                 function onBeginProcessSearchCategorias() {
                     $('#renderPages').addClass("loading");

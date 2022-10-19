@@ -12,6 +12,7 @@
                 }
             }
             <th></th>
+            <th></th>
 
         </tr>
     </thead>
@@ -83,7 +84,10 @@
 
 <script type="text/javascript">
     var $element = $('.cardTest');
-    LoadTables();
+    //LoadTables();
+    $('#tablesIndexEquipment').dynatable({
+    }).bind('dynatable:afterProcess', processingComplete);
+    processingComplete();
     function viewDocument(path) {
         $('.renderImages').html('');
         $element.find($('#number').text(path));

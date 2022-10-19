@@ -1,11 +1,6 @@
-﻿using ADO;
-using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
+﻿using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
 using static LogicBo.ManagmentIndicatorsBo;
 
 namespace LogicBo
@@ -62,7 +57,7 @@ namespace LogicBo
             }
             return model;
         }
-        
+
         public List<Results> GetPersonChar1(int idSede, int annio)
         {
             var model = new List<Results>();

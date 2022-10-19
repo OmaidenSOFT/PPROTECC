@@ -256,8 +256,8 @@ namespace WebApplication1.Controllers
             }
         }
 
-        [HttpPost]
-        public ActionResult Archivo(HttpPostedFileBase postedFile, FormCollection collection)
+        //[HttpPost]
+        public void Archivo(HttpPostedFileBase postedFile, FormCollection collection)
         {
             if (postedFile != null)
             {
@@ -274,7 +274,8 @@ namespace WebApplication1.Controllers
                 util = new Util();
                 util.CreateHVIzaje(Convert.ToInt32(id), Server.MapPath("~/Equipo_Izaje/"));
             }
-            return View();
+            Response.Redirect("/pprotecc/");
+            Url.Action("IndexEquipmentIzage", "Izaje");
         }
 
         [HttpPost]
@@ -341,7 +342,7 @@ namespace WebApplication1.Controllers
                     throw new Exception("Se ha perdido la sesión del Usuario");
 
                 string RFID = collection["RFID"];
-                int areaid = int.Parse(collection["areaid"]); ;
+                int areaid = int.Parse(collection["areaid"]);
                 int empleadoid = int.Parse(collection["empleadoid"]);
 
 

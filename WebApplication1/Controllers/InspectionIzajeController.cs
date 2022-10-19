@@ -41,6 +41,20 @@ namespace WebApplication1.Controllers
             return PartialView(result);
         }
 
+        public PartialViewResult SearchInspectionIzaje(FormCollection collection)
+        {
+            try
+            {
+                var result = _inspectionIzajeBo.GetInfo();
+
+                return PartialView(result);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         public ActionResult CreateInspectionIzaje(int id, FormCollection collection)
         {
             return PartialView();
@@ -112,17 +126,7 @@ namespace WebApplication1.Controllers
 
                 DataTable dt = _factoresIzajeBo.GetByIdEquipo(Convert.ToInt32(collection["idTipoEquipo"].ToString()));
 
-                foreach (DataRow row in dt.Rows)
-                {
-                    foreach (DataColumn col in dt.Columns)
-                    {
-                        if (col.ColumnName == "Id")
-                        {
-                            int idFactor = Convert.ToInt32(row["Id"].ToString());
-                            _inspectionIzajeBo.CreateDetalle(idFactor, collection[string.Concat("cbxAssignedDate_", idFactor)].ToString(), collection[string.Concat("txbComentario_", idFactor)].ToString());
-                        }
-                    }
-                }
+
 
                 InspectionIzaje inspectionIzaje = new InspectionIzaje();
                 inspectionIzaje.FechaInspeccion = Convert.ToDateTime(collection["cinspectionDate"].ToString());
@@ -131,7 +135,21 @@ namespace WebApplication1.Controllers
                 inspectionIzaje.IdEquipo = Convert.ToInt32(collection["id"].ToString());
                 inspectionIzaje.IdEstado = collection["cbxFinalState"].ToString() != string.Empty ? Convert.ToInt32(collection["cbxFinalState"].ToString()) : 0;
                 inspectionIzaje.Precinto = collection["txbPrecinto"];
-                _inspectionIzajeBo.Create(inspectionIzaje);
+                int idInspeccion = _inspectionIzajeBo.Create(inspectionIzaje);
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    foreach (DataColumn col in dt.Columns)
+                    {
+                        if (col.ColumnName == "Id")
+                        {
+                            int idFactor = Convert.ToInt32(row["Id"].ToString());
+
+                            _inspectionIzajeBo.CreateDetalle(idFactor, idInspeccion, collection[string.Concat("cbxAssignedDate_", idFactor)].ToString(), collection[string.Concat("txbComentario_", idFactor)].ToString());
+                        }
+                    }
+                }
+
                 util = new Util();
                 util.CreateHVIzaje(Convert.ToInt32(collection["id"].ToString()), Server.MapPath("~/Equipo_Izaje/"));
                 Response.Redirect("/pprotecc/");

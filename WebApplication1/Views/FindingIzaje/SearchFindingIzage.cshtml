@@ -1,0 +1,59 @@
+﻿@using System.Data
+@model DataTable
+@{
+    System.Data.DataTable dt = Model;
+}
+<table class="ui selectable celled table ui center aligned tablesInitial" id="tablesIndexEquipment">
+    <thead>
+        <tr>
+            @foreach (System.Data.DataColumn col in dt.Columns)
+            {
+                if (col.ColumnName != "Id")
+                {
+                    <th>@col.ColumnName</th>
+                }
+            }
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (System.Data.DataRow row in dt.Rows)
+        {
+            <tr>
+                @foreach (DataColumn col in dt.Columns)
+                {
+                    if (col.ColumnName != "Id" && col.ColumnName != "Plan de acción")
+                    {
+                        <th>@row[col.ColumnName]</th>
+                    }
+                    else if (col.ColumnName == "Plan de acción")
+                    {
+                        switch (row[col.ColumnName].ToString())
+                        {
+                            case "Sin Gestión":
+                                <th style="background-color: red; color: white;">@row[col.ColumnName]</th>
+                                break;
+                            case "Abierto":
+                                <th style="background-color: green; color: white;">@row[col.ColumnName]</th>
+                                break;
+                            default:
+                                <th>@row[col.ColumnName]</th>
+                                break;
+                        }
+                    }
+                }
+                <td>
+                    <a href="javascript:void(0)" onclick="cargarElement('@Url.Action("LoadDetailsEquipment","FindingIzaje",new { @id=row["Id"].ToString()})')">Editar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    //LoadTables();
+    $('#tablesIndexEquipment').dynatable({
+    }).bind('dynatable:afterProcess', processingComplete);
+    processingComplete();
+
+</script>

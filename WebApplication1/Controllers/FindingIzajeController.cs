@@ -38,6 +38,20 @@ namespace WebApplication1.Controllers
             return PartialView(result);
         }
 
+        public PartialViewResult SearchFindingIzage()
+        {
+            try
+            {
+                var result = _inspectionIzajeBo.GetInfoFinding();
+                return PartialView(result);
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         //[HttpPost]
         public PartialViewResult LoadDetailsEquipment(int id)
         {
@@ -49,7 +63,7 @@ namespace WebApplication1.Controllers
                 Session["FilesInspections"] = null;
                 var result = _inspectionIzajeBo.GetFindingById(id);
                 //int stateId = int.Parse(result.Rows[0]["Id"].ToString());
-                ViewBag.ActionResultDictionary = new SelectList(_finalStateBo.GetStateIzaje(), "Key", "Value", result.Rows[0]["stateid"].ToString());
+                ViewBag.ActionResultDictionary = new SelectList(_actionResultBo.GetDictionary(), "Key", "Value", result.Rows[0]["stateid"].ToString());
                 ViewBag.finding = result;
                 ViewBag.id = id;
                 return PartialView(result);

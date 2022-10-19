@@ -1,0 +1,152 @@
+﻿@using System.Data
+@model DataTable
+
+@{
+    LogicBo.CronogramaPersonasIzajeBo _cronogramaIzajeBo = new LogicBo.CronogramaPersonasIzajeBo();
+    System.Data.DataTable dt = Model;
+    string idSede = Model.Rows[0]["IdSede"].ToString();
+}
+<center>
+    <h3 style="color:#41B9E6; ">
+        Detalle inspecciones de los equipos
+    </h3>
+</center>
+<br />
+@using (Ajax.BeginForm("SearchDetalleCronograma", "CronogramaPersonasIzaje", null, new AjaxOptions()
+{
+    HttpMethod = "POST",
+    OnBegin = "onBeginProcessSearch()",
+    OnSuccess = "onSuccessProcessSearch(data)",
+    OnFailure = "onFailureProcessSearch()",
+}, new { @id = "formProcessSearch" }))
+{
+    <div class="ui equal width form">
+        <div class="fields">
+            <div class="field">
+                <label>Identificacion</label>
+                <input type="text" id="txbIdentificacion" name="txbIdentificacion" autocomplete="off" maxlength="50">
+            </div>
+            <div class="field">
+                <label>Nombre</label>
+                <input type="text" id="txbNombre" name="txbNombre" autocomplete="off" maxlength="50">
+            </div>
+            <div class="field">
+                <label>Sede</label>
+                @Html.DropDownList("cbxHeadquarter", (SelectList)ViewBag.HeadquarterDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+            </div>
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>F Inicio</label>
+                <div class="ui calendar calendarPicker" id="FechaInicio">
+                    <div class="ui input left icon">
+                        <i class="calendar icon"></i>
+                        <input type="text" placeholder="Fecha Compra">
+                    </div>
+                </div>
+                <input type="hidden" name="cFechaInicio" id="cFechaInicio" autocomplete="off">
+            </div>
+            <div class="field">
+                <label>F Fin</label>
+                <div class="ui calendar calendarPicker" id="FechaFin">
+                    <div class="ui input left icon">
+                        <i class="calendar icon"></i>
+                        <input type="text" placeholder="Fecha Compra">
+                    </div>
+                </div>
+                <input type="hidden" name="cFechaFin" id="cFechaFin" autocomplete="off">
+            </div>
+            <div class="field">
+                <input name="txbId" hidden value="@idSede" />
+            </div>
+        </div>
+        <div class="fields" style="text-align:right !important">
+            <div class="field">
+                <button class="ui primary button">
+                    Buscar
+                </button>
+            </div>
+        </div>
+        <div id="renderSearchCronograma">
+            <table class="ui selectable celled table ui center aligned tablesInitial" id="tablesIndexEquipment">
+                <thead>
+                    <tr>
+                        @foreach (System.Data.DataColumn col in dt.Columns)
+                        {
+                            if (col.ColumnName != "IdSede")
+                            {
+                                <th>@col.ColumnName</th>
+                            }
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (System.Data.DataRow row in dt.Rows)
+                    {
+                        <tr>
+                            @foreach (DataColumn col in dt.Columns)
+                            {
+                                if (col.ColumnName == "#" || col.ColumnName == "Identificacion" || col.ColumnName == "Nombre" || col.ColumnName == "Sede" || col.ColumnName == "Asignado" || col.ColumnName == "Estado Vigencia Ult. Curso")
+                                {
+                                    <th>@row[col.ColumnName]</th>
+                                }
+                                else if (col.ColumnName == "Fecha Curso Inicial" || col.ColumnName == "Fecha Ultimo Curso")
+                                {
+                                    <th>@DateTime.Parse(row[col.ColumnName].ToString()).ToString("d")</th>
+                                }
+                                else if (col.ColumnName == "Estado Vigencia Ult. Curso")
+                                {
+                                    switch (row[col.ColumnName].ToString())
+                                    {
+                                        case "Vigente":
+                                            <th style="background-color:green; color:white;">@row[col.ColumnName]</th>
+                                            break;
+                                        case "Vencido":
+                                            <th style="background-color:red; color:white;">@row[col.ColumnName]</th>
+                                            break;
+                                        default:
+                                            <th>@row[col.ColumnName]</th>
+                                            break;
+                                    }
+                                }
+                            }
+                            @*<td>
+                                <a hidden href="javascript:void(0)" onclick="cargarElement('@Url.Action("DetalleCronograma",new { @id=row["#"].ToString()})')">Editar</a>
+                            </td>*@
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    //LoadTables();
+
+    $('#formProcessSearch').form({
+        fields: {
+            headQuarterType: {
+                identifier: 'headQuarterType',
+                rules: [{
+                    type: 'checked',
+                    prompt: 'Debe seleccionar una opción'
+                }]
+            },
+        }, inline: true,
+        on: 'blur'
+    });
+
+    function onBeginProcessSearch() {
+        $('#renderPages').addClass("loading");
+        $('#renderSearchCronograma').empty();
+    }
+    function onFailureProcessSearch() {
+        $('#renderPages').removeClass("loading");
+        $('#messageCreate').show('slow').addClass("warning").removeClass("info");
+        $('#textmessageCreate').text("Ha ocurrido un error al procesar la solicitud");
+    }
+    function onSuccessProcessSearch(data) {
+        $('#renderPages').removeClass("loading");
+        $('#renderSearchCronograma').html(data);
+    }
+</script>

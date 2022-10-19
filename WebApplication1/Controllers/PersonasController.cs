@@ -49,12 +49,13 @@ namespace WebApplication1.Controllers
         //    return View();
         //}
 
-        [HttpPost]
-        public ActionResult ArchivoPersona(HttpPostedFileBase postedFile, FormCollection collection)
+        //[HttpPost]
+        public void ArchivoPersona(HttpPostedFileBase postedFile, FormCollection collection)
         {
+            string id = "";
             if (postedFile != null)
             {
-                string id = collection["txbId"];
+                id = collection["txbId"];
                 string extension = Path.GetExtension(postedFile.FileName);
                 string path = Server.MapPath("~/Fotos_Personas/");
 
@@ -66,7 +67,8 @@ namespace WebApplication1.Controllers
                 _personBo.EditImg(Convert.ToInt32(id), string.Concat("Foto_", id, extension));
 
             }
-            return View();
+            Response.Redirect("/pprotecc/");
+            Url.Action("Index", "Personas");
         }
 
         public ActionResult Index()
@@ -219,6 +221,7 @@ namespace WebApplication1.Controllers
             var model = _personBo.GetInfo(idPerson);
             Response.Redirect("/pprotecc/");
             Url.Action("Index", "Personas");
+            //return PartialView("DetalleCurso", model);
         }
 
         public ActionResult DeleteCurso(int id, int IdGlobal)

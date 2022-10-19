@@ -17,6 +17,7 @@ namespace WebApplication1.Controllers
         WorkingAtHeightBo _workingAtHeightBo = new WorkingAtHeightBo();
         TrainningBo _trainningBo = new TrainningBo();
         IzageBo _izageBo = new IzageBo();
+        CronogramaIzajeBo _cronogramaIzajeBo = new CronogramaIzajeBo();
         PersonBo _personBo = new PersonBo();
         InspectionIzajeBo _inspectionIzajeBo = new InspectionIzajeBo();
         InspectionsBo _inspectionsBo = new InspectionsBo();
@@ -84,7 +85,7 @@ namespace WebApplication1.Controllers
                         stream = new MemoryStream(pack.GetAsByteArray()); //Get updated stream
                         break;
 
-                    case "Izaje":
+                    case "Reporte_Equipos_Izaje":
                         List<int> ColumnasFechas = new List<int>() { 6 };
                         int idIzaje = Convert.ToInt32(id);
                         ws.Cells["A1"].LoadFromDataTable(_izageBo.GetIndex("", 0, "", "", "", ""), true);
@@ -98,9 +99,8 @@ namespace WebApplication1.Controllers
                         stream = new MemoryStream(pack.GetAsByteArray()); //Get updated stream
                         break;
 
-                    case "Personas":
-                        ws.Cells["A1"].LoadFromDataTable(_personBo.GetIndex("", "", 0, "", ""), true);
-                        
+                    case "Reporte_Cronograma_Equipos_Izaje":
+                        ws.Cells["A1"].LoadFromDataTable(_cronogramaIzajeBo.GetIndex(0, 0, "Mes", 2022), true);
                         ws.Cells["A1:AY1"].Style.Fill.PatternType = ExcelFillStyle.Solid;
                         ws.Cells["A1:AY1"].Style.Fill.BackgroundColor.SetColor(ColorTranslator.FromHtml("#002060"));
                         ws.Cells["A1:AY1"].Style.Font.Bold = true;
@@ -109,7 +109,21 @@ namespace WebApplication1.Controllers
                         stream = new MemoryStream(pack.GetAsByteArray()); //Get updated stream
                         break;
 
-                    case "InspeccionIzaje":
+                    case "Reporte_Personas_Izaje":
+                        List<int> ColumnasFechasP = new List<int>() { 7,9 };
+
+                        ws.Cells["A1"].LoadFromDataTable(_personBo.GetIndex("", "", 0, "", ""), true);
+                        foreach (int col in ColumnasFechasP)
+                            ws.Column(col).Style.Numberformat.Format = "dd/MM/yyyy";
+                        ws.Cells["A1:AY1"].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        ws.Cells["A1:AY1"].Style.Fill.BackgroundColor.SetColor(ColorTranslator.FromHtml("#002060"));
+                        ws.Cells["A1:AY1"].Style.Font.Bold = true;
+                        ws.Cells["A1:AY1"].Style.Font.Color.SetColor(Color.White);
+                        ws.Cells.AutoFitColumns();
+                        stream = new MemoryStream(pack.GetAsByteArray()); //Get updated stream
+                        break;
+
+                    case "Inspecciones_Equipos_Izaje":
                         List<int> ColumnasFechas1 = new List<int>() { };
                         ws.Cells["A1"].LoadFromDataTable(_inspectionIzajeBo.GetInfo(), true);
                         foreach (int col in ColumnasFechas1)

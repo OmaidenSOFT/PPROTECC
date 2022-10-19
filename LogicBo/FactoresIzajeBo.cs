@@ -77,12 +77,13 @@ namespace LogicBo
             }
         }
 
-        public DataTable GetInspeccionDetalle(int id)
+        public DataTable GetInspeccionDetalle(int id, int idInspeccion)
         {
             try
             {
                 List<SqlParameter> parameters = new List<SqlParameter> {
                 new SqlParameter(){ ParameterName="IdEquipo", SqlDbType=SqlDbType.Int,Value=id},
+                new SqlParameter(){ ParameterName="IdInspeccion", SqlDbType=SqlDbType.Int,Value=idInspeccion},
             };
                 var result = executeProcedures.DataTable("ENEL_LoadIzageInspectionDet", parameters);
                 return result;

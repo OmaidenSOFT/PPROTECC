@@ -34,7 +34,7 @@
 </style>
 
 
-<center><h3 style="color:#41B9E6; ">PROGRAMA DE PROTECCIÓN CONTRA CAÍDAS | IZAJE DE CARGAS | INGRESO DE EQUIPOS</h3></center>
+<center><h3 style="color:#41B9E6; ">IZAJE DE CARGAS | EQUIPOS DE IZAJE | INGRESO DE EQUIPOS</h3></center>
 <br />
 <br />
 <br />
@@ -158,38 +158,15 @@
         </div>
     </div>
 }
-
-@*<div id="fup">
-    <div class="ui equal width form">
-        <div class="fields">
-            <div class="field">
-                @using (Html.BeginForm("Archivo", "Izage", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                {
-                    <label>Foto equipo </label>
-                    <input type="file" name="postedFile" accept="image/png,image/gif,image/jpeg" />
-                    <hr />
-                    <input type="submit" value="Upload" />
-                    <div class="field">
-                        <input name="txbId" hidden />
-                    </div>
-                }
-            </div>
-        </div>
-    </div>
-</div>*@
 <script type="text/javascript">
-    
-
     $('#fup').hide();
     $('input:text, .ui.button', '.ui.action.input').on('click', function (e) {
         $('input:file', $(e.target).parents()).click();
     });
-
     $('input:file', '.ui.action.input').on('change', function (e) {
         var name = e.target.files[0].name;
         $('input:text', $(e.target).parent()).val(name);
     });
-
     var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];
     function ValidateFile(oInput) {
         if (oInput.type == "file") {
@@ -309,35 +286,67 @@
                     }
                 });
             }
-
         }
-
-
-
     });
 
     $('#formProcessCreateEquipmentIzage').form({
         fields: {
-            nombreEquipo: {
-                identifier: 'nombreEquipo',
-                rules: [
-                    {
-                        type: 'empty',
-                        prompt: 'Debe ingresar algun valor en el nombfre del equipo por fvor'
-                    },
-                ]
-            },
             marca: {
                 identifier: 'marca',
                 rules: [
                     {
                         type: 'empty',
-                        prompt: 'Debe ingresar algun valor en la mar ca del equipo este no debe estar vacio'
+                        prompt: 'Debe ingresar algun valor en la marca del equipo este no debe estar vacio'
                     },
                 ]
             },
             model: {
                 identifier: 'model',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar algun valor'
+                    },
+                ]
+            },
+            serial: {
+                identifier: 'serial',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar algun valor'
+                    },
+                ]
+            },
+            lote: {
+                identifier: 'lote',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar algun valor'
+                    },
+                ]
+            },
+            rfid: {
+                identifier: 'rfid',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar algun valor'
+                    },
+                ]
+            },
+            maxCapacidad: {
+                identifier: 'maxCapacidad',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe ingresar algun valor'
+                    },
+                ]
+            },
+            accesorio: {
+                identifier: 'accesorio',
                 rules: [
                     {
                         type: 'empty',
@@ -356,15 +365,6 @@
             },
             mark: {
                 identifier: 'mark',
-                rules: [
-                    {
-                        type: 'empty',
-                        prompt: 'Debe ingresar un valor'
-                    },
-                ]
-            },
-            lot: {
-                identifier: 'lot',
                 rules: [
                     {
                         type: 'empty',

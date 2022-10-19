@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="CategoriaIzajeBo.cs" />
     <Compile Include="CronogramaIzajeBo.cs" />
+    <Compile Include="CronogramaPersonasIzajeBo.cs" />
     <Compile Include="EquipoIzage.cs" />
     <Compile Include="FactoresIzajeBo.cs" />
     <Compile Include="IndicadoresBo.cs" />

@@ -1,6 +1,19 @@
 ﻿@using System.Data
 @model DataTable
 
+<style>
+    .ui.form .fields .field .ui.input input, .ui.form .field .ui.input input {
+        display: none;
+        width: auto;
+    }
+    div.dynatable-per-page {
+        display: none;
+    }
+    div#dynatable-search-tablesIndexEquipment.dynatable-search.ui.input.spanSearch {
+        display: none;
+    }
+</style>
+
 <table class="ui selectable celled table ui center aligned tablesInitial" id="tablesIndexEquipment">
     <thead>
         <tr>
@@ -26,8 +39,14 @@
 
 
 <script type="text/javascript">
+    $('#tablesIndexEquipment').dynatable({
+    }).bind('dynatable:afterProcess', processingComplete);
+    processingComplete();
+
+    //$('#dynatable-query-search-tablesIndexEquipment').css("visibility", "hidden");
+
     var $element = $('.cardTest');
-    LoadTables();
+    //LoadTables();
     function viewDocument(path) {
         $('.renderImages').html('');
         $element.find($('#number').text(path));

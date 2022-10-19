@@ -1,0 +1,117 @@
+﻿<center>
+    <h3 style="color:#41B9E6; ">
+        IZAJE DE CARGAS | FORMACIÓN DE PERSONAL | CRONOGRAMA DE FORMACIONES
+    </h3>
+</center>
+<br />
+@using System.Data
+@model DataTable
+
+@{
+    System.Data.DataTable dt = Model;
+}
+@using (Ajax.BeginForm("SearchCronograma", "CronogramaPersonasIzaje", null, new AjaxOptions()
+{
+    HttpMethod = "POST",
+    OnBegin = "onBeginProcessSearch()",
+    OnSuccess = "onSuccessProcessSearch(data)",
+    OnFailure = "onFailureProcessSearch()",
+}, new { @id = "formProcessSearch" }))
+{
+    <div class="ui equal width form">
+        <div class="fields">
+            <div class="field">
+                <label>Sede</label>
+                @Html.DropDownList("cbxHeadquarter", (SelectList)ViewBag.HeadquarterDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+            </div>
+            <div class="field">
+                <label>Tipo de cronograma</label>
+                <select id="cbxTipoCronograma" name="cbxTipoCronograma" class="ui search dropdown">
+                    <option value="Annio">Año</option>
+                    <option value="Mes">Mes</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>Año</label>
+                <select id="cbxAnnio" name="cbxAnnio" class="ui search dropdown">
+                    <option value="2019">2019</option>
+                    <option value="2020">2020</option>
+                    <option value="2021">2021</option>
+                    <option value="2022" selected>2022</option>
+                    <option value="2023">2023</option>
+                </select>
+            </div>
+        </div>
+        <div class="fields" style="text-align:right !important">
+            <div class="field">
+                <button class="ui primary button">
+                    Buscar
+                </button>
+                <button class="ui primary button" href="javascript:void(0)" onclick="location.href='@Url.Action("DownloadFile", "Download", new { fileName = "Reporte_Cronograma_Equipos_Izaje", @id="0"})'">
+                    Exportar
+                </button>
+            </div>
+        </div>
+        <div id="renderSearchCronograma">
+
+            <table class="ui selectable celled table ui center aligned tablesInitial" id="tablesIndexEquipment">
+                <thead>
+                    <tr>
+                        @foreach (System.Data.DataColumn col in dt.Columns)
+                        {
+                            if (col.ColumnName != "id")
+                            {
+                                <th>@col.ColumnName</th>
+                            }
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (System.Data.DataRow row in dt.Rows)
+                    {
+                        <tr>
+                            @foreach (DataColumn col in dt.Columns)
+                            {
+                                if (col.ColumnName != "id")
+                                {
+                                    <th>@row[col.ColumnName]</th>
+                                }
+                            }
+                            <td>
+                                <a href="javascript:void(0)" onclick="cargarElement('@Url.Action("DetalleCronograma",new { @id=row["id"].ToString()})')">Editar</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    $('#formProcessSearch').form({
+        fields: {
+            headQuarterType: {
+                identifier: 'headQuarterType',
+                rules: [{
+                    type: 'checked',
+                    prompt: 'Debe seleccionar una opción'
+                }]
+            },
+        }, inline: true,
+        on: 'blur'
+    });
+
+    function onBeginProcessSearch() {
+        $('#renderPages').addClass("loading");
+        $('#renderSearchCronograma').empty();
+    }
+    function onFailureProcessSearch() {
+        $('#renderPages').removeClass("loading");
+        $('#messageCreate').show('slow').addClass("warning").removeClass("info");
+        $('#textmessageCreate').text("Ha ocurrido un error al procesar la solicitud");
+    }
+    function onSuccessProcessSearch(data) {
+        $('#renderPages').removeClass("loading");
+        $('#renderSearchCronograma').html(data);
+    }
+</script>

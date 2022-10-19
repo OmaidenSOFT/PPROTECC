@@ -33,10 +33,7 @@
             <div class="field">
                 <input name="txbId" hidden value="@idSede" />
             </div>
-            <div class="field"></div>
-            <div class="field"></div>
-            <div class="field"></div>
-            <div class="field">
+            <div class="field" style="text-align:right !important">
                 <br />
                 <button class="ui primary button">
                     Buscar
@@ -75,6 +72,8 @@
     </div>
 }
 <script type="text/javascript">
+    LoadTables();
+
     $('#formProcessSearch').form({
         fields: {
             headQuarterType: {

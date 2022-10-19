@@ -39,12 +39,12 @@
                         @foreach (DataColumn col in Model.Columns)
                         {
                             
-                            if (col.ColumnName == "TAG" || col.ColumnName == "Equipo" || col.ColumnName == "Ubicacion" || col.ColumnName == "Estado" || col.ColumnName == "Plan de accion")
+                            if (col.ColumnName == "TAG" || col.ColumnName == "Equipo" || col.ColumnName == "Ubicacion" || col.ColumnName == "Estado")
                             {
                                 <td>@row[col.ColumnName]</td>
                             }
                         }
-                        @*<td>@Html.DropDownList("cbxActionResult", (SelectList)ViewBag.ActionResultDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })</td>*@
+                        <td>@Html.DropDownList("cbxActionResult", (SelectList)ViewBag.ActionResultDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })</td>
                     </tr>
                 }
             </tbody>
@@ -59,7 +59,7 @@
             <div class="fields">
                 <div class="field">
                     <label>Hallazgo</label>
-                    <textarea id="finding" name="finding" autocomplete="off" style="height:auto" readonly>@element.Rows[0][6].ToString()</textarea>
+                    <textarea id="finding" name="finding" autocomplete="off" style="height:auto" readonly>@element.Rows[0][4].ToString()</textarea>
                 </div>
                 <div class="field">
                     <label>Gestión a realizar</label>
@@ -144,7 +144,7 @@
                 </div>
                 <div class="field">
                     <label>Fecha a realizar la gestión</label>
-                    <input readonly value="@element.Rows[0][7].ToString()" />
+                    <input readonly value="@Convert.ToDateTime(element.Rows[0][7].ToString()).Date.ToString("d")" />
                 </div>
             </div>
             <div class="fields">

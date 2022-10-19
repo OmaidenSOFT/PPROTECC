@@ -1,5 +1,5 @@
-﻿<h3 class="titlesPages">
-    GESTIÓN DE EQUIPOS | INGRESO EQUIPOS DE IZAJE
+﻿<h3 style="color: #41B9E6; text-align: center;" ">
+    IZAJE DE CARGAS | EQUIPOS DE IZAJE | ADMINISTRACIÓN DE EQUIPOS DE IZAJE
 </h3>
 <br />
 @using System.Data
@@ -51,89 +51,119 @@
                 <input type="text" id="txbTag" name="txbTag" placeholder="Tag" autocomplete="off" maxlength="50">
             </div>
         </div>
-        <div class="fields">
-            <div class="field"></div>
-            <div class="field"></div>
-            <div class="field"></div>
-            <div class="field"></div>
-            <div class="field"></div>
-            <div class="field"></div>
-            <div class="field"></div>
-            <div class="field"></div>
+        <div class="fields" style="text-align:right !important">
             <div class="field">
                 <button class="ui primary button">
                     Buscar
                 </button>
-                <button class="ui primary button" href="javascript:void(0)" onclick="location.href='@Url.Action("DownloadFile", "Download", new { fileName = "Izaje", @id="0"})'">
+                <button class="ui primary button" href="javascript:void(0)" onclick="location.href='@Url.Action("DownloadFile", "Download", new { fileName = "Reporte_Equipos_Izaje", @id="0"})'">
                     Exportar
                 </button>
             </div>
         </div>
-        <div id="renderSearchIzage">
-            <table class="ui selectable celled table ui center aligned tablesInitial" id="tablesIndexEquipment">
-                <thead>
+    </div>
+
+    <div id="renderSearchIzage">
+        <table class="ui selectable celled table ui center aligned tablesInitial" id="tablesIndexEquipment">
+            <thead>
+                <tr>
+                    @foreach (System.Data.DataColumn col in dt.Columns)
+                    {
+                        if (col.ColumnName != "Certificados")
+                        {
+                            <th>@col.ColumnName</th>
+                        }
+                    }
+                    <th></th>
+                    <th></th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (System.Data.DataRow row in dt.Rows)
+                {
                     <tr>
-                        @foreach (System.Data.DataColumn col in dt.Columns)
+                        @foreach (DataColumn col in dt.Columns)
                         {
                             if (col.ColumnName != "Certificados")
                             {
-                                <th>@col.ColumnName</th>
-                            }
-                        }
-                        <th></th>
-
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (System.Data.DataRow row in dt.Rows)
-                    {
-                        <tr>
-                            @foreach (DataColumn col in dt.Columns)
-                            {
-                                if (col.ColumnName != "Certificados")
+                                if (col.ColumnName == "Fecha Ult. Inspeccion")
                                 {
-                                    if (col.ColumnName == "Fecha Ult. Inspeccion")
+                                    <th>@DateTime.Parse(row[col.ColumnName].ToString()).ToString("d")</th>
+                                }
+                                else if (col.ColumnName == "Estado")
+                                {
+                                    switch (row[col.ColumnName].ToString())
                                     {
-                                        <th>@DateTime.Parse(row[col.ColumnName].ToString()).ToString("d")</th>
-                                    }
-                                    else if (col.ColumnName == "Estado")
-                                    {
-                                        switch (row[col.ColumnName].ToString())
-                                        {
-                                            case "Vigente":
-                                                <th style="background-color:green; color:white;">@row[col.ColumnName]</th>
-                                                break;
-                                            case "Por vencer":
-                                                <th style="background-color:yellow; color:black;">@row[col.ColumnName]</th>
-                                                break;
-                                            case "Vencido":
-                                                <th style="background-color:red; color:white;">@row[col.ColumnName]</th>
-                                                break;
-                                            default:
-                                                <th>@row[col.ColumnName]</th>
-                                                break;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        <th>@row[col.ColumnName]</th>
+                                        case "Vigente":
+                                            <th style="background-color:green; color:white;">@row[col.ColumnName]</th>
+                                            break;
+                                        case "Por vencer":
+                                            <th style="background-color:yellow; color:black;">@row[col.ColumnName]</th>
+                                            break;
+                                        case "Vencido":
+                                            <th style="background-color:red; color:white;">@row[col.ColumnName]</th>
+                                            break;
+                                        default:
+                                            <th>@row[col.ColumnName]</th>
+                                            break;
                                     }
                                 }
+                                else
+                                {
+                                    <th>@row[col.ColumnName]</th>
+                                }
                             }
-                            <td>
-                                <a href="javascript:void(0)" onclick="cargarElement('@Url.Action("EditEquipmentIzage",new { @id=row["id"].ToString()})')">Editar</a>
-                            </td>
-                            <td>
-                                <a onclick="viewDocument('@row["Certificados"]')">Ver HV</a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+                        }
+                        <td>
+                            <a href="javascript:void(0)" onclick="cargarElement('@Url.Action("EditEquipmentIzage",new { @id=row["id"].ToString()})')">Editar</a>
+                        </td>
+                        <td>
+                            <a onclick="viewDocument('@row["Certificados"]')">Ver HV</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="ui card cardTest" style="display:none">
+            @*<div class="image icon">
+                   <i class="teal huge file pdf outline icon"></i>
+
+                </div>*@
+            <div class="content">
+                Informe:  <a href="" id="pdfref" target="_blank">
+                    <i id="number"></i>
+                </a>
+                <div class="meta">
+                    <i id="datefile"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="renderImages ui cards" style="display:none"></div>
         </div>
     </div>
 }
 <script type="text/javascript">
+    //LoadTables();
+    $('#tablesIndexEquipment').dynatable({
+    }).bind('dynatable:afterProcess', processingComplete);
+    processingComplete();
+
+    var $element = $('.cardTest');
+
+    function viewDocument(path) {
+        $('.renderImages').html('');
+        $element.find($('#number').text(path));
+        $element.find($('#pdfref').attr('href', path));
+        //$element.find($('#type').text(type));
+        $element.find($('#datefile').text("Certificado en PDF"));
+        $('.renderImages').append('<div class="ui card cardTest"> ' + $element.html() + '</div>');
+
+        $('.renderImages').show('slow');
+    }
+
     $('#formProcessSearch').form({
         fields: {
             headQuarterType: {
@@ -159,6 +189,7 @@
         $('#renderPages').addClass("loading");
         $('#renderSearchIzage').empty();
     }
+
     function onFailureProcessSearch() {
         $('#renderPages').removeClass("loading");
         $('#messageCreate').show('slow').addClass("warning").removeClass("info");

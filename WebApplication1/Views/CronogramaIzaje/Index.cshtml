@@ -1,6 +1,6 @@
 ﻿<center>
     <h3 style="color:#41B9E6; ">
-        CRONOGRAMA DE INSPECCIÓN DE EQUIPOS DE IZAJE
+        IZAJE DE CARGAS | EQUIPOS DE IZAJE | CRONOGRAMA DE INSPECCIÓN DE EQUIPOS DE IZAJE
     </h3>
 </center>
 <br />
@@ -43,23 +43,17 @@
                     <option value="2019">2019</option>
                     <option value="2020">2020</option>
                     <option value="2021">2021</option>
-                    <option value="2022">2022</option>
+                    <option value="2022" selected>2022</option>
                     <option value="2023">2023</option>
                 </select>
             </div>
         </div>
-        <div class="fields">
-            <div class="field"></div>
-            <div class="field"></div>
-            <div class="field"></div>
-            <div class="field"></div>
-            <div class="field"></div>
-            <div class="field"></div>
+        <div class="fields" style="text-align:right !important">
             <div class="field">
                 <button class="ui primary button">
                     Buscar
                 </button>
-                <button class="ui primary button" href="javascript:void(0)" onclick="location.href='@Url.Action("DownloadFile", "Download", new { fileName = "Cronograma", @id="0"})'">
+                <button class="ui primary button" href="javascript:void(0)" onclick="location.href='@Url.Action("DownloadFile", "Download", new { fileName = "Reporte_Cronograma_Equipos_Izaje", @id="0"})'">
                     Exportar
                 </button>
             </div>

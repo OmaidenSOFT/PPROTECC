@@ -1,6 +1,6 @@
 ﻿<center>
     <h3 style="color:#41B9E6; ">
-        ADMINISTRACIÓN DE PERSONAS
+        IZAJE DE CARGAS | FORMACIÓN DE PERSONAL | ADMINISTRACIÓN DE PERSONAS
     </h3>
 </center>
 <br />
@@ -35,7 +35,7 @@
         </div>
         <div class="fields">
             <div class="field">
-                <label>F Inicio</label>
+                <label>Fecha Inicio</label>
                 <div class="ui calendar calendarPicker" id="FechaInicio">
                     <div class="ui input left icon">
                         <i class="calendar icon"></i>
@@ -45,7 +45,7 @@
                 <input type="hidden" name="cFechaInicio" id="cFechaInicio" autocomplete="off">
             </div>
             <div class="field">
-                <label>F Fin</label>
+                <label>Fecha Fin</label>
                 <div class="ui calendar calendarPicker" id="FechaFin">
                     <div class="ui input left icon">
                         <i class="calendar icon"></i>
@@ -55,82 +55,80 @@
                 <input type="hidden" name="cFechaFin" id="cFechaFin" autocomplete="off">
             </div>
         </div>
-        <div class="fields">
-            
-            <div class="field"></div>
-            <div class="field"></div>
-            <div class="field"></div>
-            <div class="field"></div>
-            <div class="field"></div>
-            <div class="field"></div>
+        <div class="fields" style="text-align:right !important">
             <div class="field">
                 <button class="ui primary button">
                     Buscar
                 </button>
-                <button class="ui primary button" href="javascript:void(0)" onclick="location.href='@Url.Action("DownloadFile", "Download", new { fileName = "Personas", @id="0"})'">
+                <button class="ui primary button" href="javascript:void(0)" onclick="location.href='@Url.Action("DownloadFile", "Download", new { fileName = "Reporte_Personas_Izaje", @id="0"})'">
                     Exportar
                 </button>
             </div>
         </div>
-        <div id="renderSearchPerson">
-            <table class="ui selectable celled table ui center aligned tablesInitial" id="tablesIndexEquipment">
-                <thead>
-                    <tr>
-                        @foreach (System.Data.DataColumn col in Model.Columns)
+    </div>
+
+    <div id="renderSearchPerson">
+        <table class="ui selectable celled table ui center aligned tablesInitial" id="tablesIndexEquipment">
+            <thead>
+                <tr>
+                    @foreach (System.Data.DataColumn col in Model.Columns)
+                    {
+                        if (col.ColumnName == "#" || col.ColumnName == "Identificacion" || col.ColumnName == "Nombre" || col.ColumnName == "Sede" || col.ColumnName == "Asignado" || col.ColumnName == "Fecha Curso Inicial" || col.ColumnName == "Fecha Ultimo Curso" || col.ColumnName == "Estado Vigencia Ult. Curso")
                         {
-                            if (col.ColumnName == "#" || col.ColumnName == "Identificacion" || col.ColumnName == "Nombre" || col.ColumnName == "Sede" || col.ColumnName == "Asignado" || col.ColumnName == "Fecha Curso Inicial" || col.ColumnName == "Fecha Ultimo Curso" || col.ColumnName == "Estado Vigencia Ult. Curso")
+                            <th>@col.ColumnName</th>
+                        }
+                    }
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (System.Data.DataRow row in Model.Rows)
+                {
+                    <tr>
+                        @foreach (DataColumn col in Model.Columns)
+                        {
+                            if (col.ColumnName == "#" || col.ColumnName == "Identificacion" || col.ColumnName == "Nombre" || col.ColumnName == "Sede" || col.ColumnName == "Asignado")
                             {
-                                <th>@col.ColumnName</th>
+                                <th>@row[col.ColumnName]</th>
+                            }
+                            else if (col.ColumnName == "Fecha Curso Inicial" || col.ColumnName == "Fecha Ultimo Curso")
+                            {
+                                <th>@DateTime.Parse(row[col.ColumnName].ToString()).ToString("d")</th>
+                            }
+                            else if (col.ColumnName == "Estado Vigencia Ult. Curso")
+                            {
+                                switch (row[col.ColumnName].ToString())
+                                {
+                                    case "Vigente":
+                                        <th style="background-color:green; color:white;">@row[col.ColumnName]</th>
+                                        break;
+                                    case "Vencido":
+                                        <th style="background-color:red; color:white;">@row[col.ColumnName]</th>
+                                        break;
+                                    default:
+                                        <th>@row[col.ColumnName]</th>
+                                        break;
+                                }
                             }
                         }
-                        <th></th>
-                        <th></th>
+                        <td>
+                            <a href="javascript:void(0)" onclick="cargarElement('@Url.Action("EditPerson",new { @id=row["#"].ToString()})')">Editar</a>
+                        </td>
+                        <td>
+                            <a href="javascript:void(0)" onclick="cargarElement('@Url.Action("DetalleCurso",new { @id=row["#"].ToString()})')">Curso</a>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach (System.Data.DataRow row in Model.Rows)
-                    {
-                        <tr>
-                            @foreach (DataColumn col in Model.Columns)
-                            {
-                                if (col.ColumnName == "#" || col.ColumnName == "Identificacion" || col.ColumnName == "Nombre" || col.ColumnName == "Sede" || col.ColumnName == "Asignado"  || col.ColumnName == "Estado Vigencia Ult. Curso")
-                                {
-                                    <th>@row[col.ColumnName]</th>
-                                }
-                                else if (col.ColumnName == "Fecha Curso Inicial" || col.ColumnName == "Fecha Ultimo Curso")
-                                {
-                                    <th>@DateTime.Parse(row[col.ColumnName].ToString()).ToString("d")</th>
-                                }
-                                else if (col.ColumnName == "Estado Vigencia Ult. Curso")
-                                {
-                                    switch (row[col.ColumnName].ToString())
-                                    {
-                                        case "Vigente":
-                                            <th style="background-color:green; color:white;">@row[col.ColumnName]</th>
-                                            break;
-                                        case "Vencido":
-                                            <th style="background-color:red; color:white;">@row[col.ColumnName]</th>
-                                            break;
-                                        default:
-                                            <th>@row[col.ColumnName]</th>
-                                            break;
-                                    }
-                                }
-                            }
-                            <td>
-                                <a href="javascript:void(0)" onclick="cargarElement('@Url.Action("EditPerson",new { @id=row["#"].ToString()})')">Editar</a>
-                            </td>
-                            <td>
-                                <a href="javascript:void(0)" onclick="cargarElement('@Url.Action("DetalleCurso",new { @id=row["#"].ToString()})')">Curso</a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+                }
+            </tbody>
+        </table>
     </div>
 }
 <script type="text/javascript">
+    $('#tablesIndexEquipment').dynatable({
+    }).bind('dynatable:afterProcess', processingComplete);
+    processingComplete();
+
     $('#FechaInicio').calendar({
         type: 'date',
         text: {

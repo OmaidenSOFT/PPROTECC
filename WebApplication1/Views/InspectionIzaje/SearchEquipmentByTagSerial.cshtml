@@ -1,5 +1,9 @@
 ﻿<br />
 <br />
+<center><h3 style="color:#41B9E6; ">IZAJE DE CARGAS | EQUIPOS DE IZAJE | DATOS DE LA INSPECCIÓN</h3></center>
+<br />
+<br />
+<br />
 <center><h3 style="color:#41B9E6; ">DATOS GENERALES DEL EQUIPO</h3></center>
 <br />
 
@@ -33,7 +37,7 @@
     </div>
     <div class="field">
         <label>Fecha Fabricación</label>
-        <input type="text" id="fabricationDate" placeholder="Fecha Fabricación" autocomplete="off" maxlength="50" value="@Model.Rows[0]["FechaFabricacion"].ToString()" readonly>
+        <input type="text" id="fabricationDate" placeholder="Fecha Fabricación" autocomplete="off" maxlength="50" value="@Convert.ToDateTime(Model.Rows[0]["FechaFabricacion"].ToString()).Date.ToString("d")" readonly>
     </div>
     <div class="field">
         <label>Capacidad(Unidad)</label>
@@ -43,7 +47,7 @@
 <br />
 <br />
 <hr />
-
+<br />
 <center><h3 style="color:#41B9E6; ">FACTORES A INSPECCIONAR DEL EQUIPO</h3></center>
 <br />
 
@@ -117,8 +121,8 @@
     <br />
     <br />
     <hr />
-
-    <center><h3 style="color:#41B9E6; ">DISPOSICION GENERAL DE LA INSPECCION</h3></center>
+    <br />
+    <center><h3 style="color:#41B9E6; ">DISPOSICIÓN GENERAL DE LA INSPECCION</h3></center>
     <br />
     <div class="ui equal width form">
 

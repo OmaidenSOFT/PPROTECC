@@ -116,11 +116,12 @@ namespace LogicBo
             }
         }
 
-        public int CreateDetalle(int idFactor, string estado, string comentario)
+        public int CreateDetalle(int idFactor,int idInspeccion, string estado, string comentario)
         {
             try
             {
                 List<SqlParameter> parameters = new List<SqlParameter> {
+                new SqlParameter(){ ParameterName="IdInspeccion", SqlDbType=SqlDbType.Int,Value=idInspeccion},
                 new SqlParameter(){ ParameterName="IdFactor", SqlDbType=SqlDbType.Int,Value=idFactor},
                 new SqlParameter(){ ParameterName="Estado", SqlDbType=SqlDbType.VarChar,Value=estado},
                 new SqlParameter(){ ParameterName="Comentario", SqlDbType=SqlDbType.VarChar,Value=comentario},

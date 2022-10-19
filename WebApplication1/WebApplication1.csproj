@@ -178,6 +178,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\CronogramaIzajeController.cs" />
+    <Compile Include="Controllers\CronogramaPersonasIzajeController.cs" />
     <Compile Include="Controllers\FactoresIzajeController.cs" />
     <Compile Include="Controllers\FindingIzajeController.cs" />
     <Compile Include="Controllers\IndicadoresController.cs" />
@@ -737,7 +738,6 @@
     <Content Include="Views\InspectionIzaje\IndexInspectionIzaje.cshtml" />
     <Content Include="Views\InspectionIzaje\CreateInspectionIzaje.cshtml" />
     <Content Include="Views\FactoresIzaje\CreateFactoresIzaje.cshtml" />
-    <Content Include="Views\FactoresIzaje\EditFactoresIzaje.cshtml" />
     <Content Include="Views\FactoresIzaje\IndexFactoresIzaje.cshtml" />
     <Content Include="Views\FactoresIzaje\SearchFactoresIzaje.cshtml" />
     <Content Include="Views\FactoresIzaje\SearchCategoriasIzaje.cshtml" />
@@ -759,6 +759,12 @@
     <Content Include="Views\Personas\SearchDetalleCurso.cshtml" />
     <Content Include="Views\Personas\ArchivoPersona.cshtml" />
     <Content Include="Views\Indicadores\Index.cshtml" />
+    <Content Include="Views\CronogramaPersonasIzaje\DetalleCronograma.cshtml" />
+    <Content Include="Views\CronogramaPersonasIzaje\SearchDetalleCronograma.cshtml" />
+    <Content Include="Views\CronogramaPersonasIzaje\SearchCronograma.cshtml" />
+    <Content Include="Views\CronogramaPersonasIzaje\Index.cshtml" />
+    <Content Include="Views\InspectionIzaje\SearchInspectionIzaje.cshtml" />
+    <Content Include="Views\FindingIzaje\SearchFindingIzage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

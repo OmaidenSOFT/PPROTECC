@@ -8,8 +8,8 @@
         height: 80vh;
     }
 </style>
-<h3 class="titlesPages">
-    EDITAR EQUIPO DE IZAJE
+<h3 style="color: #41B9E6; text-align: center;">
+    IZAJE DE CARGAS | EQUIPOS DE IZAJE | EDITAR EQUIPO DE IZAJE
 </h3>
 @{
     LogicBo.IzageBo _izageBo = new LogicBo.IzageBo();
@@ -23,6 +23,7 @@
     ViewBag.LocationDictionary = new SelectList(_locationBo.GetUbicacionIzaje(), "Key", "Value", Model.Rows[0]["Ubicacion_id"].ToString());
 
     string id = Model.Rows[0]["id"].ToString();
+    string imagen = Model.Rows[0]["Imagen"].ToString();
 }
 
 @using (Ajax.BeginForm("ProcessEquipmentIzage", "Izage", FormMethod.Post, new AjaxOptions()
@@ -157,12 +158,15 @@
             <div class="field">
                 <br />
                 <button class="ui primary button" id="btnGuardar">
-                    Guardar
+                    CARGAR FOTO EQUIPO
                 </button>
                 @*<input type="submit" value="Upload" />*@
                 <div class="field">
                     <input name="txbId" hidden value="@id" />
                 </div>
+            </div>
+            <div class="field" >
+                <img src="~/Equipo_Izaje/@imagen" style="object-fit: cover; width: 100%; height: 100%;">
             </div>
         </div>
     </div>

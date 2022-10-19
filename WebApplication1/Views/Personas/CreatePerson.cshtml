@@ -36,10 +36,9 @@
 </style>
 
 
-<center><h3 style="color:#41B9E6; ">PROGRAMA DE PROTECCIÓN CONTRA CAÍDAS | IZAJE DE CARGAS | INGRESO DE EQUIPOS</h3></center>
+<center><h3 style="color:#41B9E6; ">IZAJE DE CARGAS | FORMACIÓN DE PERSONAL | INGRESO DE PERSONAS</h3></center>
 <br />
-<br />
-<br />
+
 
 @using (Ajax.BeginForm("ProcessCreatePerson", "Personas", FormMethod.Post, new AjaxOptions()
 {
@@ -98,7 +97,7 @@
                 <div class="ui calendar calendarPicker" id="FechaInicioCurso">
                     <div class="ui input left icon">
                         <i class="calendar icon"></i>
-                        <input type="text" placeholder="Fecha Compra">
+                        <input type="text">
                     </div>
                 </div>
                 <input type="hidden" name="cFechaInicioCurso" id="cFechaInicioCurso" autocomplete="off">
@@ -208,6 +207,7 @@
     function onBeginProcessCreatePerson() {
         $('#renderPages').addClass("loading");
     }
+
     function onFailureProcessCreatePerson() {
         $('#renderPages').removeClass("loading");
         $('#messageCreatePerson').show('slow').addClass("warning").removeClass("info");

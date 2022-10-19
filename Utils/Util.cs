@@ -870,6 +870,7 @@ namespace Utils
             ArrayList arrFinal = new ArrayList();
             ArrayList arrFechaInsp = new ArrayList();
             string Sede = "";
+            string Serial = "";
             string Equipo = "";
             string RFID = "";
             string CodEq = "";
@@ -879,6 +880,7 @@ namespace Utils
             dsResultEnc.Tables.Add(_IzageBo.GetInfo(idIzaje));
 
             Sede = dsResultEnc.Tables[0].Rows[0]["Sede"].ToString();
+            Serial = dsResultEnc.Tables[0].Rows[0]["Serial"].ToString();
             Equipo = dsResultEnc.Tables[0].Rows[0]["Equipo"].ToString();
             RFID = dsResultEnc.Tables[0].Rows[0]["Consecutivo"].ToString();
             CodEq = dsResultEnc.Tables[0].Rows[0]["CodE"].ToString();
@@ -889,11 +891,11 @@ namespace Utils
             try
             {
                 Document document = new Document(PageSize.LETTER, 40, 40, 40, 40);
-                if (File.Exists(string.Concat(pathPDF, @"Equipo_Izaje\CODIGO_", CodEq, ".pdf")))
+                if (File.Exists(string.Concat(pathPDF, @"Equipo_Izaje\Equipo_Izaje_", Sede, "_", Serial, ".pdf")))
                 {
-                    File.Delete(string.Concat(pathPDF, @"Equipo_Izaje\CODIGO_", CodEq, ".pdf"));
+                    File.Delete(string.Concat(pathPDF, @"Equipo_Izaje\Equipo_Izaje_", Sede, "_", Serial, ".pdf"));
                 }
-                PdfWriter pdfWrite = PdfWriter.GetInstance(document, new FileStream(pathPDF + @"Equipo_Izaje\CODIGO_" + CodEq + ".pdf", FileMode.OpenOrCreate));
+                PdfWriter pdfWrite = PdfWriter.GetInstance(document, new FileStream(string.Concat(pathPDF, @"Equipo_Izaje\Equipo_Izaje_", Sede, "_", Serial, ".pdf"), FileMode.OpenOrCreate));
                 document.Open();
                 table = new PdfPTable(3);
                 table.TotalWidth = 550.0F;
@@ -931,7 +933,7 @@ namespace Utils
                 celda.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
                 table.AddCell(celda);
 
-                celda = new iTextSharp.text.pdf.PdfPCell(new Phrase("CODIGO_" + CodEq, fuenteEncabezado));
+                celda = new iTextSharp.text.pdf.PdfPCell(new Phrase(String.Concat("Equipo_Izaje_", Sede, "_", Serial), fuenteEncabezado));
                 celda.Colspan = 1;
                 celda.Padding = 5;
                 celda.HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
@@ -1142,7 +1144,7 @@ namespace Utils
                 celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
                 table.AddCell(celda1);
 
-                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("Fecha de Fabricación:" + dsResultEnc.Tables[0].Rows[i]["FechaFabricacion"].ToString(), fuenteEncabezado));
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("Fecha de Fabricación:" + Convert.ToDateTime(dsResultEnc.Tables[0].Rows[i]["FechaFabricacion"].ToString()).Date.ToString("d"), fuenteEncabezado));
                 celda1.Colspan = 1;
                 celda1.Padding = 5;
                 celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_LEFT;

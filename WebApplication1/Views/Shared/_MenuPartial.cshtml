@@ -177,8 +177,9 @@
             </ul>
             <!-- Submenu 8-2 -->
             <ul data-menu="submenu-8-2" class="menu__level">
-                <li class="menu__item"><a class="menu__link" href="@Url.Action("Index", "Personas")">Administracion de Personas</a></li>
-                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreatePerson", "Personas")">Crear Nueva Persona</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Index", "Personas")">Página inicial</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreatePerson", "Personas")">Crear Nueva</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Index", "CronogramaPersonasIzaje")">Cronograma de formacion</a></li>
             </ul>
             <!-- Submenu 8-3 -->
             <ul data-menu="submenu-8-3" class="menu__level">
@@ -187,9 +188,9 @@
             <!-- Submenu 8-4 -->
             <ul data-menu="submenu-8-1-2" class="menu__level">
                 <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexInspectionIzaje", "InspectionIzaje")">Página Inicial Inspecciones</a></li>
-                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateInspectionIzaje", "InspectionIzaje",new { @id=0})">Crear Nueva Inspeccion </a></li>
-                <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexFactoresIzaje", "FactoresIzaje")">Catalogo de Categorias y Factores inspeccion</a></li>
-                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateFactoresIzaje", "FactoresIzaje")">Crear Categorias/Factores</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateInspectionIzaje", "InspectionIzaje",new { @id=0})">Crear Nueva Inspección </a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexFactoresIzaje", "FactoresIzaje")">Pagina inicial Factores inspección</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateFactoresIzaje", "FactoresIzaje")">Crear nuevas Categorías/Factores</a></li>
                 <li class="menu__item"><a class="menu__link" href="@Url.Action("Index", "CronogramaIzaje")">Cronograma de Inspecciones</a></li>
             </ul>
             <ul data-menu="submenu-8-1-3" class="menu__level">
@@ -197,29 +198,29 @@
             </ul>
 
             @*<ul data-menu="submenu-99-1" class="menu__level">
-                <li class="menu__item"><a class="menu__link" data-submenu="submenu-99-1-1"></a></li>
-                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateUser", "Trainning")"></a></li>
-                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateUser", "Trainning")"></a></li>
-                <li class="menu__item">-------------------</li>
-                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateUser", "Trainning")">Catálogo de Factores para Inspección de Equipos</a></li>
-                <li class="menu__item">-------------------</li>
-                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateUser", "Trainning")">Inventario por Sede</a></li>
-                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateUser", "Trainning")">Cronograma de Inspección</a></li>
-            </ul>
-            <ul data-menu="submenu-99-1-1" class="menu__level">
-                <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexEquipment", "WorkingAtHeight")">Página Inicial</a></li>
-                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateEquipment", "WorkingAtHeight")">Crear Nuevo</a></li>
-            </ul>
+                    <li class="menu__item"><a class="menu__link" data-submenu="submenu-99-1-1"></a></li>
+                    <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateUser", "Trainning")"></a></li>
+                    <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateUser", "Trainning")"></a></li>
+                    <li class="menu__item">-------------------</li>
+                    <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateUser", "Trainning")">Catálogo de Factores para Inspección de Equipos</a></li>
+                    <li class="menu__item">-------------------</li>
+                    <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateUser", "Trainning")">Inventario por Sede</a></li>
+                    <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateUser", "Trainning")">Cronograma de Inspección</a></li>
+                </ul>
+                <ul data-menu="submenu-99-1-1" class="menu__level">
+                    <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexEquipment", "WorkingAtHeight")">Página Inicial</a></li>
+                    <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateEquipment", "WorkingAtHeight")">Crear Nuevo</a></li>
+                </ul>
 
-            <ul data-menu="submenu-99-2" class="menu__level">
-                <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexUser", "Trainning")">Administración de Personas</a></li>
-                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateUser", "Trainning")">Cronograma de Formación</a></li>
-            </ul>
+                <ul data-menu="submenu-99-2" class="menu__level">
+                    <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexUser", "Trainning")">Administración de Personas</a></li>
+                    <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateUser", "Trainning")">Cronograma de Formación</a></li>
+                </ul>
 
-            <ul data-menu="submenu-99-3" class="menu__level">
-                <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexUser", "Trainning")">Inspección de Equipos</a></li>
-                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateUser", "Trainning")">Vencimientos</a></li>
-            </ul>*@
+                <ul data-menu="submenu-99-3" class="menu__level">
+                    <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexUser", "Trainning")">Inspección de Equipos</a></li>
+                    <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateUser", "Trainning")">Vencimientos</a></li>
+                </ul>*@
 
         }
         @if (@session.RolId == 2)

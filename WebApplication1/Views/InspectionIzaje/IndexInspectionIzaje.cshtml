@@ -1,106 +1,116 @@
-﻿
-@using (Ajax.BeginForm("IndexInspectionIzaje", "InspectionIzaje", null, new AjaxOptions()
+﻿<h3 style="color: #41B9E6; text-align: center;">
+    IZAJE DE CARGAS | EQUIPOS DE IZAJE | ADMINISTRADOR DE INSPECCIONES EN EQUIPOS DE IZAJE
+</h3>
+<br />
+@using System.Data
+@model DataTable
+
+@using (Ajax.BeginForm("SearchInspectionIzaje", "InspectionIzaje", null, new AjaxOptions()
 {
     HttpMethod = "POST",
     OnBegin = "onBeginProcessSearch()",
     OnSuccess = "onSuccessProcessSearch(data)",
     OnFailure = "onFailureProcessSearch()",
 }, new { @id = "formProcessSearch" }))
-{<div>
-        <h3 class="titlesPages">
-            ADMINISTRADOR DE INSPECCIONES EN EQUIPOS DE IZAJE
-        </h3>
-        <br />
-        <div class="ui equal width form">
-            <div class="fields">
-                <div class="field">
-                    <label>Serial</label>
-                    <input type="text" id="txbSerial" name="txbSerial" placeholder="Serial" autocomplete="off" maxlength="50">
-                </div>
-                <div class="field">
-                    <label>Marca/Modelo</label>
-                    <input type="text" id="txbMarca" name="txbMarca" placeholder="Marca" autocomplete="off" maxlength="50">
-                </div>
-                <div class="field">
-                    <label>TAG ENEL</label>
-                    <input type="text" id="txbTag" name="txbTag" placeholder="Tag" autocomplete="off" maxlength="50">
-                </div>
+{
+    <div class="ui equal width form">
+        <div class="fields">
+            <div class="field">
+                <label>Serial</label>
+                <input type="text" id="txbSerial" name="txbSerial" placeholder="Serial" autocomplete="off" maxlength="50">
             </div>
-            <div class="fields">
-                <div class="field">
-                    <label>Sede</label>
-                    @Html.DropDownList("cbxHeadquarter", (SelectList)ViewBag.HeadquarterDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
-                </div>
-                <div class="field">
-                    <label>Precinto</label>
-                    <input type="text" id="txbPrecinto" name="txbPrecinto" placeholder="Precinto" autocomplete="off" maxlength="50">
-                </div>
-                <div class="field">
-                    <label>Estado</label>
-                    <select id="cbxAssignedCondition" name="cbxAssignedCondition" class="ui search dropdown">
-                        <option value="">[-Seleccione una opción-]</option>
-                        <option value="Vigente">Aceptado</option>
-                        <option value="Por vencer">Rechazado</option>
-                    </select>
-                </div>
+            <div class="field">
+                <label>Marca/Modelo</label>
+                <input type="text" id="txbMarca" name="txbMarca" placeholder="Marca" autocomplete="off" maxlength="50">
             </div>
-            <div class="fields">
-                <div class="field"></div>
-                <div class="field"></div>
-                <div class="field"></div>
-                <div class="field"></div>
-                <div class="field"></div>
-                <div class="field"></div>
-                <div class="field"></div>
-                <div class="field"></div>
-                <div class="field">
-                    <button class="ui primary button">
-                        Buscar
-                    </button>
-                    <button class="ui primary button" href="javascript:void(0)" onclick="location.href='@Url.Action("DownloadFile", "Download", new { fileName = "InspeccionIzaje", @id="0"})'">
-                        Exportar
-                    </button>
-                </div>
+            <div class="field">
+                <label>TAG ENEL</label>
+                <input type="text" id="txbTag" name="txbTag" placeholder="Tag" autocomplete="off" maxlength="50">
             </div>
         </div>
-        @*<div id="renderSearchIzage">
+        <div class="fields">
+            <div class="field">
+                <label>Sede</label>
+                @Html.DropDownList("cbxHeadquarter", (SelectList)ViewBag.HeadquarterDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+            </div>
+            <div class="field">
+                <label>Precinto</label>
+                <input type="text" id="txbPrecinto" name="txbPrecinto" placeholder="Precinto" autocomplete="off" maxlength="50">
+            </div>
+            <div class="field">
+                <label>Estado</label>
+                <select id="cbxAssignedCondition" name="cbxAssignedCondition" class="ui search dropdown">
+                    <option value="">[-Seleccione una opción-]</option>
+                    <option value="Vigente">Aceptado</option>
+                    <option value="Por vencer">Rechazado</option>
+                </select>
+            </div>
+        </div>
+        <div class="fields" style="text-align:right !important">
+            <div class="field">
+                <button class="ui primary button">
+                    Buscar
+                </button>
+                <button class="ui primary button" href="javascript:void(0)" onclick="location.href='@Url.Action("DownloadFile", "Download", new { fileName = "Inspecciones_Equipos_Izaje", @id="0"})'">
+                    Exportar
+                </button>
+            </div>
+        </div>
+    </div>
+    <div id="renderSearchIzage">
+        <table class="ui selectable celled table ui center aligned tablesInitial" id="tablesIndexEquipment">
+            <thead>
+                <tr>
+                    @foreach (System.Data.DataColumn col in Model.Columns)
+                    {
+                        <th>@col.ColumnName</th>
+                    }
 
-            </div>*@
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (System.Data.DataRow row in Model.Rows)
+                {
+                    <tr>
+                        @foreach (DataColumn col in Model.Columns)
+                        {
+                            if (col.ColumnName == "Estado")
+                            {
+                                switch (row[col.ColumnName].ToString())
+                                {
+                                    case "Conforme operativo":
+                                        <th style="background-color:green; color:white;">@row[col.ColumnName]</th>
+                                        break;
+                                    case "No conforme operativo":
+                                        <th style="background-color:yellow; color:black;">@row[col.ColumnName]</th>
+                                        break;
+                                    case "No conforme no operativo":
+                                        <th style="background-color:red; color:white;">@row[col.ColumnName]</th>
+                                        break;
+                                    default:
+                                        <th>@row[col.ColumnName]</th>
+                                        break;
+                                }
+                            }
+                            else
+                            {
+                                <th>@row[col.ColumnName]</th>
+                            }
+                        }
+                        <td>
+                            <a href="javascript:void(0)" onclick="cargarElement('@Url.Action("VisualizarDetalleInspeccion",new { @tagSerial=row["Serial"].ToString()})')">Visualizar</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 }
-@using System.Data
-@model DataTable
-<div>
-    <table class="ui selectable celled table ui center aligned tablesInitial" id="tablesIndexEquipment">
-        <thead>
-            <tr>
-                @foreach (System.Data.DataColumn col in Model.Columns)
-                {
-                    <th>@col.ColumnName</th>
-                }
 
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (System.Data.DataRow row in Model.Rows)
-            {
-                <tr>
-                    @foreach (DataColumn col in Model.Columns)
-                    {
-                        <th>@row[col.ColumnName]</th>
-                    }
-                    <td>
-                        <a href="javascript:void(0)" onclick="cargarElement('@Url.Action("VisualizarDetalleInspeccion",new { @tagSerial=row["Serial"].ToString()})')">Visualizar</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
 <script type="text/javascript">
-
-    
-    LoadTables();
+    $('#tablesIndexEquipment').dynatable({
+    }).bind('dynatable:afterProcess', processingComplete);
+    processingComplete();
 
     $('#formProcessSearch').form({
         fields: {
@@ -127,6 +137,7 @@
         $('#renderPages').addClass("loading");
         $('#renderSearchIzage').empty();
     }
+
     function onFailureProcessSearch() {
         $('#renderPages').removeClass("loading");
         $('#messageCreate').show('slow').addClass("warning").removeClass("info");
