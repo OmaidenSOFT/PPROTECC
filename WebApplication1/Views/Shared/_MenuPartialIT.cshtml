@@ -1,0 +1,782 @@
+﻿@using WebApplication1.Models;
+@{
+    var session = Session["SessionUser"] as SessionModels;
+}
+@{
+    ViewBag.ApplicationName = "PROGRAMMA ANTICADUTA";
+}
+<!-- menu styles -->
+<link href="~/Scripts/MultiLevelMenu/css/component.css" rel="stylesheet" />
+
+<script src="~/Scripts/MultiLevelMenu/js/modernizr-custom.js"></script>
+
+<button class="action action--open" aria-label="Open Menu"><span class="icon icon--menu"></span></button>
+<nav id="ml-menu" class="menuMult"  style="margin-top:-1%">
+    <button class="action action--close" aria-label="Close Menu"><span class="icon icon--cross"></span></button>
+    <div class="menu__wrap">
+        @if (@session.RolId == 1)
+        {
+            <ul data-menu="main" class="menu__level">
+                <li class="menu__item">
+                    <a class="menu__link" href="@Url.Action("Index", "Home")" data-reload="true">
+                        <i class="fa fa-home" aria-hidden="true"></i> Inizio
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" data-submenu="submenu-1" href="javascript:void(0)">
+                        <i class="fa fa-address-book" aria-hidden="true"></i> Programma Altezze
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" data-submenu="submenu-2" href="javascript:void(0)">
+                        <i class="fa fa-address-card" aria-hidden="true"></i> Gestione di attrezzature per grattacieli
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" data-submenu="submenu-3" href="javascript:void(0)">
+                        <i class="fa fa-globe" aria-hidden="true"></i> Ispezione e manutenzione
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" data-submenu="submenu-4" href="javascript:void(0)">
+                        <i class="fa fa-hdd-o" aria-hidden="true"></i> Formazione e Competenza
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" data-submenu="submenu-5" href="javascript:void(0)">
+                        <i class="fa fa-id-badge" aria-hidden="true"></i> Gestione
+                    </a>
+                </li>
+
+                <li class="menu__item">
+                    <a class="menu__link" href="@Url.Action("PageInitial", "ManagmentIndicators")">Indicatori di gestione</a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" data-submenu="submenu-7" href="javascript:void(0)">
+                        <i class="fa fa-medkit" aria-hidden="true"></i> Modulo medico
+                    </a>
+                </li>
+
+
+
+                <li class="menu__item">
+                    <a class="menu__link" href="@Url.Action("LogOff", "Account")" data-finish="true">
+                        <i class="fa fa-home" aria-hidden="true"></i> Lasciare
+                    </a>
+                </li>
+            </ul>
+            <!-- Submenu 1 -->
+            <ul data-menu="submenu-1" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("ProceduresReportsIndex", "Inspections")">Procedimientos</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("FormatsReportsIndex", "Inspections")">Formatos</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CertificatesReportsIndex", "Inspections")">Certificados de proveedores</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("LegalityReportsIndex", "Inspections")">Normatividad</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Features", "Inspections")">Cargar Documentos</a></li>
+            </ul>
+
+            <!-- Submenu 2 -->
+            <ul data-menu="submenu-2" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Stock", "WorkingAtHeight")">Inventario</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("TechnicalInformation", "WorkingAtHeight")">Fichas técnicas</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateTechInfo", "Inspections")">Cargar Fichas técnicas</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Curriculum", "WorkingAtHeight")">Hojas de Vida</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("InspectionCert", "WorkingAtHeight")">Certificados de Inspección</a></li>
+                <li class="menu__item"><a class="menu__link" data-submenu="submenu-2-1">Ingreso equipos</a></li>
+            </ul>
+            <!-- Submenu 2-1 -->
+            <ul data-menu="submenu-2-1" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexEquipment", "WorkingAtHeight")">Página Inicial</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateEquipment", "WorkingAtHeight")">Crear Nuevo</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("DownloadResult", "WorkingAtHeight")">Matriz de Equipos</a></li>
+            </ul>
+            <!-- Submenu 3 -->
+            <ul data-menu="submenu-3" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("SchedulerInspections", "Inspections")">Cronograma Inspecciones</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateInspections", "Inspections")">Registros Inspecciones</a></li>
+                <li class="menu__item"><a class="menu__link" data-submenu="submenu-3-1">Informes técnicos (LV)</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("ManagementOfFindings", "Inspections")">Gestión de Hallazgos</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("ManagementMaintenanceEquipment", "Inspections")">Verificar Gestión</a></li>
+            </ul>
+            <!-- Submenu 3-1 -->
+            <ul data-menu="submenu-3-1" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("TechnicalReportsIndex", "Inspections")">Página Inicial</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateTechnicalReports", "Inspections")">Crear Nuevo</a></li>
+            </ul>
+            <!-- Submenu 4 -->
+            <ul data-menu="submenu-4" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Trainning", "Trainning")">Listado/Rol/Aptitud</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Scheduler", "Trainning")">Cronograma Formación</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Certificate", "Trainning")">Certificados</a></li>
+                <li class="menu__item"><a class="menu__link" data-submenu="submenu-4-1">Ingreso Personas</a></li>
+            </ul>
+            <!-- Submenu 4-1 -->
+            <ul data-menu="submenu-4-1" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexPerson", "Trainning")">Página Inicial</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreatePerson", "Trainning")">Crear Nuevo</a></li>
+            </ul>
+            <!-- Submenu 5 -->
+    <ul data-menu="submenu-5" class="menu__level">
+        @*<li class="menu__item"><a class="menu__link" href="@Url.Action("CreateUser", "Trainning")">Usuarios</a></li>*@
+        <li class="menu__item"><a class="menu__link" data-submenu="submenu-5-1">Usuarios</a></li>
+        <li class="menu__item"><a class="menu__link" data-submenu="submenu-5-2">Roles</a></li>
+        <li class="menu__item"><a class="menu__link" data-submenu="submenu-5-3">Inspectores</a></li>
+        <li class="menu__item"><a class="menu__link" data-submenu="submenu-5-4">Categoria Sedes</a></li>
+        <li class="menu__item"><a class="menu__link" data-submenu="submenu-5-5">Países</a></li>
+        <li class="menu__item"><a class="menu__link" data-submenu="submenu-5-6">Sedes</a></li>
+
+
+
+    </ul>
+            <!-- Submenu 5-1 -->
+            <ul data-menu="submenu-5-1" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexUser", "Trainning")">Página Inicial</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateUser", "Trainning")">Crear Nuevo</a></li>
+            </ul>
+            <!-- Submenu 5-2 -->
+            <ul data-menu="submenu-5-2" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexRol", "Trainning")">Página Inicial</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateRol", "Trainning")">Crear Nuevo</a></li>
+            </ul>
+            <!-- Submenu 5-3 -->
+            <ul data-menu="submenu-5-3" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexInspector", "Trainning")">Página Inicial</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateInspector", "Trainning")">Inspectores</a></li>
+            </ul>
+            <!-- Submenu 5-4 -->
+            <ul data-menu="submenu-5-4" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexSedeCategoria", "WorkingAtHeight")">Página Inicial</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateCategoriaSede", "WorkingAtHeight")">Categoria Sedes</a></li>
+            </ul>
+
+
+            <!-- Submenu 5-5 -->
+            <ul data-menu="submenu-5-5" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexPais", "WorkingAtHeight")">Página Inicial</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreatePais", "WorkingAtHeight")">Países</a></li>
+            </ul>
+
+
+            <!-- Submenu 5-6 -->
+            <ul data-menu="submenu-5-6" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexSede", "WorkingAtHeight")">Página Inicial</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateSede", "WorkingAtHeight")">Sedes</a></li>
+            </ul>
+
+
+
+
+
+            <!-- Submenu 6 -->
+            <ul data-menu="submenu-6" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("PageInitial", "Mission")">Total Equipos</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Create", "Mission")">Total Persona</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Create", "Mission")">Indicadores de Gestión</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Create", "Mission")">Indicadores de Cumplimiento</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Create", "Mission")">Indicadores de Cobertura</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Create", "Mission")">Semáforos Inspecciones</a></li>
+            </ul>
+            <ul data-menu="submenu-7" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateAptitudConcept", "MedicalConcepts")">Conceptos de Aptitud</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("PageInitial", "MedicalConcepts")">Listado de Aptitud</a></li>
+            </ul>
+
+
+
+            <ul data-menu="submenu-8" class="menu__level">
+                <li class="menu__item"><a class="menu__link" data-submenu="submenu-8-1">Equipos de Izage</a></li>
+                <li class="menu__item"><a class="menu__link" data-submenu="submenu-8-2">Formación de personal</a></li>
+                <li class="menu__item"><a class="menu__link" data-submenu="submenu-8-3">Indicadores</a></li>
+            </ul>
+
+            <!-- Submenu 8-1 -->
+            <ul data-menu="submenu-8-1" class="menu__level">
+                <li class="menu__item"><a class="menu__link" data-submenu="submenu-8-1-1">Administración de equipos</a></li>
+                <li class="menu__item"><a class="menu__link" data-submenu="submenu-8-1-2">Administración de Inspecciones</a></li>
+                <li class="menu__item"><a class="menu__link" data-submenu="submenu-8-1-3">Administración de Hallazgos</a></li>
+            </ul>
+            <ul data-menu="submenu-8-1-1" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexUser", "Trainning")">Página Inicial</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateEquipmentIzage", "WorkingAtHeight")">Crear Nuevo</a></li>
+            </ul>
+
+
+
+
+
+            @*<ul data-menu="submenu-99-1" class="menu__level">
+                <li class="menu__item"><a class="menu__link" data-submenu="submenu-99-1-1"></a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateUser", "Trainning")"></a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateUser", "Trainning")"></a></li>
+                <li class="menu__item">-------------------</li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateUser", "Trainning")">Catálogo de Factores para Inspección de Equipos</a></li>
+                <li class="menu__item">-------------------</li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateUser", "Trainning")">Inventario por Sede</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateUser", "Trainning")">Cronograma de Inspección</a></li>
+            </ul>
+            <ul data-menu="submenu-99-1-1" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexEquipment", "WorkingAtHeight")">Página Inicial</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateEquipment", "WorkingAtHeight")">Crear Nuevo</a></li>
+            </ul>
+
+
+
+            <ul data-menu="submenu-99-2" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexUser", "Trainning")">Administración de Personas</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateUser", "Trainning")">Cronograma de Formación</a></li>
+            </ul>
+
+            <ul data-menu="submenu-99-3" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexUser", "Trainning")">Inspección de Equipos</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateUser", "Trainning")">Vencimientos</a></li>
+            </ul>*@
+
+        }
+        @if (@session.RolId == 2)
+        {
+            <ul data-menu="main" class="menu__level">
+                <li class="menu__item">
+                    <a class="menu__link" href="@Url.Action("Index", "Home")" data-reload="true">
+                        <i class="fa fa-home" aria-hidden="true"></i> Inicio
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" data-submenu="submenu-1" href="javascript:void(0)">
+                        <i class="fa fa-address-book" aria-hidden="true"></i> Programa Alturas
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" data-submenu="submenu-2" href="javascript:void(0)">
+                        <i class="fa fa-address-card" aria-hidden="true"></i> Gestión de Equipos
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" data-submenu="submenu-3" href="javascript:void(0)">
+                        <i class="fa fa-globe" aria-hidden="true"></i> Inspección y Mantenimiento
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" data-submenu="submenu-4" href="javascript:void(0)">
+                        <i class="fa fa-hdd-o" aria-hidden="true"></i> Formación y Competencia
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" data-submenu="submenu-5" href="javascript:void(0)">
+                        <i class="fa fa-id-badge" aria-hidden="true"></i> Administración
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" href="@Url.Action("PageInitial", "ManagmentIndicators")">Indicadores de Gestión</a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" data-submenu="submenu-7" href="javascript:void(0)">
+                        <i class="fa fa-medkit" aria-hidden="true"></i> Módulo Médico
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" href="@Url.Action("LogOff", "Account")" data-finish="true">
+                        <i class="fa fa-home" aria-hidden="true"></i> Salir
+                    </a>
+                </li>
+            </ul>
+            <!-- Submenu 1 -->
+            <ul data-menu="submenu-1" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("ProceduresReportsIndex", "Inspections")">Procedimientos</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("FormatsReportsIndex", "Inspections")">Formatos</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CertificatesReportsIndex", "Inspections")">Certificados de proveedores</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("LegalityReportsIndex", "Inspections")">Normatividad</a></li>
+            </ul>
+
+            <!-- Submenu 2 -->
+            <ul data-menu="submenu-2" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Stock", "WorkingAtHeight")">Inventario</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("TechnicalInformation", "WorkingAtHeight")">Fichas técnicas</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Curriculum", "WorkingAtHeight")">Hojas de Vida</a></li>
+                <li class="menu__item"><a class="menu__link" data-submenu="submenu-2-1">Ingreso equipos</a></li>
+            </ul>
+            <!-- Submenu 2-1 -->
+            <ul data-menu="submenu-2-1" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexEquipment", "WorkingAtHeight")">Página Inicial</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateEquipment", "WorkingAtHeight")">Crear Nuevo</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("DownloadResult", "WorkingAtHeight")">Matriz de Equipos</a></li>
+            </ul>
+            <!-- Submenu 3 -->
+            <ul data-menu="submenu-3" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("SchedulerInspections", "Inspections")">Cronograma Inspecciones</a></li>
+                <li class="menu__item"><a class="menu__link" data-submenu="submenu-3-1">Informes técnicos (LV)</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("ManagementOfFindings", "Inspections")">Gestión de Hallazgos</a></li>
+            </ul>
+            <!-- Submenu 3-1 -->
+            <ul data-menu="submenu-3-1" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("TechnicalReportsIndex", "Inspections")">Página Inicial</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateTechnicalReports", "Inspections")">Crear Nuevo</a></li>
+            </ul>
+            <!-- Submenu 4 -->
+            <ul data-menu="submenu-4" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Trainning", "Trainning")">Listado/Rol/Aptitud</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Scheduler", "Trainning")">Cronograma Formación</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Certificate", "Trainning")">Certificados</a></li>
+                <li class="menu__item"><a class="menu__link" data-submenu="submenu-4-1">Ingreso Personas</a></li>
+            </ul>
+            <!-- Submenu 4-1 -->
+            <ul data-menu="submenu-4-1" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexPerson", "Trainning")">Página Inicial</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreatePerson", "Trainning")">Crear Nuevo</a></li>
+            </ul>
+            <!-- Submenu 5 -->
+            <ul data-menu="submenu-5" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("PageInitial", "User")">Usuarios</a></li>
+                <li class="menu__item"><a class="menu__link" data-submenu="submenu-5-1">Roles</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Create", "Enemy")">Permisos</a></li>
+            </ul>
+            <!-- Submenu 5-1 -->
+            <ul data-menu="submenu-5-1" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexRoles", "UsersAndRoles")">Página Inicial</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("PageInitial", "User")">Crear Nuevo</a></li>
+            </ul>
+            <!-- Submenu 6 -->
+            <ul data-menu="submenu-6" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("PageInitial", "Mission")">Total Equipos</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Create", "Mission")">Total Persona</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Create", "Mission")">Indicadores de Gestión</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Create", "Mission")">Indicadores de Cumplimiento</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Create", "Mission")">Indicadores de Cobertura</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Create", "Mission")">Semáforos Inspecciones</a></li>
+            </ul>
+            <ul data-menu="submenu-7" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("PageInitial", "MedicalConcepts")">Listado de Aptitud</a></li>
+            </ul>
+        }
+        @if (@session.RolId == 3)
+        {
+            <ul data-menu="main" class="menu__level">
+                <li class="menu__item">
+                    <a class="menu__link" href="@Url.Action("Index", "Home")" data-reload="true">
+                        <i class="fa fa-home" aria-hidden="true"></i> Inicio
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" data-submenu="submenu-1" href="javascript:void(0)">
+                        <i class="fa fa-address-book" aria-hidden="true"></i> Programa Alturas
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" data-submenu="submenu-4" href="javascript:void(0)">
+                        <i class="fa fa-hdd-o" aria-hidden="true"></i> Formación y Competencia
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" href="@Url.Action("PageInitial", "ManagmentIndicators")">Indicadores de Gestión</a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" data-submenu="submenu-7" href="javascript:void(0)">
+                        <i class="fa fa-medkit" aria-hidden="true"></i> Módulo Médico
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" href="@Url.Action("LogOff", "Account")" data-finish="true">
+                        <i class="fa fa-home" aria-hidden="true"></i> Salir
+                    </a>
+                </li>
+            </ul>
+            <!-- Submenu 1 -->
+            <ul data-menu="submenu-1" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("ProceduresReportsIndex", "Inspections")">Procedimientos</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("FormatsReportsIndex", "Inspections")">Formatos</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CertificatesReportsIndex", "Inspections")">Certificados de proveedores</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("LegalityReportsIndex", "Inspections")">Normatividad</a></li>
+            </ul>
+
+            <!-- Submenu 4 -->
+            <ul data-menu="submenu-4" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Trainning", "Trainning")">Listado/Rol/Aptitud</a></li>
+            </ul>
+            <ul data-menu="submenu-7" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateAptitudConcept", "MedicalConcepts")">Conceptos de Aptitud</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("PageInitial", "MedicalConcepts")">Listado de Aptitud</a></li>
+            </ul>
+        }
+        @if (@session.RolId == 4)
+        {
+            <ul data-menu="main" class="menu__level">
+                <li class="menu__item">
+                    <a class="menu__link" href="@Url.Action("Index", "Home")" data-reload="true">
+                        <i class="fa fa-home" aria-hidden="true"></i> Inicio
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" data-submenu="submenu-1" href="javascript:void(0)">
+                        <i class="fa fa-address-book" aria-hidden="true"></i> Programa Alturas
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" data-submenu="submenu-2" href="javascript:void(0)">
+                        <i class="fa fa-address-card" aria-hidden="true"></i> Gestión de Equipos
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" data-submenu="submenu-3" href="javascript:void(0)">
+                        <i class="fa fa-globe" aria-hidden="true"></i> Inspección y Mantenimiento
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" data-submenu="submenu-4" href="javascript:void(0)">
+                        <i class="fa fa-hdd-o" aria-hidden="true"></i> Formación y Competencia
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" data-submenu="submenu-5" href="javascript:void(0)">
+                        <i class="fa fa-id-badge" aria-hidden="true"></i> Administración
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" href="@Url.Action("PageInitial", "ManagmentIndicators")">Indicadores de Gestión</a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" data-submenu="submenu-7" href="javascript:void(0)">
+                        <i class="fa fa-medkit" aria-hidden="true"></i> Módulo Médico
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" href="@Url.Action("LogOff", "Account")" data-finish="true">
+                        <i class="fa fa-home" aria-hidden="true"></i> Salir
+                    </a>
+                </li>
+            </ul>
+            <!-- Submenu 1 -->
+            <ul data-menu="submenu-1" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("ProceduresReportsIndex", "Inspections")">Procedimientos</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("FormatsReportsIndex", "Inspections")">Formatos</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CertificatesReportsIndex", "Inspections")">Certificados de proveedores</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("LegalityReportsIndex", "Inspections")">Normatividad</a></li>
+            </ul>
+
+            <!-- Submenu 2 -->
+            <ul data-menu="submenu-2" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Stock", "WorkingAtHeight")">Inventario</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("TechnicalInformation", "WorkingAtHeight")">Fichas técnicas</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Curriculum", "WorkingAtHeight")">Hojas de Vida</a></li>
+                <li class="menu__item"><a class="menu__link" data-submenu="submenu-2-1">Ingreso equipos</a></li>
+            </ul>
+            <!-- Submenu 2-1 -->
+            <ul data-menu="submenu-2-1" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexEquipment", "WorkingAtHeight")">Página Inicial</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("DownloadResult", "WorkingAtHeight")">Matriz de Equipos</a></li>
+            </ul>
+            <!-- Submenu 3 -->
+            <ul data-menu="submenu-3" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("SchedulerInspections", "Inspections")">Cronograma Inspecciones</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateInspections", "Inspections")">Registros Inspecciones</a></li>
+                <li class="menu__item"><a class="menu__link" data-submenu="submenu-3-1">Informes técnicos (LV)</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("ManagementOfFindings", "Inspections")">Gestión de Hallazgos</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("ManagementMaintenanceEquipment", "Inspections")">Verificar Gestión</a></li>
+            </ul>
+            <!-- Submenu 3-1 -->
+            <ul data-menu="submenu-3-1" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("TechnicalReportsIndex", "Inspections")">Página Inicial</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateTechnicalReports", "Inspections")">Crear Nuevo</a></li>
+            </ul>
+            <!-- Submenu 4 -->
+            <ul data-menu="submenu-4" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Trainning", "Trainning")">Listado/Rol/Aptitud</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Scheduler", "Trainning")">Cronograma Formación</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Certificate", "Trainning")">Certificados</a></li>
+                <li class="menu__item"><a class="menu__link" data-submenu="submenu-4-1">Ingreso Personas</a></li>
+            </ul>
+            <!-- Submenu 4-1 -->
+            <ul data-menu="submenu-4-1" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexPerson", "Trainning")">Página Inicial</a></li>
+            </ul>
+            <!-- Submenu 5 -->
+            <ul data-menu="submenu-5" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("PageInitial", "User")">Usuarios</a></li>
+                <li class="menu__item"><a class="menu__link" data-submenu="submenu-5-1">Roles</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Create", "Enemy")">Permisos</a></li>
+            </ul>
+            <!-- Submenu 5-1 -->
+            <ul data-menu="submenu-5-1" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexRoles", "UsersAndRoles")">Página Inicial</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("PageInitial", "User")">Crear Nuevo</a></li>
+            </ul>
+            <ul data-menu="submenu-7" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("PageInitial", "MedicalConcepts")">Listado de Aptitud</a></li>
+            </ul>
+        }
+        @if (@session.RolId == 5)
+        {
+            <ul data-menu="main" class="menu__level">
+                <li class="menu__item">
+                    <a class="menu__link" href="@Url.Action("Index", "Home")" data-reload="true">
+                        <i class="fa fa-home" aria-hidden="true"></i> Inicio
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" data-submenu="submenu-1" href="javascript:void(0)">
+                        <i class="fa fa-address-book" aria-hidden="true"></i> Programa Alturas
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" data-submenu="submenu-2" href="javascript:void(0)">
+                        <i class="fa fa-address-card" aria-hidden="true"></i> Gestión de Equipos
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" data-submenu="submenu-3" href="javascript:void(0)">
+                        <i class="fa fa-globe" aria-hidden="true"></i> Inspección y Mantenimiento
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" data-submenu="submenu-4" href="javascript:void(0)">
+                        <i class="fa fa-hdd-o" aria-hidden="true"></i> Formación y Competencia
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" data-submenu="submenu-5" href="javascript:void(0)">
+                        <i class="fa fa-id-badge" aria-hidden="true"></i> Administración
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" href="@Url.Action("PageInitial", "ManagmentIndicators")">Indicadores de Gestión</a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" data-submenu="submenu-7" href="javascript:void(0)">
+                        <i class="fa fa-medkit" aria-hidden="true"></i> Módulo Médico
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" href="@Url.Action("LogOff", "Account")" data-finish="true">
+                        <i class="fa fa-home" aria-hidden="true"></i> Salir
+                    </a>
+                </li>
+            </ul>
+            <!-- Submenu 1 -->
+            <ul data-menu="submenu-1" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("ProceduresReportsIndex", "Inspections")">Procedimientos</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("FormatsReportsIndex", "Inspections")">Formatos</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CertificatesReportsIndex", "Inspections")">Certificados de proveedores</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("LegalityReportsIndex", "Inspections")">Normatividad</a></li>
+            </ul>
+
+            <!-- Submenu 2 -->
+            <ul data-menu="submenu-2" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Stock", "WorkingAtHeight")">Inventario</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("TechnicalInformation", "WorkingAtHeight")">Fichas técnicas</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Curriculum", "WorkingAtHeight")">Hojas de Vida</a></li>
+                <li class="menu__item"><a class="menu__link" data-submenu="submenu-2-1">Ingreso equipos</a></li>
+            </ul>
+            <!-- Submenu 2-1 -->
+            <ul data-menu="submenu-2-1" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexEquipment", "WorkingAtHeight")">Página Inicial</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateEquipment", "WorkingAtHeight")">Crear Nuevo</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("DownloadResult", "WorkingAtHeight")">Matriz de Equipos</a></li>
+            </ul>
+            <!-- Submenu 3 -->
+            <ul data-menu="submenu-3" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("SchedulerInspections", "Inspections")">Cronograma Inspecciones</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateInspections", "Inspections")">Registros Inspecciones</a></li>
+                <li class="menu__item"><a class="menu__link" data-submenu="submenu-3-1">Informes técnicos (LV)</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("ManagementOfFindings", "Inspections")">Gestión de Hallazgos</a></li>
+            </ul>
+            <!-- Submenu 3-1 -->
+            <ul data-menu="submenu-3-1" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("TechnicalReportsIndex", "Inspections")">Página Inicial</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateTechnicalReports", "Inspections")">Crear Nuevo</a></li>
+            </ul>
+            <!-- Submenu 4 -->
+            <ul data-menu="submenu-4" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Trainning", "Trainning")">Listado/Rol/Aptitud</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Scheduler", "Trainning")">Cronograma Formación</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Certificate", "Trainning")">Certificados</a></li>
+                <li class="menu__item"><a class="menu__link" data-submenu="submenu-4-1">Ingreso Personas</a></li>
+            </ul>
+            <!-- Submenu 4-1 -->
+            <ul data-menu="submenu-4-1" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexPerson", "Trainning")">Página Inicial</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreatePerson", "Trainning")">Crear Nuevo</a></li>
+            </ul>
+            <!-- Submenu 5 -->
+            <ul data-menu="submenu-5" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("PageInitial", "User")">Usuarios</a></li>
+                <li class="menu__item"><a class="menu__link" data-submenu="submenu-5-1">Roles</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Create", "Enemy")">Permisos</a></li>
+            </ul>
+            <!-- Submenu 5-1 -->
+            <ul data-menu="submenu-5-1" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexRoles", "UsersAndRoles")">Página Inicial</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("PageInitial", "User")">Crear Nuevo</a></li>
+            </ul>
+            <ul data-menu="submenu-7" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("PageInitial", "MedicalConcepts")">Listado de Aptitud</a></li>
+            </ul>
+        }
+        @if (@session.RolId == 6)
+        {
+            <ul data-menu="main" class="menu__level">
+                <li class="menu__item">
+                    <a class="menu__link" href="@Url.Action("Index", "Home")" data-reload="true">
+                        <i class="fa fa-home" aria-hidden="true"></i> Inicio
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" data-submenu="submenu-1" href="javascript:void(0)">
+                        <i class="fa fa-address-book" aria-hidden="true"></i> Programa Alturas
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" data-submenu="submenu-2" href="javascript:void(0)">
+                        <i class="fa fa-address-card" aria-hidden="true"></i> Gestión de Equipos
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" data-submenu="submenu-3" href="javascript:void(0)">
+                        <i class="fa fa-globe" aria-hidden="true"></i> Inspección y Mantenimiento
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" data-submenu="submenu-4" href="javascript:void(0)">
+                        <i class="fa fa-hdd-o" aria-hidden="true"></i> Formación y Competencia
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" data-submenu="submenu-5" href="javascript:void(0)">
+                        <i class="fa fa-id-badge" aria-hidden="true"></i> Administración
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" href="@Url.Action("PageInitial", "ManagmentIndicators")">Indicadores de Gestión</a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" data-submenu="submenu-7" href="javascript:void(0)">
+                        <i class="fa fa-medkit" aria-hidden="true"></i> Módulo Médico
+                    </a>
+                </li>
+                <li class="menu__item">
+                    <a class="menu__link" href="@Url.Action("LogOff", "Account")" data-finish="true">
+                        <i class="fa fa-home" aria-hidden="true"></i> Salir
+                    </a>
+                </li>
+            </ul>
+            <!-- Submenu 1 -->
+            <ul data-menu="submenu-1" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("ProceduresReportsIndex", "Inspections")">Procedimientos</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("FormatsReportsIndex", "Inspections")">Formatos</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CertificatesReportsIndex", "Inspections")">Certificados de proveedores</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("LegalityReportsIndex", "Inspections")">Normatividad</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Features", "Inspections")">Cargar Documentos</a></li>
+            </ul>
+
+            <!-- Submenu 2 -->
+            <ul data-menu="submenu-2" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Stock", "WorkingAtHeight")">Inventario</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("TechnicalInformation", "WorkingAtHeight")">Fichas técnicas</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Curriculum", "WorkingAtHeight")">Hojas de Vida</a></li>
+                <li class="menu__item"><a class="menu__link" data-submenu="submenu-2-1">Ingreso equipos</a></li>
+            </ul>
+            <!-- Submenu 2-1 -->
+            <ul data-menu="submenu-2-1" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexEquipment", "WorkingAtHeight")">Página Inicial</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("DownloadResult", "WorkingAtHeight")">Matriz de Equipos</a></li>
+            </ul>
+            <!-- Submenu 3 -->
+            <ul data-menu="submenu-3" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("SchedulerInspections", "Inspections")">Cronograma Inspecciones</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("ManagementOfFindings", "Inspections")">Gestión de Hallazgos</a></li>
+            </ul>
+            <!-- Submenu 4 -->
+            <ul data-menu="submenu-4" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Trainning", "Trainning")">Listado/Rol/Aptitud</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Scheduler", "Trainning")">Cronograma Formación</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Certificate", "Trainning")">Certificados</a></li>
+                <li class="menu__item"><a class="menu__link" data-submenu="submenu-4-1">Ingreso Personas</a></li>
+            </ul>
+            <!-- Submenu 4-1 -->
+            <ul data-menu="submenu-4-1" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexPerson", "Trainning")">Página Inicial</a></li>
+            </ul>
+            <!-- Submenu 5 -->
+            <ul data-menu="submenu-5" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("PageInitial", "User")">Usuarios</a></li>
+                <li class="menu__item"><a class="menu__link" data-submenu="submenu-5-1">Roles</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Create", "Enemy")">Permisos</a></li>
+            </ul>
+            <!-- Submenu 5-1 -->
+            <ul data-menu="submenu-5-1" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexRoles", "UsersAndRoles")">Página Inicial</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("PageInitial", "User")">Crear Nuevo</a></li>
+            </ul>
+            <ul data-menu="submenu-7" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("PageInitial", "MedicalConcepts")">Listado de Aptitud</a></li>
+            </ul>
+        }
+
+    </div>
+</nav>
+<script src="~/Scripts/MultiLevelMenu/js/classie.js"></script>
+<script src="~/Scripts/MultiLevelMenu/js/dummydata.js"></script>
+<script src="~/Scripts/MultiLevelMenu/js/main.js"></script>
+<script>
+    (function () {
+        var menuEl = document.getElementById('ml-menu'),
+			mlmenu = new MLMenu(menuEl, {
+			    // breadcrumbsCtrl : true, // show breadcrumbs
+			    // initialBreadcrumb : 'all', // initial breadcrumb text
+			    backCtrl: true, // show back button
+			    // itemsDelayInterval : 60, // delay between each menu item sliding animation
+			    onItemClick: loadDummyData // callback: item that doesn´t have a submenu gets clicked - onItemClick([event], [inner HTML of the clicked item])
+			});
+
+        // mobile menu toggle
+        var openMenuCtrl = document.querySelector('.action--open'),
+			closeMenuCtrl = document.querySelector('.action--close');
+
+        openMenuCtrl.addEventListener('click', openMenu);
+        closeMenuCtrl.addEventListener('click', closeMenu);
+
+        function openMenu() {
+            classie.add(menuEl, 'menu--open');
+        }
+
+        function closeMenu() {
+            classie.remove(menuEl, 'menu--open');
+        }
+
+        // simulate grid content loading
+        var gridWrapper = document.querySelector('.content');
+
+        function loadDummyData(ev, itemName) {
+            ev.preventDefault();
+            closeMenu();
+            if ($(ev.srcElement).data("finish")) {
+                location.href = '@Url.Action("LogOff","Account")';
+            } else if ($(ev.srcElement).data("reload")) {
+                location.reload();
+            } else {
+                if (ev.srcElement.href != "#" && ev.srcElement.href != "javascript:void(0)") {
+                    cargarElement(ev.srcElement.href);
+                }
+
+            }
+
+        }
+    })();
+    function cargarElement(url) {
+        $.ajax({
+            url: url,
+            beforeSend: function () {
+                $('#renderPages').html('').addClass("loading").css("height", 500);
+            },
+            success: function (data) {
+                $('#renderPages').html(data);
+                $('.titlesPages').html('@ViewBag.ApplicationName | ' + $('.titlesPages').html());
+            },
+            complete: function () {
+                $('#renderPages').removeClass("loading").css("height", "inherit");
+                LoadElementsDefaultPartial('#renderPages');
+                $("#menuPartial").hide();
+            }
+        })
+    }
+    function LoadElementsDefaultPartial(element) {
+        $(element).find($('.ui.dropdown').dropdown());
+        $(element).find($('.ui.checkbox').checkbox());
+    }
+</script>

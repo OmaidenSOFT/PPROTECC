@@ -1,6 +1,7 @@
 ﻿@using WebApplication1.Models;
 @{
     var session = Session["SessionUser"] as SessionModels;
+    session.Estado = 1;
 }
 <!DOCTYPE html>
 <html>
@@ -55,12 +56,45 @@
             <div class="sixteen wide column">
                 @Html.Partial("_LoginPartial")
                 <div id="menuPartial" style="display:none">
-                    @Html.Partial("_MenuPartial")
+
+                    @if (session.Idioma == "italiano")
+                    {
+                        if (session.ModuloSeleccionado == "WH")
+                        {
+                            @Html.Partial("_MenuPartialIT")
+                        }
+                        else
+                        {
+                            @Html.Partial("_MenuPartialIzageIT")
+                        }
+                    }
+                    else if (session.Idioma == "spain")
+                    {
+                        if (session.ModuloSeleccionado == "WH")
+                        {
+                            @Html.Partial("_MenuPartial")
+                        }
+                        else
+                        {
+                            @Html.Partial("_MenuPartialIzage")
+                        }
+                    }
+                    else if (session.Idioma == "english")
+                    {
+                        if (session.ModuloSeleccionado == "WH")
+                        {
+                            @Html.Partial("_MenuPartialEN")
+                        }
+                        else
+                        {
+                            @Html.Partial("_MenuPartialIzageEN")
+                        }
+                    }
                 </div>
             </div>
         </div>
         <div class="ui grid" style="margin-top:0px">
-            <img src="~/Content/Images/pantalla_inicio_2.jpg" style="border:none" />
+            <img src="~/Content/Images/Ingreso.png" style="border:none" />
         </div>
         <div class="ui grid">
             <div class="sixteen wide stretched column">
@@ -68,7 +102,7 @@
                     <h1 style="color:#41B9E6;text-align:center" id="Welcome">@session.Welcome.ToUpper()</h1>
                     <br />
                     <br />
-                    <div style="text-align:center;font-family:'Arial Unicode MS';font-size:16px" >
+                    <div style="text-align:center;font-family:'Arial Unicode MS';font-size:16px">
                         <p id="textopp1">@session.TextoPro1</p>
                         <p id="textopp2">@session.TextoPro2</p>
                         <br />

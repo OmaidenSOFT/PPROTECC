@@ -4750,7 +4750,7 @@ input::selection {
 
 .ui.text.container {
   font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
-  max-width: 700px !important;
+  max-width: 453px !important;
   line-height: 1.5;
 }
 
@@ -11466,7 +11466,7 @@ img.ui.bordered.image {
 .ui.medium.images img,
 .ui.medium.images svg,
 .ui.medium.image {
-  width: 300px;
+  width: 138px;
   height: auto;
   font-size: 1rem;
 }

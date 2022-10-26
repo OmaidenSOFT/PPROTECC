@@ -1,0 +1,17 @@
+﻿@using WebApplication1.Models;
+@{
+    var session = Session["SessionUser"] as SessionModels;
+}
+@{ ViewBag.Title = "LoginFacade"; Layout = "~/Views/Shared/_LayoutLoginFacade.cshtml"; } @using (Ajax.BeginForm("ValidateLogin", "Account", null, new AjaxOptions() { OnBegin = "OnBeginLogin()", OnSuccess = "OnSuccessLogin(data)", OnFailure = "OnError(xhr)", HttpMethod = "POST" }, new { @id = "formLogin" }))
+{
+
+
+<div class="ui equal width form">
+    <a class="menu__link" href="@Url.Action("LogOff", "Account")" data-finish="true" style="font-size: larger;">
+        <i class="fa fa-home" aria-hidden="true"></i> Salir
+    </a>
+</div>
+   
+}
+
+

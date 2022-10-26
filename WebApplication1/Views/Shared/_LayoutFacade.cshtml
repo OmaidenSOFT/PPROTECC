@@ -1,0 +1,189 @@
+﻿@using WebApplication1.Models;
+@{
+    var session = Session["SessionUser"] as SessionModels;
+    session.Estado = 1;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title Grupo Enel - Programa de protección contra caídas 2.0</title>
+    <!-- Include media queries -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    @Styles.Render("~/bundles/SiteCss")
+    <link href="~/Content/SemanticUI/semantic.css" rel="stylesheet" />
+    <link href="~/Scripts/tables/jquery.dynatable.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Scripts/calendar/calendar.min.css" rel="stylesheet" />
+    <link href="~/Content/toastr.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/jqueryJs")
+    @Scripts.Render("~/bundles/semanticJs")
+    @Scripts.Render("~/bundles/loadingOverlayJs")
+    @Scripts.Render("~/bundles/jqueryUnobstriveJs")
+    <script type="text/javascript" src="~/Scripts/tables/jquery.dynatable.js"></script>
+    <script type="text/javascript" src="~/Scripts/calendar/calendar.min.js"></script>
+    <script src="~/Scripts/toastr.js"></script>
+    <script src="~/Scripts/dropzone/dropzone.min.js"></script>
+    <link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
+    <script src="~/Scripts/chartJs/Chart.bundle.min.js"></script>
+    <script src="~/Scripts/chartJs/Chart.min.js"></script>
+    <link href="~/Content/facade.css" rel="stylesheet" />
+    <style type="text/css">
+        .bgimg {
+            background-image: url('/PPROTECC/Content/Images/header.jpg');
+        }
+
+        .main {
+            min-height: 100%;
+            padding-bottom: 60px;
+            box-sizing: border-box;
+        }
+
+        .footer {
+            background-color: #212121;
+            position: absolute;
+            /* bottom: 0;  remove this */
+            margin-top: -50px; /* add this */
+            left: 0;
+            width: 100%;
+            padding: 15px 0;
+        }
+       
+        body {
+            background-image: url('@Url.Content("~/Content/Images/02-Pantalla-ingreso-A.jpg")');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    
+    </style>
+</head>
+<body>
+  
+
+
+
+    <script type="text/javascript">
+
+
+        function alturas() {
+
+            //document.getElementById("menuPartialAltura").style.display = "block";
+            //document.getElementById("menuPartialIzage").style.display = "none";
+            //document.getElementById("alturasTT").style.display = "block";
+            //document.getElementById("tableProgramas").style.display = "none";
+            //var title = document.getElementById("Welcome").innerHTML + " TRABAJO EN ALTURAS";
+            //document.getElementById("Welcome").innerHTML = title
+            @session.Inicio= "No";
+            var url = '/Home/Index';
+            $.ajax({
+                type: "GET",
+                url: url,
+                data: {},
+                dataType: "html"
+            });
+
+            
+
+
+
+        }
+        function izage() {
+            document.getElementById("menuPartialIzage").style.display = "block";
+            document.getElementById("menuPartialAltura").style.display = "none";
+            document.getElementById("alturasTT").style.display = "none";
+            document.getElementById("tableProgramas").style.display = "none";
+            var title = document.getElementById("Welcome").innerHTML + " IZAGE DE CARGAS";
+            document.getElementById("Welcome").innerHTML = title
+        }
+
+
+
+        function MostrarTexto(modulo) {
+            if (modulo == "alturasT") {
+                document.getElementById("alturasT").style.display = "block";
+                document.getElementById("izageT").style.display = "none";
+                document.getElementById("espaciosT").style.display = "none";
+                document.getElementById("riesgoT").style.display = "none";
+                document.getElementById("extintoresT").style.display = "none";
+            }
+            if (modulo == "izageT") {
+                document.getElementById("alturasT").style.display = "none";
+                document.getElementById("izageT").style.display = "block";
+                document.getElementById("espaciosT").style.display = "none";
+                document.getElementById("riesgoT").style.display = "none";
+                document.getElementById("extintoresT").style.display = "none";
+            }
+            if (modulo == "espaciosT") {
+                document.getElementById("alturasT").style.display = "none";
+                document.getElementById("izageT").style.display = "none";
+                document.getElementById("espaciosT").style.display = "block";
+                document.getElementById("riesgoT").style.display = "none";
+                document.getElementById("extintoresT").style.display = "none";
+            }
+            if (modulo == "riesgoT") {
+                document.getElementById("alturasT").style.display = "none";
+                document.getElementById("izageT").style.display = "none";
+                document.getElementById("espaciosT").style.display = "none";
+                document.getElementById("riesgoT").style.display = "block";
+                document.getElementById("extintoresT").style.display = "none";
+            }
+
+        if (modulo == "extintoresT") {
+            document.getElementById("alturasT").style.display = "none";
+            document.getElementById("izageT").style.display = "none";
+            document.getElementById("espaciosT").style.display = "none";
+            document.getElementById("riesgoT").style.display = "none";
+            document.getElementById("extintoresT").style.display = "block";
+            }
+        }
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-bottom-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "0",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+        $.fn.noop = function () { return this; };
+        toastr.options.hideMethod = 'noop';
+        @*$.ajax({
+            url: '@Url.Action("GetMissions", "Mission")',
+            type: 'POST',
+            success: function (data) {
+                toastr.info("Próximas Misiones");
+                if (data.result) {
+                    $.each(data.mission, function (index, value) {
+                        toastr.success("Fecha: " + value.date + " - " + value.city + '<br/> ' + value.description, value.name);
+                    });
+                }
+
+            }
+        });*@
+        function LoadElementsDefault() {
+            $('.ui.dropdown').dropdown();
+        }
+        $(function () {
+            LoadElementsDefault();
+        });
+        function LoadTables() {
+            $(function () {
+                $('.tablesInitial').dynatable();
+            });
+        }
+        $('#renderPages').on('click', function () {
+            $("#menuPartial").hide();
+        });
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -18,6 +18,7 @@ namespace LogicBo
         #endregion
         public List<ImagesModels> GetBannerImages(string path)
         {
+            path = path.Replace(@"Home\", "").Replace("Index","");
             var files = Directory.GetFiles(path, "*.*", SearchOption.AllDirectories);
             var model = new List<ImagesModels>();
             foreach (string filename in files)

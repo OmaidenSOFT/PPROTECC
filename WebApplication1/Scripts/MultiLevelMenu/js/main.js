@@ -57,7 +57,7 @@
         // show breadcrumbs
         breadcrumbsCtrl: true,
         // initial breadcrumb text
-        initialBreadcrumb: 'Menú Principal',
+        initialBreadcrumb: '',
         // show back button
         backCtrl: true,
         // delay between each menu item sliding animation

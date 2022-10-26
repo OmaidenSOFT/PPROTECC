@@ -206,6 +206,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\alturas.jpg" />
     <Content Include="Content\argentina.png" />
     <Content Include="Content\Bootstrap\css\bootstrap-grid.css" />
     <Content Include="Content\Bootstrap\css\bootstrap-grid.min.css" />
@@ -220,6 +221,8 @@
     <Content Include="Content\Chile.jpg" />
     <Content Include="Content\Colombia.png" />
     <Content Include="Content\Ecuador.jpg" />
+    <Content Include="Content\espacios.jpg" />
+    <Content Include="Content\facade.css" />
     <Content Include="Content\font-awesome-4.7.0\css\font-awesome.css" />
     <Content Include="Content\font-awesome-4.7.0\css\font-awesome.min.css" />
     <Content Include="Content\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
@@ -232,7 +235,10 @@
     <Content Include="Content\Images\Imagen2.jpg" />
     <Content Include="Content\Images\Imagen3.png" />
     <Content Include="Content\Images\Imagen3.svg" />
+    <Content Include="Content\Images\Ingreso.png" />
+    <Content Include="Content\Images\izage.jpg" />
     <Content Include="Content\Images\Logo.png" />
+    <Content Include="Content\Images\Logo1.png" />
     <Content Include="Content\Images\menu.jpg" />
     <Content Include="Content\Images\ok.png" />
     <Content Include="Content\Images\pantalla_inicio_2.jpg" />
@@ -240,11 +246,20 @@
     <Content Include="Content\Images\Semaforo_Amarrillo.jpg" />
     <Content Include="Content\Images\Semaforo_rojo.jpg" />
     <Content Include="Content\Images\Semaforo_Verde.jpg" />
+    <Content Include="Content\Images\tr-espacio.jpg" />
+    <Content Include="Content\Images\tr-extintores.jpg" />
+    <Content Include="Content\Images\tr-izages.jpg" />
+    <Content Include="Content\Images\tr-riesgoe.jpg" />
+    <Content Include="Content\Images\tr_alturas.jpg" />
     <Content Include="Content\Italia.png" />
+    <Content Include="Content\Izage.jpg" />
     <Content Include="Content\LoadingOverlay\src\loading.gif" />
     <Content Include="Content\LoadingOverlay\src\loadingoverlay.js" />
     <Content Include="Content\LoadingOverlay\src\loadingoverlay.min.js" />
+    <Content Include="Content\menuNew.css" />
     <Content Include="Content\Peru.png" />
+    <Content Include="Content\riesgoelectrico.png" />
+    <Content Include="Content\rxtintores.jpg" />
     <Content Include="Content\SegmentEffect\css\component.css" />
     <Content Include="Content\SegmentEffect\css\demo.css" />
     <Content Include="Content\SegmentEffect\css\normalize.css" />
@@ -608,6 +623,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\menuNew.js" />
     <Content Include="Scripts\MultiLevelMenu\css\component.css" />
     <Content Include="Scripts\MultiLevelMenu\css\demo.css" />
     <Content Include="Scripts\MultiLevelMenu\css\organicfoodicons.css" />
@@ -742,6 +758,15 @@
     <Content Include="Views\WorkingAtHeight\CreateCategoriaSede.cshtml" />
     <Content Include="Views\WorkingAtHeight\IndexPais.cshtml" />
     <Content Include="Views\WorkingAtHeight\IndexSedeCategoria.cshtml" />
+    <Content Include="Views\Shared\_MenuPartialEN.cshtml" />
+    <Content Include="Views\Shared\_MenuPartialIT.cshtml" />
+    <Content Include="Views\Shared\_LayoutFacade.cshtml" />
+    <Content Include="Views\Shared\_LayoutIzage.cshtml" />
+    <Content Include="Views\Shared\_MenuPartialIzageEN.cshtml" />
+    <Content Include="Views\Account\LoginFacade.cshtml" />
+    <Content Include="Views\Shared\_LayoutLoginFacade.cshtml" />
+    <Content Include="Views\Shared\_MenuPartialIzageIT.cshtml" />
+    <Content Include="Views\Shared\_MenuPartialIzage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -796,7 +821,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>62127</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:56738/</IISUrl>
+          <IISUrl>http://localhost:56737/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

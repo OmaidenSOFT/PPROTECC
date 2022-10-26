@@ -20,6 +20,18 @@ namespace WebApplication1.Models
         public string TextoPro3 { get; set; }
         public string TextoPro4 { get; set; }
 
+        public string Idioma { get; set; }
+        public string Inicio { get; set; }
+        public int Estado { get; set; }
+
+        public string Modulos { get; set; }
+        public string Subtitulos { get; set; }
+        public string Descripciones { get; set; }
+        public string piedepaginacards { get; set; }
+
+        public string ModuloSeleccionado { get; set; }
+
+
     }
     public class RoleListModels
     {
