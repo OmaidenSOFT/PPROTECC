@@ -25,7 +25,11 @@ namespace LogicBo
             var result = executeProcedures.DataTable("ENEL_LoadLocations", null);
             return result.AsEnumerable().ToDictionary(row => row["ID"].ToString(),row => row["Descripcion"].ToString());
         }
-
+        public Dictionary<string, string> GetUbicacionIzaje()
+        {
+            var result = executeProcedures.DataTable("ENEL_LoadUbicacionIzage", null);
+            return result.AsEnumerable().ToDictionary(row => row["ID"].ToString(), row => row["Descripcion"].ToString());
+        }
         #region Entity
         #endregion
     }
