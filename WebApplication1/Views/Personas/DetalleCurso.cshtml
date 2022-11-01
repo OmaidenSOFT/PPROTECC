@@ -1,0 +1,240 @@
+﻿<center>
+    <h3 style="color:#41B9E6; ">
+        IZAJE DE CARGAS | FORMACIÓN DE PERSONAL | HISTORICO DE CURSOS DE LA PERSONA
+    </h3>
+</center>
+<br />
+
+@using System.Data
+@model DataTable
+
+<div class="ui equal width form">
+    <div class="fields">
+        <div class="field" style="width: 150px; height: 150px; ">
+            <img src="~/Fotos_Personas/@Model.Rows[0]["Imagen"].ToString()" style="object-fit: cover; width: 100%; height: 100%;">
+        </div>
+        <div class="field">
+            <table class="ui celled table ui center aligned tablesInitial" id="tablesIndexEquipment">
+                <tbody>
+                    <tr>
+                        <th>
+                            <table class="ui celled table ui center aligned tablesInitial" id="tablesIndexEquipment">
+                                <tbody>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <td>
+                                            @Model.Rows[0]["Nombre"].ToString()
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Identificación:</th>
+                                        <td>
+                                            @Model.Rows[0]["Identificacion"].ToString()
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Asignado:</th>
+                                        <td>
+                                            @Model.Rows[0]["Asignado"].ToString()
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Curso inicial:</th>
+                                        <td>
+                                            @Model.Rows[0]["Nombre"].ToString()
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </th>
+
+                        <td>
+                            <table class="ui celled table ui center aligned tablesInitial" id="tablesIndexEquipment">
+                                <tbody>
+                                    <tr>
+                                        <th>Apellido</th>
+                                        <td>
+                                            @Model.Rows[0]["Apellido"].ToString()
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Correo:</th>
+                                        <td>
+                                            @Model.Rows[0]["Correo"].ToString()
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Sede:</th>
+                                        <td>
+                                            @Model.Rows[0]["Sede"].ToString()
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Fecha curso inicial:</th>
+                                        <td>
+                                            @Convert.ToDateTime(Model.Rows[0]["FechaCursoInicial"].ToString()).Date.ToString("d")
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<br />
+@using System.Data
+@{
+    LogicBo.PersonBo _PersonBo = new LogicBo.PersonBo();
+    string idPersona = Model.Rows[0]["Id"].ToString();
+    System.Data.DataTable dtCursos = _PersonBo.GetInfoCursoDet(Convert.ToInt32(idPersona));
+}
+@using (Html.BeginForm("SearchDetalleCurso", "Personas", FormMethod.Post, new { @id = "formProcessSearch", enctype = "multipart/form-data" }))
+{
+    <div class="ui equal width form">
+        <div class="fields">
+            <div class="field">
+                <input name="txbIdPersona" hidden value="@idPersona" />
+            </div>
+            <div class="field">
+                <label>Cursos</label>
+                @Html.DropDownList("cbxCourse", (SelectList)ViewBag.CourseDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+            </div>
+            <div class="field" style="width:30%">
+                <label>Fecha Curso Inicial</label>
+                <div class="ui calendar calendarPicker" id="FechaInicioCurso">
+                    <div class="ui input left icon">
+                        <i class="calendar icon"></i>
+                        <input type="text" placeholder="Fecha Compra">
+                    </div>
+                </div>
+                <input type="hidden" name="cFechaInicioCurso" id="cFechaInicioCurso" autocomplete="off">
+            </div>
+            <div class="field">
+                <label>Archivo curso</label>
+                <input type="file" name="archivoCurso" />
+            </div>
+            <div class="field">
+                <br />
+                <button class="ui primary button" id="btnGuardar">
+                    Agregar
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+<table class="ui selectable celled table ui center aligned tablesInitial" id="tablesIndexEquipment">
+    <thead>
+        <tr>
+            @foreach (System.Data.DataColumn col in dtCursos.Columns)
+            {
+                if (col.ColumnName == "#" || col.ColumnName == "Asignado" || col.ColumnName == "Curso" || col.ColumnName == "Fecha curso" || col.ColumnName == "Estado" || col.ColumnName == "Vigencia")
+                {
+                    <th>@col.ColumnName</th>
+                }
+
+            }
+            <th></th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (System.Data.DataRow row in dtCursos.Rows)
+        {
+            <tr>
+                @foreach (DataColumn col in dtCursos.Columns)
+                {
+                    if (col.ColumnName == "#" || col.ColumnName == "Asignado" || col.ColumnName == "Curso" || col.ColumnName == "Vigencia")
+                    {
+                        <th>@row[col.ColumnName]</th>
+                    }
+                    if (col.ColumnName == "Fecha curso")
+                    {
+                        <th>@DateTime.Parse(row[col.ColumnName].ToString()).ToString("d")</th>
+                    }
+                    else if (col.ColumnName == "Estado")
+                    {
+                        switch (row[col.ColumnName].ToString())
+                        {
+                            case "Vigente":
+                                <th style="background-color:green; color:white;">@row[col.ColumnName]</th>
+                                break;
+                            case "Vencido":
+                                <th style="background-color:red; color:white;">@row[col.ColumnName]</th>
+                                break;
+                            default:
+                                <th>@row[col.ColumnName]</th>
+                                break;
+                        }
+                    }
+                }
+                <td>
+                    <a href="javascript:void(0)" onclick="cargarElement('@Url.Action("DeleteCurso",new { @id=row["#"].ToString(), @IdGlobal = idPersona})')">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    $('#FechaInicioCurso').calendar({
+        type: 'date',
+        text: {
+            days: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+            months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            today: 'Today',
+            now: 'Now',
+            am: 'AM',
+            pm: 'PM'
+        },
+        formatter: {
+            date: function (date, settings) {
+                if (!date) return '';
+                var day = date.getDate();
+                var month = date.getMonth() + 1;
+                var year = date.getFullYear();
+                return year + '-' + month + '-' + day;
+            }
+        },
+        onChange: function (date, text, mode) {
+            $('#cFechaInicioCurso').val(text);
+        }
+    });
+    $('#formProcessSearch').form({
+        fields: {
+            headQuarterType: {
+                identifier: 'headQuarterType',
+                rules: [{
+                    type: 'checked',
+                    prompt: 'Debe seleccionar una opción'
+                }]
+            },
+            frequency: {
+                identifier: 'frequency',
+                rules: [{
+                    type: 'checked',
+                    prompt: 'Debe seleccionar una opción'
+                }]
+            },
+
+        }, inline: true,
+        on: 'blur'
+    });
+    function onBeginProcessSearch() {
+        $('#renderPages').addClass("loading");
+        $('#renderSearchPerson').empty();
+    }
+    function onFailureProcessSearch() {
+        $('#renderPages').removeClass("loading");
+        $('#messageCreate').show('slow').addClass("warning").removeClass("info");
+        $('#textmessageCreate').text("Ha ocurrido un error al procesar la solicitud");
+    }
+    function onSuccessProcessSearch(data) {
+        $('#renderPages').removeClass("loading");
+        $('#renderSearchPerson').html(data);
+    }
+</script>

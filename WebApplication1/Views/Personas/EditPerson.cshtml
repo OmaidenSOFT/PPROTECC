@@ -1,0 +1,189 @@
+﻿<center>
+    <h3 style="color:#41B9E6; ">
+        IZAJE DE CARGAS | FORMACIÓN DE PERSONAL | EDICIÓN DE PERSONAS
+    </h3>
+</center>
+<br />
+
+@using System.Data
+@model DataTable
+
+
+@using (Ajax.BeginForm("ProcessEditPerson", "Personas", FormMethod.Post, new AjaxOptions()
+{
+    HttpMethod = "POST",
+    OnBegin = "return onBeginProcessEdit()",
+    OnSuccess = "onSuccessProcessEdit(data)",
+    OnFailure = "onFailureProcessEdit()",
+}, new { @id = "formProcessEdit", @enctype = "multipart/form-data" }))
+{
+
+    <div class="ui equal width form">
+        <div class="field">
+            <input type="hidden" name="ID" value="@Model.Rows[0]["Id"].ToString()" />
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>Nombre</label>
+                <input type="text" id="txbNombre" name="txbNombre" autocomplete="off" maxlength="50" value="@Model.Rows[0]["Nombre"].ToString()">
+            </div>
+            <div class="field">
+                <label>Apellido</label>
+                <input type="text" id="txbApellido" name="txbApellido" autocomplete="off" maxlength="50" value="@Model.Rows[0]["Apellido"].ToString()">
+            </div>
+            <div class="field">
+                <label>Identificación</label>
+                <input type="text" id="txbIdentificacion" name="txbIdentificacion" autocomplete="off" maxlength="50" value="@Model.Rows[0]["Identificacion"].ToString()">
+            </div>
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>Telefono</label>
+                <input type="text" id="txbTelefono" name="txbTelefono" autocomplete="off" maxlength="50" value="@Model.Rows[0]["Telefono"].ToString()">
+            </div>
+            <div class="field">
+                <label>Celular</label>
+                <input type="text" id="txbCelular" name="txbCelular" autocomplete="off" maxlength="50" value="@Model.Rows[0]["Celular"].ToString()">
+            </div>
+            <div class="field">
+                <label>Correo</label>
+                <input type="text" id="txbCorreo" name="txbCorreo" autocomplete="off" maxlength="50" value="@Model.Rows[0]["Correo"].ToString()">
+            </div>
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>Asignado</label>
+                <input type="text" id="txbAsignado" name="txbAsignado" autocomplete="off" maxlength="50" value="@Model.Rows[0]["Asignado"].ToString()">
+            </div>
+            <div class="field">
+                <label>Sede</label>
+                @Html.DropDownList("cbxHeadquarter", (SelectList)ViewBag.HeadquarterDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+            </div>
+            <div class="field">
+                <label>Cursos</label>
+                @Html.DropDownList("cbxCourse", (SelectList)ViewBag.CourseDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+            </div>
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>Fecha Curso Inicial</label>
+                <div class="ui calendar calendarPicker" id="FechaInicioCurso">
+                    <div class="ui input left icon">
+                        <i class="calendar icon"></i>
+                        <input type="text" placeholder="Fecha Compra" value="@Model.Rows[0]["FechaCursoInicial"].ToString()">
+                    </div>
+                </div>
+                <input type="hidden" name="cFechaInicioCurso" id="cFechaInicioCurso" autocomplete="off" value="@Model.Rows[0]["FechaCursoInicial"].ToString()">
+            </div>
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>Observacion</label>
+                <input type="text" id="txbObservacion" name="txbObservacion" autocomplete="off" maxlength="50" value="@Model.Rows[0]["Observacion"].ToString()">
+            </div>
+        </div>
+        <button class="ui primary button">
+            Guardar
+        </button>
+        <div class="ui floating warning message" style="width:50%;margin-left:25%;margin-right:25%;text-align:center;display:none" id="messageEditPerson">
+            <div class="header">
+                Atención
+            </div>
+            <p id="textmessageEditPerson"></p>
+        </div>
+    </div>
+}
+<br />
+<br />
+@{
+    int id = Convert.ToInt32(Model.Rows[0]["Id"].ToString());
+}
+@using (Html.BeginForm("ArchivoPersona", "Personas", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="ui equal width form">
+        <div class="fields">
+            <div class="field">
+                <label>Foto persona </label>
+                <input type="file" name="postedFile" accept="image/png,image/gif,image/jpeg" />
+            </div>
+            <div class="field">
+                <br />
+                <button class="ui primary button" id="btnGuardar">
+                    Cargar Foto
+                </button>
+                @*<input type="submit" value="Upload" />*@
+                <div class="field">
+                    <input name="txbId" hidden value="@id" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    $('#FechaInicioCurso').calendar({
+        type: 'date',
+        text: {
+            days: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+            months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            today: 'Today',
+            now: 'Now',
+            am: 'AM',
+            pm: 'PM'
+        },
+        formatter: {
+            date: function (date, settings) {
+                if (!date) return '';
+                var day = date.getDate();
+                var month = date.getMonth() + 1;
+                var year = date.getFullYear();
+                return year + '-' + month + '-' + day;
+            }
+        },
+        onChange: function (date, text, mode) {
+            $('#cFechaInicioCurso').val(text);
+        }
+    });
+    $('#messageEditPerson').hide();
+
+    $('#formProcessEdit').form({
+        fields: {
+            cbxHeadquarter: {
+                identifier: 'cbxHeadquarter',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe elegir un valor'
+                    },
+                ]
+            },
+        }, inline: true,
+        on: 'blur'
+    });
+    $('#btnGuardar').on('click', function () {
+        $('#formProcessEdit').submit();
+    });
+
+    function onBeginProcessEdit() {
+        $('#renderPages').addClass("loading");
+        return true;
+    }
+
+    function onFailureProcessEdit() {
+        $('#renderPages').removeClass("loading");
+        $('#messageEditPerson').show('slow').addClass("warning").removeClass("info");
+        $('#textmessageEditPerson').text("Ha ocurrido un error al procesar la solicitud");
+    }
+
+    function onSuccessProcessEdit(data) {
+        $('#renderPages').removeClass("loading");
+        if (data.result) {
+            $('#messageEditPerson').show('slow').removeClass("warning").addClass("info");
+            $('#textmessageEditPerson').text("Proceso Completado");
+        } else {
+            $('#messageEditPerson').show('slow').addClass("warning").removeClass("info");
+            $('#textmessageEditPerson').text(data.message);
+        }
+    }
+</script>
