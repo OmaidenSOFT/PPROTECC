@@ -16,7 +16,8 @@ namespace Utils
     {
         PdfPTable table;
         LogicBo.WorkingAtHeightBo _WorkingAtHeightBo;
-
+        LogicBo.IzageBo _IzageBo;
+        LogicBo.InspectionIzajeBo _InspectionIzajeBo;
 
 
         public void CreateCurriculum(int EquipementID)
@@ -751,6 +752,612 @@ namespace Utils
                 document.Add(table);
 
 
+
+                table = new PdfPTable(1);
+                table.TotalWidth = 550.0F;
+                table.LockedWidth = true;
+                table.DefaultCell.BorderWidth = 20;
+                Columns1 = new int[] { 500 };
+                table.SetWidths(Columns1);
+                table.SpacingBefore = 1.0F;
+                table.SpacingAfter = 1.0F;
+                table.DefaultCell.Border = Element.RECTANGLE;
+                fuenteEncabezado = FontFactory.GetFont("Bookman Old Style", 9, iTextSharp.text.Font.BOLD);
+
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("Observaciones", fuenteEncabezado));
+                celda1.Colspan = 2;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+
+                table.AddCell(celda1);
+
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase(dsResultEnc.Tables[0].Rows[i]["Observaciones"].ToString(), fuenteEncabezado));
+                celda1.Colspan = 2;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+
+                table.AddCell(celda1);
+
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("", fuenteEncabezado));
+                celda1.Colspan = 2;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+
+                table.AddCell(celda1);
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("", fuenteEncabezado));
+                celda1.Colspan = 2;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+
+                table.AddCell(celda1);
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("", fuenteEncabezado));
+                celda1.Colspan = 2;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+
+                table.AddCell(celda1);
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("", fuenteEncabezado));
+                celda1.Colspan = 2;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+
+                table.AddCell(celda1);
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("", fuenteEncabezado));
+                celda1.Colspan = 2;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+
+                table.AddCell(celda1);
+                document.Add(table);
+
+                if (intTotalFotos > 1)
+                {
+                    table = new PdfPTable(1);
+                    table.TotalWidth = 550.0F;
+                    table.LockedWidth = true;
+                    table.DefaultCell.BorderWidth = 20;
+                    Columns1 = new int[] { 600 };
+                    table.SetWidths(Columns1);
+                    table.SpacingBefore = 1.0F;
+                    table.SpacingAfter = 1.0F;
+                    table.DefaultCell.Border = Element.RECTANGLE;
+                    fuenteEncabezado = FontFactory.GetFont("Bookman Old Style", 9, iTextSharp.text.Font.BOLD);
+
+                    celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("Otras Fotografias", fuenteEncabezado));
+                    celda1.Colspan = 2;
+                    celda1.Padding = 5;
+                    celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                    celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+
+                    table.AddCell(celda1);
+
+                    int ni = 1;
+
+                    while ((ni < intTotalFotos))
+                    {
+                        strRutaImagen = @"C:\PERSONAL\Pers_GIT\ENEL_IST_Inspections\ENEL\FOTOS_EQUIPOS\" + dsResultEnc.Tables[0].Rows[i]["Sede"].ToString() + @"\" + dsResultEnc.Tables[0].Rows[i]["Fotos"].ToString().Split('/')[ni];
+
+                        if (System.IO.File.Exists(strRutaImagen))
+                        {
+                            // Creamos la imagen y le ajustamos el tamaño
+                            imagen = iTextSharp.text.Image.GetInstance(strRutaImagen);
+                            imagen.BorderWidth = 0;
+                            imagen.Alignment = Element.ALIGN_RIGHT;
+                            double percentage = 0.0F;
+                            percentage = 100 / (double)imagen.Width;
+                            imagen.ScalePercent((float)percentage * 100);
+
+                            celda1 = new iTextSharp.text.pdf.PdfPCell(imagen);
+                            celda1.Colspan = 1;
+                            celda1.Rowspan = 1;
+                            celda1.Padding = 5;
+                            celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                            celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                            table.AddCell(celda1);
+                        }
+                        ni = (ni + 1);
+                    }
+                    document.Add(table);
+
+                }
+                document.Close();
+                //fin
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        public void CreateHVIzaje(int idIzaje, string path)
+        {
+            DataSet dsResultEnc = new DataSet();
+
+            ArrayList arrUbicaciones = new ArrayList();
+            ArrayList arrModelo = new ArrayList();
+            ArrayList arrFechaFab = new ArrayList();
+            ArrayList arrMarca = new ArrayList();
+            ArrayList arrSerial = new ArrayList();
+            ArrayList arrLote = new ArrayList();
+            ArrayList arrComentariost = new ArrayList();
+            ArrayList arrRFID = new ArrayList();
+            ArrayList arrAprovado = new ArrayList();
+            ArrayList arrInspector = new ArrayList();
+            ArrayList arrFinal = new ArrayList();
+            ArrayList arrFechaInsp = new ArrayList();
+            string Sede = "";
+            string Serial = "";
+            string Equipo = "";
+            string RFID = "";
+            string CodEq = "";
+            string ImagenEI = "";
+            int i = 0;
+            _IzageBo = new LogicBo.IzageBo();
+            dsResultEnc.Tables.Add(_IzageBo.GetInfo(idIzaje));
+
+            Sede = dsResultEnc.Tables[0].Rows[0]["Sede"].ToString();
+            Serial = dsResultEnc.Tables[0].Rows[0]["Serial"].ToString();
+            Equipo = dsResultEnc.Tables[0].Rows[0]["Equipo"].ToString();
+            RFID = dsResultEnc.Tables[0].Rows[0]["Consecutivo"].ToString();
+            CodEq = dsResultEnc.Tables[0].Rows[0]["CodE"].ToString();
+            ImagenEI = dsResultEnc.Tables[0].Rows[0]["Imagen"].ToString();
+
+            string pathPDF = System.Configuration.ConfigurationManager.AppSettings["PathPDFIzaje"].ToString();
+
+            try
+            {
+                Document document = new Document(PageSize.LETTER, 40, 40, 40, 40);
+                if (File.Exists(string.Concat(pathPDF, @"Equipo_Izaje\Equipo_Izaje_", Sede, "_", Serial, ".pdf")))
+                {
+                    File.Delete(string.Concat(pathPDF, @"Equipo_Izaje\Equipo_Izaje_", Sede, "_", Serial, ".pdf"));
+                }
+                PdfWriter pdfWrite = PdfWriter.GetInstance(document, new FileStream(string.Concat(pathPDF, @"Equipo_Izaje\Equipo_Izaje_", Sede, "_", Serial, ".pdf"), FileMode.OpenOrCreate));
+                document.Open();
+                table = new PdfPTable(3);
+                table.TotalWidth = 550.0F;
+                table.LockedWidth = true;
+                table.DefaultCell.BorderWidth = 20;
+                int[] Columns1 = new int[] { 60, 200, 60 };
+                table.SetWidths(Columns1);
+                table.SpacingBefore = 1.0F;
+                table.SpacingAfter = 1.0F;
+                table.DefaultCell.Border = Element.RECTANGLE;
+                iTextSharp.text.Font fuenteEncabezado = FontFactory.GetFont("Bookman Old Style", 14, iTextSharp.text.Font.BOLD);
+
+                string strRutaImagen1 = pathPDF + "Content\\Images\\Logo.png";
+                iTextSharp.text.Image imagen1;
+                //  Creamos la imagen y le ajustamos el tama�o
+                imagen1 = iTextSharp.text.Image.GetInstance(strRutaImagen1);
+                imagen1.BorderWidth = 0;
+                imagen1.Alignment = Element.ALIGN_RIGHT;
+                float percentage1 = 0.0F;
+                percentage1 = (100 / imagen1.Width);
+                imagen1.ScalePercent(percentage1 * 100);
+
+                iTextSharp.text.pdf.PdfPCell celda = new iTextSharp.text.pdf.PdfPCell(imagen1);
+                celda.Colspan = 1;
+                celda.Rowspan = 1;
+                celda.Padding = 5;
+                celda.HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                celda.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                table.AddCell(celda);
+
+                celda = new iTextSharp.text.pdf.PdfPCell(new Phrase("HOJA DE VIDA DEL EQUIPO DE IZAJE", fuenteEncabezado));
+                celda.Colspan = 1;
+                celda.Padding = 5;
+                celda.HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                celda.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                table.AddCell(celda);
+
+                celda = new iTextSharp.text.pdf.PdfPCell(new Phrase(String.Concat("Equipo_Izaje_", Sede, "_", Serial), fuenteEncabezado));
+                celda.Colspan = 1;
+                celda.Padding = 5;
+                celda.HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                celda.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                table.AddCell(celda);
+
+                document.Add(table);
+
+                table = new PdfPTable(4);
+                table.TotalWidth = 550.0F;
+                table.LockedWidth = true;
+                table.DefaultCell.BorderWidth = 20;
+                Columns1 = new int[] { 150, 150, 150, 150 };
+                table.SetWidths(Columns1);
+                table.SpacingBefore = 1.0F;
+                table.SpacingAfter = 1.0F;
+                table.DefaultCell.Border = Element.RECTANGLE;
+                fuenteEncabezado = FontFactory.GetFont("Bookman Old Style", 9, iTextSharp.text.Font.BOLD);
+
+                iTextSharp.text.pdf.PdfPCell celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("Fecha de creación:", fuenteEncabezado));
+                celda1.Colspan = 1;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_LEFT;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                table.AddCell(celda1);
+
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase(Convert.ToDateTime(dsResultEnc.Tables[0].Rows[i]["FechaCreacion"].ToString()).Date.ToString("d"), fuenteEncabezado));
+                celda1.Colspan = 1;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                table.AddCell(celda1);
+
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("Responsable:", fuenteEncabezado));
+                celda1.Colspan = 1;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_LEFT;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                table.AddCell(celda1);
+
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase(dsResultEnc.Tables[0].Rows[i]["AsignadoA"].ToString(), fuenteEncabezado));
+                celda1.Colspan = 1;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                table.AddCell(celda1);
+
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("Consecutivo:", fuenteEncabezado));
+                celda1.Colspan = 1;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_LEFT;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                table.AddCell(celda1);
+
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase(CodEq, fuenteEncabezado));
+                celda1.Colspan = 1;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                table.AddCell(celda1);
+
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("Tag ENEL:", fuenteEncabezado));
+                celda1.Colspan = 1;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_LEFT;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                table.AddCell(celda1);
+
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase(dsResultEnc.Tables[0].Rows[i]["Tag"].ToString(), fuenteEncabezado));
+                celda1.Colspan = 1;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                table.AddCell(celda1);
+
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("1. INFORMACION GENERAL DEL EQUIPO", fuenteEncabezado));
+                celda1.Colspan = 4;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                table.AddCell(celda1);
+
+                document.Add(table);
+
+                table = new PdfPTable(2);
+                table.TotalWidth = 550.0F;
+                table.LockedWidth = true;
+                table.DefaultCell.BorderWidth = 20;
+                Columns1 = new int[] { 300, 300 };
+                table.SetWidths(Columns1);
+                table.SpacingBefore = 1.0F;
+                table.SpacingAfter = 1.0F;
+                table.DefaultCell.Border = Element.RECTANGLE;
+                fuenteEncabezado = FontFactory.GetFont("Bookman Old Style", 9, iTextSharp.text.Font.BOLD);
+
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("Datos del Equipo", fuenteEncabezado));
+                celda1.Colspan = 1;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+
+                table.AddCell(celda1);
+
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("Fotografias del Equipo", fuenteEncabezado));
+                celda1.Colspan = 1;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                table.AddCell(celda1);
+
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("Equipo/Elemento:" + dsResultEnc.Tables[0].Rows[i]["Equipo"].ToString(), fuenteEncabezado));
+                celda1.Colspan = 1;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_LEFT;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                table.AddCell(celda1);
+
+                string[] SplitFotos;
+                int intTotalFotos;
+                if (!String.IsNullOrEmpty(dsResultEnc.Tables[0].Rows[0]["Fotos"].ToString()))
+                {
+                    SplitFotos = dsResultEnc.Tables[0].Rows[i]["Fotos"].ToString().Split('/');
+                    intTotalFotos = SplitFotos.Length;
+                }
+                else
+                {
+                    intTotalFotos = 0;
+                }
+
+                iTextSharp.text.Image imagen;
+                string strRutaImagen;
+                if (intTotalFotos >= 1)
+                {
+                    strRutaImagen = string.Concat(path, ImagenEI);
+                    if (System.IO.File.Exists(strRutaImagen))
+                    {
+                        // Creamos la imagen y le ajustamos el tamaño
+                        imagen = iTextSharp.text.Image.GetInstance(strRutaImagen);
+                        imagen.BorderWidth = 0;
+                        imagen.Alignment = Element.ALIGN_RIGHT;
+                        double percentage = 0.0F;
+                        percentage = 100 / (double)imagen.Width;
+                        imagen.ScalePercent((float)percentage * 200);
+
+                        celda1 = new iTextSharp.text.pdf.PdfPCell(imagen);
+                        celda1.Colspan = 1;
+                        celda1.Rowspan = 7;
+                        celda1.Padding = 5;
+                        celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                        celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+
+                        table.AddCell(celda1);
+                    }
+                    else
+                    {
+                        celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("", fuenteEncabezado));
+                        celda1.Colspan = 1;
+                        celda1.Rowspan = 7;
+                        celda1.Padding = 5;
+                        celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                        celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                        table.AddCell(celda1);
+                    }
+                }
+                else
+                {
+                    celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("", fuenteEncabezado));
+                    celda1.Colspan = 1;
+                    celda1.Rowspan = 7;
+                    celda1.Padding = 5;
+                    celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                    celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                    table.AddCell(celda1);
+                }
+
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("Marca:" + dsResultEnc.Tables[0].Rows[i]["Marca"].ToString(), fuenteEncabezado));
+                celda1.Colspan = 1;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_LEFT;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                table.AddCell(celda1);
+
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("Modelo:" + dsResultEnc.Tables[0].Rows[i]["Modelo"].ToString(), fuenteEncabezado));
+                celda1.Colspan = 1;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_LEFT;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                table.AddCell(celda1);
+
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("Serial:" + dsResultEnc.Tables[0].Rows[i]["Serial"].ToString(), fuenteEncabezado));
+                celda1.Colspan = 1;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_LEFT;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                table.AddCell(celda1);
+
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("Lote:" + dsResultEnc.Tables[0].Rows[i]["Lote"].ToString(), fuenteEncabezado));
+                celda1.Colspan = 1;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_LEFT;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                table.AddCell(celda1);
+
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("Ubicación:" + dsResultEnc.Tables[0].Rows[i]["Ubicacion"].ToString(), fuenteEncabezado));
+                celda1.Colspan = 1;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_LEFT;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                table.AddCell(celda1);
+
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("Fecha de Fabricación:" + Convert.ToDateTime(dsResultEnc.Tables[0].Rows[i]["FechaFabricacion"].ToString()).Date.ToString("d"), fuenteEncabezado));
+                celda1.Colspan = 1;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_LEFT;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                table.AddCell(celda1);
+
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("Observaciones:" + dsResultEnc.Tables[0].Rows[i]["Observaciones"].ToString(), fuenteEncabezado));
+                celda1.Colspan = 2;
+                celda1.Rowspan = 4;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_LEFT;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                table.AddCell(celda1);
+
+
+                document.Add(table);
+
+                table = new PdfPTable(3);
+                table.TotalWidth = 550.0F;
+                table.LockedWidth = true;
+                table.DefaultCell.BorderWidth = 20;
+                Columns1 = new int[] { 400, 100, 100 };
+                table.SetWidths(Columns1);
+                table.SpacingBefore = 1.0F;
+                table.SpacingAfter = 1.0F;
+                table.DefaultCell.Border = Element.RECTANGLE;
+                fuenteEncabezado = FontFactory.GetFont("Bookman Old Style", 9, iTextSharp.text.Font.BOLD);
+
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("2. INSPECCIONES REALIZADAS AL EQUIPO", fuenteEncabezado));
+                celda1.Colspan = 3;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                table.AddCell(celda1);
+
+
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("Realizado Por:", fuenteEncabezado));
+                celda1.Colspan = 1;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                table.AddCell(celda1);
+
+
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("Fecha de Inspección", fuenteEncabezado));
+                celda1.Colspan = 1;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                table.AddCell(celda1);
+
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("Resultado", fuenteEncabezado));
+                celda1.Colspan = 1;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                table.AddCell(celda1);
+
+                _InspectionIzajeBo = new LogicBo.InspectionIzajeBo();
+                dsResultEnc.Tables.Add(_InspectionIzajeBo.GetById(idIzaje));
+
+                if (dsResultEnc.Tables[1].Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dsResultEnc.Tables[1].Rows)
+                    {
+                        celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase(dr["Inspector"].ToString(), fuenteEncabezado));
+                        celda1.Colspan = 1;
+                        celda1.Padding = 5;
+                        celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                        celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                        table.AddCell(celda1);
+
+
+                        celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase(Convert.ToDateTime(dr["FechaInspeccion"].ToString()).Date.ToString("d"), fuenteEncabezado));
+                        celda1.Colspan = 1;
+                        celda1.Padding = 5;
+                        celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                        celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                        table.AddCell(celda1);
+
+                        celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase(dr["EstadoFinal"].ToString(), fuenteEncabezado));
+                        celda1.Colspan = 1;
+                        celda1.Padding = 5;
+                        celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                        celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                        table.AddCell(celda1);
+                    }
+                }
+                document.Add(table);
+
+                table = new PdfPTable(3);
+                table.TotalWidth = 550.0F;
+                table.LockedWidth = true;
+                table.DefaultCell.BorderWidth = 20;
+                Columns1 = new int[] { 400, 100, 100 };
+                table.SetWidths(Columns1);
+                table.SpacingBefore = 1.0F;
+                table.SpacingAfter = 1.0F;
+                table.DefaultCell.Border = Element.RECTANGLE;
+                fuenteEncabezado = FontFactory.GetFont("Bookman Old Style", 9, iTextSharp.text.Font.BOLD);
+
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("", fuenteEncabezado));
+                celda1.Colspan = 1;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_LEFT;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                table.AddCell(celda1);
+
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("", fuenteEncabezado));
+                celda1.Colspan = 1;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_LEFT;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                table.AddCell(celda1);
+
+
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("", fuenteEncabezado));
+                celda1.Colspan = 1;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_LEFT;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                table.AddCell(celda1);
+                // 3
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("", fuenteEncabezado));
+                celda1.Colspan = 1;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_LEFT;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                table.AddCell(celda1);
+
+
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("", fuenteEncabezado));
+                celda1.Colspan = 1;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_LEFT;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                table.AddCell(celda1);
+
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("", fuenteEncabezado));
+                celda1.Colspan = 1;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_LEFT;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                table.AddCell(celda1);
+
+                // 4
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("", fuenteEncabezado));
+                celda1.Colspan = 1;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_LEFT;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                table.AddCell(celda1);
+
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("", fuenteEncabezado));
+                celda1.Colspan = 1;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_LEFT;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                table.AddCell(celda1);
+
+
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("", fuenteEncabezado));
+                celda1.Colspan = 1;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_LEFT;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                table.AddCell(celda1);
+                // 5
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("", fuenteEncabezado));
+                celda1.Colspan = 1;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_LEFT;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                table.AddCell(celda1);
+
+
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("", fuenteEncabezado));
+                celda1.Colspan = 1;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_LEFT;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                table.AddCell(celda1);
+
+                celda1 = new iTextSharp.text.pdf.PdfPCell(new Phrase("", fuenteEncabezado));
+                celda1.Colspan = 1;
+                celda1.Padding = 5;
+                celda1.HorizontalAlignment = iTextSharp.text.Element.ALIGN_LEFT;
+                celda1.VerticalAlignment = iTextSharp.text.Element.ALIGN_CENTER;
+                table.AddCell(celda1);
+
+                document.Add(table);
 
                 table = new PdfPTable(1);
                 table.TotalWidth = 550.0F;
