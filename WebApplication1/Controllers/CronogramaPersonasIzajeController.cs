@@ -25,7 +25,7 @@ namespace WebApplication1.Controllers
         #endregion
         public ActionResult Index()
         {
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(), "Key", "Value");
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(Convert.ToInt32(Session["CountryID"])), "Key", "Value");
 
             var result = _cronogramaPersonasIzajeBo.GetIndex(0, "", 2022);
 
@@ -52,7 +52,7 @@ namespace WebApplication1.Controllers
 
         public ActionResult DetalleCronograma(int id)
         {
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(), "Key", "Value");
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(Convert.ToInt32(Session["CountryID"])), "Key", "Value");
 
             var model = _cronogramaPersonasIzajeBo.GetInfo(id, "", "", 0, "", "");
 

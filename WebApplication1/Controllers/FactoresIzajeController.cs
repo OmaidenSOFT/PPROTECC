@@ -115,7 +115,7 @@ namespace WebApplication1.Controllers
         public ActionResult EditFactoresIzaje(int id)
         {
             var model = _izageBo.GetInfo(id);
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(), "Key", "Value", model.Rows[0]["Sede_id"].ToString());
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(Convert.ToInt32(Session["CountryID"])), "Key", "Value", model.Rows[0]["Sede_id"].ToString());
             ViewBag.UnidadMedidaDictionary = new SelectList(_izageBo.GetUnidadDictionary(), "Key", "Value", model.Rows[0]["UnidadCapacidad_Id"].ToString());
             ViewBag.LocationDictionary = new SelectList(_locationBo.GetUbicacionIzaje(), "Key", "Value", model.Rows[0]["Ubicacion_id"].ToString());
             return PartialView(model);

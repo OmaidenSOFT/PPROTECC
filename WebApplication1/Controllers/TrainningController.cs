@@ -32,7 +32,7 @@ namespace WebApplication1.Controllers
         #endregion
         public ActionResult Trainning()
         {
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(), "Key", "Value");
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(Convert.ToInt32(Session["CountryID"])), "Key", "Value");
             return PartialView();
         }
         public ActionResult Certificate()
@@ -65,7 +65,7 @@ namespace WebApplication1.Controllers
         public ActionResult Scheduler()
         {
 
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(), "Key", "Value");
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(Convert.ToInt32(Session["CountryID"])), "Key", "Value");
             ViewBag.GetYearsDictionary = new SelectList(_headquarterBo.GetYearsDictionary(), "Key", "Value");
 
             return PartialView();
@@ -73,14 +73,14 @@ namespace WebApplication1.Controllers
         public ActionResult CreatePerson()
         {
             Session["FilesUser"] = null;
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(), "Key", "Value");
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(Convert.ToInt32(Session["CountryID"])), "Key", "Value");
             ViewBag.CourseInitialDictionary = new SelectList(_trainningBo.GetCourseInitialDictionary(), "Key", "Value");
             return PartialView();
         }
         public ActionResult CreateInspector()
         {
             Session["FilesUser"] = null;
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(), "Key", "Value");
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(Convert.ToInt32(Session["CountryID"])), "Key", "Value");
             return PartialView();
         }
         public ActionResult CreateUser()
@@ -98,7 +98,7 @@ namespace WebApplication1.Controllers
         public ActionResult EditPerson(int idPerson)
         {
             var model = _trainningBo.GetInfoPerson(idPerson);
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(), "Key", "Value", model.Rows[0]["Sedeid"].ToString());
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(Convert.ToInt32(Session["CountryID"])), "Key", "Value", model.Rows[0]["Sedeid"].ToString());
             return PartialView(model);
         }
 

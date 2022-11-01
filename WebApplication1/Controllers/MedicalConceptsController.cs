@@ -22,7 +22,7 @@ namespace WebApplication1.Controllers
         public ActionResult CreateAptitudConcept()
         {
             Session["FilesMedicalConcepts"] = null;
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(), "Key", "Value");
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(Convert.ToInt32(Session["CountryID"])), "Key", "Value");
             ViewBag.ConceptsDictionary = new SelectList(_medicalConceptsBo.GetConceptsDictionary(), "Key", "Value");
             return PartialView();
         }

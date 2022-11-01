@@ -21,9 +21,12 @@ namespace LogicBo
         /// Get All Headquarter active for list
         /// </summary>
         /// <returns></returns>
-        public Dictionary<string,string> GetDictionary()
+        public Dictionary<string,string> GetDictionary(int PaisId)
         {
-            var result = executeProcedures.DataTable("ENEL_LoadSedes", null);
+            List<SqlParameter> parameters = new List<SqlParameter> {
+                new SqlParameter(){ ParameterName="Paisid", SqlDbType=SqlDbType.Int,Value=PaisId},
+            };
+            var result = executeProcedures.DataTable("ENEL_LoadSedes", parameters);
             return result.AsEnumerable().ToDictionary(row => row["id"].ToString(),row => row["Sede"].ToString());
         }
 
@@ -46,9 +49,12 @@ namespace LogicBo
             return result.AsEnumerable().ToDictionary(row => row["id"].ToString(), row => row["Sede"].ToString());
         }
 
-        public Dictionary<string, string> GetDictionaryheadQuarterType()
+        public Dictionary<string, string> GetDictionaryheadQuarterType(int PaisID)
         {
-            var result = executeProcedures.DataTable("ENEL_LoadHeadQuarterType", null);
+            List<SqlParameter> parameters = new List<SqlParameter> {
+                new SqlParameter(){ ParameterName="Paisid", SqlDbType=SqlDbType.Int,Value=PaisID},
+            };
+            var result = executeProcedures.DataTable("ENEL_LoadHeadQuarterType", parameters);
             return result.AsEnumerable().ToDictionary(row => row["id"].ToString(), row => row["Central"].ToString());
         }
 

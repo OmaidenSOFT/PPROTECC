@@ -73,7 +73,7 @@ namespace WebApplication1.Controllers
 
         public ActionResult Index()
         {
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(), "Key", "Value");
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(Convert.ToInt32(Session["CountryID"])), "Key", "Value");
 
             var result = _personBo.GetIndex("", "", 0, "", "");
 
@@ -101,7 +101,7 @@ namespace WebApplication1.Controllers
 
         public ActionResult CreatePerson()
         {
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(), "Key", "Value");
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(Convert.ToInt32(Session["CountryID"])), "Key", "Value");
             ViewBag.CourseDictionary = new SelectList(_trainningBo.GetCourseDictionary(), "Key", "Value");
 
             return PartialView();
@@ -146,7 +146,7 @@ namespace WebApplication1.Controllers
         public ActionResult EditPerson(int id)
         {
             var model = _personBo.GetInfo(id);
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(), "Key", "Value", model.Rows[0]["IdSede"].ToString());
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(Convert.ToInt32(Session["CountryID"])), "Key", "Value", model.Rows[0]["IdSede"].ToString());
             ViewBag.CourseDictionary = new SelectList(_trainningBo.GetCourseDictionary(), "Key", "Value", model.Rows[0]["IdCurso"].ToString());
 
             return PartialView(model);

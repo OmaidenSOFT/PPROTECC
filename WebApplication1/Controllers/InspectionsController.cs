@@ -50,19 +50,19 @@ namespace WebApplication1.Controllers
         public ActionResult Curriculum()
         {
             //var model = _workingAtHeightBo.GetStock();
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(), "Key", "Value");
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(Convert.ToInt32(Session["CountryID"])), "Key", "Value");
             ViewBag.CategoryDictionary = new SelectList(_categoryBo.GetDictionary(), "Key", "Value");
             return PartialView();
         }
         public ActionResult TechnicalInformation()
         {
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(), "Key", "Value");
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(Convert.ToInt32(Session["CountryID"])), "Key", "Value");
             ViewBag.CategoryDictionary = new SelectList(_categoryBo.GetDictionary(), "Key", "Value");
             return PartialView();
         }
         public ActionResult IndexEquipment()
         {
-            var result = _equipmentBo.GetIndex();
+            var result = _equipmentBo.GetIndex(Convert.ToInt32(Session["CountryID"]));
             return PartialView(result);
         }
         public ActionResult CreateInspections(int? headquarterId, string RFID, int? elementid)
@@ -70,7 +70,7 @@ namespace WebApplication1.Controllers
             ViewBag.headquarterId = headquarterId;
             ViewBag.elementid = elementid;
             ViewBag.RFID = RFID;
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(), "Key", "Value");
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(Convert.ToInt32(Session["CountryID"])), "Key", "Value");
             //ViewBag.CategoryDictionary = new SelectList(_categoryBo.GetDictionary(), "Key", "Value");
             ViewBag.ElementDictionary = new SelectList(_elementBo.GetDictionary(), "Key", "Value");
             ViewBag.LocationDictionary = new SelectList(_locationBo.GetDictionary(), "Key", "Value");
@@ -90,38 +90,38 @@ namespace WebApplication1.Controllers
         }
         public ActionResult CertificatesReportsIndex()
         {
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionaryheadQuarterType(), "Key", "Value");
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionaryheadQuarterType(Convert.ToInt32(Session["CountryID"])), "Key", "Value");
             return PartialView();
         }
         public ActionResult FormatsReportsIndex()
         {
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionaryheadQuarterType(), "Key", "Value");
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionaryheadQuarterType(Convert.ToInt32(Session["CountryID"])), "Key", "Value");
 
             return PartialView();
         }
         public ActionResult ProceduresReportsIndex()
         {
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionaryheadQuarterType(), "Key", "Value");
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionaryheadQuarterType(Convert.ToInt32(Session["CountryID"])), "Key", "Value");
             return PartialView();
         }
         public ActionResult LegalityReportsIndex()
         {
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionaryheadQuarterType(), "Key", "Value");
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionaryheadQuarterType(Convert.ToInt32(Session["CountryID"])), "Key", "Value");
             return PartialView();
         }
         public ActionResult ManagementOfFindings()
         {
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(), "Key", "Value");
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(Convert.ToInt32(Session["CountryID"])), "Key", "Value");
             return PartialView();
         }
         public ActionResult ManagementMaintenanceEquipment()
         {
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(), "Key", "Value");
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(Convert.ToInt32(Session["CountryID"])), "Key", "Value");
             return PartialView();
         }
         public ActionResult CheckListArnes()
         {
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(), "Key", "Value");
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(Convert.ToInt32(Session["CountryID"])), "Key", "Value");
             ViewBag.LocationDictionary = new SelectList(_locationBo.GetDictionary(), "Key", "Value");
             return PartialView();
         }
@@ -400,7 +400,7 @@ namespace WebApplication1.Controllers
                     throw new Exception("Se ha perdido la sesión del Usuario");
 
                 int cbxFeatures = collection["cbxFeatures"].ToString() != string.Empty ? Convert.ToInt32(collection["cbxFeatures"].ToString()) : 0;
-                int headQuarterType = collection["headQuarterType"].ToString() != string.Empty ? Convert.ToInt32(collection["headQuarterType"].ToString()) : 0;
+                int headQuarterType = collection["cbxHeadquarter"].ToString() != string.Empty ? Convert.ToInt32(collection["cbxHeadquarter"].ToString()) : 0;
                 string name = collection["name"];
 
                 string folderName = string.Empty;
@@ -794,19 +794,20 @@ namespace WebApplication1.Controllers
 
         public PartialViewResult CreateTechnicalReports()
         {
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(), "Key", "Value");
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(Convert.ToInt32(Session["CountryID"])), "Key", "Value");
             ViewBag.TypeReportDictionary = new SelectList(_inspectionsBo.GetTypeReportDictionary(), "Key", "Value");
             return PartialView();
         }
         public PartialViewResult Features()
         {
             Session["FilesInspections"] = null;
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionaryheadQuarterType(Convert.ToInt32(Session["CountryID"])), "Key", "Value");
             ViewBag.FeaturesDictionary = new SelectList(_inspectionsBo.GetFeaturesDictionary(), "Key", "Value");
             return PartialView();
         }
         public PartialViewResult CreateTechInfo()
         {
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(), "Key", "Value");
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(Convert.ToInt32(Session["CountryID"])), "Key", "Value");
             ViewBag.CategoryDictionary = new SelectList(_categoryBo.GetDictionary(), "Key", "Value");
             Session["FilesInspections"] = null;
             ViewBag.FeaturesDictionary = new SelectList(_inspectionsBo.GetFeaturesDictionary(), "Key", "Value");
@@ -814,7 +815,7 @@ namespace WebApplication1.Controllers
         }
         public PartialViewResult TechnicalReportsIndex()
         {
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(), "Key", "Value");
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(Convert.ToInt32(Session["CountryID"])), "Key", "Value");
             return PartialView();
         }
         [HttpPost]

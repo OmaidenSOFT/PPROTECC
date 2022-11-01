@@ -21,9 +21,13 @@ namespace LogicBo
         /// Get Elements by Category Code list
         /// </summary>
         /// <returns></returns>
-            public DataTable GetIndex()
+            public DataTable GetIndex(int Paisid )
             {
-                var result = executeProcedures.DataTable("ENEL_LoadElements", null);
+            List<SqlParameter> parameters = new List<SqlParameter> {
+                new SqlParameter(){ ParameterName="Paisid", SqlDbType=SqlDbType.Int,Value=Paisid},
+            };
+
+            var result = executeProcedures.DataTable("ENEL_LoadElements", parameters);
                 return result;
             }
 

@@ -11,19 +11,11 @@
 {
     <div class="ui equal width form">
         <div class="required inline fields">
-            <label>Tipo de Sede:</label>
-            <div class="field">
-                <div class="ui radio checkbox">
-                    <input type="radio" name="headQuarterType" value="1">
-                    <label>Térmicas</label>
-                </div>
-            </div>
-            <div class="field">
-                <div class="ui radio checkbox">
-                    <input type="radio" name="headQuarterType" value="2">
-                    <label>Renovables</label>
-                </div>
-            </div>
+            
+              <div class="field">
+            <label>Sede</label>
+            @Html.DropDownList("cbxHeadquarter", (SelectList)ViewBag.HeadquarterDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+        </div>
         </div>
         <div class="fields">
             <div class="field">
