@@ -191,6 +191,7 @@
     <Compile Include="Controllers\DownloadController.cs" />
     <Compile Include="Controllers\MedicalConceptsController.cs" />
     <Compile Include="Controllers\ManagmentIndicatorsController.cs" />
+    <Compile Include="Controllers\PersonasController.cs" />
     <Compile Include="Controllers\UsersAndRolesController.cs" />
     <Compile Include="Controllers\TrainningController.cs" />
     <Compile Include="Controllers\InspectionsController.cs" />
