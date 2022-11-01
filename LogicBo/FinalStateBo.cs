@@ -30,8 +30,12 @@ namespace LogicBo
             var result = executeProcedures.DataTable("ENEL_LoadStatesBYFactors", null);
             return result.AsEnumerable().ToDictionary(row => row["id"].ToString(), row => row["Descripcion"].ToString());
         }
+        public Dictionary<string, string> GetStateIzaje()
+        {
+            var result = executeProcedures.DataTable("ENEL_LoadFinalStateIzaje", null);
+            return result.AsEnumerable().ToDictionary(row => row["id"].ToString(), row => row["Descripcion"].ToString());
+        }
 
-        
 
     }
 }
