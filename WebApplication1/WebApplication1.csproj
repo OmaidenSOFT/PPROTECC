@@ -182,6 +182,11 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\CronogramaIzajeController.cs" />
+    <Compile Include="Controllers\CronogramaPersonasIzajeController.cs" />
+    <Compile Include="Controllers\FactoresIzajeController.cs" />
+    <Compile Include="Controllers\FindingIzajeController.cs" />
+    <Compile Include="Controllers\InspectionIzajeController.cs" />
     <Compile Include="Controllers\IzageController.cs" />
     <Compile Include="Controllers\DownloadController.cs" />
     <Compile Include="Controllers\MedicalConceptsController.cs" />
@@ -767,12 +772,37 @@
     <Content Include="Views\Shared\_LayoutLoginFacade.cshtml" />
     <Content Include="Views\Shared\_MenuPartialIzageIT.cshtml" />
     <Content Include="Views\Shared\_MenuPartialIzage.cshtml" />
+    <Content Include="Views\CronogramaIzaje\DetalleCronograma.cshtml" />
+    <Content Include="Views\CronogramaIzaje\Index.cshtml" />
+    <Content Include="Views\CronogramaIzaje\SearchCronograma.cshtml" />
+    <Content Include="Views\CronogramaIzaje\SearchDetalleCronograma.cshtml" />
+    <Content Include="Views\CronogramaPersonasIzaje\DetalleCronograma.cshtml" />
+    <Content Include="Views\CronogramaPersonasIzaje\Index.cshtml" />
+    <Content Include="Views\CronogramaPersonasIzaje\SearchCronograma.cshtml" />
+    <Content Include="Views\CronogramaPersonasIzaje\SearchDetalleCronograma.cshtml" />
+    <Content Include="Views\FactoresIzaje\CreateFactoresIzaje.cshtml" />
+    <Content Include="Views\FactoresIzaje\IndexFactoresIzaje.cshtml" />
+    <Content Include="Views\FactoresIzaje\SearchCategoriasIzaje.cshtml" />
+    <Content Include="Views\FactoresIzaje\SearchFactoresIzaje.cshtml" />
+    <Content Include="Views\FindingIzaje\Index.cshtml" />
+    <Content Include="Views\FindingIzaje\LoadDetailsEquipment.cshtml" />
+    <Content Include="Views\FindingIzaje\SearchFindingIzage.cshtml" />
+    <Content Include="Views\InspectionIzaje\CreateInspectionIzaje.cshtml" />
+    <Content Include="Views\InspectionIzaje\IndexInspectionIzaje.cshtml" />
+    <Content Include="Views\InspectionIzaje\SearchEquipmentByTagSerial.cshtml" />
+    <Content Include="Views\InspectionIzaje\SearchInspectionIzaje.cshtml" />
+    <Content Include="Views\InspectionIzaje\Vacio.cshtml" />
+    <Content Include="Views\InspectionIzaje\VisualizarDetalleInspeccion.cshtml" />
+    <Content Include="Views\Izage\Archivo.cshtml" />
+    <Content Include="Views\Izage\CreateEquipmentIzage.cshtml" />
+    <Content Include="Views\Izage\EditEquipmentIzage.cshtml" />
+    <Content Include="Views\Izage\IndexEquipmentIzage.cshtml" />
+    <Content Include="Views\Izage\SearchEquipmentIzage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\Banner\slides\thumbs\" />
     <Folder Include="DarDeBajaEvidencia\" />
-    <Folder Include="Views\Izage\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

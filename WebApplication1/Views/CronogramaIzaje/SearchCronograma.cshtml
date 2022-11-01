@@ -1,0 +1,49 @@
+﻿@using System.Data
+@model DataTable
+
+<table class="ui selectable celled table ui center aligned tablesInitial" id="tablesIndexEquipment">
+    <thead>
+        <tr>
+            @foreach (System.Data.DataColumn col in Model.Columns)
+            {
+                if (col.ColumnName != "id")
+                {
+                    <th>@col.ColumnName</th>
+                }
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (System.Data.DataRow row in Model.Rows)
+        {
+            <tr>
+                @foreach (DataColumn col in Model.Columns)
+                {
+                    if (col.ColumnName != "id")
+                    {
+                        <th>@row[col.ColumnName]</th>
+                    }
+                }
+                <td>
+                    <a href="javascript:void(0)" onclick="cargarElement('@Url.Action("DetalleCronograma",new { @id=row["id"].ToString()})')">Editar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<script type="text/javascript">
+    var $element = $('.cardTest');
+    LoadTables();
+    function viewDocument(path) {
+        $('.renderImages').html('');
+        $element.find($('#number').text(path));
+        $element.find($('#pdfref').attr('href', path));
+        //$element.find($('#type').text(type));
+        $element.find($('#datefile').text("Certificado en PDF"));
+        $('.renderImages').append('<div class="ui card cardTest"> ' + $element.html() + '</div>');
+
+        $('.renderImages').show('slow');
+    }
+</script>

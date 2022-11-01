@@ -1,0 +1,217 @@
+﻿@using System.Data
+@model DataTable
+<style>
+    /*.ui.selection.dropdown {
+        padding: 0;
+    }*/
+    #modalLoadCourses {
+        height: 80vh;
+    }
+</style>
+<h3 style="color: #41B9E6; text-align: center;">
+    IZAJE DE CARGAS | EQUIPOS DE IZAJE | EDITAR EQUIPO DE IZAJE
+</h3>
+@{
+    LogicBo.IzageBo _izageBo = new LogicBo.IzageBo();
+    LogicBo.HeadquarterBo _headquarterBo = new LogicBo.HeadquarterBo();
+    LogicBo.LocationBo _locationBo = new LogicBo.LocationBo();
+
+
+    ViewBag.GetTipoEquipoDictionary = new SelectList(_izageBo.GetTipoEquipoDictionary(), "Key", "Value", Model.Rows[0]["IdTipoEquipo"].ToString());
+    ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(), "Key", "Value", Model.Rows[0]["Sede_id"].ToString());
+    ViewBag.UnidadMedidaDictionary = new SelectList(_izageBo.GetUnidadDictionary(), "Key", "Value", Model.Rows[0]["UnidadCapacidad_Id"].ToString());
+    ViewBag.LocationDictionary = new SelectList(_locationBo.GetUbicacionIzaje(), "Key", "Value", Model.Rows[0]["Ubicacion_id"].ToString());
+
+    string id = Model.Rows[0]["id"].ToString();
+    string imagen = Model.Rows[0]["Imagen"].ToString();
+}
+
+@using (Ajax.BeginForm("ProcessEquipmentIzage", "Izage", FormMethod.Post, new AjaxOptions()
+{
+    HttpMethod = "POST",
+    OnBegin = "return onBeginProcessEdit()",
+    OnSuccess = "onSuccessProcessEdit(data)",
+    OnFailure = "onFailureProcessEdit()",
+}, new { @id = "formProcessEdit", @enctype = "multipart/form-data" }))
+{
+    <div class="ui equal width form">
+        <div class="field">
+            <input type="hidden" name="ID" value="@Model.Rows[0]["id"].ToString()" />
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>Tipo equipo</label>
+                @Html.DropDownList("cbxTipoEquipo", (SelectList)ViewBag.GetTipoEquipoDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+            </div>
+            <div class="field">
+                <label>Marca</label>
+                <input type="text" id="marca" name="marca" placeholder="Marca" autocomplete="off" maxlength="50" value="@Model.Rows[0]["Marca"].ToString()">
+            </div>
+            <div class="field">
+                <label>Modelo</label>
+                <input type="text" id="model" name="model" placeholder="Modelo" autocomplete="off" maxlength="50" value="@Model.Rows[0]["Modelo"].ToString()">
+            </div>
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>Serial</label>
+                <input type="text" id="serial" name="serial" placeholder="Serial" autocomplete="off" maxlength="50" value="@Model.Rows[0]["Serial"].ToString()">
+            </div>
+            <div class="field">
+                <label>Lote</label>
+                <input type="text" id="lote" name="lote" placeholder="Lote" autocomplete="off" maxlength="50" value="@Model.Rows[0]["Lote"].ToString()">
+            </div>
+            <div class="field">
+                <label>TAG ENEL</label>
+                <input type="text" id="rfid" name="rfid" placeholder="RFID del equipo" autocomplete="off" maxlength="50" value="@Model.Rows[0]["Tag"].ToString()">
+            </div>
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>Max. Capacidad</label>
+                <input type="text" id="maxCapacidad" name="maxCapacidad" placeholder="Máxima capacidad de carga del equipo" autocomplete="off" maxlength="50" value="@Model.Rows[0]["MaxCapacidad"].ToString()">
+            </div>
+            <div class="field">
+                <label>Unidad capacidad</label>
+                @Html.DropDownList("cbxUnidad", (SelectList)ViewBag.UnidadMedidaDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+            </div>
+            <div class="field">
+                <label>Accesorio</label>
+                <input type="text" id="accesorio" name="accesorio" placeholder="Accesorio" autocomplete="off" maxlength="50" value="@Model.Rows[0]["Accesorio"].ToString()">
+            </div>
+
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>Asignado a</label>
+                <input type="text" id="asignadoa" name="asignadoa" placeholder="A quien se le asigna el equipo" autocomplete="off" maxlength="50" value="@Model.Rows[0]["AsignadoA"].ToString()">
+            </div>
+            <div class="field">
+                <label>Fecha Compra</label>
+                <div class="ui calendar calendarPicker" id="purchaseDate">
+                    <div class="ui input left icon">
+                        <i class="calendar icon"></i>
+                        <input type="text" placeholder="Fecha Compra" value="@Convert.ToDateTime(Model.Rows[0]["FechaCompra"].ToString()).Date.ToString("d")">
+                    </div>
+                </div>
+                <input type="hidden" name="cpurchaseDate" id="cpurchaseDate" autocomplete="off" value="@Convert.ToDateTime(Model.Rows[0]["FechaCompra"].ToString()).Date.ToString("d")">
+            </div>
+            <div class="field">
+                <label>Fecha Fabricacion</label>
+                <div class="ui calendar calendarPicker" id="fabricationDate">
+                    <div class="ui input left icon">
+                        <i class="calendar icon"></i>
+                        <input type="text" placeholder="Fecha Fabricación" value="@Convert.ToDateTime(Model.Rows[0]["FechaFabricacion"].ToString()).Date.ToString("d")">
+                    </div>
+                </div>
+                <input type="hidden" name="cfabricationDate" id="cfabricationDate" autocomplete="off" value="@Convert.ToDateTime(Model.Rows[0]["FechaFabricacion"].ToString()).Date.ToString("d")">
+            </div>
+
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>Sede</label>
+                @Html.DropDownList("cbxHeadquarter", (SelectList)ViewBag.HeadquarterDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+            </div>
+            <div class="field">
+                <label>Ubicacion</label>
+                @Html.DropDownList("cbxUbicacion", (SelectList)ViewBag.LocationDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+            </div>
+            <div class="field">
+                <label>Fecha Inspección Inicial</label>
+                <select id="cbxAssignedDate" name="cbxAssignedDate" class="ui search dropdown">
+                    <option value="">[-Seleccione una opción-]</option>
+                    <option value="1" @Model.Rows[0]["SFC"].ToString()>Fecha Compra</option>
+                    <option value="2" @Model.Rows[0]["SFF"].ToString()>Fecha de fabricación</option>
+                </select>
+
+            </div>
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>Observación</label>
+                <input type="text" id="observacion" name="observacion" placeholder="Observacion" autocomplete="off" maxlength="2000" multiple value="@Model.Rows[0]["Observaciones"].ToString()">
+            </div>
+        </div>
+
+        <button class="ui primary button" id="btnGuardar">
+            Guardar
+        </button>
+        <div class="ui floating warning message" style="width:50%;margin-left:25%;margin-right:25%;text-align:center;display:none" id="messageEditIzaje">
+            <div class="header">
+                Atención
+            </div>
+            <p id="textmessageEditIzaje"></p>
+        </div>
+    </div>
+}
+<br />
+
+@using (Html.BeginForm("Archivo", "Izage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="ui equal width form">
+        <div class="fields">
+            <div class="field">
+                <label>Foto equipo </label>
+                <input type="file" name="postedFile" accept="image/png,image/gif,image/jpeg" width="50px" />
+            </div>
+            <div class="field">
+                <br />
+                <button class="ui primary button" id="btnGuardar">
+                    CARGAR FOTO EQUIPO
+                </button>
+                @*<input type="submit" value="Upload" />*@
+                <div class="field">
+                    <input name="txbId" hidden value="@id" />
+                </div>
+            </div>
+            <div class="field" >
+                <img src="~/Equipo_Izaje/@imagen" style="object-fit: cover; width: 100%; height: 100%;">
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    $('#messageEditIzaje').hide();
+
+    $('#formProcessEdit').form({
+        fields: {
+            cbxHeadquarter: {
+                identifier: 'cbxHeadquarter',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe elegir un valor'
+                    },
+                ]
+            },
+        }, inline: true,
+        on: 'blur'
+    });
+    $('#btnGuardar').on('click', function () {
+        $('#formProcessEdit').submit();
+    });
+
+    function onBeginProcessEdit() {
+        $('#renderPages').addClass("loading");
+        return true;
+    }
+
+    function onFailureProcessEdit() {
+        $('#renderPages').removeClass("loading");
+        $('#messageEditIzaje').show('slow').addClass("warning").removeClass("info");
+        $('#textmessageEditIzaje').text("Ha ocurrido un error al procesar la solicitud");
+    }
+
+    function onSuccessProcessEdit(data) {
+        $('#renderPages').removeClass("loading");
+        if (data.result) {
+            $('#messageEditIzaje').show('slow').removeClass("warning").addClass("info");
+            $('#textmessageEditIzaje').text("Proceso Completado");
+        } else {
+            $('#messageEditIzaje').show('slow').addClass("warning").removeClass("info");
+            $('#textmessageEditIzaje').text(data.message);
+        }
+    }
+</script>

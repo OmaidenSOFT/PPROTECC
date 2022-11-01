@@ -1,0 +1,103 @@
+﻿<style>
+    .ui.action.file.input > input {
+        display: none;
+    }
+
+    .ui.action.file.input:not([class*="left action"]) > label {
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+        border-right-color: transparent !important;
+    }
+
+    .ui.action.file.input > label:first-child {
+        cursor: pointer;
+        width: auto;
+        -webkit-box-flex: 1;
+        -webkit-flex: 1 0 auto;
+        -ms-flex: 1 0 auto;
+        flex: 1 0 auto;
+        outline: 0;
+        -webkit-tap-highlight-color: rgba(255,255,255,0);
+        padding: .67861429em 1em;
+        background: #FFF;
+        border: 1px solid rgba(34,36,38,.15);
+        color: rgba(0,0,0,.87);
+        border-radius: .28571429rem;
+        -webkit-transition: box-shadow .1s ease,border-color .1s ease;
+        transition: box-shadow .1s ease,border-color .1s ease;
+        box-shadow: none;
+    }
+
+    .ui.action.file.input > label:last-child {
+        border-radius: 0 .28571429rem .28571429rem 0 !important;
+    }
+</style>
+
+
+<center><h3 style="color:#41B9E6; "> IZAJE DE CARGAS | EQUIPOS DE IZAJE | REGISTRAR LA INSPECCIÓN A UN EQUIPO</h3></center>
+<br />
+@using (Ajax.BeginForm("SearchEquipmentByTagSerial", "InspectionIzaje", null, new AjaxOptions()
+{
+    HttpMethod = "POST",
+    OnBegin = "onBeginProcessSearchInspectionIzage()",
+    OnSuccess = "onSuccessProcessSearchInspectionIzage(data)",
+    OnFailure = "onFailureProcessSearchInspectionIzage()",
+}, new { @id = "formProcessCreateInspectionIzage", @enctype = "multipart/form-data" }))
+{
+    <div class="ui equal width form">
+        <div class="fields">
+            <div class="field" style="text-align:right;">
+                <label>TAG ENEL/SERIAL</label>
+            </div>
+            <div class="field">
+                <input type="text" id="txbTagSerial" name="txbTagSerial" autocomplete="off" maxlength="50">
+            </div>
+            <div class="field">
+                <button class="ui primary button">
+                    Buscar
+                </button>
+            </div>
+        </div>
+        <div id="renderSearchInspectionIzage">
+
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    $('#formProcessSearch').form({
+        fields: {
+            headQuarterType: {
+                identifier: 'headQuarterType',
+                rules: [{
+                    type: 'checked',
+                    prompt: 'Debe seleccionar una opción'
+                }]
+            },
+            frequency: {
+                identifier: 'frequency',
+                rules: [{
+                    type: 'checked',
+                    prompt: 'Debe seleccionar una opción'
+                }]
+            },
+
+        }, inline: true,
+        on: 'blur'
+    });
+
+    function onBeginProcessSearchInspectionIzage() {
+        $('#renderPages').addClass("loading");
+        $('#renderSearchInspectionIzage').empty();
+    }
+    function onFailureProcessSearchInspectionIzage() {
+        $('#renderPages').removeClass("loading");
+        $('#messageCreate').show('slow').addClass("warning").removeClass("info");
+        $('#textmessageCreate').text("Ha ocurrido un error al procesar la solicitud");
+    }
+
+    function onSuccessProcessSearchInspectionIzage(data) {
+        $('#renderPages').removeClass("loading");
+        $('#renderSearchInspectionIzage').html(data);
+    }
+</script>
+<br />
