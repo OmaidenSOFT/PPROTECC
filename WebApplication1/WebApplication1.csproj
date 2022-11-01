@@ -798,6 +798,13 @@
     <Content Include="Views\Izage\EditEquipmentIzage.cshtml" />
     <Content Include="Views\Izage\IndexEquipmentIzage.cshtml" />
     <Content Include="Views\Izage\SearchEquipmentIzage.cshtml" />
+    <Content Include="Views\Personas\ArchivoPersona.cshtml" />
+    <Content Include="Views\Personas\CreatePerson.cshtml" />
+    <Content Include="Views\Personas\DetalleCurso.cshtml" />
+    <Content Include="Views\Personas\EditPerson.cshtml" />
+    <Content Include="Views\Personas\Index.cshtml" />
+    <Content Include="Views\Personas\SearchDetalleCurso.cshtml" />
+    <Content Include="Views\Personas\SearchPerson.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
