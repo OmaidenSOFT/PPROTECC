@@ -83,7 +83,7 @@ namespace WebApplication1.Controllers
         }
         public ActionResult SchedulerInspections()
         {
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionaryWithoutAll(), "Key", "Value");
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionaryWithoutAll(Convert.ToInt32(Session["CountryID"])), "Key", "Value");
             ViewBag.ElementDictionary = new SelectList(_elementBo.GetDictionary(), "Key", "Value");
             ViewBag.TypeDictionary = new SelectList(_elementBo.GetDictionaryByType(), "Key", "Value");
             return PartialView();

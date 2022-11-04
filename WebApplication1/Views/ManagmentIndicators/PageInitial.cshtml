@@ -36,9 +36,12 @@
                 <div class="field" style="width: 30% !important;">
                     <label>Año</label>
                     <select class="ui search dropdown" id="year" name="year">
+                        <option value="2021">2021</option>
+                        <option value="2020">2020</option>
                         <option value="2019">2019</option>
-                        <option value="2018">2018</option>
+						 <option value="2018">2018</option>
                         <option value="2017">2017</option>
+                        
                     </select>
                 </div>
             </div>
@@ -376,7 +379,7 @@
                 datasets: [
                     {
                         label: "Total Hallazgos",
-                        data: dataSet[2],
+                        data: dataSet[3],
                         backgroundColor: "red",
                         borderColor: "red",
                         fill: false,
@@ -397,6 +400,15 @@
                          data: dataSet[1],
                          backgroundColor: "blue",
                          borderColor: "blue",
+                         fill: false,
+                         lineTension: 0,
+                         radius: 5
+                    },
+                        {
+                         label: "Hallazgos Cerrados con Verificación",
+                         data: dataSet[2],
+                         backgroundColor: "turquiose",
+                         borderColor: "turquiose",
                          fill: false,
                          lineTension: 0,
                          radius: 5

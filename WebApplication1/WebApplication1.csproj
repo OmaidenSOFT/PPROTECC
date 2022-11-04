@@ -668,7 +668,6 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
@@ -806,6 +805,9 @@
     <Content Include="Views\Personas\Index.cshtml" />
     <Content Include="Views\Personas\SearchDetalleCurso.cshtml" />
     <Content Include="Views\Personas\SearchPerson.cshtml" />
+    <Content Include="Views\Shared\_MenuPartialNew.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_Layout - Copia.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

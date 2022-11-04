@@ -43,9 +43,12 @@ namespace LogicBo
             var result = executeProcedures.DataTable("ENEL_LoadRoles", null);
             return result.AsEnumerable().ToDictionary(row => row["id"].ToString(), row => row["Descripcion"].ToString());
         }
-        public Dictionary<string, string> GetDictionaryWithoutAll()
+        public Dictionary<string, string> GetDictionaryWithoutAll(int PaisID)
         {
-            var result = executeProcedures.DataTable("ENEL_LoadSedesW", null);
+            List<SqlParameter> parameters = new List<SqlParameter> {
+                new SqlParameter(){ ParameterName="Paisid", SqlDbType=SqlDbType.Int,Value=PaisID},
+            };
+            var result = executeProcedures.DataTable("ENEL_LoadSedesW", parameters);
             return result.AsEnumerable().ToDictionary(row => row["id"].ToString(), row => row["Sede"].ToString());
         }
 

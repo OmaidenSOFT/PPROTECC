@@ -4,8 +4,8 @@
 *::before,
 *::after {
     box-sizing: border-box;
-    padding: 0;
-    margin: 0;
+  /*  padding: 0;
+    margin: 0;*/
 }
 
 body {
@@ -70,7 +70,7 @@ img {
 
 .tag-blue {
     background: #56CCF2;
-    background: linear-gradient(to bottom, #54c4a4, #ddefe0);
+    background: linear-gradient(to left, #54c4a4, #ddefe0);
     color: #fafafa;
 }
 

@@ -35,7 +35,7 @@ namespace WebApplication1.Controllers
 
         public ActionResult IndexInspectionIzaje()
         {
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionaryWithoutAll(), "Key", "Value");
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionaryWithoutAll(Convert.ToInt32(Session["CountryID"])), "Key", "Value");
             var result = _inspectionIzajeBo.GetInfo();
 
             return PartialView(result);

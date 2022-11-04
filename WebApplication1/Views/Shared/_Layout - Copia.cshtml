@@ -1,6 +1,7 @@
 ﻿@using WebApplication1.Models;
 @{
     var session = Session["SessionUser"] as SessionModels;
+    session.Estado = 1;
 }
 <!DOCTYPE html>
 <html>
@@ -27,6 +28,7 @@
     <link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
     <script src="~/Scripts/chartJs/Chart.bundle.min.js"></script>
     <script src="~/Scripts/chartJs/Chart.min.js"></script>
+    <link href="~/Content/menuNew.css" rel="stylesheet" />
     <style type="text/css">
         .bgimg {
             background-image: url('/PPROTECC/Content/Images/header.jpg');
@@ -52,35 +54,55 @@
 <body>
     <div class="main">
         <div class="ui grid">
-            <div class="sixteen wide column">
+            <div class="sixteen wide column"  style="margin-top:-6%">
                 @Html.Partial("_LoginPartial")
                 <div id="menuPartial" style="display:none">
+
                     @if (session.Idioma == "italiano")
                     {
-                        @Html.Partial("_MenuPartialIT")
+                        if (session.ModuloSeleccionado == "WH")
+                        {
+                            @Html.Partial("_MenuPartialIT")
+                        }
+                        else
+                        {
+                            @Html.Partial("_MenuPartialIzageIT")
+                        }
                     }
                     else if (session.Idioma == "spain")
                     {
-                        @Html.Partial("_MenuPartial")
+                        if (session.ModuloSeleccionado == "WH")
+                        {
+                            @Html.Partial("_MenuPartial")
+                        }
+                        else
+                        {
+                            @Html.Partial("_MenuPartialIzage")
+                        }
                     }
                     else if (session.Idioma == "english")
                     {
-                        @Html.Partial("_MenuPartialEN")
+                        if (session.ModuloSeleccionado == "WH")
+                        {
+                            @Html.Partial("_MenuPartialEN")
+                        }
+                        else
+                        {
+                            @Html.Partial("_MenuPartialIzageEN")
+                        }
                     }
-
                 </div>
             </div>
         </div>
-        <div class="ui grid" style="margin-top:-6%">
-            <img src="~/Content/Images/pantalla_inicio_2.jpg" style="border:none" />
-        </div>
+
+        @*<div class="ui grid" style="margin-top:0px">
+            <img src="~/Content/Images/Ingreso.png" style="border:none" />
+        </div>*@
+        @*@Html.Partial("_MenuPartialNew")*@
         <div class="ui grid">
             <div class="sixteen wide stretched column">
                 <div class="ui segment" id="renderPages" style="min-height:700px !important">
                     <h1 style="color:#41B9E6;text-align:center" id="Welcome">@session.Welcome.ToUpper()</h1>
-                    <img src="~/Content/alturas.jpg" />
-                    <img src="~/Content/Izage.jpg" />
-
                     <br />
                     <br />
                     <div style="text-align:center;font-family:'Arial Unicode MS';font-size:16px">
@@ -109,6 +131,33 @@
 
 
     <script type="text/javascript">
+
+        function loadDummyData(hrefURL) {
+            cargarElement(hrefURL);
+        };
+    function cargarElement(url) {
+        $.ajax({
+            url: url,
+            beforeSend: function () {
+                $('#renderPages').html('').addClass("loading").css("height", 500);
+            },
+            success: function (data) {
+                $('#renderPages').html(data);
+                $('.titlesPages').html('@ViewBag.ApplicationName | ' + $('.titlesPages').html());
+            },
+            complete: function () {
+                $('#renderPages').removeClass("loading").css("height", "inherit");
+                LoadElementsDefaultPartial('#renderPages');
+        /*        $("#menuPartial").hide();*/
+            }
+        })
+    }
+    function LoadElementsDefaultPartial(element) {
+        $(element).find($('.ui.dropdown').dropdown());
+        $(element).find($('.ui.checkbox').checkbox());
+        }
+
+
         toastr.options = {
             "closeButton": false,
             "debug": false,
