@@ -15,7 +15,7 @@ body {
     height: 100vh;
     /*background: #7f7fd5;
     background: linear-gradient(to right, #91eae4, #86a8e7, #7f7fd5);*/
-    background-image: url('@Url.Content("~/Content/Images/02-Pantalla-ingreso-A.jpg")');
+    background-image: url('@Url.Content("~/Content/Images/02-Pantalla-ingreso-A.png")');
     background-repeat: no-repeat;
     background-size: cover;
 }

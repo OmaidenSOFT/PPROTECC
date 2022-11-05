@@ -30,14 +30,14 @@
             <div class="field">
                 <label for="nameUser" id="user">Usuario:</label>
                 <div class="ui right icon input">
-                    <input type="text" name="nameUser" id="nameUser" data-validate="nameUser" placeholder="Usuario" autocomplete="off">
+                    <input type="text" name="nameUser" id="nameUser" data-validate="nameUser" placeholder="Usuario" autocomplete="off" style="width:202px">
                     <i class="user secret icon"></i>
                 </div>
             </div>
             <div class="field">
                 <label for="password" id="pass">Contraseña:</label>
                 <div class="ui right icon input">
-                    <input type="password" name="password" id="password" placeholder="Contraseña" autocomplete="off">
+                    <input type="password" name="password" id="password" placeholder="Contraseña" autocomplete="off" style="width:202px">
                     <i class="lock icon"></i>
                 </div>
             </div>
@@ -98,7 +98,6 @@
 
     function detectChange(selectOS) {
         if (selectOS.value == "italiano") {
-            $('#titulo1').html("Lavori in quota");
             $('#user').html("Nome utente");
             $('#pass').html("Parola d'ordine");
             $('#pais').html("Paese");
@@ -107,7 +106,6 @@
 
         }
         else if (selectOS.value == "english") {
-            $('#titulo1').html("Working at Height");
             $('#user').html("User Name");
             $('#pass').html("Password");
             $('#pais').html("Country");
@@ -115,7 +113,6 @@
             $('#seleccioneidi').html("Select a language");
         }
         else if (selectOS.value == "spain") {
-            $('#titulo1').html("Trabajo en alturas");
             $('#user').html("Usuario");
             $('#pass').html("Contraseña");
             $('#pais').html("País");

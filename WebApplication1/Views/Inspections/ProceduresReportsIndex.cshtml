@@ -1,4 +1,22 @@
-﻿<h3 class="titlesPages">PROGRAMA DE PROTECCIÓN CONTRA CAÍDAS | PROGRAMA ALTURAS | PROCEDIMIENTOS</h3>
+﻿
+@using WebApplication1.Models;
+@{
+    var session = Session["SessionUser"] as SessionModels;
+}
+
+@if (session.Idioma == "italiano")
+{
+<h3 class="titlesPages">PROGRAMMA ANTICADUTA | PROGRAMMA ALTEZZE | PROCEDURE</h3>
+}
+else if (session.Idioma == "spain")
+{
+    <h3 class="titlesPages">PROGRAMA DE PROTECCIÓN CONTRA CAÍDAS | PROGRAMA ALTURAS | PROCEDIMIENTOS</h3>
+}
+else if (session.Idioma == "english")
+{
+<h3 class="titlesPages">FALL PROTECTION PROGRAM | HEIGHTS PROGRAM | PROCEDURES</h3>
+}
+
 @using (Ajax.BeginForm("SearchProceduresT", "Inspections", null, new AjaxOptions()
 {
     HttpMethod = "POST",
@@ -7,18 +25,52 @@
     OnFailure = "onFailureProcessSearch()",
 }, new { @id = "formProcessSearch" }))
 {
-<div class="ui equal width form">
-    <div class="fields">
-        <div class="field">
-            <label>Sede</label>
-            @Html.DropDownList("cbxHeadquarter", (SelectList)ViewBag.HeadquarterDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+   if (session.Idioma == "italiano")
+    {
+        <div class="ui equal width form">
+            <div class="fields">
+                <div class="field">
+                    <label>Locali</label>
+                    @Html.DropDownList("cbxHeadquarter", (SelectList)ViewBag.HeadquarterDictionary, "[-Seleziona un'opzione-]", new { @class = "ui search dropdown" })
+                </div>
+            </div>
+            <button class="ui primary button">
+                Ricerca
+            </button>
         </div>
+    }
+    else if (session.Idioma == "spain")
+    {
+        <div class="ui equal width form">
+            <div class="fields">
+                <div class="field">
+                    <label>Sede</label>
+                    @Html.DropDownList("cbxHeadquarter", (SelectList)ViewBag.HeadquarterDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+                </div>
+            </div>
+            <button class="ui primary button">
+                Buscar
+            </button>
         </div>
-    <button class="ui primary button">
-        Buscar
-    </button>
-    </div>
-   
+    }
+    else if (session.Idioma == "english")
+    {
+        <div class="ui equal width form">
+            <div class="fields">
+                <div class="field">
+                    <label>Headquarter</label>
+                    @Html.DropDownList("cbxHeadquarter", (SelectList)ViewBag.HeadquarterDictionary, "[-Select an option-]", new { @class = "ui search dropdown" })
+                </div>
+            </div>
+            <button class="ui primary button">
+                Search
+            </button>
+        </div>
+    }
+
+
+
+
     <div id="renderSearchProcedure"></div>
 }
 

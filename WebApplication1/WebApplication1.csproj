@@ -808,6 +808,12 @@
     <Content Include="Views\Shared\_MenuPartialNew.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_Layout - Copia.cshtml" />
+    <Content Include="Views\Shared\_MenuPartialWH.cshtml" />
+    <Content Include="Views\Shared\_MenuPartialWHEN.cshtml" />
+    <Content Include="Views\Shared\_MenuPartialWHIT.cshtml" />
+    <Content Include="Views\Shared\_MenuPartialIC.cshtml" />
+    <Content Include="Views\Shared\_MenuPartialICIT.cshtml" />
+    <Content Include="Views\Shared\_MenuPartialICEN.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

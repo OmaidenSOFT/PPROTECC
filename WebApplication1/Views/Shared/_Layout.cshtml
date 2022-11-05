@@ -40,7 +40,7 @@
 
     <style>
         body {
-            background-image: url('@Url.Content("~/Content/Images/02-Pantalla-ingreso-A.jpg")');
+            background-image: url('@Url.Content("~/Content/Images/02-Pantalla-ingreso-A.png")');
             background-repeat: no-repeat;
             background-size: cover;
         }
@@ -63,176 +63,72 @@
     </style>
 </head>
 <body>
+    <div class="ui very text container segment" id="segmentLogin" style="margin-top:0%;height: 139px;">
+        <img class="ui centered medium image" src="/Content/Images/Logo.png">
+        <h2 style="text-align:center;color: #1cac84;" id="titulo1" class="ui teal">PPROTECC 2.0</h2>
+
+
+
+    </div>
     <div class="main">
-        <div class="ui equal width form" style="margin-top: 2%;">
+        <div class="ui equal width form" style="margin-top:-6%;">
+
+            @if (session.Idioma == "italiano")
+            {
+            <a class="menu__link" href="@Url.Action("LogOff", "Account")" data-finish="true" style="font-size: larger;">
+                <i class="fa fa-home" aria-hidden="true"></i> Lasciare
+            </a>
+            }
+            else if (session.Idioma == "spain")
+            {
+                <a class="menu__link" href="@Url.Action("LogOff", "Account")" data-finish="true" style="font-size: larger;">
+                    <i class="fa fa-home" aria-hidden="true"></i> Salir
+                </a>
+            }
+            else if (session.Idioma == "english")
+            {
+                <a class="menu__link" href="@Url.Action("LogOff", "Account")" data-finish="true" style="font-size: larger;">
+                    <i class="fa fa-home" aria-hidden="true"></i> Exit
+                </a>
+            }
             <div class="fields">
-                <div class="field" style="width: 27% !important;">
-                    <div class="accordion" id="accordionExample">
-                        <div class="card">
-                            <div class="card-header" id="headingOne">
-                                <h2 class="mb-0 tag tag-blue">
-                                    <button class="btn btn-link btn-block text-left btn-bdy" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        Programa alturas
-                                    </button>
-                                </h2>
-                            </div>
 
-                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                <div class="card-body card-bdy">
-                                    <ul class="sub-menu">
-                                        <li class="menu-item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("ProceduresReportsIndex", "Inspections")')">Procedimientos</a></li>
-                                        <li class="menu-item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("FormatsReportsIndex", "Inspections")')">Formatos</a></li>
-                                        <li class="menu-item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("CertificatesReportsIndex", "Inspections")')">Normatividad</a></li>
-                                        <li class="menu-item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("Features", "Inspections")')">Cargar Documentos</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header" id="headingTwo">
-                                <h2 class="mb-0 tag tag-blue">
-                                    <button class="btn btn-link btn-block text-left collapsed  btn-bdy" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                        Gestión de Equipos
-                                    </button>
-                                </h2>
-                            </div>
-                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                                <div class="card-body card-bdy">
-                                    <ul class="sub-menu">
-                                        <li class="menu-item"><a href="#" class="menu__link" onclick="loadDummyData('@Url.Action("Stock", "WorkingAtHeight")')">Inventario</a></li>
-                                        <li class="menu-item"><a href="#" class="menu__link" onclick="loadDummyData('@Url.Action("TechnicalInformation", "WorkingAtHeight")')">Fichas técnicas</a></li>
-                                        <li class="menu-item"><a href="#" class="menu__link" onclick="loadDummyData('@Url.Action("CreateTechInfo", "Inspections")')">Cargar Fichas técnicas</a></li>
-                                        <li class="menu-item"><a href="#" class="menu__link" onclick="loadDummyData('@Url.Action("Curriculum", "WorkingAtHeight")')">Hojas de Vida</a></li>
-                                        <li class="menu-item"><a href="#" class="menu__link" onclick="loadDummyData('@Url.Action("InspectionCert", "WorkingAtHeight")')">Certificados de Inspección</a></li>
-                                        <li class="menu-item"><a href="#" class="menu__link" onclick="loadDummyData('@Url.Action("IndexEquipment", "WorkingAtHeight")')">Página Inicial de Equipos</a></li>
-                                        <li class="menu-item"><a href="#" class="menu__link" onclick="loadDummyData('@Url.Action("CreateEquipment", "WorkingAtHeight")')">Crear Nuevo Equipo</a></li>
-                                        <li class="menu-item"><a href="#" class="menu__link" onclick="loadDummyData('@Url.Action("DownloadResult", "WorkingAtHeight")')">Matriz de Equipos</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header" id="headingThree">
-                                <h2 class="mb-0 tag tag-blue">
-                                    <button class="btn btn-link btn-block text-left collapsed btn-bdy" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                        Inspección y Mantenimiento
-                                    </button>
-                                </h2>
-                            </div>
-                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-                                <div class="card-body card-bdy">
-                                    <ul data-menu="submenu-3" class="menu__level">
-                                        <li class="menu__item"><a class="menu__link" href="@Url.Action("SchedulerInspections", "Inspections")">Cronograma Inspecciones</a></li>
-                                        <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateInspections", "Inspections")">Registros Inspecciones</a></li>
-                                        <li class="menu__item"><a class="menu__link" href="@Url.Action("TechnicalReportsIndex", "Inspections")">Informes técnicos (LV)-Página Inicial</a></li>
-                                        <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateTechnicalReports", "Inspections")">Informes técnicos (LV)-Crear Nuevo</a></li>
-                                        <li class="menu__item"><a class="menu__link" href="@Url.Action("ManagementOfFindings", "Inspections")">Gestión de Hallazgos</a></li>
-                                        <li class="menu__item"><a class="menu__link" href="@Url.Action("ManagementMaintenanceEquipment", "Inspections")">Verificar Gestión</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-header" id="heading4">
-                                <h2 class="mb-0 tag tag-blue">
-                                    <button class="btn btn-link btn-block text-left collapsed btn-bdy" type="button" data-toggle="collapse" data-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
-                                        Formación y Competencia
-                                    </button>
-                                </h2>
-                            </div>
-                            <div id="collapse4" class="collapse" aria-labelledby="heading4" data-parent="#accordionExample">
-                                <div class="card-body card-bdy">
-
-                                    <ul data-menu="submenu-4" class="menu__level">
-                                        <li class="menu__item"><a class="menu__link" href="@Url.Action("Trainning", "Trainning")">Listado/Rol/Aptitud</a></li>
-                                        <li class="menu__item"><a class="menu__link" href="@Url.Action("Scheduler", "Trainning")">Cronograma Formación</a></li>
-                                        <li class="menu__item"><a class="menu__link" href="@Url.Action("Certificate", "Trainning")">Certificados</a></li>
-                                        <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexPerson", "Trainning")">Personas-Página Inicial</a></li>
-                                        <li class="menu__item"><a class="menu__link" href="@Url.Action("CreatePerson", "Trainning")">Personas-Crear Nuevo</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="card">
-                            <div class="card-header" id="heading5">
-                                <h2 class="mb-0 tag tag-blue">
-                                    <button class="btn btn-link btn-block text-left collapsed btn-bdy" type="button" data-toggle="collapse" data-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
-                                        Administración
-                                    </button>
-                                </h2>
-                            </div>
-                            <div id="collapse5" class="collapse" aria-labelledby="heading5" data-parent="#accordionExample">
-                                <div class="card-body card-bdy">
-                                    <ul data-menu="submenu-5-1" class="menu__level">
-                                        <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexUser", "Trainning")">Usuarios - Página Inicial</a></li>
-                                        <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateUser", "Trainning")">Usuarios - Crear Nuevo</a></li>
-                                        <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexRol", "Trainning")">Roles - Página Inicial</a></li>
-                                        <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateRol", "Trainning")">Roles - Crear Nuevo</a></li>
-                                        <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexInspector", "Trainning")">Inspectores - Página Inicial</a></li>
-                                        <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateInspector", "Trainning")">Inspectores - Crear Nuevo</a></li>
-                                        <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexSedeCategoria", "WorkingAtHeight")">Categoria Sedes - Página Inicial</a></li>
-                                        <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateCategoriaSede", "WorkingAtHeight")">Categoria Sedes - Crear Nuevo</a></li>
-                                        <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexPais", "WorkingAtHeight")">Países - Página Inicial</a></li>
-                                        <li class="menu__item"><a class="menu__link" href="@Url.Action("CreatePais", "WorkingAtHeight")">Países - Crear Nuevo</a></li>
-                                        <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexSede", "WorkingAtHeight")">Sedes - Página Inicial</a></li>
-                                        <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateSede", "WorkingAtHeight")">Sedes - Crear Nuevo</a></li>
-
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="card">
-                            <div class="card-header" id="heading6">
-                                <h2 class="mb-0 tag tag-blue">
-                                    <button class="btn btn-link btn-block text-left collapsed btn-bdy" type="button" data-toggle="collapse" data-target="#collapse6" aria-expanded="false" aria-controls="collapse6">
-                                        Indicadores de Gestión
-                                    </button>
-                                </h2>
-                            </div>
-                            <div id="collapse6" class="collapse" aria-labelledby="heading6" data-parent="#accordionExample">
-                                <div class="card-body card-bdy">
-                                    <ul data-menu="submenu-5-1" class="menu__level">
-                                        <li class="menu__item">
-                                            <a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("PageInitial", "ManagmentIndicators")')">Indicadores</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                        <div class="card">
-                            <div class="card-header" id="heading7">
-                                <h2 class="mb-0 tag tag-blue">
-                                    <button class="btn btn-link btn-block text-left collapsed btn-bdy" type="button" data-toggle="collapse" data-target="#collapse7" aria-expanded="false" aria-controls="collapse7">
-                                        Módulo Médico
-                                    </button>
-                                </h2>
-                            </div>
-                            <div id="collapse7" class="collapse" aria-labelledby="heading7" data-parent="#accordionExample">
-                                <div class="card-body card-bdy">
-                                    <ul data-menu="submenu-7" class="menu__level">
-                                        <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateAptitudConcept", "MedicalConcepts")">Conceptos de Aptitud</a></li>
-                                        <li class="menu__item"><a class="menu__link" href="@Url.Action("PageInitial", "MedicalConcepts")">Listado de Aptitud</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-
-                    </div>
-                </div>
+                @if (session.Idioma == "italiano")
+                {
+                    if (session.ModuloSeleccionado == "WH")
+                    {
+                        @Html.Partial("_MenuPartialWHIT")
+                    }
+                    else
+                    {
+                        @Html.Partial("_MenuPartialICIT")
+                    }
+                }
+                else if (session.Idioma == "spain")
+                {
+                    if (session.ModuloSeleccionado == "WH")
+                    {
+                        @Html.Partial("_MenuPartialWH")
+                    }
+                    else
+                    {
+                        @Html.Partial("_MenuPartialIC")
+                    }
+                }
+                else if (session.Idioma == "english")
+                {
+                    if (session.ModuloSeleccionado == "WH")
+                    {
+                        @Html.Partial("_MenuPartialWHEN")
+                    }
+                    else
+                    {
+                        @Html.Partial("_MenuPartialICEN")
+                    }
+                }
 
                 <div class="field">
-                    <div class="ui segment" id="renderPages" style="min-height:700px !important">
+                    <div class="ui segment" id="renderPages" style="min-height:700px !important;background-color: transparent;border:none">
                         @RenderBody()
                     </div>
                 </div>
@@ -246,11 +142,12 @@
     @RenderSection("scripts", required: false)
     <script type="text/javascript">
 
-        
+
     function loadDummyData(hrefURL) {
             cargarElement(hrefURL);
         };
-    function cargarElement(url) {
+        function cargarElement(url) {
+          
         $.ajax({
             url: url,
             beforeSend: function () {
@@ -260,6 +157,7 @@
             success: function (data) {
                 $('#renderPages').html(data);
                 $('.titlesPages').html('@ViewBag.ApplicationName | ' + $('.titlesPages').html());
+                $('#renderPages').css("background-color", "white");
             },
             complete: function () {
                 $('#renderPages').removeClass("loading").css("height", "inherit");
@@ -272,7 +170,7 @@
         $(element).find($('.ui.dropdown').dropdown());
         $(element).find($('.ui.checkbox').checkbox());
         }
- 
+
 
     toastr.options = {
     "closeButton": false,
