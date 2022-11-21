@@ -1,0 +1,46 @@
+﻿@using System.Data
+@model DataTable
+
+<table class="ui selectable celled table ui center aligned tablesInitial" id="tablesIndexEquipment">
+    <thead>
+        <tr>
+            @foreach (System.Data.DataColumn col in Model.Columns)
+            {
+                <th>@col.ColumnName</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (System.Data.DataRow row in Model.Rows)
+        {
+            <tr>
+                @foreach (DataColumn col in Model.Columns)
+                {
+                    if (col.ColumnName == "Fecha Curso Inicial" || col.ColumnName == "Fecha Ultimo Curso")
+                    {
+                        <th>@DateTime.Parse(row[col.ColumnName].ToString()).ToString("d")</th>
+                    }
+                    else if (col.ColumnName == "Estado Vigencia Ult. Curso")
+                    {
+                        switch (row[col.ColumnName].ToString())
+                        {
+                            case "Vigente":
+                                <th style="background-color:green; color:white;">@row[col.ColumnName]</th>
+                                break;
+                            case "Vencido":
+                                <th style="background-color:red; color:white;">@row[col.ColumnName]</th>
+                                break;
+                            default:
+                                <th>@row[col.ColumnName]</th>
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        <th>@row[col.ColumnName]</th>
+                    }
+                }
+            </tr>
+        }
+    </tbody>
+</table>

@@ -41,29 +41,28 @@ namespace LogicBo
             }
         }
 
-        //public bool Edit(InspectionIzaje inspeccion, int id)
-        //{
-        //    try
-        //    {
-        //        List<SqlParameter> parameters = new List<SqlParameter> {
-        //        new SqlParameter(){ ParameterName="Id", SqlDbType=SqlDbType.Int,Value=id},
-        //        new SqlParameter(){ ParameterName="FechaInspeccion", SqlDbType=SqlDbType.VarChar,Value=inspeccion.FechaInspeccion},
-        //        new SqlParameter(){ ParameterName="Precinto", SqlDbType=SqlDbType.VarChar,Value=inspeccion.Precinto},
-        //        new SqlParameter(){ ParameterName="IdEquipo", SqlDbType=SqlDbType.VarChar,Value=inspeccion.IdEquipo},
-        //        new SqlParameter(){ ParameterName="Id_Estado", SqlDbType=SqlDbType.VarChar,Value=inspeccion.IdEstado},
-        //        new SqlParameter(){ ParameterName="Id_Accion", SqlDbType=SqlDbType.VarChar,Value=inspeccion.IdAccion},
-        //        new SqlParameter(){ ParameterName="Id_Inspector", SqlDbType=SqlDbType.VarChar,Value=inspeccion.IdInspector},
-        //    };
-        //        var result = executeProcedures.DataTable("ENEL_EditIzageInspection", parameters);
-        //        if (!Convert.ToBoolean(result?.Rows[0][0].ToString()))
-        //            throw new Exception(result.Rows[0][1].ToString());
-        //        return true;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw;
-        //    }
-        //}
+        public int Edit(InspectionIzaje inspeccion)
+        {
+            try
+            {
+                List<SqlParameter> parameters = new List<SqlParameter> {
+                new SqlParameter(){ ParameterName="FechaInspeccion", SqlDbType=SqlDbType.DateTime,Value=inspeccion.FechaInspeccion},
+                new SqlParameter(){ ParameterName="Precinto", SqlDbType=SqlDbType.VarChar,Value=inspeccion.Precinto},
+                new SqlParameter(){ ParameterName="Id", SqlDbType=SqlDbType.Int,Value=inspeccion.IdEquipo},
+                new SqlParameter(){ ParameterName="Id_Estado", SqlDbType=SqlDbType.Int,Value=inspeccion.IdEstado},
+                new SqlParameter(){ ParameterName="Id_Accion", SqlDbType=SqlDbType.Int,Value=inspeccion.IdAccion},
+                new SqlParameter(){ ParameterName="Id_Inspector", SqlDbType=SqlDbType.Int,Value=inspeccion.IdInspector},
+            };
+                var result = executeProcedures.DataTable("ENEL_SaveIzageInspection", parameters);
+                if (!Convert.ToBoolean(result?.Rows[0][0].ToString()))
+                    throw new Exception(result.Rows[0][2].ToString());
+                return int.Parse(result.Rows[0][1].ToString());
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
 
         public bool EditFinding(int id, int idEstado, string planAccion, string gestionRealizar, string responsable, DateTime fechaGestion, int idEstadoGestion, DateTime fechaRealizado, string gestionRealizado, string archivo, int verificado)
         {
@@ -116,7 +115,7 @@ namespace LogicBo
             }
         }
 
-        public int CreateDetalle(int idFactor,int idInspeccion, string estado, string comentario)
+        public int CreateDetalle(int idFactor, int idInspeccion, string estado, string comentario)
         {
             try
             {

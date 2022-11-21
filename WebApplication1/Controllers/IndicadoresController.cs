@@ -12,7 +12,7 @@ namespace WebApplication1.Controllers
         // GET: Indicadores
         public ActionResult Index()
         {
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(), "Key", "Value");
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(), "Key", "Value", "0");
 
             return PartialView();
         }

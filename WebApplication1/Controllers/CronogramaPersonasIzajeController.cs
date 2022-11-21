@@ -27,7 +27,7 @@ namespace WebApplication1.Controllers
         {
             ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(), "Key", "Value");
 
-            var result = _cronogramaPersonasIzajeBo.GetIndex(0, "", 2022);
+            var result = _cronogramaPersonasIzajeBo.GetIndex(0, "Annio", 2022);
 
             return PartialView(result);
         }

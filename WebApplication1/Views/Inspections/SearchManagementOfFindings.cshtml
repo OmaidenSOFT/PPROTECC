@@ -48,16 +48,45 @@
 {
     <button class="ui button" id="btnExport" onclick="location.href='@Url.Action("DownloadFile", "Download", new { fileName = "Hallazgos", @id = ViewBag.id })'">Exportar</button>
 }
-<div class="ui modal fullscreen" id="modalDetailsEquipment">
+
+ @*Modal para Editar Categoria*@
+<div class="ui modal fullscreen" id="modalEditCategoia">
     <div class="header">
         <h3 class="titlesPages">
             INSPECCIÓN Y MANTENIMIENTO | GESTIÓN DE HALLAZGOS
         </h3>
     </div>
 
-    <div class="content" id="loadDetailsEquipment">
-
-    </div>
+    @using (Ajax.BeginForm("ProcessCreateCategoriaIzaje", "FactoresIzaje", null, new AjaxOptions()
+    {
+        HttpMethod = "POST",
+        OnBegin = "onBeginProcessCreateCategoriaIzage()",
+        OnSuccess = "onSuccessProcessCreateCategoriaIzage(data)",
+        OnFailure = "onFailureProcessCreateCategoriaIzage()",
+    }, new { @id = "formProcessCreateCategoriaIzage", @enctype = "multipart/form-data" }))
+    {
+        <div class="ui equal width form">
+            <div class="fields">
+                <div class="field">
+                    <label>Tipo equipo</label>
+                    @Html.DropDownList("cbxTipoEquipo", (SelectList)ViewBag.GetTipoEquipoDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+                </div>
+                <div class="field">
+                    <label>Categoría</label>
+                    <input type="text" id="txbCategoria" name="txbCategoria" placeholder="Digite Categoria" autocomplete="off" maxlength="50">
+                </div>
+            </div>
+            <button class="ui primary button">
+                Guardar
+            </button>
+            <div class="ui floating warning message" style="width:50%;margin-left:25%;margin-right:25%;text-align:center" id="messageCreateCategoria">
+                <div class="header">
+                    Atención
+                </div>
+                <p id="textmessageCreateCategoria"></p>
+            </div>
+        </div>
+    }
 </div>
 <script type="text/javascript">
     var processingComplete = function () {
@@ -90,7 +119,7 @@
             success: function (data) {
                 if (data) {
                     $('#loadDetailsEquipment').html(data);
-                    $('#modalDetailsEquipment').modal('show');
+                    $('#modalEditCategoia').modal('show');
                 }
             }
         })

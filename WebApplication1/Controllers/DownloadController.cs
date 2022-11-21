@@ -17,6 +17,7 @@ namespace WebApplication1.Controllers
         WorkingAtHeightBo _workingAtHeightBo = new WorkingAtHeightBo();
         TrainningBo _trainningBo = new TrainningBo();
         IzageBo _izageBo = new IzageBo();
+        PersonBo _PersonBo = new PersonBo();
         CronogramaIzajeBo _cronogramaIzajeBo = new CronogramaIzajeBo();
         PersonBo _personBo = new PersonBo();
         InspectionIzajeBo _inspectionIzajeBo = new InspectionIzajeBo();
@@ -110,7 +111,7 @@ namespace WebApplication1.Controllers
                         break;
 
                     case "Reporte_Personas_Izaje":
-                        List<int> ColumnasFechasP = new List<int>() { 7,9 };
+                        List<int> ColumnasFechasP = new List<int>() { 7, 9 };
 
                         ws.Cells["A1"].LoadFromDataTable(_personBo.GetIndex("", "", 0, "", ""), true);
                         foreach (int col in ColumnasFechasP)
@@ -132,6 +133,16 @@ namespace WebApplication1.Controllers
                         ws.Cells["A1:AY1"].Style.Fill.BackgroundColor.SetColor(ColorTranslator.FromHtml("#002060"));
                         ws.Cells["A1:AY1"].Style.Font.Bold = true;
                         ws.Cells["A1:AY1"].Style.Font.Color.SetColor(Color.White);
+                        ws.Cells.AutoFitColumns();
+                        stream = new MemoryStream(pack.GetAsByteArray()); //Get updated stream
+                        break;
+                    case "InventarioIzaje":
+                        ws.Cells["A1"].LoadFromDataTable(_izageBo.GetInventario(), true);
+                        ws.Cells.AutoFitColumns();
+                        stream = new MemoryStream(pack.GetAsByteArray()); //Get updated stream
+                        break;
+                    case "InventarioPersonas":
+                        ws.Cells["A1"].LoadFromDataTable(_PersonBo.GetInventarioPersonas(), true);
                         ws.Cells.AutoFitColumns();
                         stream = new MemoryStream(pack.GetAsByteArray()); //Get updated stream
                         break;

@@ -29,7 +29,7 @@ namespace WebApplication1.Controllers
             ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(), "Key", "Value");
             ViewBag.GetTipoEquipoDictionary = new SelectList(_izageBo.GetTipoEquipoDictionary(), "Key", "Value");
 
-            var result = _cronogramaIzajeBo.GetIndex(0, 0, "", 2019);
+            var result = _cronogramaIzajeBo.GetIndex(0, 0, "Annio", 2022);
 
             return PartialView(result);
         }

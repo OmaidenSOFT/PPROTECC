@@ -102,19 +102,11 @@
                 </div>
                 <input type="hidden" name="cFechaInicioCurso" id="cFechaInicioCurso" autocomplete="off">
             </div>
-            <div class="field">
-                <label>Estado</label>
-                <select id="cbxEstado" name="cbxEstado" class="ui search dropdown">
-                    <option value="">[-Seleccione una opción-]</option>
-                    <option value="1">Activo</option>
-                    <option value="2">Inactivo</option>
-                </select>
-            </div>
-        </div>
-        <div class="fields">
-            <div class="field">
-                <label>Observacion</label>
-                <input type="text" id="txbObservacion" name="txbObservacion" autocomplete="off" maxlength="50">
+            <div class="fields">
+                <div class="field">
+                    <label>Observacion</label>
+                    <input type="text" id="txbObservacion" name="txbObservacion" autocomplete="off" maxlength="50">
+                </div>
             </div>
         </div>
         <button class="ui primary button">
@@ -196,8 +188,8 @@
                 identifier: 'txbCorreo',
                 rules: [
                     {
-                        type: 'empty',
-                        prompt: 'Debe ingresar algun valor'
+                        type: 'email',
+                        prompt: 'Debe ingresar un correo'
                     },
                 ]
             },

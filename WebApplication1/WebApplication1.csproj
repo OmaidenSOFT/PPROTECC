@@ -183,6 +183,7 @@
     <Compile Include="Controllers\FindingIzajeController.cs" />
     <Compile Include="Controllers\IndicadoresController.cs" />
     <Compile Include="Controllers\InspectionIzajeController.cs" />
+    <Compile Include="Controllers\InventarioIzajeController.cs" />
     <Compile Include="Controllers\IzageController.cs" />
     <Compile Include="Controllers\DownloadController.cs" />
     <Compile Include="Controllers\MedicalConceptsController.cs" />
@@ -765,6 +766,16 @@
     <Content Include="Views\CronogramaPersonasIzaje\Index.cshtml" />
     <Content Include="Views\InspectionIzaje\SearchInspectionIzaje.cshtml" />
     <Content Include="Views\FindingIzaje\SearchFindingIzage.cshtml" />
+    <Content Include="Views\FactoresIzaje\EditCategoriaIzage.cshtml" />
+    <Content Include="Views\FactoresIzaje\EditFactorIzage.cshtml" />
+    <Content Include="Views\FactoresIzaje\Index.cshtml" />
+    <Content Include="Views\FactoresIzaje\IndexCategoriasIzaje.cshtml" />
+    <Content Include="Views\InventarioIzaje\Index.cshtml" />
+    <Content Include="Views\InventarioIzaje\SearchEquipoByIdSede.cshtml" />
+    <Content Include="Views\FactoresIzaje\CreateFactorIzaje.cshtml" />
+    <Content Include="Views\FactoresIzaje\CreateCategoriaIzaje.cshtml" />
+    <Content Include="Views\InventarioIzaje\IndexPersonas.cshtml" />
+    <Content Include="Views\InventarioIzaje\SearchPersonasByIdSede.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

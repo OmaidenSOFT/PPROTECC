@@ -168,30 +168,38 @@
             <!-- Submenu 8-1 -->
             <ul data-menu="submenu-8-1" class="menu__level">
                 <li class="menu__item"><a class="menu__link" data-submenu="submenu-8-1-1">Administración de Equipos</a></li>
+                <li class="menu__item"><a class="menu__link" data-submenu="submenu-8-1-5">Catalogo Categorías / Factores Inspección</a></li>
                 <li class="menu__item"><a class="menu__link" data-submenu="submenu-8-1-2">Administración de Inspecciones</a></li>
                 <li class="menu__item"><a class="menu__link" data-submenu="submenu-8-1-3">Administración de Hallazgos</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Index", "InventarioIzaje")">Inventario General</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("Index", "CronogramaIzaje")">Cronograma de Inspecciones</a></li>
             </ul>
+
             <ul data-menu="submenu-8-1-1" class="menu__level">
                 <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexEquipmentIzage", "Izage")">Página Inicial</a></li>
                 <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateEquipmentIzage", "Izage")">Crear Nuevo</a></li>
             </ul>
             <!-- Submenu 8-2 -->
-            <ul data-menu="submenu-8-2" class="menu__level">
-                <li class="menu__item"><a class="menu__link" href="@Url.Action("Index", "Personas")">Página inicial</a></li>
-                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreatePerson", "Personas")">Crear Nueva</a></li>
-                <li class="menu__item"><a class="menu__link" href="@Url.Action("Index", "CronogramaPersonasIzaje")">Cronograma de formacion</a></li>
-            </ul>
+    <ul data-menu="submenu-8-2" class="menu__level">
+        <li class="menu__item"><a class="menu__link" href="@Url.Action("Index", "Personas")">Página inicial</a></li>
+        <li class="menu__item"><a class="menu__link" href="@Url.Action("CreatePerson", "Personas")">Crear Nueva</a></li>
+        <li class="menu__item"><a class="menu__link" href="@Url.Action("Index", "CronogramaPersonasIzaje")">Cronograma de formacion</a></li>
+        <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexPersonas", "Inventarioizaje")">Inventario de formacion</a></li>
+    </ul>
             <!-- Submenu 8-3 -->
             <ul data-menu="submenu-8-3" class="menu__level">
                 <li class="menu__item"><a class="menu__link" href="@Url.Action("Index", "Indicadores")">Pagina inicial</a></li>
             </ul>
+
+            <ul data-menu="submenu-8-1-5" class="menu__level">
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexCategoriasIzaje", "FactoresIzaje")">Categorías</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexFactoresIzaje", "FactoresIzaje")">Factores</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateFactoresIzaje", "FactoresIzaje")">Crear Nueva</a></li>
+            </ul>
             <!-- Submenu 8-4 -->
             <ul data-menu="submenu-8-1-2" class="menu__level">
-                <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexInspectionIzaje", "InspectionIzaje")">Página Inicial Inspecciones</a></li>
-                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateInspectionIzaje", "InspectionIzaje",new { @id=0})">Crear Nueva Inspección </a></li>
-                <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexFactoresIzaje", "FactoresIzaje")">Pagina inicial Factores inspección</a></li>
-                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateFactoresIzaje", "FactoresIzaje")">Crear nuevas Categorías/Factores</a></li>
-                <li class="menu__item"><a class="menu__link" href="@Url.Action("Index", "CronogramaIzaje")">Cronograma de Inspecciones</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("IndexInspectionIzaje", "InspectionIzaje")">Página Inicial</a></li>
+                <li class="menu__item"><a class="menu__link" href="@Url.Action("CreateInspectionIzaje", "InspectionIzaje",new { @id=0})">Crear Nueva</a></li>
             </ul>
             <ul data-menu="submenu-8-1-3" class="menu__level">
                 <li class="menu__item"><a class="menu__link" href="@Url.Action("Index", "FindingIzaje")">Pagina inicial</a></li>

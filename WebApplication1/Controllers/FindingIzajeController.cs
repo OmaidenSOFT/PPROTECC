@@ -63,7 +63,7 @@ namespace WebApplication1.Controllers
                 Session["FilesInspections"] = null;
                 var result = _inspectionIzajeBo.GetFindingById(id);
                 //int stateId = int.Parse(result.Rows[0]["Id"].ToString());
-                ViewBag.ActionResultDictionary = new SelectList(_actionResultBo.GetDictionary(), "Key", "Value", result.Rows[0]["stateid"].ToString());
+                ViewBag.ActionResultDictionary = new SelectList(_actionResultBo.GetDictionary(), "Key", "Value");
                 ViewBag.finding = result;
                 ViewBag.id = id;
                 return PartialView(result);

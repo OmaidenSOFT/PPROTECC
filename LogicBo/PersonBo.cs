@@ -58,6 +58,24 @@ namespace LogicBo
                 throw;
             }
         }
+
+        public DataTable GetInventarioPersonas()
+        {
+            try
+            {
+                List<SqlParameter> parameters = new List<SqlParameter>
+                {
+                };
+                var result = executeProcedures.DataTable("ENEL_InventarioPersonas", parameters);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         public int Create(string identificacion, string nombre, string apellido, int idSede, string telefono, string celular, string correo, string asignado, string foto, string observacion, bool estado)
         {
             try
@@ -74,8 +92,7 @@ namespace LogicBo
                 new SqlParameter(){ ParameterName="Foto", SqlDbType=SqlDbType.VarChar,Value=foto},
                 new SqlParameter(){ ParameterName="Observacion", SqlDbType=SqlDbType.VarChar,Value=observacion},
                 new SqlParameter(){ ParameterName="Estado", SqlDbType=SqlDbType.Bit,Value=estado},
-
-            };
+                };
                 var result = executeProcedures.DataTable("ENEL_PersonSave", parameters);
                 if (!Convert.ToBoolean(result?.Rows[0][0].ToString()))
                     throw new Exception(result.Rows[0][2].ToString());
@@ -106,7 +123,7 @@ namespace LogicBo
                 new SqlParameter(){ ParameterName="Observacion", SqlDbType=SqlDbType.VarChar,Value=observacion},
                 new SqlParameter(){ ParameterName="Estado", SqlDbType=SqlDbType.Bit,Value=estado},
                 new SqlParameter(){ ParameterName="Imagen", SqlDbType=SqlDbType.VarChar,Value=imagen},
-            };
+                };
                 var result = executeProcedures.DataTable("ENEL_PersonEdit", parameters);
                 if (!Convert.ToBoolean(result?.Rows[0][0].ToString()))
                     throw new Exception(result.Rows[0][1].ToString());
@@ -126,8 +143,7 @@ namespace LogicBo
                 List<SqlParameter> parameters = new List<SqlParameter> {
                 new SqlParameter(){ ParameterName="Id", SqlDbType=SqlDbType.Int,Value=id},
                 new SqlParameter(){ ParameterName="Imagen", SqlDbType=SqlDbType.VarChar,Value=imagen},
-
-            };
+                };
                 var result = executeProcedures.DataTable("ENEL_PersonEditImg", parameters);
                 if (!Convert.ToBoolean(result?.Rows[0][0].ToString()))
                     throw new Exception(result.Rows[0][1].ToString());
@@ -149,7 +165,7 @@ namespace LogicBo
                 new SqlParameter(){ ParameterName="IdPersona", SqlDbType=SqlDbType.Int,Value=idPersona},
                 new SqlParameter(){ ParameterName="FechaInicio", SqlDbType=SqlDbType.DateTime,Value=fechaInicio},
                 new SqlParameter(){ ParameterName="Archivo", SqlDbType=SqlDbType.VarChar,Value=archivo},
-            };
+                };
                 var result = executeProcedures.DataTable("ENEL_CursoDetSave", parameters);
                 if (!Convert.ToBoolean(result?.Rows[0][0].ToString()))
                     throw new Exception(result.Rows[0][2].ToString());
@@ -161,6 +177,7 @@ namespace LogicBo
                 throw;
             }
         }
+
         public void DeleteCursoDet(int id)
         {
             try

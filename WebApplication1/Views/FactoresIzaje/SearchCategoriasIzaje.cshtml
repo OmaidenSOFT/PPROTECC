@@ -21,6 +21,7 @@
             {
                 <th>@col.ColumnName</th>
             }
+
         </tr>
     </thead>
     <tbody>
@@ -32,13 +33,21 @@
 
                     <th>@row[col.ColumnName]</th>
                 }
+                <td>
+                    <a href="javascript:void(0)" onclick="loadDetails('@row["Id"].ToString()')">Editar</a>
+                </td>
             </tr>
         }
     </tbody>
 </table>
 
+<div class="ui modal fullscreen" id="modalEditCategoria">
+    <div class="content" id="loadEditCategoria">
+    </div>
+</div>
 
 <script type="text/javascript">
+    LoadTables();
     $('#tablesIndexEquipment').dynatable({
     }).bind('dynatable:afterProcess', processingComplete);
     processingComplete();
@@ -47,6 +56,7 @@
 
     var $element = $('.cardTest');
     //LoadTables();
+
     function viewDocument(path) {
         $('.renderImages').html('');
         $element.find($('#number').text(path));
@@ -56,5 +66,19 @@
         $('.renderImages').append('<div class="ui card cardTest"> ' + $element.html() + '</div>');
 
         $('.renderImages').show('slow');
+    }
+
+    function loadDetails(id) {
+        $.ajax({
+            url: '@Url.Action("EditCategoriaIzage")',
+               data: { id: id},
+            type: 'POST',
+            success: function (data) {
+                if (data) {
+                    $('#loadEditCategoria').html(data);
+                    $('#modalEditCategoria').modal('show');
+                }
+            }
+        })
     }
 </script>

@@ -127,7 +127,7 @@ namespace WebApplication1.Controllers
                 string asignado = collection["txbAsignado"];
                 string observacion = collection["txbObservacion"];
                 DateTime fechaCursoInicial = Convert.ToDateTime(collection["cFechaInicioCurso"].ToString());
-                bool estado = collection["cbxEstado"].ToString() != string.Empty ? Convert.ToBoolean(Convert.ToInt32(collection["cbxEstado"].ToString())) : true;
+                bool estado = true;
                 int idSede = collection["cbxHeadquarter"].ToString() != string.Empty ? Convert.ToInt32(collection["cbxHeadquarter"].ToString()) : 0;
                 int idCurso = collection["cbxCourse"].ToString() != string.Empty ? Convert.ToInt32(collection["cbxCourse"].ToString()) : 0;
 

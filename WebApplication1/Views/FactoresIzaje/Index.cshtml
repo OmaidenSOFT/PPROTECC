@@ -16,7 +16,7 @@
 
     function loadCategoria(id) {
         $.ajax({
-            url: '@Url.Action("CreateCategoriaIzaje")',
+            url: '@Url.Action("IndexCategoriasIzaje")',
             data: { id: id },
             type: 'POST',
             success: function (data) {
@@ -29,7 +29,7 @@
 
     function loadFactor(id) {
         $.ajax({
-            url: '@Url.Action("CreateFactorIzaje")',
+            url: '@Url.Action("IndexFactoresIzaje")',
             data: { id: id },
             type: 'POST',
             success: function (data) {

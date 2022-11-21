@@ -26,10 +26,37 @@ namespace WebApplication1.Controllers
         CategoriaIzajeBo _categoriaIzajeBo = new CategoriaIzajeBo();
         Util util;
         #endregion
+        public ActionResult Index()
+        {
+            return PartialView();
+        }
+
+        public ActionResult IndexCategoriasIzaje()
+        {
+
+            ViewBag.GetTipoEquipoDictionary = new SelectList(_izageBo.GetTipoEquipoDictionary(), "Key", "Value");
+            var result = _categoriaIzajeBo.GetInfo();
+
+            return PartialView(result);
+        }
         public ActionResult IndexFactoresIzaje()
         {
             ViewBag.GetCategoriaDictionary = new SelectList(_factoresIzajeBo.GetCategoriaDictionary(), "Key", "Value");
+            var result = _factoresIzajeBo.GetInfo();
+
+            return PartialView(result);
+        }
+
+        public PartialViewResult CreateCategoriaIzaje(int id)
+        {
             ViewBag.GetTipoEquipoDictionary = new SelectList(_izageBo.GetTipoEquipoDictionary(), "Key", "Value");
+
+            return PartialView();
+        }
+
+        public PartialViewResult CreateFactorIzaje(int id)
+        {
+            ViewBag.GetCategoriaDictionary = new SelectList(_factoresIzajeBo.GetCategoriaDictionary(), "Key", "Value");
 
             return PartialView();
         }
@@ -38,6 +65,7 @@ namespace WebApplication1.Controllers
         {
             try
             {
+
                 var result = _factoresIzajeBo.GetInfo();
 
                 return PartialView(result);
@@ -52,6 +80,7 @@ namespace WebApplication1.Controllers
         {
             try
             {
+
                 var result = _categoriaIzajeBo.GetInfo();
 
                 return PartialView(result);
@@ -112,15 +141,92 @@ namespace WebApplication1.Controllers
                 throw;
             }
         }
-        public ActionResult EditFactoresIzaje(int id)
+
+        [HttpPost]
+        public PartialViewResult EditCategoriaIzage(int id)
         {
-            var model = _izageBo.GetInfo(id);
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(), "Key", "Value", model.Rows[0]["Sede_id"].ToString());
-            ViewBag.UnidadMedidaDictionary = new SelectList(_izageBo.GetUnidadDictionary(), "Key", "Value", model.Rows[0]["UnidadCapacidad_Id"].ToString());
-            ViewBag.LocationDictionary = new SelectList(_locationBo.GetUbicacionIzaje(), "Key", "Value", model.Rows[0]["Ubicacion_id"].ToString());
-            return PartialView(model);
+            try
+            {
+                var result = _categoriaIzajeBo.GetById(id);
+
+                ViewBag.GetTipoEquipoDictionary = new SelectList(_izageBo.GetTipoEquipoDictionary(), "Key", "Value", result.Rows[0]["IdTipoEquipoFK"].ToString());
+
+                ViewBag.id = id;
+                return PartialView(result);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
+        [HttpPost]
+        public JsonResult ProcessEditCategoriaIzage(FormCollection collection)
+        {
+            try
+            {
+                var session = Session["SessionUser"] as SessionModels;
+                if (session == null)
+                    throw new Exception("Se ha perdido la sesión del Usuario");
+
+                int id = Convert.ToInt32(collection["ID"].ToString());
+                string nombre = collection["txbCategoria"].ToString();
+                int idTipoEquipo = collection["cbxTipoEquipo"].ToString() != string.Empty ? Convert.ToInt32(collection["cbxTipoEquipo"].ToString()) : 0;
+
+                _categoriaIzajeBo.Edit(id, idTipoEquipo, nombre);
+
+                return Json(new { result = true }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { result = false, message = ex.Message.ToString() }, JsonRequestBehavior.AllowGet);
+                throw;
+            }
+        }
+
+        [HttpPost]
+        public PartialViewResult EditFactorIzage(int id)
+        {
+            try
+            {
+                var result = _factoresIzajeBo.GetById(id);
+
+                ViewBag.GetCategoriaDictionary = new SelectList(_factoresIzajeBo.GetCategoriaDictionary(), "Key", "Value", result.Rows[0]["IdCategoriaFK"].ToString());
+
+                ViewBag.id = id;
+                return PartialView(result);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        [HttpPost]
+        public JsonResult ProcessEditFactorIzage(FormCollection collection)
+        {
+            try
+            {
+                var session = Session["SessionUser"] as SessionModels;
+                if (session == null)
+                    throw new Exception("Se ha perdido la sesión del Usuario");
+
+                int id = Convert.ToInt32(collection["ID"].ToString());
+                string nombre = collection["txbFactor"].ToString();
+                int idCategoria = collection["cbxCategoria"].ToString() != string.Empty ? Convert.ToInt32(collection["cbxCategoria"].ToString()) : 0;
+                var estador = collection["cbxEstado"].ToString();
+                bool estado = Convert.ToBoolean(Convert.ToInt32(collection["cbxEstado"].ToString()));
+
+                _factoresIzajeBo.Edit(id, idCategoria, nombre, estado);
+
+                return Json(new { result = true }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { result = false, message = ex.Message.ToString() }, JsonRequestBehavior.AllowGet);
+                throw;
+            }
+        }
 
     }
 }

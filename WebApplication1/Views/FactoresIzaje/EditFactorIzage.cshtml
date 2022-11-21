@@ -1,0 +1,100 @@
+﻿@using System.Data
+@model DataTable
+<style>
+    /*.ui.selection.dropdown {
+        padding: 0;
+    }*/
+    #modalLoadCourses {
+        height: 80vh;
+    }
+</style>
+<h3 style="color: #41B9E6; text-align: center;">
+    IZAJE DE CARGAS | EQUIPOS DE IZAJE | EDITAR FACTORES
+</h3>
+
+@using (Ajax.BeginForm("ProcessEditFactorIzage", "FactoresIzaje", FormMethod.Post, new AjaxOptions()
+{
+    HttpMethod = "POST",
+    OnBegin = "return onBeginProcessEdit()",
+    OnSuccess = "onSuccessProcessEdit(data)",
+    OnFailure = "onFailureProcessEdit()",
+}, new { @id = "formProcessEdit", @enctype = "multipart/form-data" }))
+{
+    <div class="ui equal width form">
+        <div class="field">
+            <input type="hidden" name="ID" value="@Model.Rows[0]["Id"].ToString()" />
+        </div>
+        <div class="fields">
+            <div class="field">
+                <label>Categoría</label>
+                @Html.DropDownList("cbxCategoria", (SelectList)ViewBag.GetCategoriaDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+
+            </div>
+            <div class="field">
+                <label>Factor</label>
+                <input type="text" id="txbFactor" name="txbFactor" value="@Model.Rows[0]["Nombre"].ToString()" placeholder="Digite Factor" autocomplete="off" maxlength="50">
+            </div>
+            <div class="field">
+                <label>Estado</label>
+                <select id="cbxEstado" name="cbxEstado" class="ui search dropdown">
+                    <option value="">[-Seleccione una opción-]</option>
+                    <option value="1" @Model.Rows[0]["Activo"].ToString()>Activo</option>
+                    <option value="0" @Model.Rows[0]["Inactivo"].ToString()>Inactivo</option>
+                </select>
+            </div>
+        </div>
+        <button class="ui primary button" id="btnGuardar">
+            Guardar
+        </button>
+        <div class="ui floating warning message" style="width:50%;margin-left:25%;margin-right:25%;text-align:center" id="messageEditFactor">
+            <div class="header">
+                Atención
+            </div>
+            <p id="textmessageEditFactor"></p>
+        </div>
+    </div>
+}
+<br />
+<script type="text/javascript">
+    $('#messageEditFactor').hide();
+
+    $('#formProcessEdit').form({
+        fields: {
+            cbxHeadquarter: {
+                identifier: 'cbxHeadquarter',
+                rules: [
+                    {
+                        type: 'empty',
+                        prompt: 'Debe elegir un valor'
+                    },
+                ]
+            },
+        }, inline: true,
+        on: 'blur'
+    });
+    $('#btnGuardar').on('click', function () {
+        $('#formProcessEdit').submit();
+    });
+
+    function onBeginProcessEdit() {
+        $('#renderPages').addClass("loading");
+        return true;
+    }
+
+    function onFailureProcessEdit() {
+        $('#renderPages').removeClass("loading");
+        $('#messageEditFactor').show('slow').addClass("warning").removeClass("info");
+        $('#textmessageEditFactor').text("Ha ocurrido un error al procesar la solicitud");
+    }
+
+    function onSuccessProcessEdit(data) {
+        $('#renderPages').removeClass("loading");
+        if (data.result) {
+            $('#messageEditFactor').show('slow').removeClass("warning").addClass("info");
+            $('#textmessageEditFactor').text("Proceso Completado");
+        } else {
+            $('#messageEditFactor').show('slow').addClass("warning").removeClass("info");
+            $('#textmessageEditFactor').text(data.message);
+        }
+    }
+</script>

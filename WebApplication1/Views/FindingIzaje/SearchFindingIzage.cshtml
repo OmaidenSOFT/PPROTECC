@@ -22,7 +22,11 @@
             <tr>
                 @foreach (DataColumn col in dt.Columns)
                 {
-                    if (col.ColumnName != "Id" && col.ColumnName != "Plan de acción")
+                    if (col.ColumnName == "Fecha de inspeccion")
+                    {
+                        <th>@DateTime.Parse(row[col.ColumnName].ToString()).ToString("d")</th>
+                    }
+                    else if (col.ColumnName != "Id" && col.ColumnName != "Plan de acción")
                     {
                         <th>@row[col.ColumnName]</th>
                     }

@@ -201,6 +201,23 @@ namespace LogicBo
             }
         }
 
+        public DataTable GetInventario()
+        {
+            try
+            {
+                List<SqlParameter> parameters = new List<SqlParameter>
+                {
+                };
+                var result = executeProcedures.DataTable("ENEL_InventarioIzaje", parameters);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         #region Entity
         #endregion
     }

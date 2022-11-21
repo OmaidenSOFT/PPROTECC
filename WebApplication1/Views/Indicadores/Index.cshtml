@@ -83,6 +83,18 @@
 </div>
 
 <script type="text/javascript">
+    $(function () {
+        onBeginProcessSearch();
+    });
+
+    var prmInstance = Sys.WebForms.PageRequestManager.getInstance();
+
+    prmInstance.add_endRequest(function () {
+        onBeginProcessSearch();
+    })
+    
+    $('#details').show();
+
     var chartInspection1 = null;
     var chartInspection2 = null;
 

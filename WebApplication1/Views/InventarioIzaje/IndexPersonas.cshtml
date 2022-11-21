@@ -1,0 +1,136 @@
+﻿@using System.Data
+@model DataTable
+<style>
+    .ui.selection.dropdown {
+        padding: 0;
+    }
+
+    .circleR {
+        height: 20px;
+        width: 20px;
+        background-color: salmon;
+        border-radius: 50%;
+    }
+
+    .circleA {
+        height: 20px;
+        width: 20px;
+        background-color: turquoise;
+        border-radius: 50%;
+    }
+
+    .circleY {
+        height: 20px;
+        width: 20px;
+        background-color: yellow;
+        border-radius: 50%;
+    }
+
+    .circleG {
+        height: 20px;
+        width: 20px;
+        background-color: green;
+        border-radius: 50%;
+    }
+
+    .circleD {
+        height: 20px;
+        width: 20px;
+        background-color: red;
+        border-radius: 50%;
+    }
+</style>
+<center><h3 style="color:#41B9E6; ">IZAJE DE CARGAS | FORMACIÓN DE PERSONAL | INVENTARIO GENERAL</h3></center>
+<br />
+<br />
+<table class="ui selectable celled table ui center aligned">
+
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Sede</th>
+            <th>Total</th>
+            <th colspan="2">Estado Curso</th>
+        </tr>
+        <tr>
+            <th colspan="3"></th>
+            <th>Vigentes <div class="circleG"></div></th>
+            <th>Vencidos <div class="circleR"></div></th>
+        </tr>
+    </thead>
+
+
+
+    <tbody>
+        @foreach (System.Data.DataRow row in Model.Rows)
+        {
+            <tr>
+                @foreach (DataColumn col in Model.Columns)
+                {
+                    if (col.ColumnName != "Codigo Sede")
+                    {
+                        if (col.ColumnName == "Sede")
+                        {
+                            <td><a href="javascript:void(0)" onclick="loadDetails('@row["Id"].ToString()')">@row[col.ColumnName]</a></td>
+                        }
+                        
+                        else if (col.ColumnName == "Vigente")
+                        {
+                            if (Convert.ToInt32(row[col.ColumnName]) != 0)
+                            {
+                                <td><a style="font-size:larger; color:green; font-style:italic" data-toggle="tooltip" title='@row[col.ColumnName] OK'>@row[col.ColumnName]</a> </td>
+                            }
+                            else
+                            {
+                                <td></td>
+                            }
+                        }
+                        
+                        else if (col.ColumnName == "Vencido")
+                        {
+                            if (Convert.ToInt32(row[col.ColumnName]) != 0)
+                            {
+                                <td><a style="font-size:larger; color:red; font-style:italic" data-toggle="tooltip" title='@row[col.ColumnName] Pendientes'>@row[col.ColumnName]</a></td>
+                            }
+                            else
+                            {
+                                <td></td>
+                            }
+                        }
+                        else
+                        {
+                            <td>@row[col.ColumnName]</td>
+                        }
+                    }
+
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+<button class="ui button" id="btnExport" onclick="location.href='@Url.Action("DownloadFile","Download",new { fileName="InventarioPersonas"})'">Exportar</button>
+<div class="ui modal" id="modalInformationByHeadquarter">
+    <div class="header" id="headerModal">Información Por sede</div>
+    <div class="scrolling content">
+        <div id="renderSearchInformationByHeadquarter"></div>
+    </div>
+</div>
+<script type="text/javascript">
+    function loadDetails(id) {
+        $.ajax({
+            url: '@Url.Action("SearchPersonasByIdSede")',
+               data: { id: id},
+            type: 'POST',
+            success: function (data) {
+                if (data) {
+                    $('#renderSearchInformationByHeadquarter').html(data);
+                    $('#modalInformationByHeadquarter').modal('show');
+                }
+            }
+        })
+    }
+
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>

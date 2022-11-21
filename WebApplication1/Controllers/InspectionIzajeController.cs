@@ -32,7 +32,6 @@ namespace WebApplication1.Controllers
         #endregion
         // GET: InspectionIzaje
 
-
         public ActionResult IndexInspectionIzaje()
         {
             ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionaryWithoutAll(), "Key", "Value");
@@ -125,8 +124,6 @@ namespace WebApplication1.Controllers
 
 
                 DataTable dt = _factoresIzajeBo.GetByIdEquipo(Convert.ToInt32(collection["idTipoEquipo"].ToString()));
-
-
 
                 InspectionIzaje inspectionIzaje = new InspectionIzaje();
                 inspectionIzaje.FechaInspeccion = Convert.ToDateTime(collection["cinspectionDate"].ToString());

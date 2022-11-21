@@ -45,7 +45,6 @@ namespace LogicBo
             }
         }
 
-
         public DataTable GetById(int id)
         {
             try
@@ -93,5 +92,28 @@ namespace LogicBo
                 throw;
             }
         }
+
+        public bool Edit(int id, int idCategoria, string nombre, bool estado)
+        {
+            try
+            {
+                List<SqlParameter> parameters = new List<SqlParameter> {
+                new SqlParameter(){ ParameterName="Id", SqlDbType=SqlDbType.Int,Value=id},
+                new SqlParameter(){ ParameterName="IdCategoriaFK", SqlDbType=SqlDbType.Int,Value=idCategoria},
+                new SqlParameter(){ ParameterName="Nombre", SqlDbType=SqlDbType.VarChar,Value=nombre},
+                new SqlParameter(){ ParameterName="Estado", SqlDbType=SqlDbType.Bit,Value=estado},
+            };
+                var result = executeProcedures.DataTable("ENEL_EditFactorIzaje", parameters);
+                if (!Convert.ToBoolean(result?.Rows[0][0].ToString()))
+                    throw new Exception(result.Rows[0][1].ToString());
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
     }
 }
