@@ -91,7 +91,16 @@
                             prompt: 'Debe ingresar algun valor'
                         },
                     ]
-                }
+                },
+                cbxCategoria: {
+                    identifier: 'cbxCategoria',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Debe elegir un valor'
+                        },
+                    ]
+                },
             }, inline: true,
             on: 'blur'
         });

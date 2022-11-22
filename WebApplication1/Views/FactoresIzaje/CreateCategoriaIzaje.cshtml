@@ -89,7 +89,16 @@
                             prompt: 'Debe ingresar algun valor'
                         },
                     ]
-                }
+                },
+                cbxTipoEquipo: {
+                    identifier: 'cbxTipoEquipo',
+                    rules: [
+                        {
+                            type: 'empty',
+                            prompt: 'Debe elegir un valor'
+                        },
+                    ]
+                },
             }, inline: true,
             on: 'blur'
         });
