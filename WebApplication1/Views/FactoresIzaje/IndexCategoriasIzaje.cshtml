@@ -1,8 +1,23 @@
 ﻿@using System.Data
-@model DataTable
+@model DataSet
 @{
-    System.Data.DataTable dt = Model;
+    System.Data.DataTable dt = Model.Tables[0];
 }
+
+<style>
+    .ui.form .fields .field .ui.input input, .ui.form .field .ui.input input {
+        display: none;
+        width: auto;
+    }
+
+    div.dynatable-per-page {
+        display: none;
+    }
+
+    div#dynatable-search-tablesIndexEquipment.dynatable-search.ui.input.spanSearch {
+        display: none;
+    }
+</style>
 
 @using (Ajax.BeginForm("SearchCategoriasIzaje", "FactoresIzaje", null, new AjaxOptions()
 {
@@ -12,74 +27,72 @@
     OnFailure = "onFailureProcessSearchCategorias()",
 }, new { @id = "formProcessSearchCategorias" }))
 {
-
-        <div class="ui top attached block header" style="padding:50px">
-            <div class="card-header">
+    <div class="ui top attached block header" style="padding:50px">
+        <div class="card-header">
+            <div class="fields">
+                <div class="field">
+                    <h3 style="color: #41B9E6; text-align: center;">
+                        IZAJE DE CARGAS | EQUIPOS DE IZAJE | CATEGORÍAS
+                    </h3>
+                    <br />
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="ui equal width form">
                 <div class="fields">
                     <div class="field">
-                        <h3 style="color: #41B9E6; text-align: center;">
-                            IZAJE DE CARGAS | EQUIPOS DE IZAJE | CATEGORÍAS
-                        </h3>
+                        <label>Categoría</label>
+                        <input type="text" id="txbCategoria" name="txbCategoria" placeholder="Categoria" autocomplete="off" maxlength="50">
+                    </div>
+                    <div class="field">
+                        <label>Tipo equipo</label>
+                        @Html.DropDownList("cbxTipoEquipo", (SelectList)ViewBag.GetTipoEquipoDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+
+                    </div>
+                    <div class="field" style="width:20%">
                         <br />
+                        <button class="ui primary button">
+                            Buscar
+                        </button>
                     </div>
+                </div>
+                <div class="fields">
+
+                </div>
+                <div class="fields" style="text-align:right !important">
+
                 </div>
             </div>
-            <div class="card-body">
-                <div class="ui equal width form">
-                    <div class="fields">
-                        <div class="field">
-                            <label>Categoría</label>
-                            <input type="text" id="txbCategoria" name="txbCategoria" placeholder="Categoria" autocomplete="off" maxlength="50">
-                        </div>
-                        <div class="field">
-                            <label>Tipo equipo</label>
-                            @Html.DropDownList("cbxTipoEquipo", (SelectList)ViewBag.GetTipoEquipoDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
-
-                        </div>
-                        <div class="field" style="width:20%">
-                            <br />
-                            <button class="ui primary button">
-                                Buscar
-                            </button>
-                        </div>
-                    </div>
-                    <div class="fields">
-
-                    </div>
-                    <div class="fields" style="text-align:right !important">
-
-                    </div>
-                </div>
-                <div id="renderSearchCategoriasIzage">
-
-                    <table class="ui selectable celled table ui center aligned tablesInitial" id="tablesIndexEquipment">
-                        <thead>
-                            <tr>
-                                @foreach (System.Data.DataColumn col in Model.Columns)
-                                {
-                                    <th>@col.ColumnName</th>
-                                }
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (System.Data.DataRow row in Model.Rows)
+            <div id="renderSearchCategoriasIzage">
+                <table class="ui selectable celled table ui center aligned tablesInitial" id="tablesIndexEquipment">
+                    <thead>
+                        <tr>
+                            @foreach (System.Data.DataColumn col in dt.Columns)
                             {
-                                <tr>
-                                    @foreach (DataColumn col in Model.Columns)
-                                    {
-
-                                        <th>@row[col.ColumnName]</th>
-                                    }
-                                    <td>
-                                        <a href="javascript:void(0)" onclick="loadDetails('@row["Id"].ToString()')">Editar</a>
-                                    </td>
-                                </tr>
+                                <th>@col.ColumnName</th>
                             }
-                        </tbody>
-                    </table>
-                </div>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (System.Data.DataRow row in dt.Rows)
+                        {
+                            <tr>
+                                @foreach (DataColumn col in dt.Columns)
+                                {
+
+                                    <th>@row[col.ColumnName]</th>
+                                }
+                                <td>
+                                    <a href="javascript:void(0)" onclick="loadDetails('@row["Id"].ToString()')">Editar</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
+        </div>
     </div>
 }
 
@@ -88,8 +101,9 @@
     </div>
 </div>
 
-<script type="text/javascript">
+<script>
     LoadTables();
+    //Funciones de Categorias
     $('#tablesIndexEquipment').dynatable({
     }).bind('dynatable:afterProcess', processingComplete);
     processingComplete();
@@ -111,6 +125,7 @@
     }
 
     function loadDetails(id) {
+        console.log(id);
         $.ajax({
             url: '@Url.Action("EditCategoriaIzage")',
                data: { id: id},

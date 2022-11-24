@@ -1,8 +1,22 @@
 ﻿@using System.Data
-@model DataTable
+@model DataSet
 @{
-    System.Data.DataTable dt = Model;
+    System.Data.DataTable dtFactor = Model.Tables[1];
 }
+<style>
+    .ui.form .fields .field .ui.input input, .ui.form .field .ui.input input {
+        display: none;
+        width: auto;
+    }
+
+    div.dynatable-per-page {
+        display: none;
+    }
+
+    div#dynatable-search-tablesIndexEquipment.dynatable-search.ui.input.spanSearch {
+        display: none;
+    }
+</style>
 
 @using (Ajax.BeginForm("SearchFactoresIzaje", "FactoresIzaje", null, new AjaxOptions()
 {
@@ -52,23 +66,23 @@
             <table class="ui selectable celled table ui center aligned tablesInitial" id="tablesIndexEquipment">
                 <thead>
                     <tr>
-                        @foreach (System.Data.DataColumn col in dt.Columns)
+                        @foreach (System.Data.DataColumn col in dtFactor.Columns)
                         {
                             <th>@col.ColumnName</th>
                         }
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (System.Data.DataRow row in dt.Rows)
+                    @foreach (System.Data.DataRow row in dtFactor.Rows)
                     {
                         <tr>
-                            @foreach (DataColumn col in dt.Columns)
+                            @foreach (DataColumn col in dtFactor.Columns)
                             {
 
                                 <th>@row[col.ColumnName]</th>
                             }
                             <td>
-                                <a href="javascript:void(0)" onclick="loadDetails('@row["#"].ToString()')">Editar</a>
+                                <a href="javascript:void(0)" onclick="loadDetailsFactor('@row["#"].ToString()')">Editar</a>
                             </td>
                         </tr>
                     }
@@ -83,8 +97,9 @@
     </div>
 </div>
 
-<script type="text/javascript">
+<script>
     LoadTables();
+        //Funciones de factores
     $('#tablesIndexEquipment').dynatable({
     }).bind('dynatable:afterProcess', processingComplete);
     processingComplete();
@@ -103,7 +118,8 @@
         $('#renderPages').removeClass("loading");
         $('#renderSearchFactoresIzage').html(data);
     }
-    function loadDetails(id) {
+    function loadDetailsFactor(id) {
+        console.log(id);
         $.ajax({
             url: '@Url.Action("EditFactorIzage")',
                data: { id: id},

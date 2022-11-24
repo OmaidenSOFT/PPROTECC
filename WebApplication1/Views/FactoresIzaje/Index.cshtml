@@ -2,41 +2,65 @@
     <div class="fields">
         <div class="field">
             <div class="content" id="loadindexCategoria">
+                @Html.Partial("IndexCategoriasIzaje")
             </div>
         </div>
         <div class="field">
             <div class="content" id="loadindexFactor">
+                @Html.Partial("IndexFactoresIzaje")
             </div>
         </div>
     </div>
 </div>
 <script>
-    loadCategoria(1);
-    loadFactor(1);
 
-    function loadCategoria(id) {
-        $.ajax({
-            url: '@Url.Action("IndexCategoriasIzaje")',
-            data: { id: id },
-            type: 'POST',
-            success: function (data) {
-                if (data) {
-                    $('#loadindexCategoria').html(data);
-                }
-            }
-        })
+    function onBeginProcessEditFactor() {
+        $('#renderPages').addClass("loading");
+        return true;
     }
 
-    function loadFactor(id) {
-        $.ajax({
-            url: '@Url.Action("IndexFactoresIzaje")',
-            data: { id: id },
-            type: 'POST',
-            success: function (data) {
-                if (data) {
-                    $('#loadindexFactor').html(data);
-                }
-            }
-        })
+    function onFailureProcessEditFactor() {
+        $('#renderPages').removeClass("loading");
+        $('#messageEditFactor').show('slow').addClass("warning").removeClass("info");
+        $('#textmessageEditFactor').text("Ha ocurrido un error al procesar la solicitud");
+    }
+
+    function onSuccessProcessEditFactor(data) {
+        $('#renderPages').removeClass("loading");
+        if (data.result) {
+            $('#messageEditFactor').show('slow').removeClass("warning").addClass("info");
+            $('#textmessageEditFactor').text("Proceso Completado");
+            setTimeout(function () {
+                location.reload();
+            }, 3000);
+        } else {
+            $('#messageEditFactor').show('slow').addClass("warning").removeClass("info");
+            $('#textmessageEditFactor').text(data.message);
+        }
+    }
+
+    function onBeginProcessEditCategoria() {
+        $('#renderPages').addClass("loading");
+        return true;
+    }
+
+    function onFailureProcessEditCategoria() {
+        $('#renderPages').removeClass("loading");
+        $('#messageEditCategoria').show('slow').addClass("warning").removeClass("info");
+        $('#textmessageEditCategoria').text("Ha ocurrido un error al procesar la solicitud");
+    }
+
+    function onSuccessProcessEditCategoria(data) {
+        $('#renderPages').removeClass("loading");
+        if (data.result) {
+            $('#messageEditCategoria').show('slow').removeClass("warning").addClass("info");
+            $('#textmessageEditCategoria').text("Proceso Completado");
+            setTimeout(function () {
+                location.reload();
+            }, 3000);
+        } else {
+            $('#messageEditCategoria').show('slow').addClass("warning").removeClass("info");
+            $('#textmessageEditCategoria').text(data.message);
+        }
     }
 </script>

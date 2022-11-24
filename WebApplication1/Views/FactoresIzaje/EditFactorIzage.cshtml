@@ -15,10 +15,10 @@
 @using (Ajax.BeginForm("ProcessEditFactorIzage", "FactoresIzaje", FormMethod.Post, new AjaxOptions()
 {
     HttpMethod = "POST",
-    OnBegin = "return onBeginProcessEdit()",
-    OnSuccess = "onSuccessProcessEdit(data)",
-    OnFailure = "onFailureProcessEdit()",
-}, new { @id = "formProcessEdit", @enctype = "multipart/form-data" }))
+    OnBegin = "return onBeginProcessEditFactor()",
+    OnSuccess = "onSuccessProcessEditFactor(data)",
+    OnFailure = "onFailureProcessEditFactor()",
+}, new { @id = "formProcessEditFactor", @enctype = "multipart/form-data" }))
 {
     <div class="ui equal width form">
         <div class="field">
@@ -43,7 +43,7 @@
                 </select>
             </div>
         </div>
-        <button class="ui primary button" id="btnGuardar">
+        <button class="ui primary button" id="btnGuardarFactor">
             Guardar
         </button>
         <div class="ui floating warning message" style="width:50%;margin-left:25%;margin-right:25%;text-align:center" id="messageEditFactor">
@@ -55,10 +55,12 @@
     </div>
 }
 <br />
-<script type="text/javascript">
+
+<script>
+    //Funciones editar factor
     $('#messageEditFactor').hide();
 
-    $('#formProcessEdit').form({
+    $('#formProcessEditFactor').form({
         fields: {
             cbxHeadquarter: {
                 identifier: 'cbxHeadquarter',
@@ -72,29 +74,8 @@
         }, inline: true,
         on: 'blur'
     });
-    $('#btnGuardar').on('click', function () {
-        $('#formProcessEdit').submit();
+    $('#btnGuardarFactor').on('click', function () {
+        $('#formProcessEditFactor').submit();
     });
 
-    function onBeginProcessEdit() {
-        $('#renderPages').addClass("loading");
-        return true;
-    }
-
-    function onFailureProcessEdit() {
-        $('#renderPages').removeClass("loading");
-        $('#messageEditFactor').show('slow').addClass("warning").removeClass("info");
-        $('#textmessageEditFactor').text("Ha ocurrido un error al procesar la solicitud");
-    }
-
-    function onSuccessProcessEdit(data) {
-        $('#renderPages').removeClass("loading");
-        if (data.result) {
-            $('#messageEditFactor').show('slow').removeClass("warning").addClass("info");
-            $('#textmessageEditFactor').text("Proceso Completado");
-        } else {
-            $('#messageEditFactor').show('slow').addClass("warning").removeClass("info");
-            $('#textmessageEditFactor').text(data.message);
-        }
-    }
 </script>

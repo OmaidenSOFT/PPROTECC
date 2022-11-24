@@ -1,5 +1,6 @@
 ﻿using LogicBo;
 using System;
+using System.Data;
 using System.Web;
 using System.Web.Mvc;
 using Utils;
@@ -28,10 +29,20 @@ namespace WebApplication1.Controllers
         #endregion
         public ActionResult Index()
         {
-            return PartialView();
+            ViewBag.GetTipoEquipoDictionary = new SelectList(_izageBo.GetTipoEquipoDictionary(), "Key", "Value");
+            ViewBag.GetCategoriaDictionary = new SelectList(_factoresIzajeBo.GetCategoriaDictionary(), "Key", "Value");
+
+            DataSet ds = new DataSet();
+
+            var result = _categoriaIzajeBo.GetInfo();
+            ds.Tables.Add(result);
+            result = _factoresIzajeBo.GetInfo();
+            ds.Tables.Add(result);
+
+            return PartialView(ds);
         }
 
-        public ActionResult IndexCategoriasIzaje()
+        public PartialViewResult IndexCategoriasIzaje()
         {
 
             ViewBag.GetTipoEquipoDictionary = new SelectList(_izageBo.GetTipoEquipoDictionary(), "Key", "Value");
@@ -39,7 +50,7 @@ namespace WebApplication1.Controllers
 
             return PartialView(result);
         }
-        public ActionResult IndexFactoresIzaje()
+        public PartialViewResult IndexFactoresIzaje()
         {
             ViewBag.GetCategoriaDictionary = new SelectList(_factoresIzajeBo.GetCategoriaDictionary(), "Key", "Value");
             var result = _factoresIzajeBo.GetInfo();
