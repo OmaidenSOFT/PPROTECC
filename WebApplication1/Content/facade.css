@@ -27,8 +27,17 @@ body {
     max-width: 1200px;
     margin-block: 2rem;
     gap: 2rem;
+    margin-top:-1% !important;
 }
-
+.containerC {
+    display: flex;
+    flex-wrap: unset;
+    justify-content: center;
+    max-width: 1581px !important;
+    margin-block: 2rem;
+    gap: 2rem;
+    margin-top: -6% !important;
+}
 img {
     max-width: 100%;
     display: block;

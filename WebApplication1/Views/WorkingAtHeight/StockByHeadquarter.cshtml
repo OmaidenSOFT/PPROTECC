@@ -1,5 +1,9 @@
 ﻿@using System.Data
 @model DataTable
+
+<link href="~/Content/SemanticUI/semantic.css" rel="stylesheet" />
+<link href="~/Scripts/tables/jquery.dynatable.css" rel="stylesheet" />
+<script type="text/javascript" src="~/Scripts/tables/jquery.dynatable.js"></script>
 <style>
     .dynatable-per-page-select {
         padding: 0px !important;
@@ -10,7 +14,7 @@
         height: 80vh;
     }
 </style>
-<table class="ui selectable celled table ui center aligned tablesInitial" id="tableStockByHeadquarter">
+<table class="ui selectable celled table ui center aligned tablesInitial" id="tableStockByHeadquarter" style=" margin-top: 5%;">
     <thead>
         <tr>
             <th>Id</th>

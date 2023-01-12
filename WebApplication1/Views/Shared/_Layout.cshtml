@@ -32,11 +32,16 @@
     <script src="~/Scripts/chartJs/Chart.min.js"></script>
     <link href="~/Content/menuNew.css" rel="stylesheet" />
 
-
+    @Styles.Render("~/Content/SemanticUi/semantic.css")
+    @Styles.Render("~/Content/Site.css")
+    @Styles.Render("~/Content/font-awesome-4.7.0/css/font-awesome.css")
+    <link href="~/Content/facade.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+
+
 
     <style>
         body {
@@ -64,33 +69,20 @@
 </head>
 <body>
     <div class="ui very text container segment" id="segmentLogin" style="margin-top:0%;height: 139px;">
-        <img class="ui centered medium image" src="/Content/Images/Logo.png">
+        <img class="ui centered medium image" src="@Url.Content("~/Content/Images/Logo.png")">
         <h2 style="text-align:center;color: #1cac84;" id="titulo1" class="ui teal">PPROTECC 2.0</h2>
 
 
 
     </div>
     <div class="main">
+
         <div class="ui equal width form" style="margin-top:-6%;">
 
-            @if (session.Idioma == "italiano")
-            {
-            <a class="menu__link" href="@Url.Action("LogOff", "Account")" data-finish="true" style="font-size: larger;">
-                <i class="fa fa-home" aria-hidden="true"></i> Lasciare
-            </a>
-            }
-            else if (session.Idioma == "spain")
-            {
-                <a class="menu__link" href="@Url.Action("LogOff", "Account")" data-finish="true" style="font-size: larger;">
-                    <i class="fa fa-home" aria-hidden="true"></i> Salir
-                </a>
-            }
-            else if (session.Idioma == "english")
-            {
-                <a class="menu__link" href="@Url.Action("LogOff", "Account")" data-finish="true" style="font-size: larger;">
-                    <i class="fa fa-home" aria-hidden="true"></i> Exit
-                </a>
-            }
+            <a class="nav-item nav-link active" href="" onclick="mostrarMenu()">Menu<span class="sr-only">(current)</span></a>
+
+
+
             <div class="fields">
 
                 @if (session.Idioma == "italiano")
@@ -108,7 +100,7 @@
                 {
                     if (session.ModuloSeleccionado == "WH")
                     {
-                        @Html.Partial("_MenuPartialWH")
+                        @Html.Partial("_MenuPartialWHU")
                     }
                     else
                     {
@@ -127,13 +119,33 @@
                     }
                 }
 
-                <div class="field">
-                    <div class="ui segment" id="renderPages" style="min-height:700px !important;background-color: transparent;border:none">
-                        @RenderBody()
-                    </div>
-                </div>
             </div>
         </div>
+
+
+        <div class="field">
+            <div class="ui segment" id="renderPages" style="min-height:700px !important;background-color: transparent;border:none">
+                @RenderBody()
+            </div>
+        </div>
+        @if (session.Idioma == "italiano")
+        {
+            <a class="menu__link" href="@Url.Action("LogOff", "Account")" data-finish="true" style="font-size: larger;">
+                <i class="fa fa-home" aria-hidden="true"></i> Lasciare
+            </a>
+        }
+        else if (session.Idioma == "spain")
+        {
+            <a class="menu__link" href="@Url.Action("LogOff", "Account")" data-finish="true" style="font-size: larger;">
+                <i class="fa fa-home" aria-hidden="true"></i> Salir
+            </a>
+        }
+        else if (session.Idioma == "english")
+        {
+            <a class="menu__link" href="@Url.Action("LogOff", "Account")" data-finish="true" style="font-size: larger;">
+                <i class="fa fa-home" aria-hidden="true"></i> Exit
+            </a>
+        }
     </div>
     @Scripts.Render("~/bundles/jqueryJs")
     @Scripts.Render("~/bundles/semanticJs")
@@ -141,7 +153,11 @@
     @Scripts.Render("~/bundles/jqueryUnobstriveJs")
     @RenderSection("scripts", required: false)
     <script type="text/javascript">
+        
 
+        function mostrarMenu() {
+            $('#facade').show();
+        };
 
     function loadDummyData(hrefURL) {
             cargarElement(hrefURL);
@@ -169,6 +185,9 @@
     function LoadElementsDefaultPartial(element) {
         $(element).find($('.ui.dropdown').dropdown());
         $(element).find($('.ui.checkbox').checkbox());
+        $('#renderPages').focus();
+        $('#facade').hide();
+        
         }
 
 

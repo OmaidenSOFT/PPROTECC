@@ -212,6 +212,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\admnis.jpg" />
     <Content Include="Content\alturas.jpg" />
     <Content Include="Content\argentina.png" />
     <Content Include="Content\Bootstrap\css\bootstrap-grid.css" />
@@ -233,7 +234,11 @@
     <Content Include="Content\font-awesome-4.7.0\css\font-awesome.min.css" />
     <Content Include="Content\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\font-awesome-4.7.0\HELP-US-OUT.txt" />
-    <Content Include="Content\Images\02-Pantalla-ingreso-A.jpg" />
+    <Content Include="Content\formacion_com.jpg" />
+    <Content Include="Content\gestion_equipos.jpg" />
+    <Content Include="Content\Images\02-Pantalla-ingreso-A.png" />
+    <Content Include="Content\Images\02-Pantalla-ingreso-A_Old.jpg" />
+    <Content Include="Content\Images\02-Pantalla-ingreso-C.jpg" />
     <Content Include="Content\Images\02-pantalla-inicio-B.jpg" />
     <Content Include="Content\Images\backPage.jpg" />
     <Content Include="Content\Images\edit.png" />
@@ -245,6 +250,7 @@
     <Content Include="Content\Images\izage.jpg" />
     <Content Include="Content\Images\Logo.png" />
     <Content Include="Content\Images\Logo1.png" />
+    <Content Include="Content\Images\Logo_1.png" />
     <Content Include="Content\Images\menu.jpg" />
     <Content Include="Content\Images\ok.png" />
     <Content Include="Content\Images\pantalla_inicio_2.jpg" />
@@ -257,12 +263,15 @@
     <Content Include="Content\Images\tr-izages.jpg" />
     <Content Include="Content\Images\tr-riesgoe.jpg" />
     <Content Include="Content\Images\tr_alturas.jpg" />
+    <Content Include="Content\indicadores.jpg" />
+    <Content Include="Content\inspeccion_man.jpg" />
     <Content Include="Content\Italia.png" />
     <Content Include="Content\Izage.jpg" />
     <Content Include="Content\LoadingOverlay\src\loading.gif" />
     <Content Include="Content\LoadingOverlay\src\loadingoverlay.js" />
     <Content Include="Content\LoadingOverlay\src\loadingoverlay.min.js" />
     <Content Include="Content\menuNew.css" />
+    <Content Include="Content\modulo_medico.jpg" />
     <Content Include="Content\Peru.png" />
     <Content Include="Content\riesgoelectrico.png" />
     <Content Include="Content\rxtintores.jpg" />
@@ -814,6 +823,7 @@
     <Content Include="Views\Shared\_MenuPartialIC.cshtml" />
     <Content Include="Views\Shared\_MenuPartialICIT.cshtml" />
     <Content Include="Views\Shared\_MenuPartialICEN.cshtml" />
+    <Content Include="Views\Shared\_MenuPartialWHU.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
