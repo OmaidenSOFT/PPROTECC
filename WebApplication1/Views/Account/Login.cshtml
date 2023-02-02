@@ -1,4 +1,8 @@
-﻿
+﻿<style>
+    .colorClass {
+        color: #008c5a !important;
+    }
+</style>
 
 @{ ViewBag.Title = "Login"; Layout = "~/Views/Shared/_LayoutLogin.cshtml"; } @using (Ajax.BeginForm("ValidateLogin", "Account", null, new AjaxOptions() { OnBegin = "OnBeginLogin()", OnSuccess = "OnSuccessLogin(data)", OnFailure = "OnError(xhr)", HttpMethod = "POST" }, new { @id = "formLogin" }))
 {
@@ -7,37 +11,30 @@
     <div class="ui equal width form">
         <div class="fields">
             <div class="field">
-
-                <label for="language-picker-select" id="seleccioneidi">Seleccione su idioma</label>
-
-                <select name="cbxlanguage" id="cbxlanguage" onchange="detectChange(this)">
+                <select name="cbxlanguage" id="cbxlanguage" onchange="detectChange(this)" style="color: #008c5a;">
+                    <option lang="na" value="selectL" selected>Seleccione idioma</option>
                     <option lang="de" value="english">English</option>
-                    <option lang="en" value="spain" selected>Español</option>
+                    <option lang="en" value="spain">Español</option>
                     <option lang="it" value="italiano">Italiano</option>
                     <!-- other language options -->
                 </select>
             </div>
             <div class="field">
-                <label for="password" id="pais">País:</label>
-                <div class="ui right icon input">
-                    @Html.DropDownList("cbxCountry", (SelectList)ViewBag.CountryDictionary, new { @class = "ui search dropdown" })
-                </div>
+                @Html.DropDownList("cbxCountry", (SelectList)ViewBag.CountryDictionary, new { @class = "ui search dropdown colorClass" })
             </div>
 
         </div>
         <div class="fields">
 
             <div class="field">
-                <label for="nameUser" id="user">Usuario:</label>
                 <div class="ui right icon input">
-                    <input type="text" name="nameUser" id="nameUser" data-validate="nameUser" placeholder="Usuario" autocomplete="off" style="width:202px">
+                    <input type="text" name="nameUser" id="nameUser" data-validate="nameUser" placeholder="Usuario" autocomplete="off" style="width:202px;color:#008c5a !important;">
                     <i class="user secret icon"></i>
                 </div>
             </div>
             <div class="field">
-                <label for="password" id="pass">Contraseña:</label>
                 <div class="ui right icon input">
-                    <input type="password" name="password" id="password" placeholder="Contraseña" autocomplete="off" style="width:202px">
+                    <input type="password" name="password" id="password" placeholder="Contraseña" autocomplete="off" style="width: 202px; color: #008c5a !important;">
                     <i class="lock icon"></i>
                 </div>
             </div>
@@ -53,7 +50,8 @@
         </div>
 
     </div>
-    <div class="ui warning message very container" id="messageResultLogin" style="text-align:center"></div>}
+    @*<div class="ui warning message very container" id="messageResultLogin" style="text-align:center"></div>*@
+    }
 
 <script type="text/javascript">
 

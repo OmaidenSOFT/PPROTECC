@@ -22,31 +22,24 @@
     </style>
 </head>
 <body>
-    <div class="ui very text container segment" id="segmentLogin" style="margin-top:0%;height:160px">
-        <img class="ui centered medium image" src="@Url.Content("~/Content/Images/Logo.png")">
-        <h2 style="text-align:center" id="titulo1" class="ui teal header">PPROTECC 2.0</h2>
-
-
-
-    </div>
+    <img class="ui centered image" src="@Url.Content("~/Content/Images/Logo.png")" style="border-radius: 0px 0px 20px 20px;width:18%">
     <div class="main" id="facade">
         <div class="container" style="margin-top:-6%">
             <div class="card">
                 <div class="card__header">
-                    <img src="~/Content/alturas.jpg" alt="card__image" class="card__image" width="600">
+                    <img src="~/Content/Images/pprotecc2_trabajo.png" alt="card__image" class="card__image" width="600" style="margin-top:-3%">
                 </div>
                 <div class="card__body">
-                    <span class="tag tag-blue">
-                        <h2 onclick="alturas()" style="text-align:center" id="titulo1" class="ui teal header">@session.Modulos.Split('|')[0].ToUpper()</h2>
-                    </span>
-                      <h4>@session.Subtitulos.Split('|')[0]</h4>
-                    
+                    <img src="~/Content/Images/PPROTECC 2 ok_Boton altura.png"  onclick="alturas()" style="height:20%" />
+                    <h4 style="font-family: RoobertENELGRE-Regular; text-transform: none !important;">@session.Subtitulos.Split('|')[0]</h4>
+
                 </div>
                 <div class="card__footer">
                     <div class="user">
-                        <img src="~/Content/Images/tr_alturas.jpg" alt="user__image" class="user__image">
+
+                        <img src="~/Content/Images/altura_pie.png" style="width: 49%;height: 91%;" />
                         <div class="user__info">
-                            <h5>@session.piedepaginacards.Split('|')[0]</h5>
+                            <h5 style="font-family: RoobertENELGRE-Regular; text-transform: none !important;">@session.piedepaginacards.Split('|')[0]</h5>
                             <small>@session.piedepaginacards.Split('|')[1]</small>
                         </div>
                     </div>
@@ -54,18 +47,18 @@
             </div>
             <div class="card">
                 <div class="card__header">
-                    <img src="~/Content/Izage.jpg" alt="card__image" class="card__image" width="600">
+                    <img src="~/Content/Images/pprotecc2_izage.png" alt="card__image" class="card__image" width="600" style="margin-top:-3%">
                 </div>
                 <div class="card__body">
-                    <span class="tag tag-blue"><h2 onclick="izage()" style="text-align:center" id="titulo1" class="ui teal header">@session.Modulos.Split('|')[1].ToUpper()</h2></span>
-                    <h4>@session.Subtitulos.Split('|')[1]</h4>
-                   
+                    <img src="~/Content/Images/PPROTECC 2 ok_boton izaje.png"onclick="izage()" style="height:24%" />
+                    <h4 style="font-family: RoobertENELGRE-Regular; text-transform: none !important;">@session.Subtitulos.Split('|')[1]</h4>
                 </div>
                 <div class="card__footer">
                     <div class="user">
-                        <img src="~/Content/Izage.jpg" alt="user__image" class="user__image">
+
+                        <img src="~/Content/Images/izage_pie.png" style="width: 49%;height: 91%;"/>
                         <div class="user__info">
-                            <h5>@session.piedepaginacards.Split('|')[0]</h5>
+                            <h5 style="font-family: RoobertENELGRE-Regular; text-transform: none !important;">@session.piedepaginacards.Split('|')[0]</h5>
                             <small>@session.piedepaginacards.Split('|')[1]</small>
                         </div>
                     </div>
@@ -73,18 +66,19 @@
             </div>
             <div class="card">
                 <div class="card__header">
-                    <img src="~/Content/espacios.jpg" alt="card__image" class="card__image" width="600">
+                    <img src="~/Content/Images/pprotecc2_espacios.png" alt="card__image" class="card__image" width="600" style="margin-top:-3%">
                 </div>
                 <div class="card__body">
-                    <span class="tag tag-blue"><h2 style="text-align:center" id="titulo1" class="ui teal header">@session.Modulos.Split('|')[2].ToUpper()</h2></span>
-                    <h4>@session.Subtitulos.Split('|')[2]</h4>
-                   
+                    <img src="~/Content/Images/PPROTECC 2 ok_boton espacio confinado.png" style="height:40%" />
+                    <h4 style="font-family: RoobertENELGRE-Regular; text-transform: none !important;">@session.Subtitulos.Split('|')[2]</h4>
+
                 </div>
                 <div class="card__footer">
                     <div class="user">
-                        <img src="~/Content/Images/tr-espacio.jpg" alt="user__image" class="user__image">
+
+                        <img src="~/Content/Images/espacios_pie.png" style="width: 49%;height: 91%;"/>
                         <div class="user__info">
-                            <h5>@session.piedepaginacards.Split('|')[0]</h5>
+                            <h5 style="font-family: RoobertENELGRE-Regular; text-transform: none !important;">@session.piedepaginacards.Split('|')[0]</h5>
                             <small>@session.piedepaginacards.Split('|')[1]</small>
                         </div>
                     </div>
@@ -92,18 +86,21 @@
             </div>
             <div class="card">
                 <div class="card__header">
-                    <img src="~/Content/riesgoelectrico.png" alt="card__image" class="card__image" width="600">
+                    <img src="~/Content/Images/pprotecc2_riesgo.png" alt="card__image" class="card__image" width="600" style="margin-top:-3%">
                 </div>
                 <div class="card__body">
-                    <span class="tag tag-blue"><h2 style="text-align:center" id="titulo1" class="ui teal header">@session.Modulos.Split('|')[3].ToUpper()</h2></span>
-                    <h4>@session.Subtitulos.Split('|')[3]</h4>
-                   
+
+                    <img src="~/Content/Images/PPROTECC 2 ok_boton electrico.png" style="height:37%"/>
+
+                    <h4 style="font-family: RoobertENELGRE-Regular; text-transform: none !important;">@session.Subtitulos.Split('|')[3]</h4>
+
                 </div>
                 <div class="card__footer">
                     <div class="user">
-                        <img src="~/Content/Images/tr-riesgoe.jpg" alt="user__image" class="user__image">
+
+                        <img src="~/Content/Images/riesgo_pie.png" style="width: 49%;height: 91%;"/>
                         <div class="user__info">
-                            <h5>@session.piedepaginacards.Split('|')[0]</h5>
+                            <h5 style="font-family: RoobertENELGRE-Regular; text-transform: none !important;">@session.piedepaginacards.Split('|')[0]</h5>
                             <small>@session.piedepaginacards.Split('|')[1]</small>
                         </div>
                     </div>
@@ -111,18 +108,19 @@
             </div>
             <div class="card">
                 <div class="card__header">
-                    <img src="~/Content/rxtintores.jpg" alt="card__image" class="card__image" width="600">
+                    <img src="~/Content/Images/pprotecc2_extintor.png" alt="card__image" class="card__image" width="600" style="margin-top:-3%">
                 </div>
                 <div class="card__body">
-                    <span class="tag tag-blue"><h2 style="text-align:center" id="titulo1" class="ui teal header">@session.Modulos.Split('|')[4].ToUpper()</h2></span>
-                    <h4>@session.Subtitulos.Split('|')[4]</h4>
-                   
+
+                    <img src="~/Content/Images/PPROTECC 2 ok_boton extintor.png" style="height:37%"/>
+                    <h4 style="font-family: RoobertENELGRE-Regular; text-transform: none !important;">@session.Subtitulos.Split('|')[4]</h4>
+
                 </div>
                 <div class="card__footer">
                     <div class="user">
-                        <img src="~/Content/Images/tr-extintores.jpg" alt="user__image" class="user__image">
+                        <img src="~/Content/Images/extintores_pie.png" style="width: 49%;height: 91%;" />
                         <div class="user__info">
-                            <h5>@session.piedepaginacards.Split('|')[0]</h5>
+                            <h5 style="font-family: RoobertENELGRE-Regular; text-transform: none !important;">@session.piedepaginacards.Split('|')[0]</h5>
                             <small>@session.piedepaginacards.Split('|')[1]</small>
                         </div>
                     </div>
@@ -146,7 +144,7 @@
     @Scripts.Render("~/Content/LoadingOverlay/src/loadingoverlay.min.js")
     @Scripts.Render("~/bundles/jqueryUnobstriveJs")
     @RenderSection("scripts", required: false)
-<script type="text/javascript">
+    <script type="text/javascript">
         function alturas() {
              var link = '@Url.Action("Index", "Home", new { modulo = "WH" })';
         location.href = link;
@@ -155,6 +153,6 @@
         var link = '@Url.Action("Index", "Home", new { modulo = "IC" })';
         location.href = link;
         }
-</script>
+    </script>
 </body>
 </html>
