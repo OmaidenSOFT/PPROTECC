@@ -22,10 +22,13 @@ body {
 }
 
 .red {
-    background-color: #db2828 !important;
+    background-color: red !important;
     color: #FFFFFF !important;
 }
-
+.white {
+    background-color: white !important;
+    color: #FFFFFF !important;
+}
 #dropZone {
     background: gray;
     border: black dashed 3px;

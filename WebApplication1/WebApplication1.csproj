@@ -257,6 +257,25 @@
     <Content Include="Content\Images\Logo.png" />
     <Content Include="Content\Images\Logo1.png" />
     <Content Include="Content\Images\Logo_1.png" />
+    <Content Include="Content\Images\M1_Cargar.png" />
+    <Content Include="Content\Images\M1_For.png" />
+    <Content Include="Content\Images\M1_Nor.png" />
+    <Content Include="Content\Images\M1_Proc.png" />
+    <Content Include="Content\Images\M2_CargarFichasT.png" />
+    <Content Include="Content\Images\M2_CertI.png" />
+    <Content Include="Content\Images\M2_CrearEq.png" />
+    <Content Include="Content\Images\M2_FichasT.png" />
+    <Content Include="Content\Images\M2_HojasV.png" />
+    <Content Include="Content\Images\M2_Inventarios.png" />
+    <Content Include="Content\Images\M2_MatrizE.png" />
+    <Content Include="Content\Images\M2_Pag_E.png" />
+    <Content Include="Content\Images\M3_1.png" />
+    <Content Include="Content\Images\M3_2.png" />
+    <Content Include="Content\Images\M3_3.png" />
+    <Content Include="Content\Images\M3_4.png" />
+    <Content Include="Content\Images\M3_5.png" />
+    <Content Include="Content\Images\M3_6.png" />
+    <Content Include="Content\Images\M3_7.png" />
     <Content Include="Content\Images\menu.jpg" />
     <Content Include="Content\Images\ok.png" />
     <Content Include="Content\Images\pantalla_inicio_2.jpg" />
@@ -266,9 +285,12 @@
     <Content Include="Content\Images\PPROTECC 2 ok_boton extintor.png" />
     <Content Include="Content\Images\PPROTECC 2 ok_boton izaje.png" />
     <Content Include="Content\Images\PPROTECC 2 ok_Cabezote.jpg" />
+    <Content Include="Content\Images\PPROTECC 2 ok_inspeccion y mantenimiento.png" />
+    <Content Include="Content\Images\PPROTECC 2 ok_programa de altura.png" />
     <Content Include="Content\Images\PPROTECC2.png" />
     <Content Include="Content\Images\pprotecc2_espacios.png" />
     <Content Include="Content\Images\pprotecc2_extintor.png" />
+    <Content Include="Content\Images\PPROTECC2_gestion de equipo.png" />
     <Content Include="Content\Images\pprotecc2_izage.png" />
     <Content Include="Content\Images\pprotecc2_riesgo.png" />
     <Content Include="Content\Images\pprotecc2_trabajo.png" />
@@ -463,6 +485,7 @@
     <Content Include="Content\SemanticUI\themes\default\assets\images\flags.png" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\spain.png" />
+    <Content Include="Content\styles\cardscss.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
     <Content Include="favicon.ico" />
@@ -843,10 +866,11 @@
     <Content Include="Views\Shared\_MenuPartialWH.cshtml" />
     <Content Include="Views\Shared\_MenuPartialWHEN.cshtml" />
     <Content Include="Views\Shared\_MenuPartialWHIT.cshtml" />
-    <Content Include="Views\Shared\_MenuPartialIC.cshtml" />
-    <Content Include="Views\Shared\_MenuPartialICIT.cshtml" />
+    <Content Include="Views\Shared\_MenuPartialIC1.cshtml" />
+    <Content Include="Views\Shared\_MenuPartialICIT1.cshtml" />
     <Content Include="Views\Shared\_MenuPartialICEN.cshtml" />
     <Content Include="Views\Shared\_MenuPartialWHU.cshtml" />
+    <Content Include="Views\Shared\_MenuPartialIC.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

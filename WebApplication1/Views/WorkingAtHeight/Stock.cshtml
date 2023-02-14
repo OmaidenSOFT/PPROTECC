@@ -84,7 +84,7 @@
                     {
                         if (col.ColumnName == "Sede")
                         {
-                            <td><a href="javascript:void(0)" onclick="getDetail('@row["CodigoSucursal"].ToString()')">@row[col.ColumnName]</a></td>
+                            <td><a href="javascript:void(0)" onclick="getDetail('@row["CodigoSucursal"].ToString()','@row["Sede"].ToString()')">@row[col.ColumnName]</a></td>
                         }
                         else if (col.ColumnName == "Total Aceptados")
                         {
@@ -161,21 +161,21 @@
     </tbody>
 </table>
 <button class="ui button" id="btnExport" onclick="location.href='@Url.Action("DownloadFile","Download",new { fileName="Stock"})'">Exportar</button>
-<div class="ui modal" id="modalInformationByHeadquarter">
-    <div class="header" id="headerModal">Información Por sede</div>
+<div class="ui modal" id="modalInformationByHeadquarter" style="width:80% !important">
+    <div class="header" id="headerModal"></div>
     <div class="scrolling content">
         <div id="renderSearchInformationByHeadquarter" style=" width: 95% !important;"></div>
     </div>
 </div>
 <script type="text/javascript">
-    function getDetail(id) {
+    function getDetail(id,sede) {
         if (id > 0) {
             $.ajax({
                 url: '@Url.Action("StockByHeadquarter", "WorkingAtHeight")',
                 data: { headquarterId: id },
                 type: 'POST',
                 success: function (data) {
-
+                    $('#headerModal').html("Información sede: " + sede);
                     $('#renderSearchInformationByHeadquarter').html(data);
                     $('#modalInformationByHeadquarter').modal('show');
                 }

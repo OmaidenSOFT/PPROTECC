@@ -1,63 +1,133 @@
-﻿<div class="field" style="width: 27% !important;">
-    <div class="accordion" id="accordionExample">
-        <div class="card">
-            <div class="card-header" id="headingOne">
-                <h2 class="mb-0 tag tag-blue">
-                    <button class="btn btn-link btn-block text-left btn-bdy" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        Equipos de Izaje de cargas
-                    </button>
-                </h2>
+﻿@using WebApplication1.Models;
+@{
+    var session = Session["SessionUser"] as SessionModels;
+}
+<link href="~/Content/styles/cardscss.css" rel="stylesheet" />
+<div class="main" id="facade">
+    <div class="container" style="margin-left: 8%; max-width:1440px;">
+        <div class="card float-right" style="width:53%">
+            <div class="row" style="margin-top: -5% !important;">
+                <div class="col-sm-5" style="padding-right: 0 !important;padding-left: 0 !important;">
+                    <img class="d-block w-100" src="~/Content/Images/pprotecc2_trabajo.png" alt="" style="height: 100%;border-radius: .28571429rem;z-index: -1;position: unset;" />
+                </div>
+                <div class="col-sm-7">
+                    <div class="card-block">
+                        <div style="background-color: #008c5a;height: 48px;text-align: center;border-radius: .28571429rem;width: 123%;margin-left: -5%;">
+                            <h5 class="card-title" style="color: #55be5a;margin-left: -13%;padding-top: 10px;">Equipos de Izaje de cargas</h5>
+                        </div>
+                        <div>
+
+                            <table class="table table-striped">
+                                <tbody>
+                                    <tr>
+                                        <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("IndexEquipmentIzage", "Izage")')" style="color: #aaaaaa !important;font-size: smaller;">Equipos - Página Inicial</a></th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("CreateEquipmentIzage", "Izage")')" style="color: #aaaaaa !important;font-size: smaller;">Equipos - Crear Nuevo</a></th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("IndexInspectionIzaje", "InspectionIzaje")')" style="color: #aaaaaa !important;font-size: smaller;">Inspecciones - Página Inicial</a></th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("CreateInspectionIzaje", "InspectionIzaje",new { @id=0})')" style="color: #aaaaaa !important;font-size: smaller;">Inspecciones - Crear Nuevo</a></th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="field">
+
+                            <table class="table table-striped">
+                                <tbody>
+                                    <tr>
+                                        <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("IndexFactoresIzaje", "FactoresIzaje")')" style="color: #aaaaaa !important;font-size: smaller;">Factores de Inspección - Página Inicial</a></th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("CreateFactoresIzaje", "FactoresIzaje")')" style="color: #aaaaaa !important;font-size: smaller;">Categorias/Factores - Crear Nuevo</a></th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("Index", "CronogramaIzaje")')" style="color: #aaaaaa !important;font-size: smaller;">Cronogramas de Inspecciones</a></th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("Index", "FindingIzaje")')" style="color: #aaaaaa !important;font-size: smaller;">Administración de Hallazgos - Página Inicial</a></th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
-            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                <div class="card-body card-bdy">
-                    <ul class="sub-menu">
-                        <li class="menu-item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("IndexEquipmentIzage", "Izage")')">Equipos - Página Inicial</a></li>
-                        <li class="menu-item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("CreateEquipmentIzage", "Izage")')">Equipos - Crear Nuevo</a></li>
-                        <li class="menu-item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("IndexInspectionIzaje", "InspectionIzaje")')">Inspecciones - Página Inicial</a></li>
-                        <li class="menu-item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("CreateInspectionIzaje", "InspectionIzaje",new { @id=0})')">Inspecciones - Crear Nuevo</a></li>
-                        <li class="menu-item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("IndexFactoresIzaje", "FactoresIzaje")')">Factores de Inspección - Página Inicial</a></li>
-                        <li class="menu-item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("CreateFactoresIzaje", "FactoresIzaje")')">Categorias/Factores - Crear Nuevo</a></li>
-                        <li class="menu-item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("Index", "CronogramaIzaje")')">Cronogramas de Inspecciones</a></li>
-                        <li class="menu-item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("Index", "FindingIzaje")')">Administración de Hallazgos - Página Inicial</a></li>
-                    </ul>
+        </div>
+            <div class="card float-right" style="width:53%">
+                <div class="row" style="margin-top: -5% !important;">
+                    <div class="col-sm-5" style="padding-right: 0 !important;padding-left: 0 !important;">
+                        <img class="d-block w-100" src="~/Content/Images/PPROTECC2_gestion de equipo.png" alt="" style="height: 100%;border-radius: .28571429rem;z-index: -1;position: unset;" />
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="card-block">
+                            <div style="background-color: #008c5a;height: 48px;text-align: center;border-radius: .28571429rem;width: 123%;margin-left: -5%;">
+                                <h5 class="card-title" style="color: #55be5a;margin-left: -13%;padding-top: 10px;">Formación de personal </h5>
+                            </div>
+                            <div class="ui equal width form">
+                                <div class="fields">
+                                    <div class="field">
+
+                                        <table class="table table-striped">
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("Index", "Personas")')" style="color: #aaaaaa !important;font-size: smaller;">Formación de personal - Página Inicial</a></th>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("CreatePerson", "Personas")')" style="color: #aaaaaa !important;font-size: smaller;">Formación de personal - Crear Nuevo</a></th>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("Index", "CronogramaPersonasIzaje")')" style="color: #aaaaaa !important;font-size: smaller;">Cronograma de formación</a></th>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="card float-right" style="width:53%">
+                <div class="row" style="margin-top: -5% !important;">
+                    <div class="col-sm-5" style="padding-right: 0 !important;padding-left: 0 !important;">
+                        <img class="d-block w-100" src="~/Content/Images/PPROTECC 2 ok_indicadores de gestion.png" alt="" style="height: 100%;border-radius: .28571429rem;z-index: -1;position: unset;" />
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="card-block">
+                            <div style="background-color: #008c5a;height: 48px;text-align: center;border-radius: .28571429rem;width: 123%;margin-left: -5%;">
+                                <h5 class="card-title" style="color: #55be5a;margin-left: -13%;padding-top: 10px;">Indicadores de Gestión</h5>
+                            </div>
+                            <div class="ui equal width form">
+                                <div class="fields">
+                                    <div class="field">
+
+                                        <table class="table table-striped">
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("Index", "Indicadores")')" style="color: #aaaaaa !important;font-size: smaller;">Indicadores</a></th>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
-        <div class="card">
-            <div class="card-header" id="headingTwo">
-                <h2 class="mb-0 tag tag-blue">
-                    <button class="btn btn-link btn-block text-left collapsed  btn-bdy" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                     Formación de personal   
-                    </button>
-                </h2>
-            </div>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                <div class="card-body card-bdy">
-                    <ul class="sub-menu">
-                        <li class="menu-item"><a href="#" class="menu__link" onclick="loadDummyData('@Url.Action("Index", "Personas")')">Formación de personal - Página Inicial</a></li>
-                        <li class="menu-item"><a href="#" class="menu__link" onclick="loadDummyData('@Url.Action("CreatePerson", "Personas")')">Formación de personal - Crear Nuevo</a></li>
-                        <li class="menu-item"><a href="#" class="menu__link" onclick="loadDummyData('@Url.Action("Index", "CronogramaPersonasIzaje")')">Cronograma de formación</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-header" id="heading6">
-                <h2 class="mb-0 tag tag-blue">
-                    <button class="btn btn-link btn-block text-left collapsed btn-bdy" type="button" data-toggle="collapse" data-target="#collapse6" aria-expanded="false" aria-controls="collapse6">
-                        Indicadores de Gestión
-                    </button>
-                </h2>
-            </div>
-            <div id="collapse6" class="collapse" aria-labelledby="heading6" data-parent="#accordionExample">
-                <div class="card-body card-bdy">
-                    <ul data-menu="submenu-5-1" class="menu__level">
-                        <li class="menu__item">
-                            <a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("Index", "Indicadores")')">Indicadores</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+
     </div>
-</div>
+
+

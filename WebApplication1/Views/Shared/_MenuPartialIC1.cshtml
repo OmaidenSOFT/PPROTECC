@@ -1,0 +1,63 @@
+﻿<div class="field" style="width: 27% !important;">
+    <div class="accordion" id="accordionExample">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h2 class="mb-0 tag tag-blue">
+                    <button class="btn btn-link btn-block text-left btn-bdy" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Equipos de Izaje de cargas
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div class="card-body card-bdy">
+                    <ul class="sub-menu">
+                        <li class="menu-item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("IndexEquipmentIzage", "Izage")')">Equipos - Página Inicial</a></li>
+                        <li class="menu-item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("CreateEquipmentIzage", "Izage")')">Equipos - Crear Nuevo</a></li>
+                        <li class="menu-item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("IndexInspectionIzaje", "InspectionIzaje")')">Inspecciones - Página Inicial</a></li>
+                        <li class="menu-item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("CreateInspectionIzaje", "InspectionIzaje",new { @id=0})')">Inspecciones - Crear Nuevo</a></li>
+                        <li class="menu-item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("IndexFactoresIzaje", "FactoresIzaje")')">Factores de Inspección - Página Inicial</a></li>
+                        <li class="menu-item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("CreateFactoresIzaje", "FactoresIzaje")')">Categorias/Factores - Crear Nuevo</a></li>
+                        <li class="menu-item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("Index", "CronogramaIzaje")')">Cronogramas de Inspecciones</a></li>
+                        <li class="menu-item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("Index", "FindingIzaje")')">Administración de Hallazgos - Página Inicial</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h2 class="mb-0 tag tag-blue">
+                    <button class="btn btn-link btn-block text-left collapsed  btn-bdy" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                     Formación de personal   
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                <div class="card-body card-bdy">
+                    <ul class="sub-menu">
+                        <li class="menu-item"><a href="#" class="menu__link" onclick="loadDummyData('@Url.Action("Index", "Personas")')">Formación de personal - Página Inicial</a></li>
+                        <li class="menu-item"><a href="#" class="menu__link" onclick="loadDummyData('@Url.Action("CreatePerson", "Personas")')">Formación de personal - Crear Nuevo</a></li>
+                        <li class="menu-item"><a href="#" class="menu__link" onclick="loadDummyData('@Url.Action("Index", "CronogramaPersonasIzaje")')">Cronograma de formación</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="heading6">
+                <h2 class="mb-0 tag tag-blue">
+                    <button class="btn btn-link btn-block text-left collapsed btn-bdy" type="button" data-toggle="collapse" data-target="#collapse6" aria-expanded="false" aria-controls="collapse6">
+                        Indicadores de Gestión
+                    </button>
+                </h2>
+            </div>
+            <div id="collapse6" class="collapse" aria-labelledby="heading6" data-parent="#accordionExample">
+                <div class="card-body card-bdy">
+                    <ul data-menu="submenu-5-1" class="menu__level">
+                        <li class="menu__item">
+                            <a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("Index", "Indicadores")')">Indicadores</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

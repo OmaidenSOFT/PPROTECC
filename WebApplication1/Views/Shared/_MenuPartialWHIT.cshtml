@@ -1,164 +1,356 @@
-﻿<div class="field" style="width: 27% !important;">
-    <div class="accordion" id="accordionExample">
-        <div class="card">
-            <div class="card-header" id="headingOne">
-                <h2 class="mb-0 tag tag-blue">
-                    <button class="btn btn-link btn-block text-left btn-bdy" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        Programma Altezze
-                    </button>
-                </h2>
-            </div>
-
-            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                <div class="card-body card-bdy">
-                    <ul class="sub-menu">
-                        <li class="menu-item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("ProceduresReportsIndex", "Inspections")')">Procedure</a></li>
-                        <li class="menu-item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("FormatsReportsIndex", "Inspections")')">Formati</a></li>
-                        <li class="menu-item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("CertificatesReportsIndex", "Inspections")')">Normatività</a></li>
-                        <li class="menu-item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("Features", "Inspections")')">Carica documenti</a></li>
-                    </ul>
+﻿@using WebApplication1.Models;
+@{
+    var session = Session["SessionUser"] as SessionModels;
+}
+<link href="~/Content/styles/cardscss.css" rel="stylesheet" />
+<div class="main" id="facade">
+    <div class="container" style="margin-left: 8%; max-width:1440px;">
+        <div class="card float-right" style="width:53%">
+            <div class="row" style="margin-top: -5% !important;">
+                <div class="col-sm-5" style="padding-right: 0 !important;padding-left: 0 !important;">
+                    <img class="d-block w-100" src="~/Content/Images/pprotecc2_trabajo.png" alt="" style="height: 100%;border-radius: .28571429rem;z-index: -1;position: unset;" />
                 </div>
+                <div class="col-sm-7">
+                    <div class="card-block">
+                        <div style="background-color: #008c5a;height: 48px;text-align: center;border-radius: .28571429rem;width: 123%;margin-left: -5%;">
+                            <h5 class="card-title" style="color: #55be5a;margin-left: -13%;padding-top: 10px;">Programma Altezze</h5>
+                        </div>
+                        <div>
+
+                            <table class="table table-striped">
+                                <tbody>
+                                    <tr>
+                                        <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("ProceduresReportsIndex", "Inspections")')" style="color: #aaaaaa !important;font-size: smaller;">Procedure</a></th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("FormatsReportsIndex", "Inspections")')" style="color: #aaaaaa !important;font-size: smaller;">Formati</a></th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("CertificatesReportsIndex", "Inspections")')" style="color: #aaaaaa !important;font-size: smaller;">Normatività</a></th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("Features", "Inspections")')" style="color: #aaaaaa !important;font-size: smaller;">Carica documenti</a></th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
         </div>
-        <div class="card">
-            <div class="card-header" id="headingTwo">
-                <h2 class="mb-0 tag tag-blue">
-                    <button class="btn btn-link btn-block text-left collapsed  btn-bdy" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        Gestione di attrezzature per grattacieli
-                    </button>
-                </h2>
-            </div>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                <div class="card-body card-bdy">
-                    <ul class="sub-menu">
-                        <li class="menu-item"><a href="#" class="menu__link" onclick="loadDummyData('@Url.Action("Stock", "WorkingAtHeight")')">Inventario</a></li>
-                        <li class="menu-item"><a href="#" class="menu__link" onclick="loadDummyData('@Url.Action("TechnicalInformation", "WorkingAtHeight")')">Schede tecniche</a></li>
-                        <li class="menu-item"><a href="#" class="menu__link" onclick="loadDummyData('@Url.Action("CreateTechInfo", "Inspections")')">Carica schede tecniche</a></li>
-                        <li class="menu-item"><a href="#" class="menu__link" onclick="loadDummyData('@Url.Action("Curriculum", "WorkingAtHeight")')">Curriculum dell'attrezzatura di altezza</a></li>
-                        <li class="menu-item"><a href="#" class="menu__link" onclick="loadDummyData('@Url.Action("InspectionCert", "WorkingAtHeight")')">Certificati di ispezione</a></li>
-                        <li class="menu-item"><a href="#" class="menu__link" onclick="loadDummyData('@Url.Action("IndexEquipment", "WorkingAtHeight")')">Pagina iniziale dell'attrezzatura</a></li>
-                        <li class="menu-item"><a href="#" class="menu__link" onclick="loadDummyData('@Url.Action("CreateEquipment", "WorkingAtHeight")')">Crea una nuova dell'attrezzatura di altezza</a></li>
-                        <li class="menu-item"><a href="#" class="menu__link" onclick="loadDummyData('@Url.Action("DownloadResult", "WorkingAtHeight")')">Dell'attrezzatura di altezza array</a></li>
-                    </ul>
+        <div class="card float-right" style="width:53%">
+            <div class="row" style="margin-top: -5% !important;">
+                <div class="col-sm-5" style="padding-right: 0 !important;padding-left: 0 !important;">
+                    <img class="d-block w-100" src="~/Content/Images/PPROTECC2_gestion de equipo.png" alt="" style="height: 100%;border-radius: .28571429rem;z-index: -1;position: unset;" />
                 </div>
+                <div class="col-sm-7">
+                    <div class="card-block">
+                        <div style="background-color: #008c5a;height: 48px;text-align: center;border-radius: .28571429rem;width: 123%;margin-left: -5%;">
+                            <h5 class="card-title" style="color: #55be5a;margin-left: -13%;padding-top: 10px;">Gestione di attrezzature per grattacieli</h5>
+                        </div>
+                        <div class="ui equal width form">
+                            <div class="fields">
+                                <div class="field">
+
+                                    <table class="table table-striped">
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("Stock", "WorkingAtHeight")')" style="color: #aaaaaa !important;font-size: smaller;">Inventario</a></th>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("TechnicalInformation", "WorkingAtHeight")')" style="color: #aaaaaa !important;font-size: smaller;">Schede tecniche</a></th>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("CreateTechInfo", "Inspections")')" style="color: #aaaaaa !important;font-size: smaller;">Carica schede tecniche</a></th>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("Curriculum", "WorkingAtHeight")')" style="color: #aaaaaa !important;font-size: smaller;">Curriculum dell'attrezzatura di altezza</a></th>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="field">
+
+                                    <table class="table table-striped">
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("InspectionCert", "WorkingAtHeight")')" style="color: #aaaaaa !important;font-size: smaller;">Certificati di ispezione</a></th>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("IndexEquipment", "WorkingAtHeight")')" style="color: #aaaaaa !important;font-size: smaller;">Pagina iniziale dell'attrezzatura</a></th>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("CreateEquipment", "WorkingAtHeight")')" style="color: #aaaaaa !important;font-size: smaller;">Crea una nuova dell'attrezzatura di altezza</a></th>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("DownloadResult", "WorkingAtHeight")')" style="color: #aaaaaa !important;font-size: smaller;">Dell'attrezzatura di altezza array</a></th>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
         </div>
-        <div class="card">
-            <div class="card-header" id="headingThree">
-                <h2 class="mb-0 tag tag-blue">
-                    <button class="btn btn-link btn-block text-left collapsed btn-bdy" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                        Ispezione e manutenzione
-                    </button>
-                </h2>
-            </div>
-            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-                <div class="card-body card-bdy">
-                    <ul data-menu="submenu-3" class="menu__level">
-                        <li class="menu__item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("SchedulerInspections", "Inspections")')">Programma di ispezione</a></li>
-                        <li class="menu__item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("CreateInspections", "Inspections")')">Ispezioni dei registri</a></li>
-                        <li class="menu__item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("TechnicalReportsIndex", "Inspections")')">Relazioni Tecniche (LV)- Pagina di elenco</a></li>
-                        <li class="menu__item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("CreateTechnicalReports", "Inspections")')">Relazioni Tecniche (LV)-Crea una nuova</a></li>
-                        <li class="menu__item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("ManagementOfFindings", "Inspections")')">Gestione dei risultati</a></li>
-                        <li class="menu__item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("ManagementMaintenanceEquipment", "Inspections")')">Verifica gestione</a></li>
-                    </ul>
+        <div class="card float-right" style="width:53%">
+            <div class="row" style="margin-top: -5% !important;">
+                <div class="col-sm-5" style="padding-right: 0 !important;padding-left: 0 !important;">
+                    <img class="d-block w-100" src="~/Content/Images/PPROTECC 2 ok_indicadores de gestion.png" alt="" style="height: 100%;border-radius: .28571429rem;z-index: -1;position: unset;" />
                 </div>
+                <div class="col-sm-7">
+                    <div class="card-block">
+                        <div style="background-color: #008c5a;height: 48px;text-align: center;border-radius: .28571429rem;width: 123%;margin-left: -5%;">
+                            <h5 class="card-title" style="color: #55be5a;margin-left: -13%;padding-top: 10px;">Indicatori di gestione</h5>
+                        </div>
+                        <div class="ui equal width form">
+                            <div class="fields">
+                                <div class="field">
+
+                                    <table class="table table-striped">
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("PageInitial", "ManagmentIndicators")')" style="color: #aaaaaa !important;font-size: smaller;">Indicatori</a></th>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
             </div>
         </div>
-
-        <div class="card">
-            <div class="card-header" id="heading4">
-                <h2 class="mb-0 tag tag-blue">
-                    <button class="btn btn-link btn-block text-left collapsed btn-bdy" type="button" data-toggle="collapse" data-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
-                        Formazione e Competenza
-                    </button>
-                </h2>
-            </div>
-            <div id="collapse4" class="collapse" aria-labelledby="heading4" data-parent="#accordionExample">
-                <div class="card-body card-bdy">
-
-                    <ul data-menu="submenu-4" class="menu__level">
-                        <li class="menu__item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("Trainning", "Trainning")')">Elenco/ruolo/abilità</a></li>
-                        <li class="menu__item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("Scheduler", "Trainning")')">Programma di allenamento</a></li>
-                        <li class="menu__item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("Certificate", "Trainning")')">Certificati</a></li>
-                        <li class="menu__item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("IndexPerson", "Trainning")')">Le persone-Pagina di elenco</a></li>
-                        <li class="menu__item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("CreatePerson", "Trainning")')">Le persone-Crea una nuova</a></li>
-                    </ul>
+    </div>
+    <div class="container" style="margin-left: 8%; max-width:1440px;">
+        <div class="card float-right" style="width:53%">
+            <div class="row" style="margin-top: -5% !important;">
+                <div class="col-sm-5" style="padding-right: 0 !important;padding-left: 0 !important;">
+                    <img class="d-block w-100" src="~/Content/Images/PPROTECC 2 ok_inspeccion y mantenimiento.png" alt="" style="height: 100%;border-radius: .28571429rem;z-index: -1;position: unset;" />
                 </div>
+                <div class="col-sm-7">
+                    <div class="card-block">
+                        <div style="background-color: #008c5a;height: 48px;text-align: center;border-radius: .28571429rem;width: 123%;margin-left: -5%;">
+                            <h5 class="card-title" style="color: #55be5a; margin-left: -13%; padding-top: 10px; font-family: math;">Inspección y Mantenimiento</h5>
+                        </div>
+
+                        <div class="ui equal width form">
+                            <div class="fields">
+                                <div class="field">
+
+                                    <table class="table table-striped">
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("SchedulerInspections", "Inspections")')" style="color: #aaaaaa !important;font-size: smaller;">Cronograma Inspecciones</a></th>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("CreateInspections", "Inspections")')" style="color: #aaaaaa !important;font-size: smaller;">Registros Inspecciones</a></th>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("TechnicalReportsIndex", "Inspections")')" style="color: #aaaaaa !important;font-size: smaller;">Informes técnicos (LV)-Página Inicial</a></th>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("CreateTechnicalReports", "Inspections")')" style="color: #aaaaaa !important;font-size: smaller;">Informes técnicos (LV)-Crear Nuevo</a></th>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="field">
+
+                                    <table class="table table-striped">
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("ManagementOfFindings", "Inspections")')" style="color: #aaaaaa !important;font-size: smaller;">Gestión de Hallazgos</a></th>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("ManagementMaintenanceEquipment", "Inspections")')" style="color: #aaaaaa !important;font-size: smaller;">Verificar Gestión</a></th>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
         </div>
-
-
-        <div class="card">
-            <div class="card-header" id="heading5">
-                <h2 class="mb-0 tag tag-blue">
-                    <button class="btn btn-link btn-block text-left collapsed btn-bdy" type="button" data-toggle="collapse" data-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
-                        Gestione
-                    </button>
-                </h2>
-            </div>
-            <div id="collapse5" class="collapse" aria-labelledby="heading5" data-parent="#accordionExample">
-                <div class="card-body card-bdy">
-                    <ul data-menu="submenu-5-1" class="menu__level">
-                        <li class="menu__item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("IndexUser", "Trainning")')">Utenti - Pagina di elenco</a></li>
-                        <li class="menu__item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("CreateUser", "Trainning")')">Utenti - Crea una nuova</a></li>
-                        <li class="menu__item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("IndexRol", "Trainning")')">Ruoli - Pagina di elenco</a></li>
-                        <li class="menu__item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("CreateRol", "Trainning")')">Ruoli - Crea una nuova</a></li>
-                        <li class="menu__item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("IndexInspector", "Trainning")')">Ispettori - Pagina di elenco</a></li>
-                        <li class="menu__item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("CreateInspector", "Trainning")')">Ispettori - Crea una nuova</a></li>
-                        <li class="menu__item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("IndexSedeCategoria", "WorkingAtHeight")')">Categoria Locali - Pagina di elenco</a></li>
-                        <li class="menu__item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("CreateCategoriaSede", "WorkingAtHeight")')">Categoria Locali - Crea una nuova</a></li>
-                        <li class="menu__item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("IndexPais", "WorkingAtHeight")')">Paesi - Pagina di elenco</a></li>
-                        <li class="menu__item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("CreatePais", "WorkingAtHeight")')">Paesi - Crea una nuova</a></li>
-                        <li class="menu__item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("IndexSede", "WorkingAtHeight")')">Locali - Pagina di elenco</a></li>
-                        <li class="menu__item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("CreateSede", "WorkingAtHeight")')">Locali - Crea una nuova</a></li>
-
-                    </ul>
+        <div class="card float-right" style="width:53%">
+            <div class="row" style="margin-top: -5% !important;">
+                <div class="col-sm-5" style="padding-right: 0 !important;padding-left: 0 !important;">
+                    <img class="d-block w-100" src="~/Content/Images/PPROTECC 2 ok_formacion y competencias.png" alt="" style="height: 100%;border-radius: .28571429rem;z-index: -1;position: unset;" />
                 </div>
+                <div class="col-sm-7">
+                    <div class="card-block">
+                        <div style="background-color: #008c5a;height: 48px;text-align: center;border-radius: .28571429rem;width: 123%;margin-left: -5%;">
+                            <h5 class="card-title" style="color: #55be5a;margin-left: -13%;padding-top: 10px;">Formación y competencia</h5>
+                        </div>
+                        <div class="ui equal width form">
+                            <div class="fields">
+                                <div class="field">
+
+                                    <table class="table table-striped">
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("Trainning", "Trainning")')" style="color: #aaaaaa !important;font-size: smaller;">Listado/Rol/Aptitud</a></th>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("Scheduler", "Trainning")')" style="color: #aaaaaa !important;font-size: smaller;">Cronograma Formación</a></th>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("Certificate", "Trainning")')" style="color: #aaaaaa !important;font-size: smaller;">Certificados</a></th>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("IndexPerson", "Trainning")')" style="color: #aaaaaa !important;font-size: smaller;">Personas-Página Inicial</a></th>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="field">
+
+                                    <table class="table table-striped">
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("CreatePerson", "Trainning")')" style="color: #aaaaaa !important;font-size: smaller;">Personas-Crear Nuevo</a></th>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
             </div>
         </div>
-
-
-        <div class="card">
-            <div class="card-header" id="heading6">
-                <h2 class="mb-0 tag tag-blue">
-                    <button class="btn btn-link btn-block text-left collapsed btn-bdy" type="button" data-toggle="collapse" data-target="#collapse6" aria-expanded="false" aria-controls="collapse6">
-                        Indicatori di gestione
-                    </button>
-                </h2>
-            </div>
-            <div id="collapse6" class="collapse" aria-labelledby="heading6" data-parent="#accordionExample">
-                <div class="card-body card-bdy">
-                    <ul data-menu="submenu-5-1" class="menu__level">
-                        <li class="menu__item">
-                            <a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("PageInitial", "ManagmentIndicators")')">Indicatori</a>
-                        </li>
-                    </ul>
+        <div class="card float-right" style="width:53%">
+            <div class="row" style="margin-top: -5% !important;">
+                <div class="col-sm-5" style="padding-right: 0 !important;padding-left: 0 !important;">
+                    <img class="d-block w-100" src="~/Content/Images/PPROTECC 2 ok_indicadores de gestion.png" alt="" style="height: 100%;border-radius: .28571429rem;z-index: -1;position: unset;" />
                 </div>
+                <div class="col-sm-7">
+                    <div class="card-block">
+                        <div style="background-color: #008c5a;height: 48px;text-align: center;border-radius: .28571429rem;width: 123%;margin-left: -5%;">
+                            <h5 class="card-title" style="color: #55be5a;margin-left: -13%;padding-top: 10px;">Módulo Médico </h5>
+                        </div>
+                        <div class="ui equal width form">
+                            <div class="fields">
+                                <div class="field">
+
+                                    <table class="table table-striped">
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("CreateAptitudConcept", "MedicalConcepts")')" style="color: #aaaaaa !important;font-size: smaller;">Conceptos de Aptitud</a></th>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("PageInitial", "MedicalConcepts")')" style="color: #aaaaaa !important;font-size: smaller;">Listado de Aptitud</a></th>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
             </div>
         </div>
-
-
-
-        <div class="card">
-            <div class="card-header" id="heading7">
-                <h2 class="mb-0 tag tag-blue">
-                    <button class="btn btn-link btn-block text-left collapsed btn-bdy" type="button" data-toggle="collapse" data-target="#collapse7" aria-expanded="false" aria-controls="collapse7">
-                        Modulo medico
-                    </button>
-                </h2>
-            </div>
-            <div id="collapse7" class="collapse" aria-labelledby="heading7" data-parent="#accordionExample">
-                <div class="card-body card-bdy">
-                    <ul data-menu="submenu-7" class="menu__level">
-                        <li class="menu__item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("CreateAptitudConcept", "MedicalConcepts")')">Concetti attitudinali</a></li>
-                        <li class="menu__item"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("PageInitial", "MedicalConcepts")')">Elenco attitudinali</a></li>
-                    </ul>
+    </div>
+    <div class="container" style="margin-left: 8%; max-width:1440px;">
+        <div class="card float-right" style="width:53%">
+            <div class="row" style="margin-top: -5% !important;">
+                <div class="col-sm-5" style="padding-right: 0 !important;padding-left: 0 !important;">
+                    <img class="d-block w-100" src="~/Content/Images/PPROTECC 2 ok_admin.png" alt="" style="height: 100%;border-radius: .28571429rem;z-index: -1;position: unset;" />
                 </div>
+                <div class="col-sm-7">
+                    <div class="card-block">
+                        <div style="background-color: #008c5a;height: 48px;text-align: center;border-radius: .28571429rem;width: 123%;margin-left: -5%;">
+                            <h5 class="card-title" style="color: #55be5a; margin-left: -13%; padding-top: 10px; font-family: math;">Administración</h5>
+                        </div>
+
+                        <div class="ui equal width form">
+                            <div class="fields">
+                                <div class="field">
+
+                                    <table class="table table-striped">
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("IndexUser", "Trainning")')" style="color: #aaaaaa !important;font-size: smaller;">Usuarios - Página Inicial</a></th>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("CreateUser", "Trainning")')" style="color: #aaaaaa !important;font-size: smaller;">Usuarios - Crear Nuevo</a></th>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("IndexRol", "Trainning")')" style="color: #aaaaaa !important;font-size: smaller;">Roles - Página Inicial</a></th>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("CreateRol", "Trainning")')" style="color: #aaaaaa !important;font-size: smaller;">Roles - Crear Nuevo</a></th>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("IndexInspector", "Trainning")')" style="color: #aaaaaa !important;font-size: smaller;">Inspectores - Página Inicial</a></th>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("CreateInspector", "Trainning")')" style="color: #aaaaaa !important;font-size: smaller;">Inspectores - Crear Nuevo</a></th>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="field">
+
+                                    <table class="table table-striped">
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("IndexSedeCategoria", "WorkingAtHeight")')" style="color: #aaaaaa !important;font-size: smaller;">Categoria Sedes - Página Inicial</a></th>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("CreateCategoriaSede", "WorkingAtHeight")')" style="color: #aaaaaa !important;font-size: smaller;">Categoria Sedes - Crear Nuevo</a></th>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("IndexPais", "WorkingAtHeight")')" style="color: #aaaaaa !important;font-size: smaller;">Países - Página Inicial</a></th>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("CreatePais", "WorkingAtHeight")')" style="color: #aaaaaa !important;font-size: smaller;">Países - Crear Nuevo</a></th>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("IndexSede", "WorkingAtHeight")')" style="color: #aaaaaa !important;font-size: smaller;">Sedes - Página Inicial</a></th>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" style="padding: 0rem !important;"><a class="menu__link" href="#" onclick="loadDummyData('@Url.Action("CreateSede", "WorkingAtHeight")')" style="color: #aaaaaa !important;font-size: smaller;">Sedes - Crear Nuevo</a></th>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
         </div>
-
-
-
 
     </div>
+
 </div>
+
+
+
