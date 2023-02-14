@@ -35,7 +35,8 @@ namespace WebApplication1.Controllers
 
         public ActionResult IndexInspectionIzaje()
         {
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionaryWithoutAll(Convert.ToInt32(Session["CountryID"])), "Key", "Value");
+            int countryID = Convert.ToInt32(base.Session["CountryID"]);
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionaryWithoutAll(countryID), "Key", "Value");
             var result = _inspectionIzajeBo.GetInfo();
 
             return PartialView(result);
@@ -70,12 +71,13 @@ namespace WebApplication1.Controllers
 
             if (model.Rows.Count > 0)
             {
-                ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(Convert.ToInt32(Session["CountryID"])), "Key", "Value", model.Rows[0]["Sede_id"].ToString());
+                int countryID = Convert.ToInt32(base.Session["CountryID"]);
+                ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(countryID), "Key", "Value", model.Rows[0]["Sede_id"].ToString());
                 ViewBag.UnidadMedidaDictionary = new SelectList(_izageBo.GetUnidadDictionary(), "Key", "Value", model.Rows[0]["UnidadCapacidad_Id"].ToString());
                 ViewBag.LocationDictionary = new SelectList(_locationBo.GetUbicacionIzaje(), "Key", "Value", model.Rows[0]["Ubicacion_id"].ToString());
 
                 ViewBag.GetTipoEquipoDictionary = new SelectList(_izageBo.GetTipoEquipoDictionary(), "Key", "Value", model.Rows[0]["IdTipoEquipo"].ToString());
-                ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(Convert.ToInt32(Session["CountryID"])), "Key", "Value");
+                ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(countryID), "Key", "Value");
                 //DISPOSICIÓN GENERAL DE LA INSPECCIÓN
                 ViewBag.InspectorDictionary = new SelectList(_trainningBO.GetInspectorDictionary(), "Key", "Value");
                 ViewBag.ActionResultDictionary = new SelectList(_actionResultBo.GetDictionary(), "Key", "Value");
@@ -93,15 +95,16 @@ namespace WebApplication1.Controllers
             var model = new DataTable();
 
             model = _izageBo.GetInfoByTagSerial(tagSerial);
+            int countryID = Convert.ToInt32(base.Session["CountryID"]);
 
             if (model.Rows.Count > 0)
             {
-                ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(Convert.ToInt32(Session["CountryID"])), "Key", "Value", model.Rows[0]["Sede_id"].ToString());
+                ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(countryID), "Key", "Value", model.Rows[0]["Sede_id"].ToString());
                 ViewBag.UnidadMedidaDictionary = new SelectList(_izageBo.GetUnidadDictionary(), "Key", "Value", model.Rows[0]["UnidadCapacidad_Id"].ToString());
                 ViewBag.LocationDictionary = new SelectList(_locationBo.GetUbicacionIzaje(), "Key", "Value", model.Rows[0]["Ubicacion_id"].ToString());
 
                 ViewBag.GetTipoEquipoDictionary = new SelectList(_izageBo.GetTipoEquipoDictionary(), "Key", "Value", model.Rows[0]["IdTipoEquipo"].ToString());
-                ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(Convert.ToInt32(Session["CountryID"])), "Key", "Value");
+                ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(countryID), "Key", "Value");
                 //DISPOSICIÓN GENERAL DE LA INSPECCIÓN
                 ViewBag.InspectorDictionary = new SelectList(_trainningBO.GetInspectorDictionary(), "Key", "Value");
                 ViewBag.ActionResultDictionary = new SelectList(_actionResultBo.GetDictionary(), "Key", "Value");
@@ -164,7 +167,8 @@ namespace WebApplication1.Controllers
         public ActionResult EditInspectionIzaje(int id)
         {
             var model = _inspectionIzajeBo.GetInfo();
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(Convert.ToInt32(Session["CountryID"])), "Key", "Value", model.Rows[0]["Sede_id"].ToString());
+            int countryID = Convert.ToInt32(base.Session["CountryID"]);
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(countryID), "Key", "Value", model.Rows[0]["Sede_id"].ToString());
             ViewBag.UnidadMedidaDictionary = new SelectList(_izageBo.GetUnidadDictionary(), "Key", "Value", model.Rows[0]["UnidadCapacidad_Id"].ToString());
             ViewBag.LocationDictionary = new SelectList(_locationBo.GetUbicacionIzaje(), "Key", "Value", model.Rows[0]["Ubicacion_id"].ToString());
             return PartialView(model);

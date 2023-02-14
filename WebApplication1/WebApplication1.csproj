@@ -186,6 +186,7 @@
     <Compile Include="Controllers\CronogramaPersonasIzajeController.cs" />
     <Compile Include="Controllers\FactoresIzajeController.cs" />
     <Compile Include="Controllers\FindingIzajeController.cs" />
+    <Compile Include="Controllers\IndicadoresController.cs" />
     <Compile Include="Controllers\InspectionIzajeController.cs" />
     <Compile Include="Controllers\IzageController.cs" />
     <Compile Include="Controllers\DownloadController.cs" />
@@ -488,8 +489,17 @@
     <Content Include="Content\styles\cardscss.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
+    <Content Include="Equipo_Izaje\ImagenEI_49.png" />
+    <Content Include="Equipo_Izaje\ImagenEI_88.jpeg" />
+    <Content Include="Equipo_Izaje\ImagenEI_88.png" />
+    <Content Include="Equipo_Izaje\ImagenEI_89.png" />
+    <Content Include="Equipo_Izaje\ImagenEI_hola.png" />
+    <Content Include="Equipo_Izaje\ImagenEI_yy.png" />
+    <Content Include="Equipo_Izaje\Porta_Pantallas_02.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Fotos_Personas\Foto_2.png" />
+    <Content Include="Fotos_Personas\Foto_3.png" />
     <Content Include="Global.asax" />
     <Content Include="Content\SemanticUI\.versions" />
     <Content Include="Content\SemanticUI\LICENSE" />
@@ -603,6 +613,16 @@
     <Content Include="Content\Fonts\RoobertENELGRE-Bold.otf" />
     <Content Include="Content\Fonts\RoobertENELGRE-Light.otf" />
     <Content Include="Content\Fonts\RoobertENELGRE-Regular.otf" />
+    <Content Include="Archivo_Cursos\Archivo_4.xlsx" />
+    <Content Include="Archivo_Hallazgo\ENEL - Mockups Equipos de izaje y Formación de Personal %281%29.pdf" />
+    <Content Include="Archivo_Hallazgo\RegistroFotografico_Montajes-técnicos-Zambrano-y-Vargas.pdf" />
+    <Content Include="Equipo_Izaje\CODIGO_71.pdf" />
+    <Content Include="Equipo_Izaje\CODIGO_72.pdf" />
+    <Content Include="Equipo_Izaje\CODIGO_80.pdf" />
+    <Content Include="Equipo_Izaje\CODIGO_81.pdf" />
+    <Content Include="Equipo_Izaje\CODIGO_87.pdf" />
+    <Content Include="Equipo_Izaje\CODIGO_88.pdf" />
+    <Content Include="Equipo_Izaje\Equipo_Izaje_Central Térmica Cartagena_JDSC.pdf" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\calendar\calendar.min.js" />
@@ -711,6 +731,7 @@
     <Content Include="Scripts\toastr\toastr.css" />
     <Content Include="Scripts\toastr\toastr.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Uploads\Porta_Pantallas_02.png" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -867,10 +888,11 @@
     <Content Include="Views\Shared\_MenuPartialWHEN.cshtml" />
     <Content Include="Views\Shared\_MenuPartialWHIT.cshtml" />
     <Content Include="Views\Shared\_MenuPartialIC1.cshtml" />
-    <Content Include="Views\Shared\_MenuPartialICIT1.cshtml" />
+    <Content Include="Views\Shared\_MenuPartialICIT.cshtml" />
     <Content Include="Views\Shared\_MenuPartialICEN.cshtml" />
     <Content Include="Views\Shared\_MenuPartialWHU.cshtml" />
     <Content Include="Views\Shared\_MenuPartialIC.cshtml" />
+    <Content Include="Views\Indicadores\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

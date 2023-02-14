@@ -44,7 +44,8 @@ namespace WebApplication1.Controllers
         public ActionResult Curriculum()
         {
             //var model = _workingAtHeightBo.GetStock();
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(Convert.ToInt32(Session["CountryID"])), "Key", "Value");
+            int countryID = Convert.ToInt32(base.Session["CountryID"]);
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(countryID), "Key", "Value");
             ViewBag.CategoryDictionary = new SelectList(_categoryBo.GetDictionary(), "Key", "Value");
             return PartialView();
         }
@@ -52,21 +53,24 @@ namespace WebApplication1.Controllers
         public ActionResult InspectionCert()
         {
             //var model = _workingAtHeightBo.GetStock();
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(Convert.ToInt32(Session["CountryID"])), "Key", "Value");
+            int countryID = Convert.ToInt32(base.Session["CountryID"]);
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(countryID), "Key", "Value");
             ViewBag.CategoryDictionary = new SelectList(_categoryBo.GetDictionary(), "Key", "Value");
             return PartialView();
         }
 
         public ActionResult TechnicalInformation()
         {
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(Convert.ToInt32(Session["CountryID"])), "Key", "Value");
+            int countryID = Convert.ToInt32(base.Session["CountryID"]);
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(countryID), "Key", "Value");
             ViewBag.CategoryDictionary = new SelectList(_categoryBo.GetDictionary(), "Key", "Value");
             return PartialView();
         }
 
         public ActionResult IndexEquipmentIzage(FormCollection collection)
         {
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionaryWithoutAll(Convert.ToInt32(Session["CountryID"])), "Key", "Value");
+            int countryID = Convert.ToInt32(base.Session["CountryID"]);
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionaryWithoutAll(countryID), "Key", "Value");
             var result = _izageBo.GetIndex("", 0, "", "", "", "");
             return PartialView(result);
         }
@@ -98,7 +102,8 @@ namespace WebApplication1.Controllers
 
         public ActionResult CreateEquipmentIzage()
         {
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(Convert.ToInt32(Session["CountryID"])), "Key", "Value");
+            int countryID = Convert.ToInt32(base.Session["CountryID"]);
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(countryID), "Key", "Value");
             ViewBag.UnidadMedidaDictionary = new SelectList(_izageBo.GetUnidadDictionary(), "Key", "Value");
             ViewBag.ElementDictionary = new SelectList(_elementBo.GetDictionary(), "Key", "Value");
             //ViewBag.LocationDictionary = new SelectList(_locationBo.GetDictionary(), "Key", "Value");
@@ -110,9 +115,9 @@ namespace WebApplication1.Controllers
         public ActionResult EditEquipmentIzage(int id)
         {
             var model = _izageBo.GetInfo(id);
-
+            int countryID = Convert.ToInt32(base.Session["CountryID"]);
             ViewBag.GetTipoEquipoDictionary = new SelectList(_izageBo.GetTipoEquipoDictionary(), "Key", "Value", model.Rows[0]["IdTipoEquipo"].ToString());
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(Convert.ToInt32(Session["CountryID"])), "Key", "Value", model.Rows[0]["Sede_id"].ToString());
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(countryID), "Key", "Value", model.Rows[0]["Sede_id"].ToString());
             ViewBag.UnidadMedidaDictionary = new SelectList(_izageBo.GetUnidadDictionary(), "Key", "Value", model.Rows[0]["UnidadCapacidad_Id"].ToString());
             ViewBag.LocationDictionary = new SelectList(_locationBo.GetUbicacionIzaje(), "Key", "Value", model.Rows[0]["Ubicacion_id"].ToString());
             return PartialView(model);
@@ -328,8 +333,9 @@ namespace WebApplication1.Controllers
 
         public ActionResult EditEquipment(string RFID)
         {
+            int countryID = Convert.ToInt32(base.Session["CountryID"]);
             var model = _workingAtHeightBo.GetInfoEquipment(RFID);
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(Convert.ToInt32(Session["CountryID"])), "Key", "Value", model.Rows[0]["Sedeid"].ToString());
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(countryID), "Key", "Value", model.Rows[0]["Sedeid"].ToString());
             return PartialView(model);
         }
         [HttpPost, ValidateInput(false)]

@@ -1,0 +1,456 @@
+﻿
+<style type="text/css">
+    canvas {
+        cursor: pointer;
+    }
+</style>
+
+<h3 style="color: #41B9E6; text-align: center;">
+    IZAJE DE CARGAS | INDICADORES
+</h3>
+
+<div class="ui bottom attached tab segment active" data-tab="second">
+    @using (Ajax.BeginForm("SearchScheduler", "Trainning", null, new AjaxOptions()
+    {
+        HttpMethod = "POST",
+        OnBegin = "return onBeginProcessSearch()"
+    }, new { @id = "formProcessManagment" }))
+    {
+        <div class="ui equal width form">
+            <div class="two fields">
+                <div class="field">
+                    <label>Sede</label>
+                    @Html.DropDownList("cbxHeadquarter", (SelectList)ViewBag.HeadquarterDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+                </div>
+                <div class="field" style="width: 30% !important;">
+                    <label>Año</label>
+                    <select class="ui search dropdown" id="year" name="year">
+                        <option value="2022" selected>2022</option>
+                        <option value="2021">2021</option>
+                        <option value="2020">2020</option>
+                        <option value="2019">2019</option>
+                        <option value="2018">2018</option>
+                        <option value="2017">2017</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="ui primary button">
+                Buscar
+            </button>
+        </div>
+    }
+</div>
+
+<div class="ui grid" id="details">
+    <div class="eight wide column">
+        <h3 class="subtitlesPages">
+            TIPO INVENTARIO / INDICADOR: NÚMERO DE EQUIPOS
+        </h3>
+        <canvas id="Inspection1"></canvas>
+    </div>
+    <div class="eight wide column">
+        <h3 class="subtitlesPages">
+            TIPO CUMPLIMIENTO / INDICADOR: CUMPLIMIENTO INSPECCIONES
+        </h3>
+        <canvas id="Inspection2"></canvas>
+    </div>
+    <div class="eight wide column">
+        <h3 class="subtitlesPages">
+            TIPO COBERTURA / INDICADOR: FORMACIÓN
+        </h3>
+        <canvas id="Person1"></canvas>
+    </div>
+    <div class="eight wide column">
+        <h3 class="subtitlesPages">
+            CUMPLIMIENTO / INDICADOR: CUMPLIMIENTO FORMACIÓN MES
+        </h3>
+        <canvas id="Person2"></canvas>
+
+    </div>
+    <div class="eight wide column">
+        <h3 class="subtitlesPages">
+            GESTIÓN / INDICADOR: GESTIÓN DE HALLAZGOS
+        </h3>
+        <canvas id="Finding1"></canvas>
+    </div>
+    <div class="eight wide column">
+        <h3 class="subtitlesPages">
+            GESTIÓN / INDICADOR: GESTIÓN DE HALLAZGOS
+        </h3>
+        <canvas id="Finding2"></canvas>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var chartInspection1 = null;
+    var chartInspection2 = null;
+
+    var chartPerson1 = null;
+    var chartPerson2 = null;
+
+    var chartFinding1 = null;
+    var chartFinding2 = null;
+
+    var headquarterId;
+    var year;
+
+    $(function () {
+        $('#details').hide();
+
+    });
+    $('#formProcessManagment').form({
+        fields: {
+            headQuarterType: {
+                identifier: 'headQuarterType',
+                rules: [{
+                    type: 'checked',
+                    prompt: 'Debe seleccionar una opción'
+                }]
+            },
+            year: {
+                identifier: 'year',
+                rules: [{
+                    type: 'empty',
+                    prompt: 'Debe seleccionar un año'
+                }]
+            },
+
+        }, inline: true,
+        on: 'blur'
+    });
+    function onBeginProcessSearch() {
+        headquarterId = $('#cbxHeadquarter option:selected').val();
+        year = $('#year option:selected').val();
+        getInspection1();
+        getInspection2();
+
+        GetPerson1();
+        GetPerson2();
+
+        GetFinding1();
+        GetFinding2();
+       
+        $('#details').show();
+        return false;
+    }
+
+    function getInspection1() {
+        $.ajax({
+            url: '@Url.Action("GetInspection1", "Indicadores")',
+            type: 'POST',
+            data: { headquarterId: headquarterId, year: year },
+            success: function (getData) {
+                var Inspection1 = document.getElementById("Inspection1");
+                var labels = [];
+                var data = [];
+                var color = [];
+                if (getData.result) {
+                    $.each(getData.data, function (i, x) {
+                        labels.push(x.label);
+                        data.push(x.value);
+                        color.push(x.color);
+                    });
+                }
+                if (chartInspection1)
+                    chartInspection1.destroy();
+
+                chartInspection1 = new Chart(Inspection1, {
+                    type: 'doughnut',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: '# of Values',
+                            data: data,
+                            backgroundColor:color,
+                            borderColor: color,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+            }
+        })
+    }
+
+    function getInspection2() {
+        $.ajax({
+            url: '@Url.Action("GetInspection2", "Indicadores")',
+            type: 'POST',
+            data: { headquarterId: headquarterId, year: year },
+            success: function (getData) {
+                var inspection2 = $("#Inspection2");
+                var dataSet = [];
+                if (getData) {
+                    $.each(getData.data, function (i, x) {
+                        var element = [x.Enero, x.Febrero, x.Marzo, x.Abril, x.Mayo, x.Junio, x.Julio, x.Agosto, x.Septiembre, x.Octubre, x.Noviembre, x.Diciembre];
+                        dataSet.push(element);
+                    });
+                }
+                if (chartInspection2)
+                    chartInspection2.destroy();
+
+                chartInspection2 = new Chart(inspection2, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                        datasets: [
+                            {
+                                label: 'Vigente',
+                                backgroundColor: 'blue',
+                                data: dataSet[0]
+                            },
+                            {
+                                label: 'Por vencer',
+                                backgroundColor: 'yellow',
+                                data: dataSet[1]
+                            },
+                            {
+                                label: 'Vencido',
+                                backgroundColor: 'red',
+                                data: dataSet[2]
+                            }
+                        ]
+
+                    },
+                    options: {
+                        title: {
+                            display: true,
+                        },
+                        tooltips: {
+                            mode: 'index',
+                            intersect: false
+                        },
+                        responsive: true,
+                        scales: {
+                            xAxes: [{
+                                stacked: true,
+                            }],
+                            yAxes: [{
+                                stacked: true
+                            }]
+                        }
+                    }
+                });
+            }
+        })
+    }
+
+    function GetPerson1() {
+        $.ajax({
+            url: '@Url.Action("GetPerson1", "Indicadores")',
+            type: 'POST',
+            data: { headquarterId: headquarterId, year: year },
+            success: function (getData) {
+                var person1 = document.getElementById("Person1");
+                var labels = [];
+                var data = [];
+                var color = [];
+                if (getData.result) {
+                    $.each(getData.data, function (i, x) {
+                        labels.push(x.label);
+                        data.push(x.value);
+                        color.push(x.color);
+                    });
+                }
+                if (chartPerson1)
+                    chartPerson1.destroy();
+
+                chartPerson1 = new Chart(person1, {
+                    type: 'doughnut',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: '# of Values',
+                            data: data,
+                            backgroundColor:color,
+                            borderColor: color,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+            }
+        })
+    }
+
+    function GetPerson2() {
+        $.ajax({
+            url: '@Url.Action("GetPerson2", "Indicadores")',
+            type: 'POST',
+            data: { headquarterId: headquarterId, year: year },
+            success: function (getData) {
+                var person2 = $("#Person2");
+                var dataSet = [];
+                if (getData) {
+                    $.each(getData.data, function (i, x) {
+                        var element = [x.Enero, x.Febrero, x.Marzo, x.Abril, x.Mayo, x.Junio, x.Julio, x.Agosto, x.Septiembre, x.Octubre, x.Noviembre, x.Diciembre];
+                        dataSet.push(element);
+                    });
+                }
+                if (chartPerson2)
+                    chartPerson2.destroy();
+
+                chartPerson2 = new Chart(person2, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                        datasets: [
+                            {
+                                label: 'Vigente',
+                                backgroundColor: 'blue',
+                                data: dataSet[0]
+                            },
+                            {
+                                label: 'Vencido',
+                                backgroundColor: 'red',
+                                data: dataSet[1]
+                            }
+                        ]
+
+                    },
+                    options: {
+                        title: {
+                            display: true,
+                        },
+                        tooltips: {
+                            mode: 'index',
+                            intersect: false
+                        },
+                        responsive: true,
+                        scales: {
+                            xAxes: [{
+                                stacked: true,
+                            }],
+                            yAxes: [{
+                                stacked: true
+                            }]
+                        }
+                    }
+                });
+            }
+        })
+    }
+
+    function GetFinding1() {
+        $.ajax({
+            url: '@Url.Action("GetFinding1", "Indicadores")',
+            type: 'POST',
+            data: { headquarterId: headquarterId, year: year },
+            success: function (getData) {
+                var finding1 = document.getElementById("Finding1");
+                var labels = [];
+                var data = [];
+                var color = [];
+                if (getData.result) {
+                    $.each(getData.data, function (i, x) {
+                        labels.push(x.label);
+                        data.push(x.value);
+                        color.push(x.color);
+                    });
+                }
+                if (chartFinding1)
+                    chartFinding1.destroy();
+
+                chartFinding1 = new Chart(finding1, {
+                    type: 'doughnut',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: '# of Values',
+                            data: data,
+                            backgroundColor:color,
+                            borderColor: color,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+            }
+        })
+    }
+
+    function GetFinding2() {
+        $.ajax({
+            url: '@Url.Action("GetFinding2", "Indicadores")',
+            type: 'POST',
+            data: { headquarterId: headquarterId, year: year },
+            success: function (getData) {
+                var finding2 = $("#Finding2");
+                var dataSet = [];
+                if (getData) {
+                    $.each(getData.data, function (i, x) {
+                        var element = [x.Enero, x.Febrero, x.Marzo, x.Abril, x.Mayo, x.Junio, x.Julio, x.Agosto, x.Septiembre, x.Octubre, x.Noviembre, x.Diciembre];
+                        dataSet.push(element);
+                    });
+                }
+                if (chartFinding2)
+                    chartFinding2.destroy();
+
+                chartFinding2 = new Chart(finding2, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                        datasets: [
+                            {
+                                label: 'Sin gestion',
+                                backgroundColor: 'red',
+                                data: dataSet[0]
+                            },
+                            {
+                                label: 'Abierto',
+                                backgroundColor: 'blue',
+                                data: dataSet[1]
+                            }
+                        ]
+
+                    },
+                    options: {
+                        title: {
+                            display: true,
+                        },
+                        tooltips: {
+                            mode: 'index',
+                            intersect: false
+                        },
+                        responsive: true,
+                        scales: {
+                            xAxes: [{
+                                stacked: true,
+                            }],
+                            yAxes: [{
+                                stacked: true
+                            }]
+                        }
+                    }
+                });
+            }
+        })
+    }
+    //---------------------------------------------------------------------------------------------------
+
+</script>

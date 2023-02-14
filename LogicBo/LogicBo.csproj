@@ -60,6 +60,7 @@
     <Compile Include="CronogramaPersonasIzajeBo.cs" />
     <Compile Include="EquipoIzage.cs" />
     <Compile Include="FactoresIzajeBo.cs" />
+    <Compile Include="IndicadoresBo.cs" />
     <Compile Include="InspectionIzaje.cs" />
     <Compile Include="InspectionIzajeBo.cs" />
     <Compile Include="IzageBo.cs" />

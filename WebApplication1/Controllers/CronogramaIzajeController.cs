@@ -26,7 +26,8 @@ namespace WebApplication1.Controllers
 
         public ActionResult Index()
         {
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(Convert.ToInt32(Session["CountryID"])), "Key", "Value");
+            int countryID = Convert.ToInt32(base.Session["CountryID"]);
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(countryID), "Key", "Value");
             ViewBag.GetTipoEquipoDictionary = new SelectList(_izageBo.GetTipoEquipoDictionary(), "Key", "Value");
 
             var result = _cronogramaIzajeBo.GetIndex(0, 0, "", 2019);

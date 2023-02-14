@@ -33,7 +33,8 @@ namespace WebApplication1.Controllers
         #endregion
         public ActionResult Index()
         {
-            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionaryWithoutAll(Convert.ToInt32(Session["CountryID"])), "Key", "Value");
+            int countryID = Convert.ToInt32(base.Session["CountryID"]);
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionaryWithoutAll(countryID), "Key", "Value");
             var result = _inspectionIzajeBo.GetInfoFinding();
             return PartialView(result);
         }
