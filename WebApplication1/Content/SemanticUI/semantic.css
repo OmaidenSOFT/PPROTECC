@@ -29151,8 +29151,9 @@ body.dimmable > .dimmer {
   cursor: pointer;
   display: block;
   border: none;
-  height: auto;
+  height: 14px;
   text-align: left;
+  margin-top:0% !important;
   border-top: none;
   line-height: 1em;
   color: rgba(0, 0, 0, 0.87);
@@ -29406,6 +29407,8 @@ body.dimmable > .dimmer {
   transform: rotateZ(0deg);
   min-width: 14em;
   min-height: 2.7142em;
+  margin-top:0%;
+  height:14px;
   background: #FFFFFF;
   display: inline-block;
   padding: 0.78571429em 2.1em 0.78571429em 1em;
@@ -29517,6 +29520,7 @@ select.ui.dropdown {
   padding: 0.78571429rem 1.14285714rem !important;
   white-space: normal;
   word-wrap: normal;
+  height:10%;
 }
 
 /* User Item */
@@ -29634,12 +29638,13 @@ select.ui.dropdown {
   z-index: 2;
 }
 
-.ui.search.dropdown > .text {
-  cursor: text;
-  position: relative;
-  left: 1px;
-  z-index: 3;
-}
+    .ui.search.dropdown > .text {
+        cursor: text;
+        position: relative;
+        left: 1px;
+        z-index: 3;
+        margin-top: 0%;
+    }
 
 /* Search Selection */
 
@@ -29698,7 +29703,7 @@ select.ui.dropdown {
 
 @media only screen and (min-width: 768px) {
   .ui.search.dropdown .menu {
-    max-height: 10.68571429rem;
+    max-height: 10.68571429rem !important;
   }
 }
 
@@ -29945,6 +29950,7 @@ select.ui.dropdown {
 .ui.dropdown:not(.button) > input:focus + .default.text,
 .ui.default.dropdown:not(.button) > input:focus + .text {
   color: rgba(115, 115, 115, 0.87);
+  margin-top:-1%;
 }
 
 /*--------------------
