@@ -71,18 +71,55 @@
 </head>
 <body>
     @*<div class="ui very text container segment" id="segmentLogin" style="margin-top:0%;height: 139px;">
-        <img class="ui centered medium image" src="@Url.Content("~/Content/Images/Logo.png")">
-        <h2 style="text-align:center;color: #1cac84;" id="titulo1" class="ui teal">PPROTECC 2.0</h2>
+            <img class="ui centered medium image" src="@Url.Content("~/Content/Images/Logo.png")">
+            <h2 style="text-align:center;color: #1cac84;" id="titulo1" class="ui teal">PPROTECC 2.0</h2>
 
 
 
-    </div>*@
+        </div>*@
     <img class="ui centered image" src="@Url.Content("~/Content/Images/Logo.png")" style="border-radius: 0px 0px 20px 20px; width: 18%; margin-top: -2%;">
     <div class="main">
 
         <div class="ui equal width form" style="margin-top:-6%;">
 
-            <a class="nav-item nav-link active" href="" onclick="mostrarMenu()">Menu<span class="sr-only">(current)</span></a>
+
+            <div class="fields">
+                <div class="field">
+                    <button class="ui primary button" onclick="mostrarMenu()">Pprotecc 2.0 - Menú</button>
+                </div>
+                <div class="field">
+
+                </div>
+                <div class="field">
+
+                </div>
+                <div class="field">
+
+                </div>
+                <div class="field">
+
+                </div>
+                <div class="field">
+                    @if (session.Idioma == "italiano")
+                    {
+                        <a class="menu__link" href="@Url.Action("LogOff", "Account")" data-finish="true" style="font-size: larger;background-color: #55BE5A;color: white;">
+                            <i class="fa fa-home" aria-hidden="true"></i> Lasciare
+                        </a>
+                    }
+                    else if (session.Idioma == "spain")
+                    {
+                        <a class="menu__link" href="@Url.Action("LogOff", "Account")" data-finish="true" style="font-size: larger;background-color: #55BE5A;color: white;">
+                            <i class="fa fa-home" aria-hidden="true"></i> Salir
+                        </a>
+                    }
+                    else if (session.Idioma == "english")
+                    {
+                        <a class="menu__link" href="@Url.Action("LogOff", "Account")" data-finish="true" style="font-size: larger;background-color: #55BE5A;color: white;">
+                            <i class="fa fa-home" aria-hidden="true"></i> Exit
+                        </a>
+                    }
+                </div>
+            </div>
 
 
 
@@ -131,24 +168,7 @@
                 @RenderBody()
             </div>
         </div>
-        @if (session.Idioma == "italiano")
-        {
-            <a class="menu__link" href="@Url.Action("LogOff", "Account")" data-finish="true" style="font-size: larger;">
-                <i class="fa fa-home" aria-hidden="true"></i> Lasciare
-            </a>
-        }
-        else if (session.Idioma == "spain")
-        {
-            <a class="menu__link" href="@Url.Action("LogOff", "Account")" data-finish="true" style="font-size: larger;">
-                <i class="fa fa-home" aria-hidden="true"></i> Salir
-            </a>
-        }
-        else if (session.Idioma == "english")
-        {
-            <a class="menu__link" href="@Url.Action("LogOff", "Account")" data-finish="true" style="font-size: larger;">
-                <i class="fa fa-home" aria-hidden="true"></i> Exit
-            </a>
-        }
+
     </div>
     @Scripts.Render("~/bundles/jqueryJs")
     @Scripts.Render("~/bundles/semanticJs")

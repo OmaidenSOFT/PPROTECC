@@ -280,12 +280,16 @@
     <Content Include="Content\Images\menu.jpg" />
     <Content Include="Content\Images\ok.png" />
     <Content Include="Content\Images\pantalla_inicio_2.jpg" />
+    <Content Include="Content\Images\PPROTECC 2 ok-27.png" />
+    <Content Include="Content\Images\PPROTECC 2 ok_admin.png" />
     <Content Include="Content\Images\PPROTECC 2 ok_Boton altura.png" />
     <Content Include="Content\Images\PPROTECC 2 ok_boton electrico.png" />
     <Content Include="Content\Images\PPROTECC 2 ok_boton espacio confinado.png" />
     <Content Include="Content\Images\PPROTECC 2 ok_boton extintor.png" />
     <Content Include="Content\Images\PPROTECC 2 ok_boton izaje.png" />
     <Content Include="Content\Images\PPROTECC 2 ok_Cabezote.jpg" />
+    <Content Include="Content\Images\PPROTECC 2 ok_formacion y competencias.png" />
+    <Content Include="Content\Images\PPROTECC 2 ok_indicadores de gestion.png" />
     <Content Include="Content\Images\PPROTECC 2 ok_inspeccion y mantenimiento.png" />
     <Content Include="Content\Images\PPROTECC 2 ok_programa de altura.png" />
     <Content Include="Content\Images\PPROTECC2.png" />
@@ -296,7 +300,7 @@
     <Content Include="Content\Images\pprotecc2_riesgo.png" />
     <Content Include="Content\Images\pprotecc2_trabajo.png" />
     <Content Include="Content\Images\riesgo_pie.png" />
-    <Content Include="Content\Images\robotica-dighe_1200x630.jpg" />
+    <Content Include="Content\Images\robotica-dighe_1200x630.jpeg" />
     <Content Include="Content\Images\search.png" />
     <Content Include="Content\Images\Semaforo_Amarrillo.jpg" />
     <Content Include="Content\Images\Semaforo_rojo.jpg" />
