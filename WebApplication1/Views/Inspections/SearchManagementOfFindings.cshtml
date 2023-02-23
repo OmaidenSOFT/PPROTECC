@@ -1,5 +1,7 @@
 ﻿@using System.Data
 @model DataTable
+<link href="~/Scripts/tables/jquery.dynatable.css" rel="stylesheet" />
+<script type="text/javascript" src="~/Scripts/tables/jquery.dynatable.js"></script>
 <style>
     .dynatable-per-page-select {
         padding: 0px !important;
@@ -89,8 +91,15 @@
             type: 'POST',
             success: function (data) {
                 if (data) {
-                    $('#loadDetailsEquipment').html(data);
-                    $('#modalDetailsEquipment').modal('show');
+                    //$('#loadDetailsEquipment').html(data);
+                    //$('#modalDetailsEquipment').modal('show');
+
+                    $('#renderPagesOculto').html($('#renderPages').html());
+                    $('#renderPagesOculto').hide();
+                    $('#renderPages').html('').addClass("loading");
+                    $('#renderPages').html(data);
+                    $('#Titulo').html("INSPECCIÓN Y MANTENIMIENTO | GESTIÓN DE HALLAZGOS");
+                    $('#renderPages').removeClass("loading").css("height", "inherit");
                 }
             }
         })

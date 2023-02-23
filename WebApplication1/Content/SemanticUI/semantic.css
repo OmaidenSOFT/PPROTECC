@@ -28849,7 +28849,7 @@ a.ui.card:hover,
 *******************************/
 
 .dimmable:not(.body) {
-  position: relative;
+  /*position: relative;*/
 }
 
 .ui.dimmer {
@@ -28948,7 +28948,7 @@ body.dimmed.dimmable {
 }
 
 body.dimmable > .dimmer {
-  position: fixed;
+  /*position: fixed;*/
 }
 
 /*--------------

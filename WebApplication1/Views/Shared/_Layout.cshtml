@@ -85,7 +85,7 @@
 
             <div class="fields">
                 <div class="field">
-                    <button class="ui primary button" onclick="mostrarMenu()">Pprotecc 2.0 - Menú</button>
+                    <button class="ui primary button" id="menuP"  style="display:none" onclick="mostrarMenu()">Pprotecc 2.0 - Menú</button>
                 </div>
                 <div class="field">
 
@@ -167,6 +167,10 @@
             <div class="ui segment overflow-auto" id="renderPages" style="min-height:250px !important;background-color: transparent;border:none;height:650px !important">
                 @RenderBody()
             </div>
+            
+            <div class="ui segment overflow-auto" id="renderPagesOculto" style="min-height:250px !important;background-color: transparent;border:none;height:650px !important">
+               
+            </div>
         </div>
 
     </div>
@@ -180,17 +184,20 @@
 
         function mostrarMenu() {
             $('#facade').show();
+            $('#menuP').hide();
         };
 
-    function loadDummyData(hrefURL) {
+        function loadDummyData(hrefURL) {
             cargarElement(hrefURL);
         };
         function cargarElement(url) {
-
+            $('#menuP').show();
         $.ajax({
             url: url,
             beforeSend: function () {
                 $('#renderPages').html('').addClass("loading");
+                
+               
                 /*$('#renderPages').html('').addClass("loading").css("height", 500);*/
             },
             success: function (data) {
@@ -201,9 +208,11 @@
             complete: function () {
                 $('#renderPages').removeClass("loading").css("height", "inherit");
                 LoadElementsDefaultPartial('#renderPages');
-        /*        $("#menuPartial").hide();*/
+                /*        $("#menuPartial").hide();*/
+               
             }
         })
+          
     }
     function LoadElementsDefaultPartial(element) {
         $(element).find($('.ui.dropdown').dropdown());

@@ -1,7 +1,5 @@
 ﻿@using System.Data
 @model DataTable
-
-@*<link href="~/Content/SemanticUI/semantic.css" rel="stylesheet" />*@
 <link href="~/Scripts/tables/jquery.dynatable.css" rel="stylesheet" />
 <script type="text/javascript" src="~/Scripts/tables/jquery.dynatable.js"></script>
 <style>
@@ -14,12 +12,11 @@
         height: 80vh;
     }
 </style>
-
 <center><h3 id="Titulo" style="color:#41B9E6; "> </h3></center>
 <a class="menu__link" href="#" onclick="regresar()" data-finish="true" style="font-size: larger;background-color: #55BE5A;color: white;">
     <i class="fa fa-home" aria-hidden="true"></i> Regresar
 </a>
-<table class="ui selectable celled table ui center aligned tablesInitial" id="tableStockByHeadquarter" style=" margin-top: 5%;">
+<table class="ui selectable celled table ui center aligned tablesInitial" id="tableStockByHeadquarter">
     <thead>
         <tr>
             <th>Id</th>
@@ -45,9 +42,7 @@
                     {
                         if (col.ColumnName == "TAG")
                         {
-                            @*<td><a onclick="viewDocument('@row["RutaHV"]')" style="color: #4183C4 !important;">@row[col.ColumnName]</a> </td>*@
-
-                            <td><a href="@row["RutaHV"]" id="pdfref" target="_blank" style="color: #4183C4 !important;">@row[col.ColumnName]</a></td>
+                            <td><a onclick="viewDocument('@row["RutaHV"]')">@row[col.ColumnName]</a> </td>
                         }
 
                         else
@@ -72,21 +67,17 @@
     </div>
 </div>
 <script type="text/javascript">
-
     function regresar() {
         
         var renderPagesOculto = $('#renderPagesOculto').html();
         $('#renderPagesOculto').html('')
         $('#renderPagesOculto').hide();
         $('#renderPages').html(renderPagesOculto);
-        $('#renderPages').show();        
+        $('#renderPages').show();
         $('#renderPages').focus();
         
     }
 
-
-
-    
     var processingComplete = function () {
         $.each($('#tableStockByHeadquarter tr'), function (index, value) {
             var classElement = $(this).find('td:eq(8)').html();
@@ -100,14 +91,8 @@
     processingComplete();
 
     function viewDocument(path) {
-
-
-
         $('#view').modal('hide');
         $('#pathStock').attr("src", path);
         $('#modalStock').modal('show');
-
-
-
     }
 </script>

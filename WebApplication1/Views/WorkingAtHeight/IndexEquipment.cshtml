@@ -1,5 +1,7 @@
 ﻿@using System.Data
 @model DataTable
+<link href="~/Scripts/tables/jquery.dynatable.css" rel="stylesheet" />
+<script type="text/javascript" src="~/Scripts/tables/jquery.dynatable.js"></script>
 <h3 class="titlesPages">
     GESTIÓN DE EQUIPOS | INGRESO EQUIPOS
 </h3>
@@ -46,11 +48,11 @@
 
                 }
                 @*<td>
-                    @if (@row["Estado"].ToString() != "Rojo")
-                    {
-                        <a href="javascript:void(0)" onclick="unsubscribe('@row["TAG"].ToString()')">Dar de Baja</a>
-                    }
-                </td>*@
+                        @if (@row["Estado"].ToString() != "Rojo")
+                        {
+                            <a href="javascript:void(0)" onclick="unsubscribe('@row["TAG"].ToString()')">Dar de Baja</a>
+                        }
+                    </td>*@
             </tr>
         }
     </tbody>
@@ -108,19 +110,19 @@
 <script type="text/javascript">
     var processingComplete = function () {
         $.each($('#tablesIndexEquipment tr'), function (index, value) {
-            var classElement = $(this).find('td:eq(5)').html();
+            var classElement = $(this).find('td:eq(7)').html();
             classElement = classElement == "Rojo" ? "red" : classElement == "Amarillo" ? "yellow" : classElement == "Verde" ? "green" : "";
 
-            $(this).find('td:eq(5)').addClass(classElement);
+            $(this).find('td:eq(7)').addClass(classElement);
 
             if (classElement == "red")
-                $(this).find('td:eq(5)').text("Rechazado");
+                $(this).find('td:eq(7)').text("Rechazado");
 
             if (classElement == "yellow")
-                $(this).find('td:eq(5)').text("Para mantenimiento");
+                $(this).find('td:eq(7)').text("Para mantenimiento");
 
             if (classElement == "green")
-                $(this).find('td:eq(5)').text("Aceptado");
+                $(this).find('td:eq(7)').text("Aceptado");
 
             //$(this).find('td:eq(5)').html('');
         });

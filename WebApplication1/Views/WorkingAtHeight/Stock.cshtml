@@ -1,5 +1,10 @@
 ﻿@using System.Data
 @model DataTable
+@using WebApplication1.Models
+@{
+    var session = Session["SessionUser"] as SessionModels;
+    session.Estado = 1;
+}
 
 <style>
     .ui.selection.dropdown {
@@ -86,7 +91,7 @@
                     {
                         if (col.ColumnName == "Sede")
                         {
-                            <td><a href="javascript:void(0)" onclick="getDetail('@row["CodigoSucursal"].ToString()','@row["Sede"].ToString()')">@row[col.ColumnName]</a></td>
+                            <td><a href="javascript:void(0)" data-toggle="modal" data-target="#exampleModalLong" onclick="getDetail('@row["CodigoSucursal"].ToString()','@row["Sede"].ToString()')">@row[col.ColumnName]</a></td>
                         }
                         else if (col.ColumnName == "Total Aceptados")
                         {
@@ -94,21 +99,21 @@
                         }
                         else if (col.ColumnName == "Total Mantenimiento")
                         {
-                            <td> <a href="javascript:void(0)" onclick="getDetailMant('@row["CodigoSucursal"].ToString()')">@row[col.ColumnName]</a> <div class="circleY"></div></td>
+                            <td> <a href="javascript:void(0)" onclick="getDetailMant('@row["CodigoSucursal"].ToString()','@row["Sede"].ToString()')">@row[col.ColumnName]</a> <div class="circleY"></div></td>
                         }
                         else if (col.ColumnName == "Total Rechazados")
                         {
-                            <td> <a href="javascript:void(0)" onclick="getDetailRechazados('@row["CodigoSucursal"].ToString()')">@row[col.ColumnName]</a> <div class="circleR"></div></td>
+                            <td> <a href="javascript:void(0)" onclick="getDetailRechazados('@row["CodigoSucursal"].ToString()','@row["Sede"].ToString()')">@row[col.ColumnName]</a> <div class="circleR"></div></td>
                         }
                         else if (col.ColumnName == "Total Dados de Baja")
                         {
-                            <td><a href="javascript:void(0)" onclick="getDetailDadosBaja('@row["CodigoSucursal"].ToString()')">@row[col.ColumnName]</a> <div class="circleD"></div></td>
+                            <td><a href="javascript:void(0)" onclick="getDetailDadosBaja('@row["CodigoSucursal"].ToString()','@row["Sede"].ToString()')">@row[col.ColumnName]</a> <div class="circleD"></div></td>
                         }
                         else if (col.ColumnName == "Vigentes")
                         {
                             if (Convert.ToInt32(row[col.ColumnName]) != 0)
                             {
-                                <td><a href="javascript:void(0)" onclick="getDetailVig('@row["CodigoSucursal"].ToString()')" style="font-size:larger; color:green; font-style:italic" data-toggle="tooltip" title='@row[col.ColumnName] OK'>@row[col.ColumnName]</a> </td>
+                                <td><a href="javascript:void(0)" onclick="getDetailVig('@row["CodigoSucursal"].ToString()','@row["Sede"].ToString()')" style="font-size:larger; color:green; font-style:italic" data-toggle="tooltip" title='@row[col.ColumnName] Vigentes'>@row[col.ColumnName]</a> </td>
                             }
                             else
                             {
@@ -119,7 +124,7 @@
                         {
                             if (Convert.ToInt32(row[col.ColumnName]) != 0)
                             {
-                                <td><a href="javascript:void(0)" onclick="getDetailPor('@row["CodigoSucursal"].ToString()')" style="font-size:larger; color: greenyellow; font-style:italic" data-toggle="tooltip" title='@row[col.ColumnName] Próximas'>@row[col.ColumnName]</a></td>
+                                <td><a href="javascript:void(0)" onclick="getDetailPor('@row["CodigoSucursal"].ToString()','@row["Sede"].ToString()')" style="font-size:larger; color: greenyellow; font-style:italic" data-toggle="tooltip" title='@row[col.ColumnName] Próximas'>@row[col.ColumnName]</a></td>
                             }
                             else
                             {
@@ -130,7 +135,7 @@
                         {
                             if (Convert.ToInt32(row[col.ColumnName]) != 0)
                             {
-                                <td><a href="javascript:void(0)" onclick="getDetailVen('@row["CodigoSucursal"].ToString()')" style="font-size:larger; color:red; font-style:italic" data-toggle="tooltip" title='@row[col.ColumnName] Pendientes'>@row[col.ColumnName]</a></td>
+                                <td><a href="javascript:void(0)" onclick="getDetailVen('@row["CodigoSucursal"].ToString()','@row["Sede"].ToString()')" style="font-size:larger; color:red; font-style:italic" data-toggle="tooltip" title='@row[col.ColumnName] Pendientes'>@row[col.ColumnName]</a></td>
                             }
                             else
                             {
@@ -163,30 +168,66 @@
     </tbody>
 </table>
 <button class="ui button" id="btnExport" onclick="location.href='@Url.Action("DownloadFile","Download",new { fileName="Stock"})'">Exportar</button>
-<div class="ui modal" id="modalInformationByHeadquarter" style="width:80% !important">
-    <div class="header" id="headerModal"></div>
-    <div class="scrolling content">
-        <div id="renderSearchInformationByHeadquarter" style=" width: 95% !important;"></div>
+@*<div class="ui modal" id="modalInformationByHeadquarter" style="width:80% !important">
+        <div class="header" id="headerModal"></div>
+        <div class="scrolling content">
+            <div id="renderSearchInformationByHeadquarter" style=" width: 95% !important;"></div>
+        </div>
+    </div>*@
+
+
+<div class="modal fade" id="modalInformationByHeadquarter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="headerModal">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="renderSearchInformationByHeadquarter" class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
     </div>
 </div>
+
+
 <script type="text/javascript">
-    function getDetail(id,sede) {
+
+
+    function getDetail(id, sede) {
         if (id > 0) {
             $.ajax({
                 url: '@Url.Action("StockByHeadquarter", "WorkingAtHeight")',
                 data: { headquarterId: id },
                 type: 'POST',
                 success: function (data) {
-                    $('#headerModal').html("Información sede: " + sede);
-                    $('#renderSearchInformationByHeadquarter').html(data);
-                    $('#modalInformationByHeadquarter').modal('show');
+                    //$('#headerModal').html("Información sede: " + sede);
+                    //$('#renderSearchInformationByHeadquarter').html(data);
+                    //$('#modalInformationByHeadquarter').modal('show');
+                    //$('#headerModal').html("Información sede: " + sede);
+                    $('#renderPagesOculto').html($('#renderPages').html());
+                    $('#renderPagesOculto').hide();
+                    $('#renderPages').html('').addClass("loading");
+                    $('#renderPages').html(data);
+                    $('#Titulo').html("Inventario - " + sede);
+                    $('#renderPages').removeClass("loading").css("height", "inherit");
+
+
+                    //$('#renderPages').focus();
+                    //$('#facade').hide();
                 }
             });
         }
     }
 
 
-     function getDetailRechazados(id) {
+    function getDetailRechazados(id, sede) {
 	 if (id > 0) {
             $.ajax({
                 url: '@Url.Action("StockByHeadquarterRechazos", "WorkingAtHeight")',
@@ -194,13 +235,20 @@
                 type: 'POST',
                 success: function (data) {
 
-                    $('#renderSearchInformationByHeadquarter').html(data);
-                    $('#modalInformationByHeadquarter').modal('show');
+                    //$('#renderSearchInformationByHeadquarter').html(data);
+                    //$('#modalInformationByHeadquarter').modal('show');
+
+                    $('#renderPagesOculto').html($('#renderPages').html());
+                    $('#renderPagesOculto').hide();
+                    $('#renderPages').html('').addClass("loading");
+                    $('#renderPages').html(data);
+                    $('#Titulo').html("Inventario equipos rechazados - " + sede);
+                    $('#renderPages').removeClass("loading").css("height", "inherit");
                 }
             });
         }
     }
-     function getDetailDadosBaja(id) {
+    function getDetailDadosBaja(id, sede) {
 	 if (id > 0) {
             $.ajax({
                 url: '@Url.Action("StockByHeadquarterDados", "WorkingAtHeight")',
@@ -208,70 +256,98 @@
                 type: 'POST',
                 success: function (data) {
 
-                    $('#renderSearchInformationByHeadquarter').html(data);
-                    $('#modalInformationByHeadquarter').modal('show');
+                    //$('#renderSearchInformationByHeadquarter').html(data);
+                    //$('#modalInformationByHeadquarter').modal('show');
+                    $('#renderPagesOculto').html($('#renderPages').html());
+                    $('#renderPagesOculto').hide();
+                    $('#renderPages').html('').addClass("loading");
+                    $('#renderPages').html(data);
+                    $('#Titulo').html("Inventario equipos dados de baja - " + sede);
+                    $('#renderPages').removeClass("loading").css("height", "inherit");
                 }
             });
         }
     }
 
-	 function getDetailMant(id) {
-	 if (id > 0) {
+    function getDetailMant(id, sede) {
+      	 if (id > 0) {
             $.ajax({
                 url: '@Url.Action("StockByHeadquarterMant", "WorkingAtHeight")',
                 data: { headquarterId: id },
                 type: 'POST',
                 success: function (data) {
 
-                    $('#renderSearchInformationByHeadquarter').html(data);
-                    $('#modalInformationByHeadquarter').modal('show');
+                    //$('#renderSearchInformationByHeadquarter').html(data);
+                    //$('#modalInformationByHeadquarter').modal('show');
+                    $('#renderPagesOculto').html($('#renderPages').html());
+                    $('#renderPagesOculto').hide();
+                    $('#renderPages').html('').addClass("loading");
+                    $('#renderPages').html(data);
+                    $('#Titulo').html("Inventario equipos para mantenimiento - " + sede);
+                    $('#renderPages').removeClass("loading").css("height", "inherit");
                 }
             });
         }
     }
 
-    function getDetailVig(id) {
+    function getDetailVig(id, sede) {
         if (id > 0) {
             $.ajax({
                 url: '@Url.Action("StockByHeadquarterByStateVig", "WorkingAtHeight")',
                 data: { headquarterId: id},
                 type: 'POST',
                 success: function (data) {
-                    $('#renderSearchInformationByHeadquarter').html(data);
-                    $('#modalInformationByHeadquarter').modal('show');
+                    //$('#renderSearchInformationByHeadquarter').html(data);
+                    //$('#modalInformationByHeadquarter').modal('show');
+                    $('#renderPagesOculto').html($('#renderPages').html());
+                    $('#renderPagesOculto').hide();
+                    $('#renderPages').html('').addClass("loading");
+                    $('#renderPages').html(data);
+                    $('#Titulo').html("Inventario equipos vigentes - " + sede);
+                    $('#renderPages').removeClass("loading").css("height", "inherit");
                 }
             });
         }
     }
-    function getDetailVen(id) {
+    function getDetailVen(id, sede) {
         if (id > 0) {
             $.ajax({
                 url: '@Url.Action("StockByHeadquarterByStateVen", "WorkingAtHeight")',
                 data: { headquarterId: id},
                 type: 'POST',
                 success: function (data) {
-                    $('#renderSearchInformationByHeadquarter').html(data);
-                    $('#modalInformationByHeadquarter').modal('show');
+                    //$('#renderSearchInformationByHeadquarter').html(data);
+                    //$('#modalInformationByHeadquarter').modal('show');
+                    $('#renderPagesOculto').html($('#renderPages').html());
+                    $('#renderPagesOculto').hide();
+                    $('#renderPages').html('').addClass("loading");
+                    $('#renderPages').html(data);
+                    $('#Titulo').html("Inventario equipos vencidos - " + sede);
+                    $('#renderPages').removeClass("loading").css("height", "inherit");
                 }
             });
         }
     }
-     function getDetailPor(id) {
+    function getDetailPor(id, sede) {
         if (id > 0) {
             $.ajax({
                 url: '@Url.Action("StockByHeadquarterByStatePor", "WorkingAtHeight")',
                 data: { headquarterId: id},
                 type: 'POST',
                 success: function (data) {
-                    $('#renderSearchInformationByHeadquarter').html(data);
-                    $('#modalInformationByHeadquarter').modal('show');
+                    $('#renderPagesOculto').html($('#renderPages').html());
+                    $('#renderPagesOculto').hide();
+                    $('#renderPages').html('').addClass("loading");
+                    $('#renderPages').html(data);
+                    $('#Titulo').html("Inventario equipos por vencer - " + sede);
+                    $('#renderPages').removeClass("loading").css("height", "inherit");
+                    //$('#renderSearchInformationByHeadquarter').html(data);
+                    //$('#modalInformationByHeadquarter').modal('show');
                 }
             });
         }
     }
 
 
-    $(document).ready(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-    });
+
 </script>

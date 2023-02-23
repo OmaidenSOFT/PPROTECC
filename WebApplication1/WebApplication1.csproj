@@ -897,6 +897,12 @@
     <Content Include="Views\Shared\_MenuPartialWHU.cshtml" />
     <Content Include="Views\Shared\_MenuPartialIC.cshtml" />
     <Content Include="Views\Indicadores\Index.cshtml" />
+    <Content Include="Views\WorkingAtHeight\StockByHeadquarterByStatePor.cshtml" />
+    <Content Include="Views\WorkingAtHeight\StockByHeadquarterByStateVen.cshtml" />
+    <Content Include="Views\WorkingAtHeight\StockByHeadquarterByStateVig.cshtml" />
+    <Content Include="Views\WorkingAtHeight\StockByHeadquarterDados.cshtml" />
+    <Content Include="Views\WorkingAtHeight\StockByHeadquarterMant.cshtml" />
+    <Content Include="Views\WorkingAtHeight\StockByHeadquarterRechazos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

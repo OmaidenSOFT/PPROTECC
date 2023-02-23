@@ -5,6 +5,10 @@
         padding: 0px !important;
     }
 </style>
+<center><h3 id="Titulo" style="color:#41B9E6; "> </h3></center>
+<a class="menu__link" href="#" onclick="regresar()" data-finish="true" style="font-size: larger;background-color: #55BE5A;color: white;">
+    <i class="fa fa-home" aria-hidden="true"></i> Regresar
+</a>
 @if (Model.Rows[0]["EstadoGestionID"].ToString() == "1")
 {
     using (Ajax.BeginForm("SaveDetailsEquipmentWMan", "Inspections", null, new AjaxOptions()
@@ -187,6 +191,16 @@
     <p id="textmessageSave"></p>
 </div>
 <script type="text/javascript">
+    function regresar() {
+
+        var renderPagesOculto = $('#renderPagesOculto').html();
+        $('#renderPagesOculto').html('')
+        $('#renderPagesOculto').hide();
+        $('#renderPages').html(renderPagesOculto);
+        $('#renderPages').show();
+        $('#renderPages').focus();
+
+    }
     var myDropzoneFile;
     var idVariedad;
     var _thisFile;
@@ -259,7 +273,7 @@
         onChange: function (date, text, mode) {
             $('#cManagmentDate').val(text);
         }
-    });  
+    });
     $(function () {
         $('#messageSave').hide();
         LoadElementsDefault();
@@ -350,7 +364,7 @@
         }, inline: true,
         on: 'blur'
     });
-    
+
     $('#btnGuardar').on('click', function () {
         $('#formProcessOpen').submit();
     });

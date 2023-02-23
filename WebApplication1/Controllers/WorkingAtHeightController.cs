@@ -29,7 +29,7 @@ namespace WebApplication1.Controllers
         TechnicalInformationBo _technicalInformationBo = new TechnicalInformationBo();
         EquipmentBo _equipmentBo = new EquipmentBo();
         Util util;
-        IzageBo _izageBo= new IzageBo();
+        IzageBo _izageBo = new IzageBo();
         #endregion
         public ActionResult Stock()
         {
@@ -45,6 +45,58 @@ namespace WebApplication1.Controllers
             var model = _workingAtHeightBo.GetStockByHeadquarter(headquarterId);
             return PartialView(model);
         }
+        [HttpPost]
+        public ActionResult StockByHeadquarterMant(int headquarterId)
+        {
+            ViewBag.id = headquarterId;
+            var model = _workingAtHeightBo.GetStockByHeadquarterMant(headquarterId);
+            return PartialView(model);
+        }
+        [HttpPost]
+        public ActionResult StockByHeadquarterDados(int headquarterId)
+        {
+            ViewBag.id = headquarterId;
+            var model = _workingAtHeightBo.GetStockByHeadquarterDados(headquarterId);
+            return PartialView(model);
+        }
+        [HttpPost]
+        public ActionResult StockByHeadquarterRechazos(int headquarterId)
+        {
+            ViewBag.id = headquarterId;
+            var model = _workingAtHeightBo.GetStockByHeadquarterRechazos(headquarterId);
+            return PartialView(model);
+        }
+        [HttpPost]
+        public ActionResult StockByHeadquarterByStateVig(int headquarterId)
+        {
+            ViewBag.id = headquarterId;
+            var model = _workingAtHeightBo.GetStockByHeadquarterStateVig(headquarterId);
+            return PartialView(model);
+        }
+
+        [HttpPost]
+        public ActionResult StockByHeadquarterByStateVen(int headquarterId)
+        {
+            ViewBag.id = headquarterId;
+            var model = _workingAtHeightBo.GetStockByHeadquarterStateVen(headquarterId);
+            return PartialView(model);
+        }
+
+
+
+        [HttpPost]
+        public ActionResult StockByHeadquarterByStatePor(int headquarterId)
+        {
+            ViewBag.id = headquarterId;
+            var model = _workingAtHeightBo.GetStockByHeadquarterStatePor(headquarterId);
+            return PartialView(model);
+        }
+
+
+
+
+
+
 
         public ActionResult Curriculum()
         {
@@ -88,7 +140,7 @@ namespace WebApplication1.Controllers
             return PartialView(result);
         }
 
-        
+
         public ActionResult DownloadResult()
         {
             return PartialView();
@@ -121,7 +173,7 @@ namespace WebApplication1.Controllers
         public ActionResult CreateEquipmentIzage()
         {
             ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(Convert.ToInt32(Session["CountryID"])), "Key", "Value");
-            ViewBag.UnidadMedidaDictionary= new SelectList(_izageBo.GetUnidadDictionary(), "Key", "Value");
+            ViewBag.UnidadMedidaDictionary = new SelectList(_izageBo.GetUnidadDictionary(), "Key", "Value");
             ViewBag.ElementDictionary = new SelectList(_elementBo.GetDictionary(), "Key", "Value");
             ViewBag.LocationDictionary = new SelectList(_locationBo.GetDictionary(), "Key", "Value");
             return PartialView();
@@ -239,16 +291,16 @@ namespace WebApplication1.Controllers
                 var session = Session["SessionUser"] as SessionModels;
                 if (session == null)
                     throw new Exception("Se ha perdido la sesión del Usuario");
-                
 
-                    
-                    
+
+
+
 
 
                 string nombreSede = collection["sede"];
 
                 int paisid = collection["cbxCountry"].ToString() != string.Empty ? Convert.ToInt32(collection["cbxCountry"].ToString()) : 0; ;
-                int sedecategoriaid= collection["cbxSedeCategoria"].ToString() != string.Empty ? Convert.ToInt32(collection["cbxSedeCategoria"].ToString()) : 0; ;
+                int sedecategoriaid = collection["cbxSedeCategoria"].ToString() != string.Empty ? Convert.ToInt32(collection["cbxSedeCategoria"].ToString()) : 0; ;
                 string codeENEL = collection["codeENEL"];
                 string ubicacion = collection["ubicaciuon"];
 
@@ -316,7 +368,7 @@ namespace WebApplication1.Controllers
         //        else if(fechaInspInicial==2)
         //         equipoI.FechaInspeccionInicial= Convert.ToDateTime(collection["cfabricationDate"]);
         //        equipoI.Observaciones = collection["observacion"];
-                
+
         //        var idEquipment = _izageBo.Create(equipoI);
 
         //        return Json(new { result = true }, JsonRequestBehavior.AllowGet);
@@ -481,7 +533,7 @@ namespace WebApplication1.Controllers
             }
         }
 
-        
+
         [HttpPost]
         public PartialViewResult SearchTechnicalInformation(FormCollection collection)
         {
@@ -516,7 +568,7 @@ namespace WebApplication1.Controllers
 
 
         [HttpPost]
-        public PartialViewResult AssignEquipment(string tag,int sedeid)
+        public PartialViewResult AssignEquipment(string tag, int sedeid)
         {
             ViewBag.tag = tag;
             ViewBag.sedeid = sedeid;

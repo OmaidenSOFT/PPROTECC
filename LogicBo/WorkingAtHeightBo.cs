@@ -36,7 +36,65 @@ namespace LogicBo
             
             return result;
         }
+        public DataTable GetStockByHeadquarterMant(int headquarterId)
+        {
+            List<SqlParameter> parameters = new List<SqlParameter> {
+                new SqlParameter(){ ParameterName="SedeId", SqlDbType=SqlDbType.Int,Value=headquarterId}
+                 };
+            var result = executeProcedures.DataTable("ENEL_LoadStockBySedeMantenemiento", parameters);
 
+            return result;
+        }
+        public DataTable GetStockByHeadquarterDados(int headquarterId)
+        {
+            List<SqlParameter> parameters = new List<SqlParameter> {
+                new SqlParameter(){ ParameterName="SedeId", SqlDbType=SqlDbType.Int,Value=headquarterId}
+                 };
+            var result = executeProcedures.DataTable("ENEL_LoadStockBySedeDados", parameters);
+
+            return result;
+        }
+
+        public DataTable GetStockByHeadquarterRechazos(int headquarterId)
+        {
+            List<SqlParameter> parameters = new List<SqlParameter> {
+                new SqlParameter(){ ParameterName="SedeId", SqlDbType=SqlDbType.Int,Value=headquarterId}
+                 };
+            var result = executeProcedures.DataTable("ENEL_LoadStockBySedeRechazos", parameters);
+
+            return result;
+        }
+
+        public DataTable GetStockByHeadquarterStateVig(int headquarterId)
+        {
+            List<SqlParameter> parameters = new List<SqlParameter> {
+                new SqlParameter(){ ParameterName="SedeId", SqlDbType=SqlDbType.Int,Value=headquarterId}
+                 };
+            var result = executeProcedures.DataTable("ENEL_LoadStockBySedeVig", parameters);
+
+            return result;
+        }
+        public DataTable GetStockByHeadquarterStateVen(int headquarterId)
+        {
+            List<SqlParameter> parameters = new List<SqlParameter> {
+                new SqlParameter(){ ParameterName="SedeId", SqlDbType=SqlDbType.Int,Value=headquarterId}
+                 };
+            var result = executeProcedures.DataTable("ENEL_LoadStockBySedeVen", parameters);
+
+            return result;
+        }
+        public DataTable GetStockByHeadquarterStatePor(int headquarterId)
+        {
+            List<SqlParameter> parameters = new List<SqlParameter> {
+                new SqlParameter(){ ParameterName="SedeId", SqlDbType=SqlDbType.Int,Value=headquarterId}
+                 };
+            var result = executeProcedures.DataTable("ENEL_LoadStockBySedePor", parameters);
+
+            return result;
+        }
+
+
+        
 
         public string GetCountryNameByID(int countryID)
         {

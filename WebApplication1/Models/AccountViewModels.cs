@@ -30,6 +30,7 @@ namespace WebApplication1.Models
         public string piedepaginacards { get; set; }
 
         public string ModuloSeleccionado { get; set; }
+        public string htmlStock { get; set; }
 
 
     }
