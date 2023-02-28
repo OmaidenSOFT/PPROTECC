@@ -97,7 +97,24 @@
 
                 </div>
                 <div class="field">
-
+                    @if (session.Idioma == "italiano")
+                    {
+                    <a class="menu__link" href="@Url.Action("LoginFacade", "Account")" data-finish="true" style="font-size: larger;background-color: #55BE5A;color: white;">
+                        <i class="fa fa-home" aria-hidden="true"></i> Torna a Moduli
+                    </a>
+                    }
+                    else if (session.Idioma == "spain")
+                    {
+                <a class="menu__link" href="@Url.Action("LoginFacade", "Account")" data-finish="true" style="font-size: larger;background-color: #55BE5A;color: white;">
+                    <i class="fa fa-home" aria-hidden="true"></i> Regresar a Módulos
+                </a>
+                    }
+                    else if (session.Idioma == "english")
+                    {
+                <a class="menu__link" href="@Url.Action("LoginFacade", "Account")" data-finish="true" style="font-size: larger;background-color: #55BE5A;color: white;">
+                    <i class="fa fa-home" aria-hidden="true"></i> Back to Modules
+                </a>
+                    }
                 </div>
                 <div class="field">
                     @if (session.Idioma == "italiano")
@@ -185,6 +202,8 @@
         function mostrarMenu() {
             $('#facade').show();
             $('#menuP').hide();
+            $('#renderPages').html('');
+            $('#renderPages').hide();
         };
 
         function loadDummyData(hrefURL) {
@@ -192,6 +211,7 @@
         };
         function cargarElement(url) {
             $('#menuP').show();
+            $('#renderPages').show();
         $.ajax({
             url: url,
             beforeSend: function () {

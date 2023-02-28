@@ -1,4 +1,6 @@
-﻿<h3 class="titlesPages">
+﻿<script src="~/Scripts/dropzone/dropzone.js"></script>
+<link href="~/Scripts/dropzone/dropzone.css" rel="stylesheet" />
+<h3 class="titlesPages">
     PROGRAMA ALTURAS | CARGAR DOCUMENTOS
 </h3>
 @using (Ajax.BeginForm("FeaturesCreate", "Inspections", null, new AjaxOptions()
@@ -11,11 +13,11 @@
 {
     <div class="ui equal width form">
         <div class="required inline fields">
-            
-              <div class="field">
-            <label>Sede</label>
-            @Html.DropDownList("cbxHeadquarter", (SelectList)ViewBag.HeadquarterDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
-        </div>
+
+            <div class="field">
+                <label>Sede</label>
+                @Html.DropDownList("cbxHeadquarter", (SelectList)ViewBag.HeadquarterDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+            </div>
         </div>
         <div class="fields">
             <div class="field">

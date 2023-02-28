@@ -27,7 +27,7 @@ namespace LogicBo
         }
         public DataTable GetCountries()
         {
-            return executeProcedures.DataTable("ENEL_LoadCountries", null);
+            return executeProcedures.DataTable("ENEL_LoadCountriesAll", null);
         }
         public Dictionary<string, string> GetCategoryDictionary()
         {

@@ -1,5 +1,7 @@
 ﻿@using System.Data
 @model DataTable
+<link href="~/Scripts/tables/jquery.dynatable.css" rel="stylesheet" />
+<script type="text/javascript" src="~/Scripts/tables/jquery.dynatable.js"></script>
 <h3 class="titlesPages">
     GESTIÓN DE SEDES | LISTADO DE SEDES
 </h3>
@@ -21,7 +23,7 @@
                     <td>
                         @row[col.ColumnName].ToString()
                     </td>
-                    }
+                }
             </tr>
         }
     </tbody>

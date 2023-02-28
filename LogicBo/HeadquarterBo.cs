@@ -15,26 +15,28 @@ namespace LogicBo
 
         #region Properties
         private readonly Entity.ModelEntities entities = new Entity.ModelEntities();
-        private readonly ADO.ExecuteProcedures executeProcedures= new ADO.ExecuteProcedures();
+        private readonly ADO.ExecuteProcedures executeProcedures = new ADO.ExecuteProcedures();
         #endregion
         /// <summary>
         /// Get All Headquarter active for list
         /// </summary>
         /// <returns></returns>
-        public Dictionary<string,string> GetDictionary(int PaisId)
+        public Dictionary<string, string> GetDictionary(int PaisId)
         {
             List<SqlParameter> parameters = new List<SqlParameter> {
                 new SqlParameter(){ ParameterName="Paisid", SqlDbType=SqlDbType.Int,Value=PaisId},
             };
             var result = executeProcedures.DataTable("ENEL_LoadSedes", parameters);
-            return result.AsEnumerable().ToDictionary(row => row["id"].ToString(),row => row["Sede"].ToString());
+            return result.AsEnumerable().ToDictionary(row => row["id"].ToString(), row => row["Sede"].ToString());
         }
 
-        public DataTable GetIndex()
+        public DataTable GetIndex(int PaisId)
         {
+            List<SqlParameter> parameters = new List<SqlParameter> {
+                new SqlParameter(){ ParameterName="Paisid", SqlDbType=SqlDbType.Int,Value=PaisId},
+            };
+            var result = executeProcedures.DataTable("ENEL_LoadSedesTotal", parameters);
 
-            var result = executeProcedures.DataTable("ENEL_LoadSedesTotal", null);
-            
             return result;
         }
 

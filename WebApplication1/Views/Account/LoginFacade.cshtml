@@ -7,9 +7,24 @@
 
 
 <div class="ui equal width form">
-    <a class="menu__link" href="@Url.Action("LogOff", "Account")" data-finish="true" style="font-size: larger;">
-        <i class="fa fa-home" aria-hidden="true"></i> Salir
-    </a>
+    @if (session.Idioma == "italiano")
+    {
+        <a class="menu__link" href="@Url.Action("LogOff", "Account")" data-finish="true" style="font-size: larger;background-color: #55BE5A;color: white;">
+            <i class="fa fa-home" aria-hidden="true"></i> Lasciare
+        </a>
+    }
+    else if (session.Idioma == "spain")
+    {
+        <a class="menu__link" href="@Url.Action("LogOff", "Account")" data-finish="true" style="font-size: larger;background-color: #55BE5A;color: white;">
+            <i class="fa fa-home" aria-hidden="true"></i> Salir
+        </a>
+    }
+    else if (session.Idioma == "english")
+    {
+        <a class="menu__link" href="@Url.Action("LogOff", "Account")" data-finish="true" style="font-size: larger;background-color: #55BE5A;color: white;">
+            <i class="fa fa-home" aria-hidden="true"></i> Exit
+        </a>
+    }
 </div>
    
 }

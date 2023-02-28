@@ -63,6 +63,7 @@
             if (classElement == "green")
                 $(this).find('td:eq(6)').html('Vigente');
 
+
         });
     }
     $('#tableSearchPageInitial').dynatable({
@@ -80,4 +81,27 @@
     $('#tableSearchPageInitial').dynatable({
     }).bind('dynatable:afterProcess', processingComplete1);
     processingComplete1();
+
+
+
+    var processingComplete2 = function () {
+        $.each($('#tableSearchPageInitial tr'), function (index, value) {
+            var classElement = $(this).find('td:eq(8)').html();
+            if (classElement == "Si") {
+                $(this).find('td:eq(8)').addClass("green");
+                $(this).find('td:eq(8)').html('Si <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>');
+            }
+            else {
+                $(this).find('td:eq(8)').addClass("red");
+                $(this).find('td:eq(8)').html('No <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>');
+            }
+        });
+    }
+    $('#tableSearchPageInitial').dynatable({
+    }).bind('dynatable:afterProcess', processingComplete1);
+    processingComplete2();
+
+
+
+
 </script>

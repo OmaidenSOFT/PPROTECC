@@ -125,7 +125,7 @@ namespace WebApplication1.Controllers
         }
         public ActionResult IndexSede()
         {
-            var result = _headquarterBo.GetIndex();
+            var result = _headquarterBo.GetIndex(Convert.ToInt32(Session["CountryID"]));
             return PartialView(result);
         }
         public ActionResult IndexPais()
@@ -302,7 +302,7 @@ namespace WebApplication1.Controllers
                 int paisid = collection["cbxCountry"].ToString() != string.Empty ? Convert.ToInt32(collection["cbxCountry"].ToString()) : 0; ;
                 int sedecategoriaid = collection["cbxSedeCategoria"].ToString() != string.Empty ? Convert.ToInt32(collection["cbxSedeCategoria"].ToString()) : 0; ;
                 string codeENEL = collection["codeENEL"];
-                string ubicacion = collection["ubicaciuon"];
+                string ubicacion = collection["ubicacion"];
 
                 var idEquipment = _curriculumBo.CreateSede(nombreSede, paisid, sedecategoriaid, ubicacion, codeENEL);
                 return Json(new { result = true }, JsonRequestBehavior.AllowGet);

@@ -36,7 +36,7 @@ namespace WebApplication1.Controllers
             try
             {
                 int headQuarterType = collection["headQuarterType"].ToString() != string.Empty ? Convert.ToInt32(collection["headQuarterType"].ToString()) : 0;
-                                var result = _medicalConceptsBo.SearchMedicalConcepts(headQuarterType);
+                var result = _medicalConceptsBo.SearchMedicalConcepts(headQuarterType);
                 return PartialView(result);
             }
             catch (Exception ex)

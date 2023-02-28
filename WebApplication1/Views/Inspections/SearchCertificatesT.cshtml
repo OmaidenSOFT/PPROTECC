@@ -1,5 +1,7 @@
 ﻿@using System.Data
 @model DataTable
+<link href="~/Scripts/tables/jquery.dynatable.css" rel="stylesheet" />
+<script type="text/javascript" src="~/Scripts/tables/jquery.dynatable.js"></script>
 <table class="ui selectable celled table ui center aligned tablesInitial" id="tablesIndexTechnicalReports">
     <thead>
         <tr>
@@ -16,7 +18,7 @@
     </thead>
     <tbody>
         @foreach (System.Data.DataRow row in Model.Rows)
-            {
+        {
             <tr>
                 @foreach (DataColumn col in Model.Columns)
                 {
@@ -73,14 +75,14 @@
     <div class="renderImages ui cards" style="display:none"></div>
 </div>
 <script type="text/javascript">
-            var $element = $('.cardTest');
-            LoadTables();
-            function getDetailTechReports(pdfs, type) {
-                $('.renderImages').html('');
-                $element.find($('#number').text(pdfs));
-                $element.find($('#pdfref').attr('href', '../../PROCEDURE_reports/' + pdfs));
-                $element.find($('#type').text(type));
-                $('.renderImages').append('<div class="ui card cardTest"> ' + $element.html() + '</div>');
-                $('.renderImages').show('slow');
-            }
+    var $element = $('.cardTest');
+    LoadTables();
+    function getDetailTechReports(pdfs, type) {
+        $('.renderImages').html('');
+        $element.find($('#number').text(pdfs));
+        $element.find($('#pdfref').attr('href', '../../PROCEDURE_reports/' + pdfs));
+        $element.find($('#type').text(type));
+        $('.renderImages').append('<div class="ui card cardTest"> ' + $element.html() + '</div>');
+        $('.renderImages').show('slow');
+    }
 </script>

@@ -1,5 +1,7 @@
 ﻿@using System.Data
 @model DataTable
+<link href="~/Scripts/tables/jquery.dynatable.css" rel="stylesheet" />
+<script type="text/javascript" src="~/Scripts/tables/jquery.dynatable.js"></script>
 <style>
     /*.ui.selection.dropdown {
         padding: 0;
@@ -31,9 +33,9 @@
                 {
                     <td>@row[col.ColumnName]</td>
                 }
-                    <td>
-                        <a href="javascript:void(0)" onclick="cargarElement('@Url.Action("EditUser",new { @idUser=row["Usuario_ID"].ToString()})')">Editar</a>
-                    </td>
+                <td>
+                    <a href="javascript:void(0)" onclick="cargarElement('@Url.Action("EditUser",new { @idUser=row["Usuario_ID"].ToString()})')">Editar</a>
+                </td>
             </tr>
         }
     </tbody>

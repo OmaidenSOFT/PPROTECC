@@ -1,4 +1,6 @@
-﻿<h3 class="titlesPages">
+﻿<script src="~/Scripts/dropzone/dropzone.js"></script>
+<link href="~/Scripts/dropzone/dropzone.css" rel="stylesheet" />
+<h3 class="titlesPages">
     PROGRAMA ALTURAS | CREAR FICHAS TECNICAS
 </h3>
 @using (Ajax.BeginForm("CreateTechInfo", "Inspections", null, new AjaxOptions()
@@ -33,7 +35,7 @@
             </div>
         </div>
         <div class="fields">
-           <div class="field">
+            <div class="field">
                 <label>Modelo</label>
                 <input type="text" id="model" name="model" placeholder="Modelo" autocomplete="off" maxlength="50">
             </div>
@@ -89,7 +91,7 @@
             }
         });
     });
-   
+
 
     $('#messageCreateFeature').hide();
     var myDropzoneFile;

@@ -84,86 +84,86 @@
     <tbody>
         @foreach (System.Data.DataRow row in Model.Rows)
         {
-            <tr>
-                @foreach (DataColumn col in Model.Columns)
+        <tr>
+            @foreach (DataColumn col in Model.Columns)
+            {
+                if (col.ColumnName != "CodigoSucursal")
                 {
-                    if (col.ColumnName != "CodigoSucursal")
+                    if (col.ColumnName == "Sede")
                     {
-                        if (col.ColumnName == "Sede")
+                        <td><a href="javascript:void(0)" data-toggle="modal" data-target="#exampleModalLong" onclick="getDetail('@row["CodigoSucursal"].ToString()','@row["Sede"].ToString()')">@row[col.ColumnName]</a></td>
+                    }
+                    else if (col.ColumnName == "Total Aceptados")
+                    {
+                        <td> @row[col.ColumnName] <div class="circleA"></div></td>
+                    }
+                    else if (col.ColumnName == "Total Mantenimiento")
+                    {
+                        <td> <a href="javascript:void(0)" onclick="getDetailMant('@row["CodigoSucursal"].ToString()','@row["Sede"].ToString()')">@row[col.ColumnName]</a> <div class="circleY"></div></td>
+                    }
+                    else if (col.ColumnName == "Total Rechazados")
+                    {
+                        <td> <a href="javascript:void(0)" onclick="getDetailRechazados('@row["CodigoSucursal"].ToString()','@row["Sede"].ToString()')">@row[col.ColumnName]</a> <div class="circleR"></div></td>
+                    }
+                    else if (col.ColumnName == "Total Dados de Baja")
+                    {
+                        <td><a href="javascript:void(0)" onclick="getDetailDadosBaja('@row["CodigoSucursal"].ToString()','@row["Sede"].ToString()')">@row[col.ColumnName]</a> <div class="circleD"></div></td>
+                    }
+                    else if (col.ColumnName == "Vigentes")
+                    {
+                        if (Convert.ToInt32(row[col.ColumnName]) != 0)
                         {
-                            <td><a href="javascript:void(0)" data-toggle="modal" data-target="#exampleModalLong" onclick="getDetail('@row["CodigoSucursal"].ToString()','@row["Sede"].ToString()')">@row[col.ColumnName]</a></td>
+                            <td><a href="javascript:void(0)" onclick="getDetailVig('@row["CodigoSucursal"].ToString()','@row["Sede"].ToString()')" style="font-size:larger; color:green; font-style:italic" data-toggle="tooltip" title='@row[col.ColumnName] Vigentes'>@row[col.ColumnName]</a><i class="fa fa-thumbs-o-up" aria-hidden="true" style="margin-left:20%"></i> </td>
                         }
-                        else if (col.ColumnName == "Total Aceptados")
-                        {
-                            <td> @row[col.ColumnName] <div class="circleA"></div></td>
-                        }
-                        else if (col.ColumnName == "Total Mantenimiento")
-                        {
-                            <td> <a href="javascript:void(0)" onclick="getDetailMant('@row["CodigoSucursal"].ToString()','@row["Sede"].ToString()')">@row[col.ColumnName]</a> <div class="circleY"></div></td>
-                        }
-                        else if (col.ColumnName == "Total Rechazados")
-                        {
-                            <td> <a href="javascript:void(0)" onclick="getDetailRechazados('@row["CodigoSucursal"].ToString()','@row["Sede"].ToString()')">@row[col.ColumnName]</a> <div class="circleR"></div></td>
-                        }
-                        else if (col.ColumnName == "Total Dados de Baja")
-                        {
-                            <td><a href="javascript:void(0)" onclick="getDetailDadosBaja('@row["CodigoSucursal"].ToString()','@row["Sede"].ToString()')">@row[col.ColumnName]</a> <div class="circleD"></div></td>
-                        }
-                        else if (col.ColumnName == "Vigentes")
-                        {
-                            if (Convert.ToInt32(row[col.ColumnName]) != 0)
-                            {
-                                <td><a href="javascript:void(0)" onclick="getDetailVig('@row["CodigoSucursal"].ToString()','@row["Sede"].ToString()')" style="font-size:larger; color:green; font-style:italic" data-toggle="tooltip" title='@row[col.ColumnName] Vigentes'>@row[col.ColumnName]</a> </td>
-                            }
-                            else
-                            {
-                                <td></td>
-                            }
-                        }
-                        else if (col.ColumnName == "PorVencer")
-                        {
-                            if (Convert.ToInt32(row[col.ColumnName]) != 0)
-                            {
-                                <td><a href="javascript:void(0)" onclick="getDetailPor('@row["CodigoSucursal"].ToString()','@row["Sede"].ToString()')" style="font-size:larger; color: greenyellow; font-style:italic" data-toggle="tooltip" title='@row[col.ColumnName] Próximas'>@row[col.ColumnName]</a></td>
-                            }
-                            else
-                            {
-                                <td></td>
-                            }
-                        }
-                        else if (col.ColumnName == "Vencidos")
-                        {
-                            if (Convert.ToInt32(row[col.ColumnName]) != 0)
-                            {
-                                <td><a href="javascript:void(0)" onclick="getDetailVen('@row["CodigoSucursal"].ToString()','@row["Sede"].ToString()')" style="font-size:larger; color:red; font-style:italic" data-toggle="tooltip" title='@row[col.ColumnName] Pendientes'>@row[col.ColumnName]</a></td>
-                            }
-                            else
-                            {
-                                <td></td>
-                            }
-                        }
-
-                        @*else if (col.ColumnName == "Vigencia")
-                            {
-                                var classElement = @row[col.ColumnName].ToString().Split('-')[1];
-                                classElement = classElement == "Rojo" ? "" : classElement == "Amarillo" ? "yellow" : classElement == "Verde" ? "green" : "";
-
-
-                                var classEl1 = @row[col.ColumnName].ToString().Split('-')[1];
-                                classEl1 = classEl1 == "Rojo" ? "font color='red'" : "font color='white'";
-
-
-                                <td class="@classElement @classEl1">@row[col.ColumnName].ToString().Split('-')[0]</td>
-
-                            }*@
                         else
                         {
-                            <td>@row[col.ColumnName]</td>
+                            <td></td>
+                        }
+                    }
+                    else if (col.ColumnName == "PorVencer")
+                    {
+                        if (Convert.ToInt32(row[col.ColumnName]) != 0)
+                        {
+                            <td><a href="javascript:void(0)" onclick="getDetailPor('@row["CodigoSucursal"].ToString()','@row["Sede"].ToString()')" style="font-size:larger; color: greenyellow; font-style:italic" data-toggle="tooltip" title='@row[col.ColumnName] Próximas'>@row[col.ColumnName]</a><i class="fa fa-hand-lizard-o" aria-hidden="true" style="margin-left:20%"></i> </td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+                    }
+                    else if (col.ColumnName == "Vencidos")
+                    {
+                        if (Convert.ToInt32(row[col.ColumnName]) != 0)
+                        {
+                            <td><a href="javascript:void(0)" onclick="getDetailVen('@row["CodigoSucursal"].ToString()','@row["Sede"].ToString()')" style="font-size:larger; color:red; font-style:italic" data-toggle="tooltip" title='@row[col.ColumnName] Pendientes'>@row[col.ColumnName]</a><i class="fa fa-thumbs-o-down" aria-hidden="true" style="margin-left:20%"></i> </td>
+                        }
+                        else
+                        {
+                            <td></td>
                         }
                     }
 
+                    @*else if (col.ColumnName == "Vigencia")
+                {
+                    var classElement = @row[col.ColumnName].ToString().Split('-')[1];
+                    classElement = classElement == "Rojo" ? "" : classElement == "Amarillo" ? "yellow" : classElement == "Verde" ? "green" : "";
+
+
+                    var classEl1 = @row[col.ColumnName].ToString().Split('-')[1];
+                    classEl1 = classEl1 == "Rojo" ? "font color='red'" : "font color='white'";
+
+
+                    <td class="@classElement @classEl1">@row[col.ColumnName].ToString().Split('-')[0]</td>
+
+                }*@
+                    else
+                    {
+                        <td>@row[col.ColumnName]</td>
+                    }
                 }
-            </tr>
+
+            }
+        </tr>
         }
     </tbody>
 </table>
