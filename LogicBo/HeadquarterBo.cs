@@ -50,7 +50,7 @@ namespace LogicBo
             List<SqlParameter> parameters = new List<SqlParameter> {
                 new SqlParameter(){ ParameterName="Paisid", SqlDbType=SqlDbType.Int,Value=PaisID},
             };
-            var result = executeProcedures.DataTable("ENEL_LoadSedes", parameters);
+            var result = executeProcedures.DataTable("ENEL_LoadSedesW", parameters);
             return result.AsEnumerable().ToDictionary(row => row["id"].ToString(), row => row["Sede"].ToString());
         }
 

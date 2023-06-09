@@ -229,6 +229,8 @@
     $("#rfid").blur(function () {
         var rfid = document.getElementById("rfid").value;
         var headquarterid = $("#cbxHeadquarter").val();
+        alert(rfid);
+        alert(headquarterid);
         if (headquarterid != "" && headquarterid != null) {
             var html = ' value =';
             $.ajax({
