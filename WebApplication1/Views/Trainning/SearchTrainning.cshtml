@@ -6,56 +6,68 @@
     }
 </style>
 <br />
-<table class="ui selectable celled table ui center aligned tablesInitial" id="tableSearchTrainning">
-    <thead>
-        <tr>
-            @foreach (System.Data.DataColumn col in Model.Columns)
-            {
-                if (col.ColumnName == "Color")
-                {
-                    <th style="display:none">@col.ColumnName</th>
-                }
-                else
-                {
-                    <th>@col.ColumnName</th>
-
-                }
-
-            }
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (System.Data.DataRow row in Model.Rows)
-        {
+<div id="trainingA">
+    <table class="ui selectable celled table ui center aligned tablesInitial" id="tableSearchTrainning">
+        <thead>
             <tr>
-                @foreach (DataColumn col in Model.Columns)
+                @foreach (System.Data.DataColumn col in Model.Columns)
                 {
-                    <td>
-                        @if (col.ColumnName == "Nombre")
-                        {
-                            <a href="javascript:void(0)" onclick="loadDetailsUser('@row["id"].ToString()')">@row[col.ColumnName]</a>
-                        }
-                        else
-                        {
-                            @row[col.ColumnName]
-                        }
-                    </td>
-                }
+                    if (col.ColumnName == "Color")
+                    {
+                        <th style="display:none">@col.ColumnName</th>
+                    }
+                    else
+                    {
+                        <th>@col.ColumnName</th>
 
+                    }
+
+                }
             </tr>
-        }
-    </tbody>
-</table>
-@if (Model.Rows.Count > 0)
-{
-    <button class="ui button" id="btnExport" onclick="location.href='@Url.Action("DownloadFile", "Download", new { fileName = "ListadoRolAptitud", @id = ViewBag.id })'">Exportar</button>
-}
-<div class="ui modal" id="modalDetailsUser">
-    <div class="header">Detalle Usuario</div>
-    <div class="content" id="loadDetailsUser">
+        </thead>
+        <tbody>
+            @foreach (System.Data.DataRow row in Model.Rows)
+            {
+                <tr>
+                    @foreach (DataColumn col in Model.Columns)
+                    {
+                        <td>
+                            @if (col.ColumnName == "Nombre")
+                            {
+                                <a href="javascript:void(0)" onclick="loadDetailsUser('@row["id"].ToString()')">@row[col.ColumnName]</a>
+                            }
+                            else
+                            {
+                                @row[col.ColumnName]
+                            }
+                        </td>
+                    }
+
+                </tr>
+            }
+        </tbody>
+    </table>
+    @if (Model.Rows.Count > 0)
+    {
+        <button class="ui button" id="btnExport" onclick="location.href='@Url.Action("DownloadFile", "Download", new { fileName = "ListadoRolAptitud", @id = ViewBag.id })'">Exportar</button>
+    }
+</div>
+<div class="ui" id="modalDetailsUser">
+    @*<div class="header">Detalle Usuario</div>*@
+    <a class="menu__link" href="#" onclick="regresar()" data-finish="true" style="font-size: larger;background-color: #55BE5A;color: white;">
+        <i class="fa fa-home" aria-hidden="true"></i> Regresar
+    </a>
+    <div class="content" id="loadDetailsUser"   style="margin-top: -2%;">
     </div>
 </div>
 <script type="text/javascript">
+
+    function regresar() {
+        $('#modalDetailsUser').hide();
+        $('#trainingA').show();
+        $('#trainingA').focus();
+    }
+
     var processingComplete = function () {
         $.each($('#tableSearchTrainning tr'), function (index, value) {
             var classElement = $(this).find('td:eq(8)').html();
@@ -79,7 +91,9 @@
             success: function (data) {
                 if (data) {
                     $('#loadDetailsUser').html(data);
-                    $('#modalDetailsUser').modal('show');
+                    $('#loadDetailsUser').focus();
+                    $('#modalDetailsUser').show();
+                    $('#trainingA').hide();
                 }
             }
         })
