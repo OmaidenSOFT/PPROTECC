@@ -65,17 +65,27 @@ namespace WebApplication1.Controllers
             var result = _equipmentBo.GetIndex(Convert.ToInt32(Session["CountryID"]));
             return PartialView(result);
         }
-        public ActionResult CreateInspections(int? headquarterId, string RFID, int? elementid)
+        [HttpPost]
+        public ActionResult ScheduleInspectionsByHeadquarter(int headquarterId, int monthid, int elementId, int yearid)
+        {
+            ViewBag.id = headquarterId;
+            var model = _inspectionsBo.SearchSchedulerInspectionsDetails(headquarterId, monthid, elementId, yearid);
+            return PartialView(model);
+        }
+
+  
+    public ActionResult CreateInspections(int? headquarterId, string RFID, int? elementid)
         {
             ViewBag.headquarterId = headquarterId;
             ViewBag.elementid = elementid;
             ViewBag.RFID = RFID;
+
             ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(Convert.ToInt32(Session["CountryID"])), "Key", "Value");
             //ViewBag.CategoryDictionary = new SelectList(_categoryBo.GetDictionary(), "Key", "Value");
             ViewBag.ElementDictionary = new SelectList(_elementBo.GetDictionary(), "Key", "Value");
             ViewBag.LocationDictionary = new SelectList(_locationBo.GetDictionary(), "Key", "Value");
             ViewBag.TsaDictionary = new SelectList(_trainningBO.GetDictionary(), "Key", "Value");
-            ViewBag.InspectorDictionary = new SelectList(_trainningBO.GetInspectorDictionary(), "Key", "Value");
+            ViewBag.InspectorDictionary = new SelectList(_trainningBO.GetInspectorDDictionary(), "Key", "Value");
             ViewBag.ActionResultDictionary = new SelectList(_actionResultBo.GetDictionary(), "Key", "Value");
             ViewBag.FinalStateDictionary = new SelectList(_finalStateBo.GetDictionary(), "Key", "Value");
             ViewBag.StateDictionary = new SelectList(_finalStateBo.GetStatesDictionary(), "Key", "Value");
@@ -155,6 +165,38 @@ namespace WebApplication1.Controllers
             }
 
         }
+
+        public JsonResult GetDataElementBySerial(string serial, int headquaterid)
+            {
+            try
+            {
+                var result = _elementBo.GetDataElementBySerial(serial, headquaterid);
+                return Json(new { result = true, data = result }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { result = false, message = ex.Message.ToString() }, JsonRequestBehavior.AllowGet);
+                throw;
+            }
+
+        }
+        public JsonResult GetDataElementByPrecinto(string precinto, int headquaterid)
+        {
+            try
+            {
+                var result = _elementBo.GetDataElementByPrecinto(precinto, headquaterid);
+                return Json(new { result = true, data = result }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { result = false, message = ex.Message.ToString() }, JsonRequestBehavior.AllowGet);
+                throw;
+            }
+
+        }
+
+        
+
         [HttpPost]
         public JsonResult GetFactorByElement(string rfid, int headquarterid)
         {

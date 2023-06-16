@@ -903,6 +903,7 @@
     <Content Include="Views\WorkingAtHeight\StockByHeadquarterDados.cshtml" />
     <Content Include="Views\WorkingAtHeight\StockByHeadquarterMant.cshtml" />
     <Content Include="Views\WorkingAtHeight\StockByHeadquarterRechazos.cshtml" />
+    <Content Include="Views\Inspections\ScheduleInspectionsByHeadquarter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

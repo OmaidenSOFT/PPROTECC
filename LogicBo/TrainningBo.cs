@@ -27,6 +27,11 @@ namespace LogicBo
             var result = executeProcedures.DataTable("ENEL_LoadInspectors", null);
             return result.AsEnumerable().ToDictionary(row => row["Codigo"].ToString(), row => row["Nombre"].ToString());
         }
+        public Dictionary<string, string> GetInspectorDDictionary()
+        {
+            var result = executeProcedures.DataTable("ENEL_LoadInspectoresD", null);
+            return result.AsEnumerable().ToDictionary(row => row["id"].ToString(), row => row["Nombre"].ToString());
+        }
         public DataTable GetTrainningByHeadquarter(int headquarterId)
         {
             List<SqlParameter> parameters = new List<SqlParameter> {

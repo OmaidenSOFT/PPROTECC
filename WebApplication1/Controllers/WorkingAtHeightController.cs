@@ -20,6 +20,7 @@ namespace WebApplication1.Controllers
         #region Properties
         private readonly AccountBo _accountBo = new AccountBo();
         WorkingAtHeightBo _workingAtHeightBo = new WorkingAtHeightBo();
+        InspectionsBo _inspectionsBo = new InspectionsBo();
         HeadquarterBo _headquarterBo = new HeadquarterBo();
         CategoryBo _categoryBo = new CategoryBo();
         ElementBo _elementBo = new ElementBo();
@@ -45,6 +46,7 @@ namespace WebApplication1.Controllers
             var model = _workingAtHeightBo.GetStockByHeadquarter(headquarterId);
             return PartialView(model);
         }
+      
         [HttpPost]
         public ActionResult StockByHeadquarterMant(int headquarterId)
         {

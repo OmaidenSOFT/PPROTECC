@@ -10,7 +10,10 @@
         <tr>
             @foreach (System.Data.DataColumn col in Model.Columns)
             {
-                <th>@col.ColumnName</th>
+                if (col.ColumnName != "Sedeid" && col.ColumnName != "ElementId")
+                {
+                    <th>@col.ColumnName</th>
+                }
             }
         </tr>
     </thead>
@@ -20,32 +23,71 @@
             <tr>
                 @foreach (DataColumn col in Model.Columns)
                 {
-                    if (col.ColumnName == "TAG")
+                    if (col.ColumnName != "Sedeid" && col.ColumnName != "ElementId")
                     {
-                        <td><a href="javascript:void(0)" onclick="loadDetails('@row["TAG"].ToString()','@ViewBag.id','@row["ID"].ToString()','@row["Descripcion"].ToString()')">@row[col.ColumnName]</a></td>
-                    }
-                    else
-                    {
-                        <td>@row[col.ColumnName]</td>
+
+                        if (Convert.ToInt32(row[col.ColumnName]) != 0 && col.ColumnName != "Total Año")
+                        {
+                            <td> <a href="javascript:void(0)" onclick="getDetail('@row["Sedeid"].ToString()','@col.ColumnName','@row["ElementId"].ToString()','@row["Año"].ToString()')">@row[col.ColumnName]</a> <div class="circleG"></div></td>
+                        }
+                        else
+                        {
+                            <td>@row[col.ColumnName]</td>
+                        }
                     }
                 }
             </tr>
         }
     </tbody>
 </table>
-<div class="ui modal fullscreen" id="modalDetailsEquipment">
-    <div class="header">
-        <h3 class="titlesPages">
-            INSPECCIÓN Y MANTENIMIENTO | GESTIÓN DE HALLAZGOS
-        </h3>
-    </div>
 
     <div class="content" id="loadDetailsEquipment">
 
     </div>
-</div>
+
 <script type="text/javascript">
-    LoadTables();
+    /*LoadTables();*/
+    function getDetail(id, mes,element,year) {
+        var mesid = 0;
+        if (mes == "Enero")
+            mesid = 1;
+        if (mes == "Febrero")
+            mesid = 2;
+        if (mes == "Marzo")
+            mesid = 3;
+        if (mes == "Abril")
+            mesid = 4;
+        if (mes == "Mayo")
+            mesid = 5;
+        if (mes == "Junio")
+            mesid = 6;
+        if (mes == "Julio")
+            mesid = 7;
+        if (mes == "Agosto")
+            mesid = 8;
+        if (mes == "Septiembre")
+            mesid = 9;
+        if (mes == "Octubre")
+            mesid = 10;
+        if (mes == "Noviembre")
+            mesid = 11;
+        if (mes == "Diciembre")
+            mesid = 12;
+        if (id > 0) {
+            $.ajax({
+                url: '@Url.Action("ScheduleInspectionsByHeadquarter", "Inspections")',
+                data: { headquarterId: id, monthid: mesid, elementId: element, yearid:year},
+                type: 'POST',
+                success: function (data) {
+                    $('#loadDetailsEquipment').html('').addClass("loading");
+                    $('#loadDetailsEquipment').html(data);
+                    $('#loadDetailsEquipment').removeClass("loading").css("height", "inherit");
+                }
+            });
+        }
+    }
+
+
     function loadDetails(tag, headquarteid, id, stateid) {
         var state;
         if(stateid =='Rechazado')

@@ -186,6 +186,18 @@ namespace LogicBo
 
 
         }
+        public DataTable SearchSchedulerInspectionsDetails(int headQuarterTypeid, int monthid, int ElementID, int yearid)
+        {
+            List<SqlParameter> parameters = new List<SqlParameter> {
+                    new SqlParameter(){ ParameterName="Sedeid", SqlDbType=SqlDbType.Int,Value=headQuarterTypeid},
+                    new SqlParameter(){ ParameterName="@monthid", SqlDbType=SqlDbType.Int,Value=monthid},
+                    new SqlParameter(){ ParameterName="@ElementID", SqlDbType=SqlDbType.Int,Value=ElementID},
+                    new SqlParameter(){ ParameterName="@yearid", SqlDbType=SqlDbType.Int,Value=yearid},
+
+        };
+            var result = executeProcedures.DataTable("ENEL_LOADSCHEINSPECTIONSDETAILS", parameters);
+            return result;
+        }
         public DataTable ManagementMaintenanceEquipment(int headQuarterTypeid)
         {
             List<SqlParameter> parameters = new List<SqlParameter> {
@@ -235,7 +247,7 @@ namespace LogicBo
             }
 
         }
-        public bool TechInfoCreate(int headQuarterType, int Elementoid, string marca, string modelo,string observaciones, string file)
+        public bool TechInfoCreate(int headQuarterType, int Elementoid, string marca, string modelo, string observaciones, string file)
         {
             try
             {

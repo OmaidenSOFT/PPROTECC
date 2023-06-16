@@ -54,6 +54,34 @@ namespace LogicBo
 
             return element;
         }
+        public object[] GetDataElementBySerial(string serial, int headquarterid)
+        {
+            List<SqlParameter> parameters = new List<SqlParameter> {
+                new SqlParameter(){ ParameterName="serial", SqlDbType=SqlDbType.VarChar,Value=serial},
+                new SqlParameter(){ ParameterName="Sedeid", SqlDbType=SqlDbType.Int,Value=headquarterid},
+            };
+            var result = executeProcedures.DataTable("ENEL_LoadDataElementbySerial", parameters);
+            if (result.Rows.Count == 0)
+                return new object[0];
+
+            var element = result.AsEnumerable().ToList()?[0].ItemArray;
+
+            return element;
+        }
+        public object[] GetDataElementByPrecinto(string precinto, int headquarterid)
+        {
+            List<SqlParameter> parameters = new List<SqlParameter> {
+                new SqlParameter(){ ParameterName="precinto", SqlDbType=SqlDbType.VarChar,Value=precinto},
+                new SqlParameter(){ ParameterName="Sedeid", SqlDbType=SqlDbType.Int,Value=headquarterid},
+            };
+            var result = executeProcedures.DataTable("ENEL_LoadDataElementbyprecinto", parameters);
+            if (result.Rows.Count == 0)
+                return new object[0];
+
+            var element = result.AsEnumerable().ToList()?[0].ItemArray;
+
+            return element;
+        }
 
 
         #region Entity
