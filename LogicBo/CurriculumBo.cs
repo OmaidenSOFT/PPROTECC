@@ -21,23 +21,27 @@ namespace LogicBo
         /// Get List By Filters
         /// </summary>
         /// <returns></returns>
-        public DataTable GetListByElement(int? headquarterId, int? elementId, string rFID)
+        public DataTable GetListByElement(int? headquarterId, int? elementId, string rFID,string serial, string precinto)
         {
             List<SqlParameter> parameters = new List<SqlParameter> {
                 new SqlParameter(){ ParameterName="sedeId", SqlDbType=SqlDbType.Int,Value=headquarterId},
                 new SqlParameter(){ ParameterName="ElementoID", SqlDbType=SqlDbType.Int,Value=elementId},
-                new SqlParameter(){ ParameterName="RFID", SqlDbType=SqlDbType.VarChar,Value=rFID}
+                new SqlParameter(){ ParameterName="RFID", SqlDbType=SqlDbType.VarChar,Value=rFID},
+                new SqlParameter(){ ParameterName="serial", SqlDbType=SqlDbType.VarChar,Value=serial},
+                new SqlParameter(){ ParameterName="precinto", SqlDbType=SqlDbType.VarChar,Value=precinto}
             };
             var result = executeProcedures.DataTable("ENEL_LoadHVFromElement", parameters);
             return result;
         }
 
-        public DataTable GetListCertificatesByElement(int? headquarterId, int? elementId, string rFID)
+        public DataTable GetListCertificatesByElement(int? headquarterId, int? elementId, string rFID,string serial,string precinto)
         {
             List<SqlParameter> parameters = new List<SqlParameter> {
                 new SqlParameter(){ ParameterName="sedeId", SqlDbType=SqlDbType.Int,Value=headquarterId},
                 new SqlParameter(){ ParameterName="ElementoID", SqlDbType=SqlDbType.Int,Value=elementId},
-                new SqlParameter(){ ParameterName="RFID", SqlDbType=SqlDbType.VarChar,Value=rFID}
+                new SqlParameter(){ ParameterName="RFID", SqlDbType=SqlDbType.VarChar,Value=rFID},
+                new SqlParameter(){ ParameterName="serial", SqlDbType=SqlDbType.VarChar,Value=serial},
+                new SqlParameter(){ ParameterName="precinto", SqlDbType=SqlDbType.VarChar,Value=precinto}
             };
             var result = executeProcedures.DataTable("ENEL_LoadInspectionCErtificateFromElement", parameters);
             return result;

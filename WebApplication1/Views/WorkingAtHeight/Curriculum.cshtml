@@ -32,6 +32,14 @@
                     <label for="rFID">TAG</label>
                     <input type="text" id="rFID" name="rFID" maxlength="20" placeholder="Digite el valor del TAG" autocomplete="off">
                 </div>
+				<div class="eight wide field">
+                    <label for="serial">Serial</label>
+                    <input type="text" id="serial" name="serial" maxlength="20" placeholder="Digite el valor del Serial" autocomplete="off">
+                </div>
+				<div class="eight wide field">
+                    <label for="precinto">Precinto</label>
+                    <input type="text" id="precinto" name="precinto" maxlength="20" placeholder="Digite el valor del Precinto" autocomplete="off">
+                </div>
                 <div class="eight wide field">
                     <label>&nbsp;</label>
                     <button class="ui primary button" style="background-color:#55BE5A">
@@ -107,24 +115,7 @@
             });
     });
 
-        $('#formProcessSearchByTag').form({
-            fields: {
-                rFID: {
-                    identifier: 'rFID',
-                    rules: [
-                        {
-                            type: 'empty',
-                            prompt: 'Debe ingresar algun valor'
-                        },
-                        {
-                                type   : 'minLength[3]',
-                                prompt : 'Debe digitar más de 3 caracteres'
-                         }
-                    ]
-                },
-            }, inline: true,
-            on: 'blur'
-        });
+        
     $('#formProcessSearch').form({
         fields: {
             cbxHeadquarter: {

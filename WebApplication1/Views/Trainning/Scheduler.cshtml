@@ -21,40 +21,25 @@
     }, new { @id = "formProcessSearch" }))
     {
     <div class="ui equal width form">
-        <div class="required inline fields">
-            <label>Tipo de Sede:</label>
+        <div class="fields">
             <div class="field">
-                <div class="ui radio checkbox">
-                    <input type="radio" name="headQuarterType" value="1">
-                    <label>Térmicas</label>
-                </div>
-            </div>
-            <div class="field">
-                <div class="ui radio checkbox">
-                    <input type="radio" name="headQuarterType" value="2">
-                    <label>Renovables</label>
-                </div>
+                <label>Sede</label>
+                @Html.DropDownList("cbxHeadquarter", (SelectList)ViewBag.HeadquarterDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
             </div>
         </div>
 
 
 
         <div class="required inline fields">
-                        <label>Tipo de Cronograma:</label>
-                <div class="field">
-                    <div class="ui radio checkbox">
-                        <input type="radio" name="frequency" value="1">
-                        <label>Por Año</label>
-
-                    </div>
-                </div>
-                <div class="field">
-                    <div class="ui radio checkbox">
-                        <input type="radio" name="frequency" value="2">
-                        <label>Por Mes</label>
-                    </div>
-                </div>
+            <label>Tipo de Cronograma:</label>
+            <div class="field">
+                <select name="frequency" id="frequency" >
+                    <option value="1">Año</option>
+                    <option value="2">Mes</option>
+                </select>
             </div>
+            
+        </div>
 
         <button class="ui primary button">
             Buscar
@@ -64,6 +49,7 @@
 </div>
 
 <div id="renderSearchScheduler"></div>
+<div id="renderSearchSchedulerDetails"></div>
 
 <script type="text/javascript">
 
@@ -76,13 +62,7 @@
                     prompt: 'Debe seleccionar una opción'
                 }]
             },
-            frequency: {
-                identifier: 'frequency',
-                rules: [{
-                    type: 'checked',
-                    prompt: 'Debe seleccionar una opción'
-                }]
-            },
+           
             
         }, inline: true,
         on: 'blur'

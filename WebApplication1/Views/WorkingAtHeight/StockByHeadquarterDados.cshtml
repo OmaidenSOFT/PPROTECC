@@ -42,7 +42,7 @@
                     {
                         if (col.ColumnName == "TAG")
                         {
-                            <td><a onclick="viewDocument('@row["RutaHV"]')">@row[col.ColumnName]</a> </td>
+                           <td><a href="@row["RutaHV"]" id="pdfref" target="_blank" style="color: #4183C4 !important;">@row[col.ColumnName]</a></td>
                         }
 
                         else

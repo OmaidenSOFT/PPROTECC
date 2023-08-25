@@ -135,12 +135,15 @@ namespace WebApplication1.Controllers
         {
             try
             {
-                int headQuarterType = collection["headQuarterType"].ToString() != string.Empty ? Convert.ToInt32(collection["headQuarterType"].ToString()) : 0;
-                int schedulerType = collection["frequency"].ToString() != string.Empty ? Convert.ToInt32(collection["frequency"].ToString()) : 0;
+
+                int tempcbxHeadquarter;
+                int? headQuarterType = int.TryParse(collection["cbxHeadquarter"].ToString(), out tempcbxHeadquarter) ? tempcbxHeadquarter : (int?)0;
+                int tempfrequency;
+                int? schedulerType = int.TryParse(collection["frequency"].ToString(), out tempfrequency) ? tempfrequency : (int?)0;
                 //  int year = collection["cbxYear"].ToString() != string.Empty ? Convert.ToInt32(collection["cbxYear"].ToString()) : 0;
-                var result = _trainningBo.GetSearchScheduler(headQuarterType, schedulerType, 1);
-                ViewBag.id = collection["headQuarterType"].ToString();
-                ViewBag.id1 = collection["frequency"].ToString();
+                var result = _trainningBo.GetSearchScheduler((int)headQuarterType, (int)schedulerType, 1);
+                ViewBag.id = int.TryParse(collection["cbxHeadquarter"].ToString(), out tempcbxHeadquarter) ? tempcbxHeadquarter : (int?)0;
+                ViewBag.id1 = int.TryParse(collection["frequency"].ToString(), out tempfrequency) ? tempfrequency : (int?)0;
                 //ViewBag.id2 = collection["cbxYear"].ToString();
                 return PartialView(result);
             }

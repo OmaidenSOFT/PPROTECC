@@ -669,12 +669,15 @@ namespace WebApplication1.Controllers
             try
             {
                 string rFID = string.IsNullOrEmpty(collection["rFID"].ToString()) ? null : collection["rFID"].ToString();
+                string serial = string.IsNullOrEmpty(collection["serial"].ToString()) ? null : collection["serial"].ToString();
+                string precinto = string.IsNullOrEmpty(collection["precinto"].ToString()) ? null : collection["precinto"].ToString();
+
                 int tempcbxHeadquarter;
                 int tempcbxElement;
                 int? cbxHeadquarter = int.TryParse(collection["cbxHeadquarter"].ToString(), out tempcbxHeadquarter) ? tempcbxHeadquarter : (int?)null;
                 int? cbxElement = Int32.TryParse(collection["cbxElement"].ToString(), out tempcbxElement) ? tempcbxElement : (int?)null;
 
-                var result = _curriculumBo.GetListByElement(cbxHeadquarter, cbxElement, rFID);
+                var result = _curriculumBo.GetListByElement(cbxHeadquarter, cbxElement, rFID,serial,precinto);
                 return PartialView(result);
             }
             catch (Exception ex)

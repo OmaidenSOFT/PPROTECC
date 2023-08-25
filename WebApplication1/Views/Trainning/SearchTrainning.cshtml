@@ -1,5 +1,7 @@
 ﻿@using System.Data
 @model DataTable
+<link href="~/Scripts/tables/jquery.dynatable.css" rel="stylesheet" />
+<script type="text/javascript" src="~/Scripts/tables/jquery.dynatable.js"></script>
 <style>
     .dynatable-per-page-select {
         padding: 0px !important;
@@ -57,7 +59,7 @@
     <a class="menu__link" href="#" onclick="regresar()" data-finish="true" style="font-size: larger;background-color: #55BE5A;color: white;">
         <i class="fa fa-home" aria-hidden="true"></i> Regresar
     </a>
-    <div class="content" id="loadDetailsUser"   style="margin-top: -2%;">
+    <div class="content" id="loadDetailsUser" style="margin-top: -2%;">
     </div>
 </div>
 <script type="text/javascript">
