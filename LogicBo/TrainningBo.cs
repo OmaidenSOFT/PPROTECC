@@ -110,6 +110,33 @@ new SqlParameter(){ ParameterName="YearINI", SqlDbType=SqlDbType.VarChar,Value=y
 
         }
 
+        public DataTable GetLoadDetailsSchedulerAcumulado(int headQuarterId, int schedulerType, string month, int type, int year)
+        {
+            if (type == 1)
+            {
+                List<SqlParameter> parameters = new List<SqlParameter> {
+                    //new SqlParameter(){ ParameterName="Year", SqlDbType=SqlDbType.Int,Value=year},
+                    new SqlParameter(){ ParameterName="SedeID", SqlDbType=SqlDbType.Int,Value=headQuarterId},
+                    //new SqlParameter(){ ParameterName="Order", SqlDbType=SqlDbType.Int,Value=2},
+                };
+                var result = executeProcedures.DataTable("ENEL_LOADSCHEDULEBYTSABYYEARDetails", parameters);
+                return result;
+            }
+            else
+            {
+                List<SqlParameter> parameters = new List<SqlParameter> {
+                new SqlParameter(){ ParameterName="SedeID", SqlDbType=SqlDbType.Int,Value=headQuarterId},
+                 new SqlParameter(){ ParameterName="Month", SqlDbType=SqlDbType.VarChar,Value=month},
+new SqlParameter(){ ParameterName="YearINI", SqlDbType=SqlDbType.VarChar,Value=year}
+
+                };
+                var result = executeProcedures.DataTable("ENEL_LOADSCHEDULEBYTSABYMonthDetailsAcumulado", parameters);
+                return result;
+            }
+
+
+        }
+
         public DataTable GetLoadDetailsUser(int userId)
         {
             List<SqlParameter> parameters = new List<SqlParameter> {

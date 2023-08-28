@@ -28,6 +28,7 @@ namespace WebApplication1.Controllers
         }
         public ActionResult PageInitial()
         {
+            ViewBag.HeadquarterDictionary = new SelectList(_headquarterBo.GetDictionary(Convert.ToInt32(Session["CountryID"])), "Key", "Value");
             return PartialView();
         }
         [HttpPost]
@@ -35,8 +36,9 @@ namespace WebApplication1.Controllers
         {
             try
             {
-                int headQuarterType = collection["headQuarterType"].ToString() != string.Empty ? Convert.ToInt32(collection["headQuarterType"].ToString()) : 0;
-                var result = _medicalConceptsBo.SearchMedicalConcepts(headQuarterType);
+                
+                int headQuarterTypeid = collection["cbxHeadquarter"].ToString() != string.Empty ? Convert.ToInt32(collection["cbxHeadquarter"].ToString()) : 0;
+                var result = _medicalConceptsBo.SearchMedicalConcepts(headQuarterTypeid);
                 return PartialView(result);
             }
             catch (Exception ex)

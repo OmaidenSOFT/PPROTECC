@@ -29,11 +29,11 @@
                         {
                             if (ViewBag.id1 == 1)
                             {
-                                <a href="javascript:void(0)" onclick="loadDetails('@row["Sede"].ToString().Split('-')[0]','',1,0)">@row[col.ColumnName]</a>
+                                <a href="javascript:void(0)" onclick="loadDetails('@row["Sede"].ToString().Split('-')[0]','',1,0,'@row["Detalle"].ToString()')">@row[col.ColumnName]</a>
                             }
                             else
                             {
-                                <a href="javascript:void(0)" onclick="loadDetails('@ViewBag.id','@col.ColumnName',2,'@row["Año"].ToString()')">@row[col.ColumnName]</a>
+                                <a href="javascript:void(0)" onclick="loadDetails('@ViewBag.id','@col.ColumnName',2,'@row["Año"].ToString()','@row["Detalle"].ToString()')">@row[col.ColumnName]</a>
                             }
 
                         }
@@ -68,11 +68,10 @@
     }
 
     LoadTables();
-    function loadDetails(headQuarterId, month, type, year) {
-       
-               $.ajax({
+    function loadDetails(headQuarterId, month, type, year, detalle) {
+        $.ajax({
             url: '@Url.Action("LoadDetailsScheduler")',
-            data: { headQuarterId: headQuarterId, month: month, type: type, year: year },
+            data: { headQuarterId: headQuarterId, month: month, type: type, year: year,detail:detalle },
             type: 'POST',
             success: function (data) {
                 if (data) {

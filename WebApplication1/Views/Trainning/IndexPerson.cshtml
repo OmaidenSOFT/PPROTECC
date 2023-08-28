@@ -59,8 +59,9 @@
         $.each($('#tablesIndexperson tr'), function (index, value) {
             var classElement = $(this).find('td:eq(6)').html();
             classElement = classElement == "Rojo" ? "red" : classElement == "Amarillo" ? "yellow" : classElement == "Verde" ? "green" : "";
+            var texto = classElement == "red" ? "Vencido" : classElement == "yellow" ? "Por vencer" : classElement == "green" ? "Vigente" : "";
             $(this).find('td:eq(6)').addClass(classElement);
-            $(this).find('td:eq(6)').html('');
+            $(this).find('td:eq(6)').html(texto);
         });
     }
     //LoadTables();

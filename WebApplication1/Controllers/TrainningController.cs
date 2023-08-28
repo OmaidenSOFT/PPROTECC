@@ -170,14 +170,25 @@ namespace WebApplication1.Controllers
             }
         }
         [HttpPost]
-        public PartialViewResult LoadDetailsScheduler(int headQuarterId, string month, int type, int year)
+        public PartialViewResult LoadDetailsScheduler(int headQuarterId, string month, int type, int year, string detail)
         {
             try
             {
-                var result = _trainningBo.GetLoadDetailsScheduler(headQuarterId, 1, string.IsNullOrEmpty(month) ? null : month, type, year);
-                ViewBag.headQuarterId = headQuarterId;
-                ViewBag.month = month;
-                return PartialView(result);
+                if (detail == "Acumulado")
+                {
+                    var result = _trainningBo.GetLoadDetailsSchedulerAcumulado(headQuarterId, 1, string.IsNullOrEmpty(month) ? null : month, type, year);
+                    ViewBag.headQuarterId = headQuarterId;
+                    ViewBag.month = month;
+                    return PartialView(result);
+                }
+                else
+                {
+                    var result = _trainningBo.GetLoadDetailsScheduler(headQuarterId, 1, string.IsNullOrEmpty(month) ? null : month, type, year);
+                    ViewBag.headQuarterId = headQuarterId;
+                    ViewBag.month = month;
+                    return PartialView(result);
+                }
+               
             }
             catch (Exception ex)
             {
