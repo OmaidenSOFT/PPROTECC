@@ -33,23 +33,24 @@
     <tbody>
         @foreach (System.Data.DataRow row in Model.Rows)
         {
-            <tr>
-                @foreach (DataColumn col in Model.Columns)
-                {
+        <tr>
+            @foreach (DataColumn col in Model.Columns)
+            {
 
-                    if (col.ColumnName == "Identificacion")
-                    {
-                        <td><a href="javascript:void(0)" onclick="cargarElement('@Url.Action("LoadCourses",new { @idPerson=row["ID"].ToString(),@identification=@row["Identificacion"].ToString(),@isView=true})')">@row[col.ColumnName]</a></td>
-                    }
-                    else
-                    {
-                        <td>@row[col.ColumnName]</td>
-                    }
+                if (col.ColumnName == "Identificacion" && Convert.ToBoolean(@row["Activo"])==true)
+                {
+                    <td><a href="javascript:void(0)" onclick="cargarElement('@Url.Action("LoadCourses",new { @idPerson=row["ID"].ToString(),@identification=@row["Identificacion"].ToString(),@isView=true})')">@row[col.ColumnName]</a></td>
                 }
-                <td>
-                    <a href="javascript:void(0)" onclick="cargarElement('@Url.Action("EditPerson",new { @idPerson=row["ID"].ToString()})')">Editar</a>
-                </td>
-            </tr>
+                else
+                {
+                    <td>@row[col.ColumnName]</td>
+                }
+            }
+            <td>
+                <a href="javascript:void(0)" onclick="cargarElement('@Url.Action("EditPerson",new { @idPerson=row["ID"].ToString()})')">Editar</a>
+            </td>
+          
+        </tr>
         }
     </tbody>
 </table>

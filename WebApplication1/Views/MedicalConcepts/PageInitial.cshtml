@@ -4,6 +4,10 @@
     canvas {
         cursor: pointer;
     }
+
+    .cbo {
+        width: 250px !important;
+    }
 </style>
 
 <h3 class="titlesPages">
@@ -23,10 +27,10 @@
             <div class="required inline fields">
                 <div class="field">
                     <label>Sede</label>
-                    @Html.DropDownList("cbxHeadquarter", (SelectList)ViewBag.HeadquarterDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
+                    @Html.DropDownList("cbxHeadquarter", (SelectList)ViewBag.HeadquarterDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown cbo" })
                 </div>
             </div>
-           
+
 
             <button class="ui primary button">
                 Buscar
@@ -48,7 +52,7 @@
                     prompt: 'Debe seleccionar una opción'
                 }]
             },
-            
+
         }, inline: true,
         on: 'blur'
     });

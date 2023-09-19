@@ -227,6 +227,21 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPost]
+        public JsonResult DeactivatePerson(int id, string identificaction)
+        {
+            try
+            {
+                var result = _workingAtHeightBo.GetResourceByHeadquarter(id);
+                return Json(new { result = true, data = result }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { result = false, message = ex.Message.ToString() }, JsonRequestBehavior.AllowGet);
+                throw;
+            }
+        }
+
+        [HttpPost]
         public PartialViewResult LoadCoursesByPerson(int idPerson)
         {
             try
@@ -443,9 +458,9 @@ namespace WebApplication1.Controllers
                 string name = collection["name"];
                 string lastName = collection["lastName"];
                 int headquarterId = int.Parse(collection["cbxHeadquarter"]);
+                int active = collection["active"].ToString() != string.Empty ? Convert.ToInt32(collection["active"].ToString()) : 0;
 
-
-                _trainningBo.EditPerson(idPerson, headquarterId, name, lastName);
+                _trainningBo.EditPerson(idPerson, headquarterId, name, lastName,active);
                 return Json(new { result = true, idPerson, identification }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)

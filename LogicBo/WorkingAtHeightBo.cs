@@ -177,6 +177,9 @@ namespace LogicBo
 
             return true;
         }
+
+     
+
         public bool EditEquipment(string RFID,int areaid, int empleadoid)
         {
             try

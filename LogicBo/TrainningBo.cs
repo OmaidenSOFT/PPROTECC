@@ -263,7 +263,7 @@ new SqlParameter(){ ParameterName="YearINI", SqlDbType=SqlDbType.VarChar,Value=y
 
 
 
-        public bool EditPerson(int idPerson, int headquarterId, string name, string lastName)
+        public bool EditPerson(int idPerson, int headquarterId, string name, string lastName,int active)
         {
             try
             {
@@ -271,8 +271,9 @@ new SqlParameter(){ ParameterName="YearINI", SqlDbType=SqlDbType.VarChar,Value=y
                 new SqlParameter(){ ParameterName="TSAId", SqlDbType=SqlDbType.Int,Value=idPerson},
                 new SqlParameter(){ ParameterName="Sedeid", SqlDbType=SqlDbType.Int,Value=headquarterId},
                 new SqlParameter(){ ParameterName="name", SqlDbType=SqlDbType.VarChar,Value=name},
-                new SqlParameter(){ ParameterName="lastName", SqlDbType=SqlDbType.VarChar,Value=lastName}
-            };
+                new SqlParameter(){ ParameterName="lastName", SqlDbType=SqlDbType.VarChar,Value=lastName},
+                new SqlParameter(){ ParameterName="activar", SqlDbType=SqlDbType.VarChar,Value=active}
+};
                 var result = executeProcedures.DataTable("ENEL_UpdateTSA", parameters);
                 if (!Convert.ToBoolean(result?.Rows[0][0].ToString()))
                     throw new Exception(result.Rows[0][1].ToString());

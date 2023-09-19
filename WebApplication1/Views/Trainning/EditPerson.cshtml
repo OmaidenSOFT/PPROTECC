@@ -47,9 +47,18 @@
                 <label>Sede</label>
                 @Html.DropDownList("cbxHeadquarter", (SelectList)ViewBag.HeadquarterDictionary, "[-Seleccione una opción-]", new { @class = "ui search dropdown" })
             </div>
-        </div>
 
-    </div>
+            <div class="field">
+                <label>Activo</label>
+                <select class="ui search dropdown" id="active" name="active">
+                    <option value="0">No</option>
+                    <option value="1">Si</option>
+                </select>
+                </div>
+
+            </div>
+
+        </div>
 }
 <div class="ui modal" id="modalLoadCourses">
     <div class="header">Carga de Cursos</div>
@@ -60,6 +69,9 @@
 <button class="ui primary button" id="btnGuardar">
     Guardar
 </button>
+@*<button class="ui primary button" id="btnDesactivar" >
+    Desactivar
+</button>*@
 <button class="ui button" onclick="cargarElement('@Url.Action("IndexPerson","Trainning")')">
     Volver
 </button>
@@ -89,6 +101,8 @@
     $('#btnGuardar').on('click', function () {
         $('#formProcessEditPerson').submit();
     });
+
+
 
     function onBeginProcessEditPerson() {
         $('#renderPages').addClass("loading");
@@ -122,7 +136,7 @@
     }
     function loadCourses(id,cc) {
         $.ajax({
-            data: { idPerson: id, identification: cc },
+            data: { id: id, identificaction: cc },
             url: '@Url.Action("LoadCourses")',
             type: 'POST',
             success: function (data) {
@@ -135,4 +149,6 @@
             }
         });
     }
+
+        
 </script>
